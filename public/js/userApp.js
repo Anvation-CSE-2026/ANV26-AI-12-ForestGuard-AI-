@@ -277,46 +277,343 @@ function initReportingMethods() {
     });
   }
 
-  // Method 6: Location Search
-  const btnSearch = document.getElementById('btnSearchLoc');
+  // Method 6: Location Search with Autocomplete Predictions
+  initLocationAutocomplete();
+}
+
+// ==========================================
+// AUTOCOMPLETE PREDICTIONS DATABASE & ENGINE
+// ==========================================
+const LOCATION_CATALOG = [
+  // Campus & Educational Institutes (Prominently includes DSATM as requested)
+  { name: 'DSATM Campus, Kanakapura Road, Bengaluru', shortName: 'DSATM Bengaluru', category: 'College / Engineering', icon: '🎓', lat: 12.8258, lng: 77.5158, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['dsatm', 'dayananda sagar', 'kanakapura', 'engineering', 'college'] },
+  { name: 'Dayananda Sagar Institutions (DSI), Kumaraswamy Layout, Bengaluru', shortName: 'DSI Main Campus', category: 'Campus / Engineering', icon: '🎓', lat: 12.9081, lng: 77.5663, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['dsi', 'dayananda sagar', 'kumaraswamy layout'] },
+  { name: 'Indian Institute of Science (IISc), Mathikere, Bengaluru', shortName: 'IISc Bengaluru', category: 'Research Institute', icon: '🎓', lat: 13.0219, lng: 77.5671, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['iisc', 'science', 'mathikere'] },
+  { name: 'RV College of Engineering (RVCE), Mysuru Road, Bengaluru', shortName: 'RVCE Bengaluru', category: 'Engineering College', icon: '🎓', lat: 12.9237, lng: 77.4987, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['rvce', 'rv college', 'mysuru road'] },
+  { name: 'PES University, Banashankari 3rd Stage, Bengaluru', shortName: 'PES University', category: 'University Campus', icon: '🎓', lat: 12.9344, lng: 77.5345, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['pes', 'pesit', 'banashankari'] },
+  { name: 'BMS College of Engineering, Basavanagudi, Bengaluru', shortName: 'BMSCE Bengaluru', category: 'Engineering College', icon: '🎓', lat: 12.9410, lng: 77.5655, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['bms', 'bmsce', 'basavanagudi'] },
+  { name: 'IIT Madras, Sardar Patel Road, Adyar, Chennai', shortName: 'IIT Madras', category: 'National Institute', icon: '🎓', lat: 12.9915, lng: 80.2337, state: 'Tamil Nadu', district: 'Chennai', tags: ['iit madras', 'iitm', 'adyar'] },
+  { name: 'IIT Bombay, Powai Lake, Mumbai', shortName: 'IIT Bombay', category: 'National Institute', icon: '🎓', lat: 19.1334, lng: 72.9133, state: 'Maharashtra', district: 'Mumbai Suburban', tags: ['iit bombay', 'iitb', 'powai'] },
+  { name: 'IIT Delhi, Hauz Khas, New Delhi', shortName: 'IIT Delhi', category: 'National Institute', icon: '🎓', lat: 28.5450, lng: 77.1926, state: 'Delhi', district: 'South Delhi', tags: ['iit delhi', 'iitd', 'hauz khas'] },
+  { name: 'Forest Research Institute (FRI), Dehradun', shortName: 'FRI Dehradun', category: 'Forestry Institute', icon: '🌲', lat: 30.3429, lng: 77.9996, state: 'Uttarakhand', district: 'Dehradun', tags: ['fri', 'forest institute', 'dehradun'] },
+
+  // Key National Parks & Tiger Reserves
+  { name: 'Bandipur National Park & Tiger Reserve, Karnataka', shortName: 'Bandipur Tiger Reserve', category: 'Tiger Reserve', icon: '🌲', lat: 11.6643, lng: 76.6250, state: 'Karnataka', district: 'Chamarajanagar', tags: ['bandipur', 'moyar', 'gundlupet', 'forest', 'wildfire'] },
+  { name: 'Nagarhole National Park & Tiger Reserve (Kabini), Karnataka', shortName: 'Nagarhole National Park', category: 'National Park', icon: '🌲', lat: 11.9961, lng: 76.1325, state: 'Karnataka', district: 'Kodagu / Mysuru', tags: ['nagarhole', 'kabini', 'forest'] },
+  { name: 'Mudumalai Tiger Reserve & National Park, Nilgiris', shortName: 'Mudumalai Tiger Reserve', category: 'Tiger Reserve', icon: '🌲', lat: 11.5623, lng: 76.5341, state: 'Tamil Nadu', district: 'Nilgiris', tags: ['mudumalai', 'theppakadu', 'nilgiris'] },
+  { name: 'Wayanad Wildlife Sanctuary, Sulthan Bathery, Kerala', shortName: 'Wayanad Sanctuary', category: 'Wildlife Sanctuary', icon: '🍃', lat: 11.6854, lng: 76.3670, state: 'Kerala', district: 'Wayanad', tags: ['wayanad', 'muthanga', 'tholpetty'] },
+  { name: 'Bannerghatta National Park & Safari, Bengaluru', shortName: 'Bannerghatta Reserve', category: 'National Park', icon: '🌲', lat: 12.8009, lng: 77.5777, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['bannerghatta', 'bengaluru park', 'safari'] },
+  { name: 'Biligiriranga Hills (BRT) Tiger Reserve, Karnataka', shortName: 'BRT Tiger Reserve', category: 'Tiger Reserve', icon: '⛰️', lat: 11.9922, lng: 77.1444, state: 'Karnataka', district: 'Chamarajanagar', tags: ['brt', 'br hills', 'biligiriranga'] },
+  { name: 'Kudremukh National Park & Shola Grasslands', shortName: 'Kudremukh Forest', category: 'National Park', icon: '⛰️', lat: 13.2144, lng: 75.2570, state: 'Karnataka', district: 'Chikkamagaluru', tags: ['kudremukh', 'shola', 'western ghats'] },
+  { name: 'Agumbe Rainforest & Cobra Reserve, Western Ghats', shortName: 'Agumbe Rainforest', category: 'Rainforest', icon: '🌧️', lat: 13.5078, lng: 75.0934, state: 'Karnataka', district: 'Shimoga', tags: ['agumbe', 'rainforest', 'ghats'] },
+  { name: 'Dandeli Wildlife Sanctuary & Kali Tiger Reserve', shortName: 'Dandeli Reserve', category: 'Wildlife Sanctuary', icon: '🌲', lat: 15.2447, lng: 74.6231, state: 'Karnataka', district: 'Uttara Kannada', tags: ['dandeli', 'kali', 'teak'] },
+  { name: 'Jim Corbett National Park (Dhikala), Uttarakhand', shortName: 'Jim Corbett National Park', category: 'Tiger Reserve', icon: '🐅', lat: 29.5300, lng: 78.7747, state: 'Uttarakhand', district: 'Nainital', tags: ['corbett', 'jim corbett', 'ramnagar', 'nainital'] },
+  { name: 'Kanha Tiger Reserve, Mandla / Balaghat', shortName: 'Kanha Tiger Reserve', category: 'Tiger Reserve', icon: '🦌', lat: 22.3345, lng: 80.6115, state: 'Madhya Pradesh', district: 'Mandla', tags: ['kanha', 'mandla', 'sal forest'] },
+  { name: 'Pench Tiger Reserve & National Park', shortName: 'Pench Tiger Reserve', category: 'Tiger Reserve', icon: '🐅', lat: 21.7583, lng: 79.3056, state: 'Madhya Pradesh', district: 'Seoni', tags: ['pench', 'mowgli', 'seoni'] },
+  { name: 'Kaziranga National Park & Rhino Sanctuary, Assam', shortName: 'Kaziranga National Park', category: 'World Heritage', icon: '🦏', lat: 26.5775, lng: 93.1711, state: 'Assam', district: 'Golaghat', tags: ['kaziranga', 'assam', 'rhino'] },
+  { name: 'Ranthambore National Park, Sawai Madhopur', shortName: 'Ranthambore Tiger Reserve', category: 'Tiger Reserve', icon: '🐅', lat: 26.0173, lng: 76.5026, state: 'Rajasthan', district: 'Sawai Madhopur', tags: ['ranthambore', 'rajasthan'] },
+  { name: 'Gir Forest National Park (Asiatic Lion Sanctuary)', shortName: 'Gir National Park', category: 'National Park', icon: '🦁', lat: 21.1243, lng: 70.7937, state: 'Gujarat', district: 'Junagadh', tags: ['gir', 'asiatic lion', 'gujarat'] },
+  { name: 'Sundarbans Mangrove Tiger Reserve, West Bengal', shortName: 'Sundarbans Reserve', category: 'Mangrove / Reserve', icon: '🌿', lat: 21.9497, lng: 88.8999, state: 'West Bengal', district: 'South 24 Parganas', tags: ['sundarbans', 'delta', 'bengal'] },
+  { name: 'Periyar Tiger Reserve, Thekkady', shortName: 'Periyar Tiger Reserve', category: 'Tiger Reserve', icon: '🐘', lat: 9.4679, lng: 77.1435, state: 'Kerala', district: 'Idukki', tags: ['periyar', 'thekkady', 'cardamom hills'] },
+  { name: 'Silent Valley National Park, Palakkad', shortName: 'Silent Valley', category: 'Rainforest', icon: '🍃', lat: 11.0838, lng: 76.4526, state: 'Kerala', district: 'Palakkad', tags: ['silent valley', 'lion tailed macaque'] },
+  { name: 'Tadoba-Andhari Tiger Reserve, Chandrapur', shortName: 'Tadoba Tiger Reserve', category: 'Tiger Reserve', icon: '🐅', lat: 20.2443, lng: 79.3082, state: 'Maharashtra', district: 'Chandrapur', tags: ['tadoba', 'chandrapur'] },
+  { name: 'Satpura Tiger Reserve, Hoshangabad', shortName: 'Satpura Reserve', category: 'Tiger Reserve', icon: '⛰️', lat: 22.4633, lng: 78.2917, state: 'Madhya Pradesh', district: 'Hoshangabad', tags: ['satpura', 'pachmarhi'] },
+  { name: 'Similipal Biosphere Reserve, Mayurbhanj', shortName: 'Similipal Biosphere', category: 'Biosphere Reserve', icon: '🌲', lat: 21.8600, lng: 86.3400, state: 'Odisha', district: 'Mayurbhanj', tags: ['similipal', 'odisha'] },
+  { name: 'Great Himalayan National Park, Kullu Valley', shortName: 'Great Himalayan Park', category: 'Alpine Reserve', icon: '🏔️', lat: 31.7833, lng: 77.4167, state: 'Himachal Pradesh', district: 'Kullu', tags: ['himalayan', 'kullu', 'alpine'] },
+  { name: 'Rajaji National Park & Elephant Corridor', shortName: 'Rajaji National Park', category: 'National Park', icon: '🐘', lat: 29.9833, lng: 78.1833, state: 'Uttarakhand', district: 'Haridwar', tags: ['rajaji', 'haridwar', 'rishikesh'] },
+  { name: 'Dudhwa National Park, Terai Grasslands', shortName: 'Dudhwa National Park', category: 'National Park', icon: '🌾', lat: 28.4900, lng: 80.6500, state: 'Uttar Pradesh', district: 'Lakhimpur Kheri', tags: ['dudhwa', 'terai', 'swamp deer'] },
+
+  // Key Cities & Hill Stations
+  { name: 'Bengaluru / Bangalore Urban, Karnataka', shortName: 'Bengaluru City', category: 'Major City', icon: '🏙️', lat: 12.9716, lng: 77.5946, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['bengaluru', 'bangalore', 'capital', 'karnataka'] },
+  { name: 'Mysuru / Mysore Heritage City, Karnataka', shortName: 'Mysuru City', category: 'Heritage City', icon: '🏰', lat: 12.2958, lng: 76.6394, state: 'Karnataka', district: 'Mysuru', tags: ['mysuru', 'mysore', 'chamundi'] },
+  { name: 'Coorg (Madikeri), Western Ghats, Karnataka', shortName: 'Coorg / Madikeri', category: 'Hill Station', icon: '☕', lat: 12.4244, lng: 75.7382, state: 'Karnataka', district: 'Kodagu', tags: ['coorg', 'madikeri', 'kodagu'] },
+  { name: 'Ooty (Udhagamandalam), Nilgiris, Tamil Nadu', shortName: 'Ooty Nilgiris', category: 'Hill Station', icon: '⛰️', lat: 11.4102, lng: 76.6950, state: 'Tamil Nadu', district: 'Nilgiris', tags: ['ooty', 'nilgiris', 'tea'] },
+  { name: 'Kodaikanal (Princess of Hill Stations), Tamil Nadu', shortName: 'Kodaikanal', category: 'Hill Station', icon: '⛰️', lat: 10.2381, lng: 77.4892, state: 'Tamil Nadu', district: 'Dindigul', tags: ['kodaikanal', 'kodai', 'palani'] },
+  { name: 'Munnar Tea Hills, Western Ghats, Kerala', shortName: 'Munnar', category: 'Hill Station', icon: '🍃', lat: 10.0889, lng: 77.0595, state: 'Kerala', district: 'Idukki', tags: ['munnar', 'tea', 'idukki'] },
+  { name: 'Dehradun Valley, Shivalik Foothills', shortName: 'Dehradun', category: 'Capital City', icon: '🏔️', lat: 30.3165, lng: 78.0322, state: 'Uttarakhand', district: 'Dehradun', tags: ['dehradun', 'doon', 'shivalik'] },
+  { name: 'Shimla Capital Hill Station, Himachal Pradesh', shortName: 'Shimla', category: 'Hill Station', icon: '🏔️', lat: 31.1048, lng: 77.1734, state: 'Himachal Pradesh', district: 'Shimla', tags: ['shimla', 'mall road'] },
+  { name: 'New Delhi, National Capital Region', shortName: 'New Delhi', category: 'National Capital', icon: '🏛️', lat: 28.6139, lng: 77.2090, state: 'Delhi', district: 'New Delhi', tags: ['delhi', 'new delhi', 'ncr'] },
+  { name: 'Mumbai Financial Capital, Maharashtra', shortName: 'Mumbai', category: 'Metro City', icon: '🏙️', lat: 19.0760, lng: 72.8777, state: 'Maharashtra', district: 'Mumbai', tags: ['mumbai', 'bombay'] }
+];
+
+function initLocationAutocomplete() {
   const inputSearch = document.getElementById('inputSearchLocation');
-  if (btnSearch && inputSearch) {
-    const doSearch = async () => {
+  const dropdown = document.getElementById('searchPredictionsDropdown');
+  const list = document.getElementById('predictionsList');
+  const headerLabel = document.getElementById('predictionsHeaderLabel');
+  const btnClear = document.getElementById('btnClearSearchLoc');
+  const btnSearch = document.getElementById('btnSearchLoc');
+  const quickPills = document.querySelectorAll('.quick-loc-pill');
+
+  if (!inputSearch || !dropdown || !list) return;
+
+  let activeIndex = -1;
+  let currentPredictions = [];
+  let debounceTimer = null;
+
+  // Helper: Highlight matching query characters
+  function highlightMatch(text, query) {
+    if (!query) return text;
+    const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<mark class="bg-amber-500/30 text-amber-300 font-bold px-0.5 rounded">$1</mark>');
+  }
+
+  // Render Predictions List
+  function renderPredictions(items, query = '') {
+    currentPredictions = items;
+    if (!items || items.length === 0) {
+      list.innerHTML = `
+        <div class="p-3 text-center text-xs text-slate-400">
+          <span>❌ No matching locations found for "<b>${query}</b>"</span>
+          <div class="text-[10px] text-slate-500 mt-1">Try another keyword or press Search to query online geocoder.</div>
+        </div>
+      `;
+      dropdown.classList.remove('hidden');
+      return;
+    }
+
+    if (headerLabel) {
+      headerLabel.innerHTML = query
+        ? `<span>🔍 PREDICTIONS FOR "<b>${query}</b>" (${items.length})</span>`
+        : `<span>⭐ POPULAR & RECOMMENDED LOCATIONS (${items.length})</span>`;
+    }
+
+    list.innerHTML = items.map((item, idx) => {
+      const isSelected = idx === activeIndex;
+      const selectClass = isSelected
+        ? 'bg-orange-950/70 border-l-4 border-orange-500 shadow-md ring-1 ring-orange-500/40'
+        : 'hover:bg-[#101b33] hover:border-l-4 hover:border-orange-500/80';
+      const latStr = typeof item.lat === 'number' ? item.lat.toFixed(4) : item.lat;
+      const lngStr = typeof item.lng === 'number' ? item.lng.toFixed(4) : item.lng;
+      const sourceTag = item.isOnline
+        ? `<span class="text-[8px] font-mono px-1 py-0.2 rounded bg-sky-950 text-sky-300 border border-sky-700/60 uppercase">ONLINE</span>`
+        : `<span class="text-[8px] font-mono px-1 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700 uppercase">${item.category || 'LOCATION'}</span>`;
+
+      return `
+        <div class="prediction-item px-3 py-2 cursor-pointer transition-all flex items-center justify-between gap-2.5 ${selectClass}" data-idx="${idx}">
+          <div class="flex items-start gap-2.5 min-w-0 flex-1">
+            <span class="text-base shrink-0 pt-0.5">${item.icon || '📍'}</span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-xs font-bold text-white leading-tight break-words">${highlightMatch(item.name, query)}</span>
+                ${sourceTag}
+              </div>
+              <div class="text-[10px] text-slate-400 mt-0.5 truncate flex items-center gap-1.5 font-mono">
+                <span class="truncate">📍 ${item.district || ''}${item.district && item.state ? ', ' : ''}${item.state || ''}</span>
+                <span class="text-slate-600">•</span>
+                <span class="text-cyan-400 font-bold shrink-0">${latStr}, ${lngStr}</span>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn-fly-to-loc shrink-0 px-2 py-1 rounded bg-orange-950/60 hover:bg-orange-600 border border-orange-700/60 text-orange-300 hover:text-white text-[10px] font-bold transition flex items-center gap-1 shadow-sm">
+            <span>✈️ Fly</span>
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    dropdown.classList.remove('hidden');
+
+    // Click handler for items
+    list.querySelectorAll('.prediction-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.idx, 10);
+        if (currentPredictions[idx]) selectPrediction(currentPredictions[idx]);
+      });
+    });
+  }
+
+  // Select Prediction & Fly Map
+  function selectPrediction(item) {
+    if (!item) return;
+    inputSearch.value = item.name;
+    if (btnClear) btnClear.classList.remove('hidden');
+
+    const lat = parseFloat(item.lat);
+    const lng = parseFloat(item.lng);
+
+    // Fly map to selected coordinates
+    if (userMap) {
+      userMap.flyTo([lat, lng], 14, { duration: 1.2 });
+    }
+    if (userMarker) {
+      userMarker.setLatLng([lat, lng]);
+    }
+
+    // Update location readouts & form default hint
+    updateLocationReadouts(lat, lng, item.name);
+
+    hideDropdown();
+  }
+
+  function hideDropdown() {
+    dropdown.classList.add('hidden');
+    activeIndex = -1;
+  }
+
+  // Filter Catalog & Query Nominatim
+  function executePredictionsSearch(query) {
+    const q = query.trim().toLowerCase();
+
+    if (!q) {
+      // Default: Return top curated recommendations
+      const defaultPresets = LOCATION_CATALOG.slice(0, 8);
+      activeIndex = -1;
+      renderPredictions(defaultPresets, '');
+      return;
+    }
+
+    // 1. Instant local catalog filter (0ms latency)
+    const localMatches = LOCATION_CATALOG.filter(loc => {
+      const matchName = loc.name.toLowerCase().includes(q);
+      const matchShort = loc.shortName && loc.shortName.toLowerCase().includes(q);
+      const matchCategory = loc.category && loc.category.toLowerCase().includes(q);
+      const matchState = loc.state && loc.state.toLowerCase().includes(q);
+      const matchDistrict = loc.district && loc.district.toLowerCase().includes(q);
+      const matchTag = loc.tags && loc.tags.some(t => t.toLowerCase().includes(q));
+      return matchName || matchShort || matchCategory || matchState || matchDistrict || matchTag;
+    });
+
+    activeIndex = -1;
+    renderPredictions(localMatches, query);
+
+    // 2. Debounced online Nominatim geocoder if query has >= 3 chars
+    if (q.length >= 3) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=in&q=${encodeURIComponent(query)}&limit=5`);
+          const data = await res.json();
+          if (data && data.length > 0) {
+            const onlineResults = data.map(d => {
+              const parts = (d.display_name || '').split(',');
+              const title = parts.slice(0, 2).join(',').trim();
+              const rest = parts.slice(2).join(',').trim();
+              return {
+                name: d.display_name,
+                shortName: title,
+                category: d.type || 'ONLINE',
+                icon: '📍',
+                lat: parseFloat(d.lat),
+                lng: parseFloat(d.lon),
+                state: parts[parts.length - 2]?.trim() || '',
+                district: parts[parts.length - 3]?.trim() || '',
+                isOnline: true
+              };
+            });
+
+            // Merge local and online, avoiding duplicates
+            const combined = [...localMatches];
+            onlineResults.forEach(onl => {
+              if (!combined.some(c => Math.abs(c.lat - onl.lat) < 0.005 && Math.abs(c.lng - onl.lng) < 0.005)) {
+                combined.push(onl);
+              }
+            });
+
+            renderPredictions(combined, query);
+          }
+        } catch (e) {
+          console.warn('Online prediction fetch warning:', e);
+        }
+      }, 280);
+    }
+  }
+
+  // Focus Event: Show top popular recommendations
+  inputSearch.addEventListener('focus', () => {
+    executePredictionsSearch(inputSearch.value);
+  });
+
+  // Input Event: Live search predictions
+  inputSearch.addEventListener('input', () => {
+    if (btnClear) btnClear.classList.toggle('hidden', !inputSearch.value.trim());
+    executePredictionsSearch(inputSearch.value);
+  });
+
+  // Clear Button
+  if (btnClear) {
+    btnClear.addEventListener('click', (e) => {
+      e.stopPropagation();
+      inputSearch.value = '';
+      btnClear.classList.add('hidden');
+      inputSearch.focus();
+      executePredictionsSearch('');
+    });
+  }
+
+  // Keyboard Navigation: Up, Down, Enter, Escape
+  inputSearch.addEventListener('keydown', (e) => {
+    if (dropdown.classList.contains('hidden')) {
+      if (e.key === 'ArrowDown') {
+        executePredictionsSearch(inputSearch.value);
+        return;
+      }
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (currentPredictions.length === 0) return;
+      activeIndex = (activeIndex + 1) % currentPredictions.length;
+      renderPredictions(currentPredictions, inputSearch.value.trim());
+      // Scroll into view
+      const activeEl = list.children[activeIndex];
+      if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (currentPredictions.length === 0) return;
+      activeIndex = (activeIndex - 1 + currentPredictions.length) % currentPredictions.length;
+      renderPredictions(currentPredictions, inputSearch.value.trim());
+      const activeEl = list.children[activeIndex];
+      if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (activeIndex >= 0 && currentPredictions[activeIndex]) {
+        selectPrediction(currentPredictions[activeIndex]);
+      } else if (currentPredictions.length > 0) {
+        selectPrediction(currentPredictions[0]);
+      } else if (inputSearch.value.trim()) {
+        btnSearch?.click();
+      }
+    } else if (e.key === 'Escape') {
+      hideDropdown();
+    }
+  });
+
+  // Document Click Outside: Close dropdown
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target) && e.target !== inputSearch && e.target !== btnClear) {
+      hideDropdown();
+    }
+  });
+
+  // Wire Search Button
+  if (btnSearch) {
+    btnSearch.addEventListener('click', async () => {
       const q = inputSearch.value.trim();
       if (!q) return;
+      hideDropdown();
+
+      // Check if matches any in local catalog first
       const ql = q.toLowerCase();
+      const directMatch = LOCATION_CATALOG.find(c => 
+        c.name.toLowerCase().includes(ql) || 
+        (c.tags && c.tags.some(t => t.includes(ql)))
+      );
+      if (directMatch) {
+        selectPrediction(directMatch);
+        return;
+      }
+
+      // Fallback to geocoder
       btnSearch.textContent = '...';
       try {
-        if (ql.includes('dsatm') || ql.includes('dayananda sagar')) {
-          userMap.flyTo([12.8258, 77.5158], 14);
-          userMarker.setLatLng([12.8258, 77.5158]);
-          updateLocationReadouts(12.8258, 77.5158, 'DSATM Campus, Kanakapura Road, Bengaluru');
-          return;
-        }
-        if (ql.includes('corbett') || ql.includes('nainital')) {
-          userMap.flyTo([29.5300, 78.7747], 13);
-          userMarker.setLatLng([29.5300, 78.7747]);
-          updateLocationReadouts(29.5300, 78.7747, 'Jim Corbett National Park');
-          return;
-        }
-        if (ql.includes('kanha') || ql.includes('mandla')) {
-          userMap.flyTo([22.3345, 80.6115], 13);
-          userMarker.setLatLng([22.3345, 80.6115]);
-          updateLocationReadouts(22.3345, 80.6115, 'Kanha Tiger Reserve');
-          return;
-        }
-
-        // Try OpenStreetMap Nominatim Search
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`);
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=in&q=${encodeURIComponent(q)}&limit=1`);
         const data = await res.json();
         if (data && data.length > 0) {
           const lat = parseFloat(data[0].lat);
           const lon = parseFloat(data[0].lon);
-          const parts = (data[0].display_name || '').split(',');
-          const locName = parts.slice(0, 3).join(', ').trim() || q;
-          userMap.flyTo([lat, lon], 14);
-          userMarker.setLatLng([lat, lon]);
-          updateLocationReadouts(lat, lon, locName);
+          const locName = data[0].display_name.split(',').slice(0, 3).join(', ').trim() || q;
+          selectPrediction({ name: locName, lat, lng: lon });
           return;
         }
       } catch (err) {
@@ -327,10 +624,18 @@ function initReportingMethods() {
 
       // Default fallback
       updateLocationReadouts(currentCoords.lat, currentCoords.lng, q);
-    };
-    btnSearch.addEventListener('click', doSearch);
-    inputSearch.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+    });
   }
+
+  // Wire Quick Suggestion Pills
+  quickPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const name = pill.dataset.name;
+      const lat = parseFloat(pill.dataset.lat);
+      const lng = parseFloat(pill.dataset.lng);
+      selectPrediction({ name, lat, lng });
+    });
+  });
 }
 
 function setReportingMethod(method) {

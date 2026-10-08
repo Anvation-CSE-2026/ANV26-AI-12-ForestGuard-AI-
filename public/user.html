@@ -174,19 +174,62 @@
             <video id="videoPreviewPlayer" controls class="w-full h-40 rounded-xl border border-slate-700 hidden mt-2"></video>
           </div>
 
-          <!-- Method 4/5/6 Controls: GPS & Search Toolbar -->
-          <div class="p-4 rounded-2xl bg-[#091122] border border-slate-800 space-y-2">
+          <!-- Method 4/5/6 Controls: GPS & Autocomplete Search Toolbar -->
+          <div class="p-4 rounded-2xl bg-[#091122] border border-slate-800 space-y-2 relative z-30">
             <div class="flex items-center justify-between text-xs">
-              <span class="font-bold text-slate-300">LOCATION TOOLS</span>
-              <button type="button" id="btnCurrentGps" class="text-sky-400 hover:text-white font-bold flex items-center gap-1">
-                <span>📍</span> <span>USE MY CURRENT LOCATION</span>
+              <span class="font-bold text-slate-300 flex items-center gap-1.5">
+                <span>📍</span> <span>LOCATION TOOLS</span>
+              </span>
+              <button type="button" id="btnCurrentGps" class="text-sky-400 hover:text-white font-bold flex items-center gap-1 transition">
+                <span>🎯</span> <span>USE MY CURRENT LOCATION</span>
               </button>
             </div>
-            <div class="flex gap-2">
-              <input type="text" id="inputSearchLocation" placeholder="Search Forest, Village, District, Landmark..." class="flex-1 bg-[#040814] border border-slate-700 focus:border-orange-500 rounded-lg px-3 py-1.5 text-xs text-white outline-none" />
-              <button type="button" id="btnSearchLoc" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg">
-                Search
+
+            <!-- Search Input with Autocomplete Predictions Dropdown -->
+            <div class="relative flex gap-2">
+              <div class="relative flex-1">
+                <input 
+                  type="text" 
+                  id="inputSearchLocation" 
+                  autocomplete="off" 
+                  spellcheck="false"
+                  placeholder="Search Campus, Forest, City, Landmark (e.g. dsatm, bandipur)..." 
+                  class="w-full bg-[#040814] border border-slate-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 rounded-lg pl-3 pr-7 py-2 text-xs text-white outline-none transition shadow-inner placeholder-slate-500" 
+                />
+                <!-- Clear Button -->
+                <button type="button" id="btnClearSearchLoc" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs hidden cursor-pointer p-0.5" title="Clear search">✕</button>
+
+                <!-- Floating Autocomplete Predictions Dropdown Menu -->
+                <div id="searchPredictionsDropdown" class="absolute left-0 right-0 top-full mt-1.5 bg-[#070e1c] border border-slate-700/80 rounded-xl shadow-2xl z-50 overflow-hidden hidden backdrop-blur-md">
+                  <div class="px-3 py-1.5 bg-[#040814]/90 border-b border-slate-800 flex items-center justify-between text-[10px] text-slate-400 font-mono">
+                    <span id="predictionsHeaderLabel" class="font-bold flex items-center gap-1">
+                      <span>🔍</span> <span>SUGGESTED PREDICTIONS</span>
+                    </span>
+                    <span class="text-orange-400 text-[9px] font-bold tracking-wider">CLICK TO FLY MAP</span>
+                  </div>
+                  <div id="predictionsList" class="max-h-64 overflow-y-auto divide-y divide-slate-800/60 font-sans">
+                    <!-- Dynamic autocomplete predictions rendered here -->
+                  </div>
+                  <div class="px-3 py-1 bg-[#030712] border-t border-slate-800/80 text-[9px] text-slate-500 flex items-center justify-between">
+                    <span>💡 Press Enter or click to pinpoint location</span>
+                    <span class="font-mono text-cyan-400">↑↓ to navigate</span>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" id="btnSearchLoc" class="px-4 py-2 bg-gradient-to-r from-slate-800 to-slate-700 hover:from-orange-600 hover:to-amber-600 text-white text-xs font-bold rounded-lg transition shadow-md cursor-pointer shrink-0 flex items-center gap-1">
+                <span>Search</span>
               </button>
+            </div>
+
+            <!-- Quick Location Suggestion Pills -->
+            <div class="flex items-center gap-1.5 flex-wrap pt-0.5 text-[10px]">
+              <span class="text-slate-400 font-bold shrink-0">Popular:</span>
+              <button type="button" class="quick-loc-pill px-2 py-0.5 rounded-full bg-slate-800/80 hover:bg-orange-950/80 hover:border-orange-500 border border-slate-700 text-slate-300 hover:text-orange-300 transition cursor-pointer" data-name="DSATM Campus, Kanakapura Road, Bengaluru" data-lat="12.8258" data-lng="77.5158">🎓 DSATM Bengaluru</button>
+              <button type="button" class="quick-loc-pill px-2 py-0.5 rounded-full bg-slate-800/80 hover:bg-orange-950/80 hover:border-orange-500 border border-slate-700 text-slate-300 hover:text-orange-300 transition cursor-pointer" data-name="Bandipur National Park & Tiger Reserve, Karnataka" data-lat="11.6643" data-lng="76.6250">🌲 Bandipur</button>
+              <button type="button" class="quick-loc-pill px-2 py-0.5 rounded-full bg-slate-800/80 hover:bg-orange-950/80 hover:border-orange-500 border border-slate-700 text-slate-300 hover:text-orange-300 transition cursor-pointer" data-name="Jim Corbett National Park, Uttarakhand" data-lat="29.5300" data-lng="78.7747">🐅 Corbett</button>
+              <button type="button" class="quick-loc-pill px-2 py-0.5 rounded-full bg-slate-800/80 hover:bg-orange-950/80 hover:border-orange-500 border border-slate-700 text-slate-300 hover:text-orange-300 transition cursor-pointer" data-name="Kanha Tiger Reserve, Madhya Pradesh" data-lat="22.3345" data-lng="80.6115">🦌 Kanha</button>
+              <button type="button" class="quick-loc-pill px-2 py-0.5 rounded-full bg-slate-800/80 hover:bg-orange-950/80 hover:border-orange-500 border border-slate-700 text-slate-300 hover:text-orange-300 transition cursor-pointer" data-name="Wayanad Wildlife Sanctuary, Kerala" data-lat="11.6854" data-lng="76.3670">🍃 Wayanad</button>
             </div>
           </div>
 

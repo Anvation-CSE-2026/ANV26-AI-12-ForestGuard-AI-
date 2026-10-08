@@ -19,11 +19,11 @@
       "flamesVisible": true,
       "peopleInDanger": false,
       "aiConfidence": 94.2,
-      "severity": "CRITICAL",
-      "riskScore": 95,
+      "severity": "LOW",
+      "riskScore": 5,
       "satelliteConfidence": 89.2,
       "sensorConfidence": 78.5,
-      "status": "TEAM DISPATCHED",
+      "status": "CANCELLED",
       "aiExplanation": "Visible smoke and flame-like regions detected. Image evidence indicates a high probability of forest fire with rapid crown propagation risk.",
       "affectedAreaHectares": 2.4,
       "affectedRadiiMeters": [
@@ -441,6 +441,26 @@
           "time": "04:27:55 pm",
           "message": "Bandipur Forest Rapid Response Unit (HQ) dispatched by Admin Command",
           "type": "DISPATCH"
+        },
+        {
+          "time": "04:45:14 pm",
+          "message": "Fire verified by Forest Authority Admin",
+          "type": "VERIFY"
+        },
+        {
+          "time": "04:45:17 pm",
+          "message": "Marked as FALSE ALARM: Verified as non-hazardous ambient haze / sunset",
+          "type": "STATUS"
+        },
+        {
+          "time": "04:45:20 pm",
+          "message": "Fire verified by Forest Authority Admin",
+          "type": "VERIFY"
+        },
+        {
+          "time": "04:45:25 pm",
+          "message": "Alert CANCELLED: Alert cancelled by operator",
+          "type": "CANCEL"
         }
       ],
       "isPriority": true,
@@ -499,7 +519,9 @@
       ],
       "routeProgressIndex": 0,
       "createdAt": "2026-10-08T10:48:26.849Z",
-      "updatedAt": "2026-10-08T10:57:55.783Z"
+      "updatedAt": "2026-10-08T11:15:25.857Z",
+      "verifiedBy": "Forest Authority Admin",
+      "verifiedAt": "2026-10-08T11:15:20.051Z"
     },
     {
       "incidentId": "FG-2026-5078",
@@ -2162,5 +2184,5 @@
       "description": "Periyar Reserve Forest Emergency response cell."
     }
   ],
-  "lastSaved": "2026-10-08T11:08:41.044Z"
+  "lastSaved": "2026-10-08T11:15:25.858Z"
 }
