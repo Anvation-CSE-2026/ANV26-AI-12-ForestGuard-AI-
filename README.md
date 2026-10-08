@@ -14,17 +14,20 @@
 
 | Environment | Interface / Portal | Direct Live Link | Key Capabilities |
 | :--- | :--- | :--- | :--- |
-| 🔀 **Vercel Cloud** | **Unified Dual Live Demo Hub** | [**Open Dual Split Demo ➔**](https://agni-rakshak.vercel.app/demo.html) | Side-by-side synchronized Citizen + Admin view |
-| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Command Center ➔**](https://agni-rakshak.vercel.app/admin.html) | Protected auth gate, 🔬 Deep Zoom, 🎯 Default Zoom, dispatch |
-| 👤 **Vercel Cloud** | **Citizen Emergency Dashboard** | [**Open Citizen Reporting Portal ➔**](https://agni-rakshak.vercel.app/user.html) | 6 reporting methods, YOLOv8 scoreboard, GPS, hyper-local routes |
-| 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Landing Page ➔**](https://agni-rakshak.vercel.app) | 3s flash intro, instant launchpad to Citizen & Admin |
-| 🚒 **Vercel Cloud** | **Fire Station Turnout Terminal** | [**Open Station Turnout Terminal ➔**](https://agni-rakshak.vercel.app/station.html) | Station alert receipt, turnout acceptance & route navigation |
-| 🛰️ **Vercel Cloud** | **Satellite Thermal Radar** | [**Open Satellite Thermal Radar ➔**](https://agni-rakshak.vercel.app/satellite.html) | ISRO / MODIS thermal anomaly hotspots & FRP index |
-| 📡 **Vercel Cloud** | **IoT Microclimate Grid** | [**Open IoT Sensor Grid ➔**](https://agni-rakshak.vercel.app/iot.html) | Real-time temperature, humidity, and smoke telemetry |
-| 📊 **Vercel Cloud** | **Analytics & Risk Intelligence** | [**Open Analytics & Simulation ➔**](https://agni-rakshak.vercel.app/analytics.html) | Historical fire trends, spread simulation & threat models |
+| 🔀 **Vercel Cloud** | **Unified Dual Live Demo Hub** | [**Open Dual Split Demo ➔**](https://agni-rakshak-three.vercel.app/demo.html) | Side-by-side synchronized Citizen + Admin view |
+| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Command Center ➔**](https://agni-rakshak-three.vercel.app/admin.html) | Protected auth gate, 🔬 Deep Zoom, 🎯 Default Zoom, dispatch |
+| 👤 **Vercel Cloud** | **Citizen Emergency Dashboard** | [**Open Citizen Reporting Portal ➔**](https://agni-rakshak-three.vercel.app/user.html) | 6 reporting methods, YOLOv8 scoreboard, GPS, hyper-local routes |
+| 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Landing Page ➔**](https://agni-rakshak-three.vercel.app) | 3s flash intro, instant launchpad to Citizen & Admin |
+| 🚒 **Vercel Cloud** | **Fire Station Turnout Terminal** | [**Open Station Turnout Terminal ➔**](https://agni-rakshak-three.vercel.app/station.html) | Station alert receipt, turnout acceptance & route navigation |
+| 🛰️ **Vercel Cloud** | **Satellite Thermal Radar** | [**Open Satellite Thermal Radar ➔**](https://agni-rakshak-three.vercel.app/satellite.html) | ISRO / MODIS thermal anomaly hotspots & FRP index |
+| 📡 **Vercel Cloud** | **IoT Microclimate Grid** | [**Open IoT Sensor Grid ➔**](https://agni-rakshak-three.vercel.app/iot.html) | Real-time temperature, humidity, and smoke telemetry |
+| 📊 **Vercel Cloud** | **Analytics & Risk Intelligence** | [**Open Analytics & Simulation ➔**](https://agni-rakshak-three.vercel.app/analytics.html) | Historical fire trends, spread simulation & threat models |
 | 🐙 **GitHub** | **Source Code Repository** | [**github.com/Suhas-Saur/AgniRakshak**](https://github.com/Suhas-Saur/AgniRakshak) | Full source code, test scenarios, and GIS dataset |
 
-> 💡 **Mirror Cloud URL**: [https://agnirakshak.vercel.app/demo.html](https://agnirakshak.vercel.app/demo.html)
+> 💡 **Cloud Mirrors**:
+> - Production URL: [https://agni-rakshak-three.vercel.app/demo.html](https://agni-rakshak-three.vercel.app/demo.html)
+> - Custom Alias: [https://agni-rakshak.vercel.app/demo.html](https://agni-rakshak.vercel.app/demo.html)
+> - Legacy Mirror: [https://agnirakshak.vercel.app/demo.html](https://agnirakshak.vercel.app/demo.html)
 
 ---
 

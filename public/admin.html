@@ -129,117 +129,114 @@
     </section>
 
     <!-- CENTER: Large Live Google Map (Expanded Col 6/7) -->
+    <!-- CENTER: Large Live Google Map (Expanded Col 6/7 - Maximized Unobstructed View) -->
     <section class="md:col-span-6 xl:col-span-7 relative bg-[#040814] flex flex-col h-full min-h-[350px] md:min-h-0 overflow-hidden">
-      <!-- Floating Map Header Overlay -->
-      <div class="absolute top-3 left-3 z-30 flex flex-wrap items-center gap-2 pointer-events-auto">
-        <div class="px-3 py-1 rounded-lg bg-[#070e1c]/90 backdrop-blur-md border border-slate-700/80 text-xs font-bold text-white shadow-lg flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-          <span>LIVE GEOSPATIAL MAP (INDIA)</span>
-        </div>
-
-        <!-- Small Button to Restore Default Zoom (Fire + Connected Stations) -->
-        <button id="btnAdminRestoreDefaultZoom" type="button" class="px-2.5 py-1 rounded-lg bg-[#070e1c]/95 hover:bg-orange-600 border border-orange-500/80 text-orange-300 hover:text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md" title="Restore default sector zoom (Fire + Station + Waterbodies)">
-          <span>🎯</span> <span class="hidden sm:inline">Default Zoom</span>
+      
+      <!-- Sleek Floating Map Controls (Top-Right: ONLY Zoom Controls, Zero Unnecessary Boxes!) -->
+      <div class="absolute top-3 right-3 z-30 flex items-center gap-2 pointer-events-auto">
+        <!-- Default Sector Zoom Button -->
+        <button id="btnAdminRestoreDefaultZoom" type="button" class="px-3 py-1.5 rounded-xl bg-[#070e1c]/95 hover:bg-orange-600 border border-orange-500/80 text-orange-300 hover:text-white text-xs font-black shadow-2xl transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md active:scale-95 group" title="Restore default sector zoom (Fire + Station + Waterbodies)">
+          <span class="group-hover:scale-110 transition-transform">🎯</span>
+          <span>Default Zoom</span>
         </button>
 
         <!-- Deep Zoom In Button (View each building, tree, and bush deeply at Zoom 19) -->
-        <button id="btnAdminDeepZoom" type="button" class="px-2.5 py-1 rounded-lg bg-[#070e1c]/95 hover:bg-sky-600 border border-sky-400/80 text-sky-300 hover:text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md active:scale-95" title="Deep Zoom In: View each building, tree, or bush clearly at Ground Zero (Zoom 19)">
-          <span>🔬</span> <span class="hidden sm:inline">Deep Zoom (Tree/Building)</span>
-        </button>
-        
-        <!-- Tile Layer Switchers -->
-        <div class="hidden sm:flex items-center bg-[#070e1c]/90 backdrop-blur-md border border-slate-700/80 rounded-lg p-0.5 text-[11px] font-bold">
-          <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="satellite">🛰️ Satellite</button>
-          <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="terrain">⛰️ Terrain</button>
-          <button class="btn-map-toggle px-2 py-0.5 rounded text-orange-400 font-black" data-layer="hybrid">🗺️ Hybrid</button>
-        </div>
-
-        <!-- Feature Map Layer Controls Dropdown (Section Integration) -->
-        <div class="relative">
-          <button id="btnToggleLayersMenu" class="px-2.5 py-1 rounded-lg bg-[#070e1c]/95 border border-slate-700 hover:border-orange-500 text-xs font-bold text-slate-200 transition flex items-center gap-1.5 shadow-md cursor-pointer">
-            <span>🗂️</span> <span>Map Layers</span> <span class="text-[10px]">▾</span>
-          </button>
-          <div id="dropdownMapLayers" class="hidden absolute top-full left-0 mt-1 w-56 p-2 rounded-xl bg-[#070e1c]/95 backdrop-blur-md border border-slate-700 shadow-2xl z-40 space-y-1 text-xs">
-            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1 pb-1 border-b border-slate-800">Map Layer Visibility</div>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerActiveFires" checked class="rounded accent-orange-500">
-              <span>🔴 Active Fires</span>
-            </label>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerFirePerimeter" checked class="rounded accent-orange-500">
-              <span>🟥 Fire Perimeter</span>
-            </label>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerFireRiskZone" checked class="rounded accent-orange-500">
-              <span>🟠 Fire Risk Zone</span>
-            </label>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerSpreadSimulation" checked class="rounded accent-orange-500">
-              <span>🟡 Fire Spread Simulation</span>
-            </label>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerFireStations" checked class="rounded accent-purple-500">
-              <span>🟣 Fire Stations</span>
-            </label>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerResponseTeams" checked class="rounded accent-cyan-500">
-              <span>🚑 Response Teams</span>
-            </label>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerWaterBodies" checked class="rounded accent-sky-500">
-              <span>🔵 Water Bodies</span>
-            </label>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerVulnerableLocations" checked class="rounded accent-amber-500">
-              <span>🟧 Vulnerable Locations</span>
-            </label>
-            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
-              <input type="checkbox" id="chkLayerPopulationExposure" checked class="rounded accent-rose-500">
-              <span>👥 Population Exposure</span>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Floating Top-Right Controls & Station Status Card -->
-      <div class="absolute top-3 right-3 z-30 flex flex-col items-end gap-2 pointer-events-auto">
-        <!-- Deep Zoom In Button (Replaces redundant search box on map) -->
-        <button id="btnAdminDeepZoomTop" type="button" class="px-3.5 py-1.5 rounded-xl bg-[#070e1c]/95 hover:bg-sky-600 border-2 border-sky-400/90 text-sky-300 hover:text-white text-xs font-black shadow-2xl transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md active:scale-95 group" title="Deep Zoom In: View each building, tree, and bush clearly at Ground Zero (Zoom 19)">
-          <span class="text-sm group-hover:scale-125 transition-transform animate-pulse">🔬</span>
+        <button id="btnAdminDeepZoom" type="button" class="px-3 py-1.5 rounded-xl bg-[#070e1c]/95 hover:bg-sky-600 border border-sky-400/80 text-sky-300 hover:text-white text-xs font-black shadow-2xl transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md active:scale-95 group" title="Deep Zoom In: View each building, tree, or bush clearly at Ground Zero (Zoom 19)">
+          <span class="group-hover:scale-110 transition-transform animate-pulse">🔬</span>
           <span>Deep Zoom (Tree/Building)</span>
         </button>
-        <div id="adminMapStationStatusCard" class="p-2.5 rounded-xl bg-[#070e1c]/95 border border-slate-700/80 text-[11px] shadow-2xl backdrop-blur-md w-60 sm:w-72 space-y-1">
-          <div class="font-extrabold text-white uppercase tracking-wider flex items-center justify-between">
-            <span>Forest Fire Stations</span>
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <!-- Retain btnAdminDeepZoomTop as hidden alias for JS listener compatibility -->
+        <button id="btnAdminDeepZoomTop" type="button" class="hidden"></button>
+      </div>
+
+      <!-- Live Map DOM Container (Maximized, Open, and Unobstructed!) -->
+      <div id="adminLiveMap" class="flex-1 w-full h-full min-h-[350px] md:min-h-0 relative z-0 isolate bg-[#030712] overflow-hidden" style="isolation: isolate;"></div>
+
+      <!-- Tactical Controls & Status Strip (CLEANLY PLACED BELOW THE MAP) -->
+      <div id="adminMapBelowToolbar" class="bg-[#050b17] border-t border-slate-800/90 px-3 py-2 flex flex-wrap items-center justify-between gap-2.5 text-xs shrink-0 z-20">
+        
+        <!-- Left: Compact Tactical Map Legend Strip -->
+        <div class="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-[11px] text-slate-300 flex-wrap">
+          <span class="font-extrabold text-slate-400 text-[10px] uppercase tracking-wider">Legend:</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_4px_#ef4444]"></span> <span class="text-red-400 font-bold">Fire</span></span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-red-600"></span> <span class="text-red-300">Perimeter</span></span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-orange-500"></span> <span class="text-orange-400">Buffer</span></span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-purple-500"></span> <span class="text-purple-300 font-bold">Station</span></span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-sky-500"></span> <span class="text-sky-400 font-bold">Water</span></span>
+          <span class="flex items-center gap-1"><span>🚑</span> <span class="text-cyan-300 font-bold">Team</span></span>
+        </div>
+
+        <!-- Center: Tile Layer Switchers & Map Layer Options Dropdown -->
+        <div class="flex items-center gap-2">
+          <!-- Tile Layer Switchers -->
+          <div class="flex items-center bg-[#070e1c] border border-slate-700/80 rounded-lg p-0.5 text-[10px] font-bold">
+            <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="satellite">🛰️ Satellite</button>
+            <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="terrain">⛰️ Terrain</button>
+            <button class="btn-map-toggle px-2 py-0.5 rounded text-orange-400 font-black bg-orange-950/40" data-layer="hybrid">🗺️ Hybrid</button>
           </div>
-          <div class="flex items-center justify-between text-slate-300 font-mono text-[10px]">
-            <span>ACTIVE ALERTS:</span>
-            <span id="mapCardAlertsCount" class="font-black text-red-400">3</span>
-          </div>
-          <div class="flex items-center justify-between text-slate-300 font-mono text-[10px]">
-            <span>NEAREST TEAM DISTANCE:</span>
-            <span id="mapCardNearestDist" class="font-black text-amber-400">14 KM</span>
+
+          <!-- Feature Map Layer Controls Dropdown -->
+          <div class="relative">
+            <button id="btnToggleLayersMenu" type="button" onclick="const d = document.getElementById('dropdownMapLayers'); if (d) d.classList.toggle('hidden');" class="px-2 py-1 rounded-lg bg-[#070e1c] border border-slate-700 hover:border-orange-500 text-[11px] font-bold text-slate-200 transition flex items-center gap-1 shadow-md cursor-pointer">
+              <span>🗂️</span> <span>Layers</span> <span class="text-[9px]">▾</span>
+            </button>
+            <div id="dropdownMapLayers" class="hidden absolute bottom-full left-0 mb-1 w-56 p-2 rounded-xl bg-[#070e1c]/95 backdrop-blur-md border border-slate-700 shadow-2xl z-40 space-y-1 text-xs">
+              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1 pb-1 border-b border-slate-800">Map Layer Visibility</div>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerActiveFires" checked class="rounded accent-orange-500">
+                <span>🔴 Active Fires</span>
+              </label>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerFirePerimeter" checked class="rounded accent-orange-500">
+                <span>🟥 Fire Perimeter</span>
+              </label>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerFireRiskZone" checked class="rounded accent-orange-500">
+                <span>🟠 Fire Risk Zone</span>
+              </label>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerSpreadSimulation" checked class="rounded accent-orange-500">
+                <span>🟡 Fire Spread Simulation</span>
+              </label>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerFireStations" checked class="rounded accent-purple-500">
+                <span>🟣 Fire Stations</span>
+              </label>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerResponseTeams" checked class="rounded accent-cyan-500">
+                <span>🚑 Response Teams</span>
+              </label>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerWaterBodies" checked class="rounded accent-sky-500">
+                <span>🔵 Water Bodies</span>
+              </label>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerVulnerableLocations" checked class="rounded accent-amber-500">
+                <span>🟧 Vulnerable Locations</span>
+              </label>
+              <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+                <input type="checkbox" id="chkLayerPopulationExposure" checked class="rounded accent-rose-500">
+                <span>👥 Population Exposure</span>
+              </label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Legend Overlay (Bottom Left) -->
-      <div class="absolute bottom-3 left-3 z-30 p-2.5 rounded-xl bg-[#070e1c]/95 backdrop-blur-md border border-slate-800 text-[10px] space-y-1 shadow-2xl pointer-events-auto max-w-[210px]">
-        <div class="font-extrabold text-slate-300 uppercase tracking-wider mb-1 border-b border-slate-800 pb-0.5">MAP LEGEND</div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444]"></span> <span class="text-red-400 font-bold">🔴 ACTIVE FIRE</span></div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-red-600"></span> <span class="text-red-300 font-bold">🟥 FIRE PERIMETER</span></div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-orange-500"></span> <span class="text-orange-400 font-bold">🟠 HIGH FIRE RISK</span></div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-yellow-400"></span> <span class="text-yellow-400 font-bold">🟡 PROJECTED SPREAD</span></div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-purple-500"></span> <span class="text-purple-400 font-bold">🟣 FIRE STATION</span></div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-sky-500"></span> <span class="text-sky-400 font-bold">🔵 WATER BODY</span></div>
-        <div class="flex items-center gap-1.5"><span class="text-[11px]">🟦</span> <span class="text-sky-300 font-bold">HOSPITAL</span></div>
-        <div class="flex items-center gap-1.5"><span class="text-[11px]">🟨</span> <span class="text-amber-300 font-bold">SCHOOL</span></div>
-        <div class="flex items-center gap-1.5"><span class="text-[11px]">🟧</span> <span class="text-orange-400 font-bold">VILLAGE</span></div>
-      </div>
+        <!-- Right: Station Readiness Telemetry (Cleanly preserved below map) -->
+        <div id="adminMapStationStatusCard" class="flex items-center gap-2.5 text-[11px] bg-[#070e1c] px-3 py-1 rounded-lg border border-slate-700/80 shadow-md">
+          <span class="flex items-center gap-1.5 font-bold text-slate-300 font-mono">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>STATIONS:</span>
+            <span id="mapCardAlertsCount" class="font-black text-red-400">7</span>
+          </span>
+          <span class="text-slate-600">|</span>
+          <span class="font-bold text-slate-300 font-mono">
+            <span>NEAREST UNIT:</span>
+            <span id="mapCardNearestDist" class="font-black text-amber-400">1.1 KM</span>
+          </span>
+        </div>
 
-      <!-- Live Map DOM Container -->
-      <div id="adminLiveMap" class="flex-1 w-full h-full min-h-[350px] md:min-h-0 relative z-0 isolate bg-[#030712] overflow-hidden" style="isolation: isolate;"></div>
+      </div>
     </section>
 
     <!-- RIGHT: Selected Incident Details (Slimmer Col 3) -->
