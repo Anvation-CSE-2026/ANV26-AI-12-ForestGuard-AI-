@@ -91,7 +91,7 @@ class GeoSpatialService {
     return ranked[0] || {
       id: 'STA-KA-01',
       name: 'Bandipur Range Forest Office & Fire Command (HQ)',
-      coordinates: { lat: 11.6675, lng: 76.6322 },
+      coordinates: { lat: 11.6617, lng: 76.6272 },
       distanceKm: 0.9,
       etaMinutes: 4,
       phone: '+91-8229-236021'

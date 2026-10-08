@@ -17,7 +17,27 @@ let cameraStream = null;
 let socket = null;
 let myReports = [];
 let pendingSubmissionData = null;
-let allResponseStations = [];
+let allResponseStations = [
+  { id: 'STA-BLR-01', name: 'Anjanapura Fire & Emergency Station (Karnataka Fire Services)', coordinates: { lat: 12.8575, lng: 77.5623 }, etaMinutesBase: 5 },
+  { id: 'STA-BLR-02', name: 'DSATM Campus & Kaggalipura Rapid Fire Post', coordinates: { lat: 12.8258, lng: 77.5158 }, etaMinutesBase: 6 },
+  { id: 'STA-BLR-03', name: 'Banashankari Fire Station (Karnataka State Fire Services)', coordinates: { lat: 12.9159, lng: 77.5546 }, etaMinutesBase: 12 },
+  { id: 'STA-KA-01', name: 'Bandipur Range Forest Office & Fire Command (HQ)', coordinates: { lat: 11.6617, lng: 76.6272 }, etaMinutesBase: 4 },
+  { id: 'STA-KA-02', name: 'Gundlupet Fire Station (Karnataka State Fire Services)', coordinates: { lat: 11.8055, lng: 76.6888 }, etaMinutesBase: 20 },
+  { id: 'STA-KA-03', name: 'Saraswathipuram Fire Station (Mysuru Fire Services)', coordinates: { lat: 12.3020, lng: 76.6290 }, etaMinutesBase: 22 },
+  { id: 'STA-UK-01', name: 'Ramnagar Fire Station & Corbett STPF Headquarters', coordinates: { lat: 29.3950, lng: 79.1270 }, etaMinutesBase: 15 },
+  { id: 'STA-MP-01', name: 'Kanha Khatia Fire Response Post & Range Office', coordinates: { lat: 22.3510, lng: 80.5920 }, etaMinutesBase: 18 }
+];
+
+let allWaterBodies = [
+  { id: 'WB-BLR-01', name: 'Vajarahalli Lake & Emergency Drafting Reservoir (KSSEM)', coordinates: { lat: 12.8715, lng: 77.5430 }, capacity: 'Continuous 35,000 Litres Aerial Drafting' },
+  { id: 'WB-BLR-02', name: 'Kaggalipura Lake Emergency Reservoir (DSATM)', coordinates: { lat: 12.8025, lng: 77.5050 }, capacity: '50,000 Litres Rapid Pump Draft' },
+  { id: 'WB-BLR-03', name: 'Bannerghatta Forest Suvarnamukhi Reservoir', coordinates: { lat: 12.7950, lng: 77.5680 }, capacity: 'High Volume Aerial Drafting' },
+  { id: 'WB-06', name: 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)', coordinates: { lat: 11.6672, lng: 76.6215 }, capacity: 'Continuous 25,000 LPM Aerial Drafting' },
+  { id: 'WB-01', name: 'Kabini Reservoir & Backwaters', coordinates: { lat: 11.9733, lng: 76.3533 }, capacity: 'High Volume Regional Aerial Drafting' },
+  { id: 'WB-KA-05', name: 'Kukkarahalli Lake Drafting Reservoir (Mysuru)', coordinates: { lat: 12.3085, lng: 76.6345 }, capacity: 'Continuous 40,000 LPM Drafting Access' },
+  { id: 'WB-02', name: 'Ramganga Dam & River Reservoir', coordinates: { lat: 29.5850, lng: 78.7520 }, capacity: 'Continuous 45,000 LPM Drafting' },
+  { id: 'WB-04', name: 'Banjar River Water Extraction Point', coordinates: { lat: 22.3120, lng: 80.5980 }, capacity: '12,000 LPM High Pressure Pump Draft' }
+];
 
 document.addEventListener('DOMContentLoaded', async () => {
   initTabs();
@@ -27,15 +47,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   initSocket();
   loadEmergencyContacts();
   loadMyReports();
-  loadStations();
+  loadStationsAndWater();
 });
 
-async function loadStations() {
+async function loadStationsAndWater() {
   try {
-    const res = await fetch('/api/response-stations');
-    const data = await res.json();
-    if (data.success && data.responseStations) {
-      allResponseStations = data.responseStations;
+    const [resS, resW] = await Promise.all([
+      fetch('/api/response-stations').then(r => r.json()).catch(() => null),
+      fetch('/api/water-bodies').then(r => r.json()).catch(() => null)
+    ]);
+    if (resS && resS.success && resS.responseStations && resS.responseStations.length > 0) {
+      allResponseStations = resS.responseStations;
+    }
+    if (resW && resW.success && resW.waterBodies && resW.waterBodies.length > 0) {
+      allWaterBodies = resW.waterBodies;
     }
   } catch (e) {}
 }
@@ -304,28 +329,28 @@ function renderUserMapOverlays(lat, lng) {
     userAuxLayers.circles.push(c);
   });
 
-  // 2. Nearest Fire Station within few km
+  // 2. Nearest Fire Station within given district, city or village
   let stLat, stLng, stName, distKm;
   if (Math.abs(lat - 12.8550) < 0.04 && Math.abs(lng - 77.5420) < 0.04) {
-    // KSSEM / Anjanapura local station building
+    // KSSEM / Kanakapura Rd -> Anjanapura Fire Station actual building
     stLat = 12.8575;
     stLng = 77.5623;
     stName = 'Anjanapura Fire & Emergency Station (KSSEM)';
     distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
   } else if (Math.abs(lat - 12.8258) < 0.04 && Math.abs(lng - 77.5158) < 0.04) {
-    // DSATM / Anjanapura local station building
-    stLat = 12.8575;
-    stLng = 77.5623;
-    stName = 'Anjanapura Fire & Emergency Station (DSATM)';
+    // DSATM / Kanakapura Rd -> DSATM Campus & Rapid Fire Post building
+    stLat = 12.8258;
+    stLng = 77.5158;
+    stName = 'DSATM Campus & Rapid Fire Post (DSATM)';
     distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
   } else if (Math.abs(lat - 11.6643) < 0.2 && Math.abs(lng - 76.6250) < 0.2) {
-    // Bandipur Range Forest Office & Fire Command HQ building (physical building on NH-766)
-    stLat = 11.6675;
-    stLng = 76.6322;
+    // Bandipur -> Bandipur Range Forest Office & Fire Command HQ campus building on NH-766
+    stLat = 11.6617;
+    stLng = 76.6272;
     stName = 'Bandipur Range Forest Office & Fire Command (HQ)';
     distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
   } else {
-    // Dynamically find closest real station from allResponseStations (never synthetic offsets)
+    // Dynamically find closest real physical station building from allResponseStations
     let best = null;
     let minD = Infinity;
     for (const s of allResponseStations) {
@@ -340,14 +365,14 @@ function renderUserMapOverlays(lat, lng) {
       stName = best.name.split('(')[0].trim();
       distKm = minD.toFixed(1);
     } else {
-      stLat = 11.6675;
-      stLng = 76.6322;
+      stLat = 11.6617;
+      stLng = 76.6272;
       stName = 'Bandipur Range Forest Office & Fire Command (HQ)';
       distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
     }
   }
 
-  // Station Badge Marker
+  // Station Badge Marker placed at actual physical building
   const stnIcon = L.divIcon({
     className: 'custom-map-marker marker-station-badge',
     html: `<div style="display:inline-flex; align-items:center; gap:5px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:9px; padding:3px 8px; box-shadow:0 0 14px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:10px; font-weight:800; color:#fff;">${stName} - Team Ready</span><span style="font-size:12px;">🛡️</span></div>`,
@@ -355,35 +380,38 @@ function renderUserMapOverlays(lat, lng) {
     iconAnchor: [0, 0]
   });
   userAuxLayers.markerStation = L.marker([stLat, stLng], { icon: stnIcon }).addTo(userMap)
-    .bindPopup(`<b>${stName}</b><br><span style="color:#60a5fa;">Nearest Fire Response Unit - Team Ready (🛡️)</span><br>Distance: <b>${distKm} km</b>`);
+    .bindPopup(`<b>${stName}</b><br><span style="color:#60a5fa;">Nearest Fire Response Unit - Team Ready (🛡️)</span><br>Physical Building Coordinates: <b>${stLat.toFixed(4)}, ${stLng.toFixed(4)}</b><br>Distance: <b>${distKm} km</b>`);
 
-  // Neat Dotted Route: Station to Fire (dashArray '8, 8')
-  userAuxLayers.routeStation = L.polyline([[stLat, stLng], [(stLat + lat) / 2 + 0.001, (stLng + lng) / 2], [lat, lng]], {
+  // Crisp Dotted Route: Points strictly towards the actual building of fire station
+  userAuxLayers.routeStation = L.polyline([[stLat, stLng], [lat, lng]], {
     color: '#f97316',
     weight: 4,
     opacity: 0.95,
     dashArray: '8, 8'
   }).addTo(userMap);
 
-  // 3. Nearest Water Body within few km
-  let wbLat, wbLng, wbName, wbDist;
+  // 3. Nearest Water Body (Lake / Reservoir / Drafting Pier) within district
+  let wbLat, wbLng, wbName, wbDist, wbCap;
   if (Math.abs(lat - 12.8550) < 0.08 && Math.abs(lng - 77.5420) < 0.08) {
-    wbLat = 12.8710;
-    wbLng = 77.5435;
+    wbLat = 12.8715;
+    wbLng = 77.5430;
     wbName = 'Vajarahalli Lake & Emergency Drafting Reservoir (KSSEM)';
+    wbCap = 'Continuous 35,000 Litres Aerial Drafting';
     wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
   } else if (Math.abs(lat - 12.8258) < 0.08 && Math.abs(lng - 77.5158) < 0.08) {
-    wbLat = 12.8120;
-    wbLng = 77.5020;
+    wbLat = 12.8025;
+    wbLng = 77.5050;
     wbName = 'Kaggalipura Lake Emergency Reservoir (DSATM)';
+    wbCap = '50,000 Litres Rapid Pump Draft';
     wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
   } else if (Math.abs(lat - 11.6643) < 0.2 && Math.abs(lng - 76.6250) < 0.2) {
     wbLat = 11.6672;
     wbLng = 76.6215;
     wbName = 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)';
+    wbCap = 'Continuous 25,000 LPM Aerial Drafting';
     wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
   } else {
-    // Dynamically find closest real water body from allWaterBodies (never synthetic offsets)
+    // Dynamically find closest real lake/reservoir from allWaterBodies
     let bestWb = null;
     let minWbD = Infinity;
     for (const w of allWaterBodies) {
@@ -396,25 +424,33 @@ function renderUserMapOverlays(lat, lng) {
       wbLat = bestWb.coordinates.lat;
       wbLng = bestWb.coordinates.lng;
       wbName = bestWb.name;
+      wbCap = bestWb.capacity || 'Active Drafting Access';
       wbDist = minWbD.toFixed(1);
     } else {
       wbLat = 11.6672;
       wbLng = 76.6215;
       wbName = 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)';
+      wbCap = 'Continuous 25,000 LPM Aerial Drafting';
       wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
     }
   }
 
-  // Water Marker
-  userAuxLayers.markerWater = L.marker([wbLat, wbLng]).addTo(userMap)
-    .bindPopup(`💧 <b>${wbName}</b><br><span style="color:#38bdf8;">Nearest Water Drafting Terminal</span><br>Distance: <b>${wbDist} km</b>`);
+  // Water Badge Marker directly at the Lake / Reservoir / Water Source
+  const waterIcon = L.divIcon({
+    className: 'custom-map-marker marker-water-badge',
+    html: `<div style="display:inline-flex; align-items:center; gap:5px; background:rgba(7,20,40,0.95); border:2px solid #0284c7; border-radius:9px; padding:3px 8px; box-shadow:0 0 14px rgba(2,132,199,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:12px;">💧</span><span style="font-size:10px; font-weight:800; color:#38bdf8;">${wbName.split('(')[0].trim()}</span></div>`,
+    iconSize: [0, 0],
+    iconAnchor: [0, 0]
+  });
+  userAuxLayers.markerWater = L.marker([wbLat, wbLng], { icon: waterIcon }).addTo(userMap)
+    .bindPopup(`💧 <b>${wbName}</b><br><span style="color:#38bdf8;">Water Drafting Source / Lake Reservoir (BLUE)</span><br>${wbCap}<br>Coordinates: <b>${wbLat.toFixed(4)}, ${wbLng.toFixed(4)}</b><br>Distance: <b>${wbDist} km</b>`);
 
-  // Neat Dotted Route: Water Body to Fire (dashArray '6, 6')
+  // Blue Dotted Line linking Water Body directly to Fire Ground Zero
   userAuxLayers.routeWater = L.polyline([[wbLat, wbLng], [lat, lng]], {
     color: '#0284c7',
     weight: 3.5,
-    opacity: 0.9,
-    dashArray: '6, 6'
+    opacity: 0.95,
+    dashArray: '6, 8'
   }).addTo(userMap);
 
   // Store sector bounds encompassing fire ground zero, fire station, and waterbody
@@ -2012,8 +2048,8 @@ function initFullMap() {
   });
 
   // 3. Response Station Graphical Badge: Bandipur Station - Team Ready (🛡️)
-  const stnLat = 11.6675;
-  const stnLng = 76.6322;
+  const stnLat = 11.6617;
+  const stnLng = 76.6272;
   const stnIcon = L.divIcon({
     className: 'custom-map-marker marker-station-badge',
     html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">Bandipur Station - Team Ready</span><span style="font-size:14px; filter:drop-shadow(0 0 4px #3b82f6);">🛡️</span></div>`,
@@ -2023,12 +2059,10 @@ function initFullMap() {
   L.marker([stnLat, stnLng], { icon: stnIcon }).addTo(fullMap)
     .bindPopup(`<b>Bandipur Station - Team Ready</b><br><span style="color:#60a5fa;">Bandipur Range Forest Office & Fire Command (HQ)</span><br>ETA: <b>4 min</b> • Dist: <b>0.9 km</b>`);
 
-  // 4. Dotted Route Line connecting Station to Fire (dashArray '8, 8')
+  // 4. Dotted Route Line connecting Station Building to Fire (dashArray '8, 8')
   const routeWaypoints = [
-    [11.6675, 76.6322],
-    [11.66638, 76.6319],
-    [11.6655, 76.6295],
-    [11.66415, 76.6283],
+    [11.6617, 76.6272],
+    [11.6630, 76.6265],
     [11.6643, 76.6250]
   ];
   L.polyline(routeWaypoints, {
@@ -2038,14 +2072,20 @@ function initFullMap() {
     dashArray: '8, 8'
   }).addTo(fullMap);
 
-  // 5. Water drafting line to Tavarekatte Lake Reservoir
+  // 5. Water drafting line to Tavarekatte Lake Reservoir (Blue Dotted Line)
   const waterCoords = [11.6672, 76.6215];
-  L.marker(waterCoords).addTo(fullMap).bindPopup(`💧 <b>Tavarekatte Lake Reservoir</b><br>Bandipur Forest Emergency Water Drafting Source`);
-  L.polyline([[bandipurLat, bandipurLng], waterCoords], {
+  const waterIcon = L.divIcon({
+    className: 'custom-map-marker marker-water-badge',
+    html: `<div style="display:inline-flex; align-items:center; gap:5px; background:rgba(7,20,40,0.95); border:2px solid #0284c7; border-radius:9px; padding:3px 8px; box-shadow:0 0 14px rgba(2,132,199,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:12px;">💧</span><span style="font-size:10px; font-weight:800; color:#38bdf8;">Tavarekatte Lake</span></div>`,
+    iconSize: [0, 0],
+    iconAnchor: [0, 0]
+  });
+  L.marker(waterCoords, { icon: waterIcon }).addTo(fullMap).bindPopup(`💧 <b>Tavarekatte Lake Reservoir</b><br>Bandipur Forest Emergency Water Drafting Source (BLUE)`);
+  L.polyline([waterCoords, [bandipurLat, bandipurLng]], {
     color: '#0284c7',
     weight: 3.5,
-    opacity: 0.9,
-    dashArray: '6, 6'
+    opacity: 0.95,
+    dashArray: '6, 8'
   }).addTo(fullMap);
 
   // Add other water bodies & stations to full map

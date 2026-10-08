@@ -184,7 +184,7 @@
       "name": "Vajarahalli Lake & Emergency Drafting Reservoir (KSSEM)",
       "forestId": "FOR-KA-03",
       "state": "Karnataka",
-      "coordinates": { "lat": 12.8710, "lng": 77.5435 },
+      "coordinates": { "lat": 12.8715, "lng": 77.5430 },
       "type": "Freshwater Lake & Fire Hydrant Terminal",
       "capacity": "Continuous 35,000 Litres Aerial Drafting",
       "waterSourceType": "LAKE"
@@ -194,7 +194,7 @@
       "name": "Kaggalipura Lake Emergency Reservoir (DSATM)",
       "forestId": "FOR-KA-03",
       "state": "Karnataka",
-      "coordinates": { "lat": 12.8120, "lng": 77.5020 },
+      "coordinates": { "lat": 12.8025, "lng": 77.5050 },
       "type": "Emergency Water Reservoir",
       "capacity": "50,000 Litres Rapid Pump Draft",
       "waterSourceType": "RESERVOIR"
@@ -218,6 +218,36 @@
       "type": "Major River Dam Reservoir",
       "capacity": "High Volume Regional Aerial Drafting",
       "waterSourceType": "RESERVOIR"
+    },
+    {
+      "id": "WB-KA-05",
+      "name": "Kukkarahalli Lake Drafting Reservoir (Mysuru)",
+      "forestId": "FOR-KA-01",
+      "state": "Karnataka",
+      "coordinates": { "lat": 12.3085, "lng": 76.6345 },
+      "type": "Protected Freshwater Lake",
+      "capacity": "Continuous 40,000 LPM Drafting Access",
+      "waterSourceType": "LAKE"
+    },
+    {
+      "id": "WB-KL-02",
+      "name": "Karapuzha Dam & Reservoir (Wayanad)",
+      "forestId": "FOR-KL-01",
+      "state": "Kerala",
+      "coordinates": { "lat": 11.6020, "lng": 76.1750 },
+      "type": "Major Irrigation & Forest Dam Reservoir",
+      "capacity": "Unlimited Helicopter Bucket Drafting",
+      "waterSourceType": "RESERVOIR"
+    },
+    {
+      "id": "WB-TN-01",
+      "name": "Ooty Lake Emergency Reservoir (Nilgiris)",
+      "forestId": "FOR-KA-01",
+      "state": "Tamil Nadu",
+      "coordinates": { "lat": 11.4070, "lng": 76.6890 },
+      "type": "High Altitude Freshwater Lake",
+      "capacity": "35,000 LPM Aerial Sump Drafting",
+      "waterSourceType": "LAKE"
     }
   ],
   "responseStations": [
@@ -240,7 +270,7 @@
       "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
       "forestId": "FOR-KA-03",
       "state": "Karnataka",
-      "coordinates": { "lat": 12.8290, "lng": 77.5180 },
+      "coordinates": { "lat": 12.8258, "lng": 77.5158 },
       "phone": "+91-80-22971565",
       "etaMinutesBase": 6,
       "unitType": "Campus & Reserve Forest Unit",
@@ -268,7 +298,7 @@
       "name": "Bandipur Range Forest Office & Fire Command (HQ)",
       "forestId": "FOR-KA-01",
       "state": "Karnataka",
-      "coordinates": { "lat": 11.6675, "lng": 76.6322 },
+      "coordinates": { "lat": 11.6617, "lng": 76.6272 },
       "phone": "+91-8229-236021",
       "etaMinutesBase": 5,
       "unitType": "Bandipur Tiger Reserve Fire Squad Alpha",
@@ -288,6 +318,48 @@
       "unitType": "Municipal Heavy Tender Fleet",
       "crewCount": 22,
       "waterTenders": 5,
+      "aerialDrones": 1,
+      "status": "AVAILABLE"
+    },
+    {
+      "id": "STA-KA-03",
+      "name": "Saraswathipuram Fire Station (Mysuru Fire Services)",
+      "forestId": "FOR-KA-01",
+      "state": "Karnataka",
+      "coordinates": { "lat": 12.3020, "lng": 76.6290 },
+      "phone": "+91-821-2544444",
+      "etaMinutesBase": 25,
+      "unitType": "Mysuru District Fire Fleet",
+      "crewCount": 18,
+      "waterTenders": 4,
+      "aerialDrones": 2,
+      "status": "AVAILABLE"
+    },
+    {
+      "id": "STA-KL-01",
+      "name": "Muthanga Wildlife Range & Fire Response Post",
+      "forestId": "FOR-KL-01",
+      "state": "Kerala",
+      "coordinates": { "lat": 11.6705, "lng": 76.3680 },
+      "phone": "+91-4936-271010",
+      "etaMinutesBase": 18,
+      "unitType": "Wayanad Forest Fire Strike Unit",
+      "crewCount": 14,
+      "waterTenders": 2,
+      "aerialDrones": 1,
+      "status": "AVAILABLE"
+    },
+    {
+      "id": "STA-TN-01",
+      "name": "Ooty Central Fire & Rescue Station (Tamil Nadu Fire Services)",
+      "forestId": "FOR-KA-01",
+      "state": "Tamil Nadu",
+      "coordinates": { "lat": 11.4120, "lng": 76.7110 },
+      "phone": "+91-423-2442222",
+      "etaMinutesBase": 30,
+      "unitType": "Nilgiris Mountain Fire Response",
+      "crewCount": 20,
+      "waterTenders": 4,
       "aerialDrones": 1,
       "status": "AVAILABLE"
     },

@@ -15,7 +15,7 @@ let currentWaypointIndex = 0;
 let socket = null;
 
 const ACTIVE_TEAM_ID = 'TEAM-04';
-const STATION_COORDS = [11.6675, 76.6322]; // Bandipur Range Forest Office & Fire Command HQ building
+const STATION_COORDS = [11.6617, 76.6272]; // Bandipur Range Forest Office & Fire Command HQ building on NH-766
 
 document.addEventListener('DOMContentLoaded', async () => {
   initMap();
@@ -101,6 +101,15 @@ function drawFireAndRoute(incident) {
   if (fireMarker) stationMap.removeLayer(fireMarker);
   if (routePolyline) stationMap.removeLayer(routePolyline);
 
+  // Station Coordinates
+  const stCoords = incident.assignedStation?.coordinates
+    ? [incident.assignedStation.coordinates.lat, incident.assignedStation.coordinates.lng]
+    : (incident.nearestStation?.coordinates ? [incident.nearestStation.coordinates.lat, incident.nearestStation.coordinates.lng] : STATION_COORDS);
+
+  if (stationMarker) {
+    stationMarker.setLatLng(stCoords);
+  }
+
   // Fire Marker
   const fireIcon = L.divIcon({
     className: 'custom-fire-marker',
@@ -109,15 +118,13 @@ function drawFireAndRoute(incident) {
   });
   fireMarker = L.marker(firePos, { icon: fireIcon }).addTo(stationMap);
 
-  // Route Polyline
-  const waypoints = incident.routeWaypoints && incident.routeWaypoints.length > 0
-    ? incident.routeWaypoints
-    : [STATION_COORDS, [11.6660, 76.6300], [11.6650, 76.6270], firePos];
+  // Route Polyline strictly from Station Building to Fire Ground Zero
+  const waypoints = [stCoords, firePos];
 
   routePolyline = L.polyline(waypoints, {
     color: '#f97316',
     weight: 5,
-    opacity: 0.9,
+    opacity: 0.95,
     dashArray: '8, 8'
   }).addTo(stationMap);
 

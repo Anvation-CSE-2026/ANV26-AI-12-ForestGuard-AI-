@@ -449,14 +449,15 @@ class ForestGuardMapEngine {
       this.markers.water.push(marker);
       return marker;
     } else {
+      const wName = water.name ? water.name.split('(')[0].trim() : 'Water Source';
       const icon = L.divIcon({
-        className: 'custom-map-marker marker-blue',
-        html: `<div class="water-badge-marker" style="background:#0284c7; border:2px solid #38bdf8; box-shadow:0 0 14px #0284c7;">💧</div>`,
-        iconSize: [34, 34],
-        iconAnchor: [17, 17]
+        className: 'custom-map-marker marker-water-badge',
+        html: `<div style="display:inline-flex; align-items:center; gap:5px; background:rgba(7,20,40,0.95); border:2px solid #0284c7; border-radius:9px; padding:3px 8px; box-shadow:0 0 14px rgba(2,132,199,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:12px;">💧</span><span style="font-size:10px; font-weight:800; color:#38bdf8;">${wName}</span></div>`,
+        iconSize: [0, 0],
+        iconAnchor: [0, 0]
       });
       const marker = L.marker([lat, lng], { icon }).addTo(this.map);
-      marker.bindPopup(`<b>${water.name}</b><br><span style="color:#38bdf8;">Water Body / Drafting Source (BLUE)</span><br>${water.capacity || ''}`);
+      marker.bindPopup(`<b>${water.name}</b><br><span style="color:#38bdf8;">Water Body / Drafting Source (BLUE)</span><br>${water.capacity || ''}<br>Coordinates: <b>${lat.toFixed(4)}, ${lng.toFixed(4)}</b>`);
       marker.on('click', () => onClickCallback && onClickCallback(water));
       this.markers.water.push(marker);
       return marker;
