@@ -391,9 +391,14 @@
                 </h2>
                 <div class="text-[10px] text-slate-400">Tap anywhere on map or drag pin to position ground zero.</div>
               </div>
-              <span class="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
-                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> LIVE GPS PINNED
-              </span>
+              <div class="flex items-center gap-2">
+                <button type="button" id="btnUserRestoreDefaultZoom" title="Restore Default Zoom to show fire ground zero, fire station & waterbodies together" class="px-2.5 py-1 text-[10px] font-black uppercase tracking-wider bg-orange-600/90 hover:bg-orange-500 text-white rounded-lg border border-orange-400/60 transition shadow flex items-center gap-1 active:scale-95 cursor-pointer">
+                  <span>🎯</span> <span>Default Zoom</span>
+                </button>
+                <span class="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> LIVE GPS PINNED
+                </span>
+              </div>
             </div>
 
             <!-- Map Container -->

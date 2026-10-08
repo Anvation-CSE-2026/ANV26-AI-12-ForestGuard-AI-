@@ -127,17 +127,68 @@
     <!-- CENTER: Large Live Google Map (Expanded Col 6/7) -->
     <section class="md:col-span-6 xl:col-span-7 relative bg-[#040814] flex flex-col h-full min-h-[350px] md:min-h-0 overflow-hidden">
       <!-- Floating Map Header Overlay -->
-      <div class="absolute top-3 left-3 z-30 flex flex-wrap items-center gap-2">
+      <div class="absolute top-3 left-3 z-30 flex flex-wrap items-center gap-2 pointer-events-auto">
         <div class="px-3 py-1 rounded-lg bg-[#070e1c]/90 backdrop-blur-md border border-slate-700/80 text-xs font-bold text-white shadow-lg flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
           <span>LIVE GEOSPATIAL MAP (INDIA)</span>
         </div>
+
+        <!-- Small Button to Restore Default Zoom (Fire + Connected Stations) -->
+        <button id="btnAdminRestoreDefaultZoom" type="button" class="px-2.5 py-1 rounded-lg bg-[#070e1c]/95 hover:bg-orange-600 border border-orange-500/80 text-orange-300 hover:text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md" title="Restore default zoom connecting fire area and nearby fire stations">
+          <span>🎯</span> <span class="hidden sm:inline">Default Zoom</span>
+        </button>
         
-        <!-- Layer Toggles -->
+        <!-- Tile Layer Switchers -->
         <div class="hidden sm:flex items-center bg-[#070e1c]/90 backdrop-blur-md border border-slate-700/80 rounded-lg p-0.5 text-[11px] font-bold">
           <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="satellite">🛰️ Satellite</button>
           <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="terrain">⛰️ Terrain</button>
           <button class="btn-map-toggle px-2 py-0.5 rounded text-orange-400 font-black" data-layer="hybrid">🗺️ Hybrid</button>
+        </div>
+
+        <!-- Feature Map Layer Controls Dropdown (Section Integration) -->
+        <div class="relative">
+          <button id="btnToggleLayersMenu" class="px-2.5 py-1 rounded-lg bg-[#070e1c]/95 border border-slate-700 hover:border-orange-500 text-xs font-bold text-slate-200 transition flex items-center gap-1.5 shadow-md cursor-pointer">
+            <span>🗂️</span> <span>Map Layers</span> <span class="text-[10px]">▾</span>
+          </button>
+          <div id="dropdownMapLayers" class="hidden absolute top-full left-0 mt-1 w-56 p-2 rounded-xl bg-[#070e1c]/95 backdrop-blur-md border border-slate-700 shadow-2xl z-40 space-y-1 text-xs">
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1 pb-1 border-b border-slate-800">Map Layer Visibility</div>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerActiveFires" checked class="rounded accent-orange-500">
+              <span>🔴 Active Fires</span>
+            </label>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerFirePerimeter" checked class="rounded accent-orange-500">
+              <span>🟥 Fire Perimeter</span>
+            </label>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerFireRiskZone" checked class="rounded accent-orange-500">
+              <span>🟠 Fire Risk Zone</span>
+            </label>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerSpreadSimulation" checked class="rounded accent-orange-500">
+              <span>🟡 Fire Spread Simulation</span>
+            </label>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerFireStations" checked class="rounded accent-purple-500">
+              <span>🟣 Fire Stations</span>
+            </label>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerResponseTeams" checked class="rounded accent-cyan-500">
+              <span>🚑 Response Teams</span>
+            </label>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerWaterBodies" checked class="rounded accent-sky-500">
+              <span>🔵 Water Bodies</span>
+            </label>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerVulnerableLocations" checked class="rounded accent-amber-500">
+              <span>🟧 Vulnerable Locations</span>
+            </label>
+            <label class="flex items-center gap-2 px-1 py-1 rounded hover:bg-slate-800/60 cursor-pointer text-slate-200">
+              <input type="checkbox" id="chkLayerPopulationExposure" checked class="rounded accent-rose-500">
+              <span>👥 Population Exposure</span>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -164,15 +215,17 @@
       </div>
 
       <!-- Legend Overlay (Bottom Left) -->
-      <div class="absolute bottom-3 left-3 z-30 p-2 rounded-lg bg-[#070e1c]/95 backdrop-blur-md border border-slate-800 text-[10px] space-y-1 shadow-xl pointer-events-auto">
-        <div class="font-bold text-slate-400 uppercase tracking-wider mb-1">MARKER LEGEND</div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444]"></span> <span class="text-red-400 font-bold">RED:</span> Critical Active Fire (PULSING)</div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span> <span class="text-orange-400 font-bold">ORANGE:</span> High-Risk Fire</div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> <span class="text-amber-400 font-bold">YELLOW:</span> Verification Required</div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> <span class="text-emerald-400 font-bold">GREEN:</span> Safe / Resolved</div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> <span class="text-sky-400 font-bold">BLUE:</span> Water Body / Drafting</div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> <span class="text-purple-400 font-bold">PURPLE:</span> Forest Response Station</div>
-        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> <span class="text-cyan-400 font-bold">CYAN:</span> IoT Microclimate Sensor</div>
+      <div class="absolute bottom-3 left-3 z-30 p-2.5 rounded-xl bg-[#070e1c]/95 backdrop-blur-md border border-slate-800 text-[10px] space-y-1 shadow-2xl pointer-events-auto max-w-[210px]">
+        <div class="font-extrabold text-slate-300 uppercase tracking-wider mb-1 border-b border-slate-800 pb-0.5">MAP LEGEND</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444]"></span> <span class="text-red-400 font-bold">🔴 ACTIVE FIRE</span></div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-red-600"></span> <span class="text-red-300 font-bold">🟥 FIRE PERIMETER</span></div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-orange-500"></span> <span class="text-orange-400 font-bold">🟠 HIGH FIRE RISK</span></div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-yellow-400"></span> <span class="text-yellow-400 font-bold">🟡 PROJECTED SPREAD</span></div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-purple-500"></span> <span class="text-purple-400 font-bold">🟣 FIRE STATION</span></div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-sky-500"></span> <span class="text-sky-400 font-bold">🔵 WATER BODY</span></div>
+        <div class="flex items-center gap-1.5"><span class="text-[11px]">🟦</span> <span class="text-sky-300 font-bold">HOSPITAL</span></div>
+        <div class="flex items-center gap-1.5"><span class="text-[11px]">🟨</span> <span class="text-amber-300 font-bold">SCHOOL</span></div>
+        <div class="flex items-center gap-1.5"><span class="text-[11px]">🟧</span> <span class="text-orange-400 font-bold">VILLAGE</span></div>
       </div>
 
       <!-- Live Map DOM Container -->
@@ -462,6 +515,395 @@
             <div id="detailWaterDist" class="text-sm font-mono font-black text-sky-300">14.2 km</div>
             <div class="text-[10px] text-sky-400">Draft Viable</div>
           </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- FEATURE 1: FIRE PERIMETER VISUALIZATION -->
+      <!-- ======================================================== -->
+      <div id="cardFirePerimeter" class="p-3.5 rounded-xl bg-[#091122] border border-red-500/40 shadow-xl space-y-2">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex items-center gap-1.5">
+            <span class="text-red-500 text-sm">🟥</span>
+            <span class="text-xs font-black text-white tracking-wide uppercase">FIRE PERIMETER VISUALIZATION</span>
+          </div>
+          <!-- Toggle Perimeter ON / OFF -->
+          <div class="flex items-center gap-1.5">
+            <span class="text-[10px] font-bold text-slate-400">PERIMETER:</span>
+            <button id="btnTogglePerimeter" type="button" class="px-2 py-0.5 rounded text-[10px] font-black bg-red-600 text-white border border-red-400 shadow-sm transition cursor-pointer">
+              ON
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="p-2 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[10px] text-slate-400 block uppercase">Incident ID</span>
+            <span id="perimeterIncidentId" class="font-mono font-bold text-sky-400">FG-2026-1052</span>
+          </div>
+          <div class="p-2 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[10px] text-slate-400 block uppercase">Estimated Fire Area</span>
+            <span id="perimeterAreaText" class="font-mono font-black text-amber-400">2.8 hectares</span>
+          </div>
+        </div>
+
+        <!-- 3-Tier Visual Distinction Legend -->
+        <div class="space-y-1 pt-1 text-[11px] font-mono">
+          <div class="flex items-center justify-between p-1.5 rounded bg-red-950/40 border border-red-600/30">
+            <span class="flex items-center gap-1.5 text-red-300 font-bold">
+              <span class="w-2.5 h-2.5 rounded bg-red-500"></span> <span>RED: Confirmed Fire Area</span>
+            </span>
+            <span id="perimeterConfRadius" class="text-red-300 font-bold">~95m Radius</span>
+          </div>
+          <div class="flex items-center justify-between p-1.5 rounded bg-orange-950/40 border border-orange-600/30">
+            <span class="flex items-center gap-1.5 text-orange-300 font-bold">
+              <span class="w-2.5 h-2.5 rounded bg-orange-500"></span> <span>ORANGE: High-Risk Zone</span>
+            </span>
+            <span id="perimeterRiskRadius" class="text-orange-300 font-bold">~210m Buffer</span>
+          </div>
+          <div class="flex items-center justify-between p-1.5 rounded bg-yellow-950/40 border border-yellow-600/30">
+            <span class="flex items-center gap-1.5 text-yellow-300 font-bold">
+              <span class="w-2.5 h-2.5 rounded bg-yellow-400"></span> <span>YELLOW: Expansion Zone</span>
+            </span>
+            <span id="perimeterExpRadius" class="text-yellow-300 font-bold">~380m Sector</span>
+          </div>
+        </div>
+
+        <div class="text-[9px] font-mono text-slate-400 pt-0.5 text-center italic">
+          ⚠️ ESTIMATED FIRE PERIMETER • Prototype calculation based on incident coordinates, severity & affected-area.
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- FEATURE 3: FOREST FIRE DANGER INDEX (FFDI) -->
+      <!-- ======================================================== -->
+      <div id="cardFireDangerIndex" class="p-3.5 rounded-xl bg-[#091122] border border-orange-500/40 shadow-xl space-y-2.5">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex items-center gap-1.5">
+            <span class="text-orange-400 text-sm">🔥</span>
+            <span class="text-xs font-black text-white tracking-wide uppercase">FOREST FIRE DANGER INDEX</span>
+          </div>
+          <span class="text-[9px] font-mono text-amber-400 font-bold px-2 py-0.5 rounded bg-amber-950/60 border border-amber-600/50">
+            PROTOTYPE FFDI
+          </span>
+        </div>
+
+        <!-- Prominent Danger Rating Score -->
+        <div class="p-3 rounded-xl bg-gradient-to-r from-red-950/80 via-orange-950/80 to-[#040814] border border-red-500/60 flex items-center justify-between shadow-md">
+          <div>
+            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">FIRE DANGER RATING</div>
+            <div class="flex items-baseline gap-1 mt-0.5">
+              <span id="ffdiScoreVal" class="text-2xl font-black text-red-400 font-mono">87</span>
+              <span class="text-xs font-mono text-slate-400 font-bold">/ 100</span>
+            </div>
+            <div class="text-[10px] text-slate-400 font-mono mt-0.5">Scale: 0-25 Low • 26-50 Mod • 51-75 High • 76-100 Crit</div>
+          </div>
+          <div class="text-right">
+            <span id="ffdiSeverityBadge" class="text-xs font-black px-3 py-1 rounded-lg bg-red-600 text-white border border-red-400 shadow-md inline-block uppercase animate-pulse">
+              CRITICAL
+            </span>
+            <div class="text-[9px] font-mono text-red-300 mt-1">Extreme Fuel Ignition Risk</div>
+          </div>
+        </div>
+
+        <!-- Factors Contributing to Score -->
+        <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 text-center text-xs font-mono">
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[9px] text-slate-400 block uppercase">TEMP</span>
+            <span id="ffdiTemp" class="font-bold text-orange-400">42°C</span>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[9px] text-slate-400 block uppercase">HUMIDITY</span>
+            <span id="ffdiHumidity" class="font-bold text-sky-400">19%</span>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[9px] text-slate-400 block uppercase">WIND</span>
+            <span id="ffdiWind" class="font-bold text-amber-400">18 km/h</span>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[9px] text-slate-400 block uppercase">VEGETATION</span>
+            <span id="ffdiVegetation" class="font-bold text-emerald-400">DRY</span>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[9px] text-slate-400 block uppercase">HISTORY</span>
+            <span id="ffdiHistory" class="font-bold text-rose-400">HIGH</span>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[9px] text-slate-400 block uppercase">AI CONF</span>
+            <span id="ffdiAiConf" class="font-bold text-red-400">94%</span>
+          </div>
+        </div>
+
+        <!-- Explain Risk Section -->
+        <div class="p-2.5 rounded-xl bg-[#040814] border border-slate-800 space-y-1.5">
+          <div class="text-[10px] font-bold text-slate-300 uppercase tracking-wider flex items-center justify-between">
+            <span>EXPLAIN RISK (FACTOR CONTRIBUTIONS)</span>
+            <span class="text-amber-400 text-[9px]">DEMO WEATHER DATA</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1.5 text-[10px] font-mono">
+            <div class="flex items-center justify-between p-1 rounded bg-[#070e1c] border border-slate-800">
+              <span class="text-slate-400">Temperature:</span>
+              <span class="font-bold text-red-400">HIGH CONTRIBUTION</span>
+            </div>
+            <div class="flex items-center justify-between p-1 rounded bg-[#070e1c] border border-slate-800">
+              <span class="text-slate-400">Humidity:</span>
+              <span class="font-bold text-red-400">HIGH CONTRIBUTION</span>
+            </div>
+            <div class="flex items-center justify-between p-1 rounded bg-[#070e1c] border border-slate-800">
+              <span class="text-slate-400">Wind:</span>
+              <span class="font-bold text-amber-400">MEDIUM CONTRIBUTION</span>
+            </div>
+            <div class="flex items-center justify-between p-1 rounded bg-[#070e1c] border border-slate-800">
+              <span class="text-slate-400">Dry vegetation:</span>
+              <span class="font-bold text-red-400">HIGH CONTRIBUTION</span>
+            </div>
+            <div class="flex items-center justify-between p-1 rounded bg-[#070e1c] border border-slate-800">
+              <span class="text-slate-400">Recent fire activity:</span>
+              <span class="font-bold text-amber-400">MEDIUM CONTRIBUTION</span>
+            </div>
+            <div class="flex items-center justify-between p-1 rounded bg-[#070e1c] border border-slate-800">
+              <span class="text-slate-400">AI detection:</span>
+              <span class="font-bold text-red-400">HIGH CONTRIBUTION</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-[9px] font-mono text-slate-500 text-center">
+          "Prototype Fire Danger Index" • Not an official government fire-danger rating.
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- FEATURE 2: FIRE SPREAD PREDICTION / SIMULATION -->
+      <!-- ======================================================== -->
+      <div id="cardFireSpreadSim" class="p-3.5 rounded-xl bg-[#091122] border border-amber-500/40 shadow-xl space-y-2.5">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex items-center gap-1.5">
+            <span class="text-amber-400 text-sm">↗️</span>
+            <span class="text-xs font-black text-white tracking-wide uppercase">FIRE SPREAD SIMULATION</span>
+          </div>
+          <span class="text-[9px] font-mono text-orange-400 font-bold px-2 py-0.5 rounded bg-orange-950/60 border border-orange-600/50">
+            PROJECTION ENGINE
+          </span>
+        </div>
+
+        <!-- Telemetry Parameters Strip -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10px] font-mono">
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-slate-400 block text-[9px]">WIND VECTOR</span>
+            <span id="simWindVector" class="font-bold text-amber-400">18 km/h • North-East</span>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-slate-400 block text-[9px]">TEMP / HUMIDITY</span>
+            <span id="simTempHum" class="font-bold text-slate-200">42°C / 19%</span>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-slate-400 block text-[9px]">VEGETATION RISK</span>
+            <span class="font-bold text-red-400">Dry Canopy</span>
+          </div>
+          <div class="p-1.5 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-slate-400 block text-[9px]">TERRAIN RISK</span>
+            <span class="font-bold text-orange-400">Ridge Slope</span>
+          </div>
+        </div>
+
+        <!-- Simulation Time Step Controls -->
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center bg-[#040814] p-1 rounded-xl border border-slate-800 flex-1">
+            <button class="btn-sim-timestep flex-1 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition cursor-pointer" data-step="30">
+              30 MIN
+            </button>
+            <button class="btn-sim-timestep flex-1 py-1 rounded-lg text-xs font-black bg-amber-600 text-white shadow transition cursor-pointer" data-step="60">
+              60 MIN
+            </button>
+            <button class="btn-sim-timestep flex-1 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition cursor-pointer" data-step="90">
+              90 MIN
+            </button>
+          </div>
+          <button id="btnTriggerSpreadSim" type="button" class="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase shadow-md transition flex items-center gap-1.5 cursor-pointer shrink-0">
+            <span>⚡</span> <span>SIMULATE SPREAD</span>
+          </button>
+        </div>
+
+        <!-- Simulated Progression Panel -->
+        <div class="p-2.5 rounded-xl bg-[#040814] border border-slate-800 space-y-1.5 text-xs font-mono">
+          <div class="flex items-center justify-between pb-1 border-b border-slate-800/80">
+            <span class="text-slate-400">Current area:</span>
+            <span id="simCurrentArea" class="font-bold text-red-400">2.8 ha (RED)</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">30-minute estimate:</span>
+            <span id="sim30MinArea" class="font-bold text-orange-400">3.7 ha (ORANGE)</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">60-minute estimate:</span>
+            <span id="sim60MinArea" class="font-bold text-amber-400">5.1 ha (ORANGE/YELLOW)</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">90-minute estimate:</span>
+            <span id="sim90MinArea" class="font-bold text-yellow-400">6.8 ha (YELLOW)</span>
+          </div>
+          <div class="flex items-center justify-between pt-1 border-t border-slate-800/80">
+            <span class="text-slate-400">Projected direction:</span>
+            <span id="simDirection" class="font-black text-amber-300">North-East ↗</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">Spread Propagation Risk:</span>
+            <span class="font-black text-red-400 px-1.5 py-0.2 rounded bg-red-950 border border-red-700/60">HIGH</span>
+          </div>
+        </div>
+
+        <div class="text-[9px] font-mono text-slate-500 text-center italic">
+          "SIMULATION - NOT AN OPERATIONAL FIRE-PREDICTION MODEL" • DEMO WEATHER DATA
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- FEATURE 4: NEARBY POPULATION AND VULNERABLE LOCATIONS -->
+      <!-- ======================================================== -->
+      <div id="cardNearbyPopulation" class="p-3.5 rounded-xl bg-[#091122] border border-rose-500/40 shadow-xl space-y-2.5">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex items-center gap-1.5">
+            <span class="text-rose-400 text-sm">👥</span>
+            <span class="text-xs font-black text-white tracking-wide uppercase">POPULATION & VULNERABLE LOCATIONS</span>
+          </div>
+          <span class="text-[9px] font-mono text-rose-400 font-bold px-2 py-0.5 rounded bg-rose-950/60 border border-rose-600/50">
+            EXPOSURE RADAR
+          </span>
+        </div>
+
+        <!-- Key Headline: Exposure Level & Estimated Population -->
+        <div class="p-2.5 rounded-xl bg-[#040814] border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">POPULATION EXPOSURE</div>
+            <div id="popExposureCount" class="text-lg font-black text-white font-mono mt-0.5">8,420</div>
+            <div class="text-[9px] text-slate-400">Estimated Inhabitants in 10km Sector</div>
+          </div>
+          <div class="text-right">
+            <span id="popExposureBadge" class="text-xs font-black px-3 py-1 rounded-lg bg-orange-600 text-white border border-orange-400 shadow-md inline-block uppercase">
+              HIGH EXPOSURE
+            </span>
+            <div class="text-[9px] font-mono text-orange-300 mt-1">Concentric Threat: 1 / 5 / 10 km</div>
+          </div>
+        </div>
+
+        <!-- Breakdown List: Village, Town, Road, School, Hospital -->
+        <div class="space-y-1.5 text-xs font-mono">
+          <div class="flex items-center justify-between p-1.5 rounded bg-[#070e1c] border border-slate-800">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <span>🟧</span> <span>Village (Mangala Hamlet):</span>
+            </span>
+            <span id="popDistVillage" class="font-bold text-orange-400">4.2 km</span>
+          </div>
+          <div class="flex items-center justify-between p-1.5 rounded bg-[#070e1c] border border-slate-800">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <span>🛣️</span> <span>Major Road (NH-766 Corridor):</span>
+            </span>
+            <span id="popDistRoad" class="font-bold text-slate-200">1.1 km</span>
+          </div>
+          <div class="flex items-center justify-between p-1.5 rounded bg-[#070e1c] border border-slate-800">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <span>🟨</span> <span>School (Govt Primary Hangala):</span>
+            </span>
+            <span id="popDistSchool" class="font-bold text-yellow-400">7.3 km</span>
+          </div>
+          <div class="flex items-center justify-between p-1.5 rounded bg-[#070e1c] border border-slate-800">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <span>🟦</span> <span>Hospital (Gundlupet Health Ctr):</span>
+            </span>
+            <span id="popDistHospital" class="font-bold text-sky-400">18.0 km</span>
+          </div>
+          <div class="flex items-center justify-between p-1.5 rounded bg-[#070e1c] border border-slate-800">
+            <span class="text-slate-300 flex items-center gap-1.5">
+              <span>🏙️</span> <span>Nearest Town (Gundlupet):</span>
+            </span>
+            <span id="popDistTown" class="font-bold text-purple-400">12.4 km</span>
+          </div>
+        </div>
+
+        <div class="text-[9px] font-mono text-slate-500 text-center">
+          Population data: DEMO / API READY • Radius: 1km, 5km, 10km translucent zones
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- FEATURE 5: AUTOMATIC NEAREST RESPONSE-TEAM RECOMMENDATION -->
+      <!-- ======================================================== -->
+      <div id="cardTeamRecommendation" class="p-3.5 rounded-xl bg-gradient-to-br from-[#0c162b] to-[#070e1c] border-2 border-emerald-500/80 shadow-2xl space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div class="flex items-center gap-1.5">
+            <span class="text-emerald-400 text-base animate-pulse">🚒</span>
+            <span class="text-xs font-black text-white tracking-wide uppercase">RECOMMENDED RESPONSE TEAM</span>
+          </div>
+          <span class="text-[9px] font-black px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500 text-emerald-300 uppercase">
+            BEST AVAILABLE TEAM
+          </span>
+        </div>
+
+        <!-- Top Recommendation Card -->
+        <div class="p-3 rounded-xl bg-[#040814] border border-emerald-500/50 space-y-2">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <span id="recTeamName" class="text-base font-black text-white">TEAM 04</span>
+                <span id="recTeamStatus" class="text-[10px] font-black px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-600">AVAILABLE</span>
+              </div>
+              <div class="text-[11px] text-slate-300 mt-0.5 font-mono">
+                Distance: <b id="recTeamDist" class="text-white">8.2 km</b> • ETA: <b id="recTeamEta" class="text-emerald-400">14 min</b>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] font-bold text-slate-400 uppercase block">Crew Count</span>
+              <span class="text-sm font-black text-sky-400 font-mono">6 Specialists</span>
+            </div>
+          </div>
+
+          <!-- Equipment Tags -->
+          <div class="space-y-1">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Deployed Equipment:</div>
+            <div id="recTeamEquipment" class="flex flex-wrap gap-1">
+              <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200 text-[10px] font-bold">💧 Water Tanker</span>
+              <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200 text-[10px] font-bold">🚒 Fire Vehicle (4x4 Brush)</span>
+              <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200 text-[10px] font-bold">🛸 Thermal Aerial Drone</span>
+              <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-200 text-[10px] font-bold">🛡️ Wildland PPE</span>
+            </div>
+          </div>
+
+          <!-- Reason Callout -->
+          <div class="p-2 rounded-lg bg-emerald-950/40 border border-emerald-600/40 text-[10px] text-emerald-300 font-mono flex items-center gap-1.5">
+            <span>✓</span>
+            <span id="recTeamReason">Recommendation Reason: Shortest estimated response time + Available + Suitable equipment</span>
+          </div>
+
+          <!-- Direct Dispatch Button -->
+          <button id="btnDispatchRecommendedTeam" type="button" class="btn-shimmer w-full py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white font-black text-xs uppercase shadow-lg shadow-red-950/60 hover:brightness-110 transition flex items-center justify-center gap-1.5 cursor-pointer">
+            <span>🚒</span> <span>DISPATCH TEAM 04 NOW</span>
+          </button>
+        </div>
+
+        <!-- Alternatives List -->
+        <div class="space-y-1.5">
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Alternative Response Squads:</div>
+          <div id="recAlternativesList" class="space-y-1 text-xs font-mono">
+            <div class="p-2 rounded-lg bg-[#040814] border border-slate-800 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-white">TEAM 02</span>
+                <span class="text-slate-400 text-[10px] ml-1.5">11.4 km • ETA 19 min</span>
+              </div>
+              <span class="text-[10px] font-bold text-emerald-400 px-1.5 py-0.2 rounded bg-emerald-950 border border-emerald-600/60">AVAILABLE</span>
+            </div>
+            <div class="p-2 rounded-lg bg-[#040814] border border-slate-800 flex items-center justify-between">
+              <div>
+                <span class="font-bold text-white">TEAM 07</span>
+                <span class="text-slate-400 text-[10px] ml-1.5">16.8 km • ETA 27 min</span>
+              </div>
+              <span class="text-[10px] font-bold text-amber-400 px-1.5 py-0.2 rounded bg-amber-950 border border-amber-600/60">BUSY</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-[9px] font-mono text-slate-400 text-center italic">
+          Ranked by: Availability → ETA → Distance → Equipment Suitability → Workload. Final dispatch confirmed by Admin.
         </div>
       </div>
 

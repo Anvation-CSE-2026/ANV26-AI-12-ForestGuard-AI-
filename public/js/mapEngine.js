@@ -160,6 +160,22 @@ class ForestGuardMapEngine {
       attribution: '&copy; CartoDB & OSM'
     });
 
+    // Small Button on map to restore default zoom (Fire + Connected Stations)
+    try {
+      const zoomRestoreControl = L.control({ position: 'topleft' });
+      zoomRestoreControl.onAdd = () => {
+        const div = L.DomUtil.create('div', 'leaflet-bar');
+        div.innerHTML = `<a href="javascript:void(0)" title="🎯 Restore Default Sector Zoom (Fire + Connected Stations)" style="display:flex;align-items:center;justify-content:center;font-size:15px;background:#070e1c;color:#f97316;text-decoration:none;width:30px;height:30px;cursor:pointer;" onmouseover="this.style.background='#ea580c';this.style.color='#fff'" onmouseout="this.style.background='#070e1c';this.style.color='#f97316'">🎯</a>`;
+        div.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.restoreSectorDefaultZoom();
+        };
+        return div;
+      };
+      zoomRestoreControl.addTo(this.map);
+    } catch(e) {}
+
     // Invalidate map size after DOM layout settles to prevent tile overlap / grey corners
     setTimeout(() => {
       this.invalidateSize();
@@ -227,8 +243,11 @@ class ForestGuardMapEngine {
       }
     }
 
+    // Save points for 1-click restore default zoom button
+    this.currentSectorBounds = points;
+
     if (points.length === 1) {
-      this.centerOn(fLat, fLng, 16);
+      this.centerOn(fLat, fLng, 15);
       return;
     }
 
@@ -237,13 +256,38 @@ class ForestGuardMapEngine {
       points.forEach(p => bounds.extend(new google.maps.LatLng(p[0], p[1])));
       this.map.fitBounds(bounds);
     } else {
-      // Leaflet fitBounds ensuring BOTH the forest fire ground zero AND the fire station building are simultaneously visible
+      // Leaflet fitBounds ensuring BOTH the forest fire ground zero AND the connected fire stations/water bodies are simultaneously visible
       this.map.fitBounds(points, {
-        padding: [75, 75],
-        maxZoom: 16,
+        padding: [65, 65],
+        maxZoom: 15,
         animate: true,
-        duration: 1.4
+        duration: 1.2
       });
+    }
+  }
+
+  // --- 1-Click Restore Default Zoom (Fire + Connected Stations & Water Bodies) ---
+  restoreSectorDefaultZoom() {
+    if (!this.map) return;
+    if (this.currentSectorBounds && this.currentSectorBounds.length > 0) {
+      if (this.mode === 'google-api') {
+        const bounds = new google.maps.LatLngBounds();
+        this.currentSectorBounds.forEach(p => bounds.extend(new google.maps.LatLng(p[0], p[1])));
+        this.map.fitBounds(bounds);
+      } else {
+        this.map.fitBounds(this.currentSectorBounds, {
+          padding: [65, 65],
+          maxZoom: 15,
+          animate: true,
+          duration: 1.2
+        });
+      }
+    } else if (this.markers.fires && this.markers.fires.length > 0) {
+      const firstFire = this.markers.fires[0];
+      if (firstFire && firstFire.getLatLng) {
+        const ll = firstFire.getLatLng();
+        this.centerOn(ll.lat, ll.lng, 15);
+      }
     }
   }
 

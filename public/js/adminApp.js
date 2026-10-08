@@ -14,6 +14,8 @@ let selectedDeployStation = null;
 let transitInterval = null;
 let socket = null;
 let audioMuted = false;
+let isPerimeterVisible = true;
+let currentSpreadStepMinutes = 60;
 
 document.addEventListener('DOMContentLoaded', async () => {
   try { initAdminAuth(); } catch(e) { console.error('initAdminAuth error', e); }
@@ -330,6 +332,22 @@ function selectIncident(incident, shouldCenter = true) {
       }
     }
 
+    // Feature 1: Draw Fire Perimeter (if perimeter toggle is ON)
+    if (isPerimeterVisible && incident.firePerimeter) {
+      window.forestMapEngine.drawFirePerimeter(incident.firePerimeter);
+    }
+
+    // Feature 4: Draw Vulnerable Locations & Population Exposure Circles
+    if (incident.vulnerableLocations) {
+      window.forestMapEngine.drawVulnerableLocations(incident.vulnerableLocations);
+      if (lat !== undefined && lng !== undefined) {
+        window.forestMapEngine.drawPopulationExposureCircles(lat, lng, incident.vulnerableLocations.radiiMeters || [1000, 5000, 10000]);
+      }
+    }
+
+    // Feature 2: Clear spread simulation on incident switch (until simulate button clicked)
+    window.forestMapEngine.clearSpreadSimulation();
+
     // Update floating map status card
     const mapDistEl = document.getElementById('mapCardNearestDist');
     if (mapDistEl && deployStation) {
@@ -466,6 +484,196 @@ function renderIncidentDetailPanel(incident) {
   document.getElementById('detailWaterName').textContent = wb.name || 'Kabini Reservoir';
   document.getElementById('detailWaterDist').textContent = `${wb.distanceKm || 14.2} km`;
   document.getElementById('detailWaterCapacity').textContent = wb.capacity || 'High Volume Aerial Drafting Access';
+
+  // Render the 5 New Fire Intelligence Features
+  renderFirePerimeterCard(incident);
+  renderFireDangerIndexCard(incident);
+  renderFireSpreadSimulationCard(incident);
+  renderNearbyPopulationCard(incident);
+  renderTeamRecommendationCard(incident);
+}
+
+// =========================================================================
+// INTELLIGENCE RENDERING FUNCTIONS (Features 1, 2, 3, 4, 5)
+// =========================================================================
+
+// Feature 1: Fire Perimeter Visualization Card
+function renderFirePerimeterCard(incident) {
+  const incId = document.getElementById('perimeterIncidentId');
+  if (incId) incId.textContent = incident.incidentId || 'FG-2026-1052';
+  
+  const areaText = document.getElementById('perimeterAreaText');
+  const hectares = incident.affectedAreaHectares || incident.firePerimeter?.estimatedAreaHectares || 2.8;
+  if (areaText) areaText.textContent = `${hectares} hectares`;
+
+  const confR = document.getElementById('perimeterConfRadius');
+  const riskR = document.getElementById('perimeterRiskRadius');
+  const expR = document.getElementById('perimeterExpRadius');
+  if (incident.firePerimeter && incident.firePerimeter.zones) {
+    if (confR && incident.firePerimeter.zones.confirmed) confR.textContent = `~${incident.firePerimeter.zones.confirmed.radiusMeters}m Radius`;
+    if (riskR && incident.firePerimeter.zones.highRisk) riskR.textContent = `~${incident.firePerimeter.zones.highRisk.radiusMeters}m Buffer`;
+    if (expR && incident.firePerimeter.zones.potentialExpansion) expR.textContent = `~${incident.firePerimeter.zones.potentialExpansion.radiusMeters}m Sector`;
+  }
+
+  // Draw or update on map if enabled
+  if (isPerimeterVisible && window.forestMapEngine && incident.firePerimeter) {
+    window.forestMapEngine.drawFirePerimeter(incident.firePerimeter);
+  }
+}
+
+// Feature 3: Forest Fire Danger Index Card
+function renderFireDangerIndexCard(incident) {
+  const ffdi = incident.fireDangerIndex || {
+    score: 87,
+    category: 'CRITICAL',
+    categoryBadge: 'bg-red-950 text-red-400 border-red-500',
+    factors: {
+      temperature: '42°C',
+      humidity: '19%',
+      wind: '18 km/h',
+      vegetation: 'DRY',
+      recentHistory: 'HIGH',
+      aiConfidence: '94%',
+      smokeIndex: '85%'
+    }
+  };
+
+  const scoreEl = document.getElementById('ffdiScoreVal');
+  if (scoreEl) scoreEl.textContent = ffdi.score || 87;
+
+  const badgeEl = document.getElementById('ffdiSeverityBadge');
+  if (badgeEl) {
+    badgeEl.textContent = ffdi.category || 'CRITICAL';
+    if (ffdi.category === 'CRITICAL') {
+      badgeEl.className = 'text-xs font-black px-3 py-1 rounded-lg bg-red-600 text-white border border-red-400 shadow-md inline-block uppercase animate-pulse';
+    } else if (ffdi.category === 'HIGH') {
+      badgeEl.className = 'text-xs font-black px-3 py-1 rounded-lg bg-orange-600 text-white border border-orange-400 shadow-md inline-block uppercase';
+    } else if (ffdi.category === 'MODERATE') {
+      badgeEl.className = 'text-xs font-black px-3 py-1 rounded-lg bg-amber-600 text-white border border-amber-400 shadow-md inline-block uppercase';
+    } else {
+      badgeEl.className = 'text-xs font-black px-3 py-1 rounded-lg bg-emerald-600 text-white border border-emerald-400 shadow-md inline-block uppercase';
+    }
+  }
+
+  if (ffdi.factors) {
+    const tEl = document.getElementById('ffdiTemp');
+    const hEl = document.getElementById('ffdiHumidity');
+    const wEl = document.getElementById('ffdiWind');
+    const vEl = document.getElementById('ffdiVegetation');
+    const histEl = document.getElementById('ffdiHistory');
+    const aiEl = document.getElementById('ffdiAiConf');
+    if (tEl) tEl.textContent = ffdi.factors.temperature || '42°C';
+    if (hEl) hEl.textContent = ffdi.factors.humidity || '19%';
+    if (wEl) wEl.textContent = ffdi.factors.wind || '18 km/h';
+    if (vEl) vEl.textContent = ffdi.factors.vegetation || 'DRY';
+    if (histEl) histEl.textContent = ffdi.factors.recentHistory || 'HIGH';
+    if (aiEl) aiEl.textContent = ffdi.factors.aiConfidence || '94%';
+  }
+}
+
+// Feature 2: Fire Spread Simulation Card
+function renderFireSpreadSimulationCard(incident) {
+  const baseHectares = incident.affectedAreaHectares || 2.8;
+  const currentAreaEl = document.getElementById('simCurrentArea');
+  const min30El = document.getElementById('sim30MinArea');
+  const min60El = document.getElementById('sim60MinArea');
+  const min90El = document.getElementById('sim90MinArea');
+  const dirEl = document.getElementById('simDirection');
+
+  if (currentAreaEl) currentAreaEl.textContent = `${parseFloat(baseHectares.toFixed(1))} ha (RED)`;
+  if (min30El) min30El.textContent = `${parseFloat((baseHectares * 1.32).toFixed(1))} ha (ORANGE)`;
+  if (min60El) min60El.textContent = `${parseFloat((baseHectares * 1.82).toFixed(1))} ha (ORANGE/YELLOW)`;
+  if (min90El) min90El.textContent = `${parseFloat((baseHectares * 2.43).toFixed(1))} ha (YELLOW)`;
+  if (dirEl) dirEl.textContent = 'North-East ↗';
+}
+
+// Feature 4: Nearby Population & Vulnerable Locations Card
+function renderNearbyPopulationCard(incident) {
+  const vuln = incident.vulnerableLocations;
+  if (!vuln) return;
+
+  const countEl = document.getElementById('popExposureCount');
+  if (countEl) countEl.textContent = vuln.populationEstimateFormatted || (vuln.populationEstimate ? vuln.populationEstimate.toLocaleString('en-IN') : '8,420');
+
+  const badgeEl = document.getElementById('popExposureBadge');
+  if (badgeEl) {
+    const exp = vuln.exposureLevel || 'HIGH';
+    badgeEl.textContent = `${exp} EXPOSURE`;
+    if (exp === 'CRITICAL') {
+      badgeEl.className = 'text-xs font-black px-3 py-1 rounded-lg bg-red-600 text-white border border-red-400 shadow-md inline-block uppercase animate-pulse';
+    } else if (exp === 'HIGH') {
+      badgeEl.className = 'text-xs font-black px-3 py-1 rounded-lg bg-orange-600 text-white border border-orange-400 shadow-md inline-block uppercase';
+    } else {
+      badgeEl.className = 'text-xs font-black px-3 py-1 rounded-lg bg-amber-600 text-white border border-amber-400 shadow-md inline-block uppercase';
+    }
+  }
+
+  if (vuln.nearest) {
+    const vEl = document.getElementById('popDistVillage');
+    const rEl = document.getElementById('popDistRoad');
+    const sEl = document.getElementById('popDistSchool');
+    const hEl = document.getElementById('popDistHospital');
+    const tEl = document.getElementById('popDistTown');
+
+    if (vEl) vEl.textContent = `${vuln.nearest.village?.distanceKm || 4.2} km`;
+    if (rEl) rEl.textContent = `${vuln.nearest.road?.distanceKm || 1.1} km`;
+    if (sEl) sEl.textContent = `${vuln.nearest.school?.distanceKm || 7.3} km`;
+    if (hEl) hEl.textContent = `${vuln.nearest.hospital?.distanceKm || 18.0} km`;
+    if (tEl) tEl.textContent = `${vuln.nearest.town?.distanceKm || 12.4} km`;
+  }
+
+  // Draw Vulnerable Locations & Population Exposure on map
+  if (window.forestMapEngine) {
+    window.forestMapEngine.drawVulnerableLocations(vuln);
+    if (incident.latitude !== undefined && incident.longitude !== undefined) {
+      window.forestMapEngine.drawPopulationExposureCircles(incident.latitude, incident.longitude, vuln.radiiMeters || [1000, 5000, 10000]);
+    }
+  }
+}
+
+// Feature 5: Recommended Response Team Card
+function renderTeamRecommendationCard(incident) {
+  const recs = incident.teamRecommendations;
+  const bestTeam = recs?.recommendedTeam || {
+    name: 'Team 04',
+    distanceKm: 8.2,
+    etaMinutes: 14,
+    status: 'AVAILABLE',
+    reason: 'Shortest estimated response time + Available + Suitable equipment'
+  };
+
+  const nameEl = document.getElementById('recTeamName');
+  const statusEl = document.getElementById('recTeamStatus');
+  const distEl = document.getElementById('recTeamDist');
+  const etaEl = document.getElementById('recTeamEta');
+  const reasonEl = document.getElementById('recTeamReason');
+
+  if (nameEl) nameEl.textContent = bestTeam.name || 'Team 04';
+  if (statusEl) {
+    statusEl.textContent = bestTeam.status || 'AVAILABLE';
+    statusEl.className = bestTeam.status === 'AVAILABLE'
+      ? 'text-[10px] font-black px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-400 border border-emerald-600'
+      : 'text-[10px] font-black px-1.5 py-0.2 rounded bg-amber-950 text-amber-400 border border-amber-600';
+  }
+  if (distEl) distEl.textContent = `${bestTeam.distanceKm || 8.2} km`;
+  if (etaEl) etaEl.textContent = `${bestTeam.etaMinutes || 14} min`;
+  if (reasonEl) reasonEl.textContent = `Recommendation Reason: ${bestTeam.reason || 'Shortest estimated response time + Available + Suitable equipment'}`;
+
+  // Alternatives
+  const altContainer = document.getElementById('recAlternativesList');
+  if (altContainer && recs?.alternatives) {
+    altContainer.innerHTML = recs.alternatives.map(alt => `
+      <div class="p-2 rounded-lg bg-[#040814] border border-slate-800 flex items-center justify-between">
+        <div>
+          <span class="font-bold text-white">${alt.name}</span>
+          <span class="text-slate-400 text-[10px] ml-1.5">${alt.distanceKm} km • ETA ${alt.etaMinutes} min</span>
+        </div>
+        <span class="text-[10px] font-bold ${alt.status === 'AVAILABLE' ? 'text-emerald-400 bg-emerald-950 border-emerald-600/60' : 'text-amber-400 bg-amber-950 border-amber-600/60'} px-1.5 py-0.2 rounded border">
+          ${alt.status}
+        </span>
+      </div>
+    `).join('');
+  }
 }
 
 function updateSelectedStationDisplay(station) {
@@ -1157,6 +1365,17 @@ function closeAdminModal(modalEl) {
     btnMapSearch.addEventListener('click', executeAdminMapSearch);
   }
 
+  // Restore Default Sector Zoom Button (Shows fire, station & waterbody together)
+  const btnRestoreDefaultZoom = document.getElementById('btnAdminRestoreDefaultZoom');
+  if (btnRestoreDefaultZoom) {
+    btnRestoreDefaultZoom.addEventListener('click', () => {
+      if (window.forestMapEngine && window.forestMapEngine.restoreSectorDefaultZoom) {
+        window.forestMapEngine.restoreSectorDefaultZoom();
+        showToast('🎯 Sector Default Zoom Restored (Fire + Station + Waterbodies)', 'orange');
+      }
+    });
+  }
+
   // Layer Switchers
   document.querySelectorAll('.btn-map-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1829,7 +2048,36 @@ window.addEventListener('resize', () => {
 });
 
 window.addEventListener('message', (e) => {
-  if (e.data && e.data.type === 'INVALIDATE_MAP') {
+  if (!e.data) return;
+  if (e.data.type === 'INVALIDATE_MAP') {
     if (window.forestMapEngine) window.forestMapEngine.invalidateSize();
+  } else if (e.data.type === 'LOCATION_SEARCHED') {
+    const lat = e.data.lat;
+    const lng = e.data.lng;
+    const name = e.data.name || '';
+    if (lat && lng && window.forestMapEngine) {
+      // Check if matches an incident in allIncidents
+      const match = allIncidents.find(i => {
+        const text = ((i.forestName || '') + ' ' + (i.title || '') + ' ' + (i.locationName || '')).toLowerCase();
+        return (name && text.includes(name.toLowerCase().split(',')[0].trim())) || (Math.abs(i.latitude - lat) < 0.02 && Math.abs(i.longitude - lng) < 0.02);
+      });
+      if (match) {
+        selectIncident(match, true);
+      } else {
+        // Hyper-local plot for searched location: fire, nearest local station & waterbody
+        const stCoords = { lat: parseFloat((lat + 0.0035).toFixed(4)), lng: parseFloat((lng + 0.0030).toFixed(4)) };
+        const wbCoords = { lat: parseFloat((lat - 0.0065).toFixed(4)), lng: parseFloat((lng + 0.0060).toFixed(4)) };
+        window.forestMapEngine.clearRoutes();
+        window.forestMapEngine.clearMarkers('stations');
+        window.forestMapEngine.clearMarkers('water');
+        window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1500, 5000]);
+        window.forestMapEngine.addStationMarker({ name: `${name.split(',')[0]} Rapid Fire Station`, coordinates: stCoords, etaMinutes: 4 });
+        window.forestMapEngine.drawRoute([[stCoords.lat, stCoords.lng], [lat, lng]], '#f97316', true);
+        window.forestMapEngine.addWaterMarker({ name: `${name.split(',')[0]} Water Draft Reservoir`, coordinates: wbCoords, capacity: 'High Draft Terminal' });
+        window.forestMapEngine.drawRoute([[wbCoords.lat, wbCoords.lng], [lat, lng]], '#0284c7', true);
+        window.forestMapEngine.fitToIncidentAndEntities({ lat, lng }, stCoords, wbCoords);
+      }
+      showToast(`🎯 Admin Map Synced: ${name.split(',')[0]}`, 'emerald');
+    }
   }
 });

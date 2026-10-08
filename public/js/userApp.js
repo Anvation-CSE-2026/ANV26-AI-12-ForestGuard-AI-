@@ -127,6 +127,47 @@ function initCentralMap() {
     updateLocationReadouts(e.latlng.lat, e.latlng.lng);
   });
 
+  // Add Leaflet Control Button for Default Sector Zoom
+  try {
+    const UserDefaultZoomControl = L.Control.extend({
+      options: { position: 'topleft' },
+      onAdd: function() {
+        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        const button = L.DomUtil.create('a', '', container);
+        button.innerHTML = '🎯';
+        button.href = '#';
+        button.title = 'Restore Default Zoom (Fire Sector & Stations)';
+        button.setAttribute('role', 'button');
+        button.style.fontSize = '14px';
+        button.style.lineHeight = '30px';
+        button.style.textAlign = 'center';
+        button.style.display = 'block';
+        button.style.width = '30px';
+        button.style.height = '30px';
+        button.style.backgroundColor = '#070e1c';
+        button.style.color = '#f97316';
+        button.style.cursor = 'pointer';
+
+        L.DomEvent.disableClickPropagation(button);
+        L.DomEvent.on(button, 'click', function(e) {
+          L.DomEvent.preventDefault(e);
+          restoreUserDefaultZoom();
+        });
+
+        return container;
+      }
+    });
+    new UserDefaultZoomControl().addTo(userMap);
+  } catch (e) {}
+
+  // Wire Top Card Button for Default Zoom
+  const btnUserRestore = document.getElementById('btnUserRestoreDefaultZoom');
+  if (btnUserRestore) {
+    btnUserRestore.addEventListener('click', () => {
+      restoreUserDefaultZoom();
+    });
+  }
+
   setTimeout(() => {
     if (userMap) {
       userMap.invalidateSize();
@@ -136,6 +177,7 @@ function initCentralMap() {
 }
 
 // Auxiliary overlays on userMap (Alert Radius + Nearest Station + Nearest Waterbody + Dotted Lines)
+let userSectorBounds = null;
 let userAuxLayers = {
   circles: [],
   routeStation: null,
@@ -143,6 +185,19 @@ let userAuxLayers = {
   markerStation: null,
   markerWater: null
 };
+
+function restoreUserDefaultZoom() {
+  if (!userMap) return;
+  if (userSectorBounds && typeof userSectorBounds.isValid === 'function' && userSectorBounds.isValid()) {
+    userMap.fitBounds(userSectorBounds, {
+      padding: [45, 45],
+      maxZoom: 15,
+      animate: true
+    });
+  } else if (currentCoords) {
+    userMap.setView([currentCoords.lat, currentCoords.lng], 14, { animate: true });
+  }
+}
 
 function renderUserMapOverlays(lat, lng) {
   if (!userMap) return;
@@ -270,6 +325,13 @@ function renderUserMapOverlays(lat, lng) {
     opacity: 0.9,
     dashArray: '6, 6'
   }).addTo(userMap);
+
+  // Store sector bounds encompassing fire ground zero, fire station, and waterbody
+  userSectorBounds = L.latLngBounds([
+    [lat, lng],
+    [stLat, stLng],
+    [wbLat, wbLng]
+  ]);
 }
 
 function updateLocationReadouts(lat, lng, customForestName = null) {
@@ -424,18 +486,29 @@ function initReportingMethods() {
       btnGps.classList.add('animate-pulse');
 
       const applyLocation = (lat, lng, label, methodType) => {
-        if (userMap) {
-          const isCampus = label.toLowerCase().includes('kssem') || label.toLowerCase().includes('kseam') || label.toLowerCase().includes('dsatm');
-          const zoomGps = isCampus ? 17 : 16;
-          userMap.flyTo([lat, lng], zoomGps, { duration: 1.2 });
-        }
         if (userMarker) {
           userMarker.setLatLng([lat, lng]);
         }
         updateLocationReadouts(lat, lng, label);
+        restoreUserDefaultZoom();
         if (userMap) setTimeout(() => userMap.invalidateSize(), 300);
         btnGps.innerHTML = '<span>🎯</span> <span>USE MY CURRENT LOCATION</span>';
         btnGps.classList.remove('animate-pulse');
+
+        // Scroll central map into view
+        const mapEl = document.getElementById('userCentralMap');
+        if (mapEl) mapEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        // Forward to Admin map in Split View
+        try {
+          window.parent?.postMessage({
+            type: 'LOCATION_SEARCHED',
+            lat: lat,
+            lng: lng,
+            name: label,
+            shortName: label
+          }, '*');
+        } catch (e) {}
 
         // Show non-blocking toast
         showLocationToast(
@@ -706,7 +779,7 @@ function initLocationAutocomplete() {
     });
   }
 
-  // Select Prediction & Fly Map Directly
+  // Select Prediction & Pinpoint Map with Connected Stations and Water Bodies
   function selectPrediction(item) {
     if (!item) return;
     inputSearch.value = item.name;
@@ -715,33 +788,37 @@ function initLocationAutocomplete() {
     const lat = parseFloat(item.lat);
     const lng = parseFloat(item.lng);
 
-    // Deep detailed zoom level on search:
-    // When a campus/college/building is searched (KSSEM, DSATM, college), zoom in deeply to 17.
-    // When Bandipur or other forest sector is searched, zoom to 16.
-    const nameLower = (item.name || '').toLowerCase();
-    const isCampus = nameLower.includes('kssem') || nameLower.includes('kseam') || nameLower.includes('ks school') || 
-                     nameLower.includes('dsatm') || nameLower.includes('college') || nameLower.includes('campus') || 
-                     nameLower.includes('institute') || nameLower.includes('university') || (item.category && item.category.toLowerCase().includes('campus'));
-    const targetZoom = isCampus ? 17 : (nameLower.includes('bandipur') ? 16 : 16);
-
-    // Directly fly and pinpoint on Central Map
-    if (userMap) {
-      userMap.flyTo([lat, lng], targetZoom, { duration: 1.2 });
-      setTimeout(() => {
-        if (userMap) userMap.invalidateSize();
-      }, 350);
-    }
     if (userMarker) {
       userMarker.setLatLng([lat, lng]);
     }
 
-    // Update location readouts & form default hint
+    // Update location readouts & form default hint (invokes renderUserMapOverlays to draw circles, station, water, routes, and computes userSectorBounds)
     updateLocationReadouts(lat, lng, item.name);
+
+    // Restore sector default zoom so BOTH the fire location, nearby fire station, and waterbody are in view!
+    restoreUserDefaultZoom();
+
+    // Scroll map smoothly into view so user sees the location, connected stations and waterbodies immediately
+    const mapEl = document.getElementById('userCentralMap');
+    if (mapEl) {
+      mapEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Forward to parent / Admin iframe for live dual split screen demo
+    try {
+      window.parent?.postMessage({
+        type: 'LOCATION_SEARCHED',
+        lat: lat,
+        lng: lng,
+        name: item.name,
+        shortName: item.shortName || item.name
+      }, '*');
+    } catch (e) {}
 
     hideDropdown();
 
     // Display non-blocking feedback toast
-    showLocationToast(`📍 Pinned location: ${item.shortName || item.name}`, 'info');
+    showLocationToast(`📍 Pinned location: ${item.shortName || item.name} (Connected Stations & Waterbodies)`, 'info');
   }
 
   function hideDropdown() {
@@ -924,6 +1001,15 @@ function initLocationAutocomplete() {
 
       // Default fallback
       updateLocationReadouts(currentCoords.lat, currentCoords.lng, q);
+      restoreUserDefaultZoom();
+      try {
+        window.parent?.postMessage({
+          type: 'LOCATION_SEARCHED',
+          lat: currentCoords.lat,
+          lng: currentCoords.lng,
+          name: q
+        }, '*');
+      } catch (e) {}
     });
   }
 

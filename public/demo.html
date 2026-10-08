@@ -187,6 +187,17 @@
     });
 
     window.addEventListener('resize', notifyMapResize);
+
+    // Forward Citizen Dashboard location searches to Admin Command Map in Split View
+    window.addEventListener('message', (event) => {
+      if (!event.data) return;
+      if (event.data.type === 'LOCATION_SEARCHED') {
+        const frameAdmin = document.getElementById('frameAdmin');
+        try {
+          frameAdmin?.contentWindow?.postMessage(event.data, '*');
+        } catch (e) {}
+      }
+    });
   </script>
   <script src="/js/dashboardSwitcher.js"></script>
 </body>
