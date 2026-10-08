@@ -2132,26 +2132,7 @@ function initFullMap() {
     dashArray: '6, 8'
   }).addTo(fullMap);
 
-  // Add other water bodies & stations to full map
-  fetch('/api/water-bodies').then(r => r.json()).then(data => {
-    if (data.success) {
-      data.waterBodies.forEach(wb => {
-        if (wb.coordinates && (wb.coordinates.lat !== waterCoords[0])) {
-          L.marker([wb.coordinates.lat, wb.coordinates.lng]).addTo(fullMap).bindPopup(`💧 <b>${wb.name}</b>`);
-        }
-      });
-    }
-  });
-
-  fetch('/api/response-stations').then(r => r.json()).then(data => {
-    if (data.success) {
-      data.responseStations.forEach(st => {
-        if (st.coordinates && (st.coordinates.lat !== stnLat)) {
-          L.marker([st.coordinates.lat, st.coordinates.lng]).addTo(fullMap).bindPopup(`🚒 <b>${st.name}</b>`);
-        }
-      });
-    }
-  });
+  // Dedicated full map strictly focused on sector fire, nearest station, and drafting lake
 }
 
 // Window resize & message listeners to keep map viewports updated without tile glitches

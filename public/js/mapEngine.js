@@ -929,49 +929,9 @@ class ForestGuardMapEngine {
   // =========================================================================
   drawVulnerableLocations(vulnerableData) {
     this.clearVulnerableLocations();
-    if (!this.map || !vulnerableData) return;
-    if (this.layerVisibility.vulnerableLocations === false) return;
-
-    try {
-      const list = vulnerableData.vulnerableLocations || [];
-      list.forEach(item => {
-        if (!item.coordinates) return;
-        const lat = item.coordinates.lat;
-        const lng = item.coordinates.lng;
-        const popupContent = `<b>${item.name}</b><br><span style="color:${item.color};font-weight:bold;">${item.category}</span><br>Distance: <b>${item.distanceKm} km</b>${item.population ? `<br>Population Est: <b>${item.population.toLocaleString('en-IN')}</b>` : ''}<br><span style="font-size:9px;color:#94a3b8;">Population data: DEMO / API READY</span>`;
-
-        if (this.mode === 'google-api') {
-          const marker = new google.maps.Marker({
-            position: { lat, lng },
-            map: this.map,
-            title: `${item.name} (${item.distanceKm} km)`,
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 8,
-              fillColor: item.color,
-              fillOpacity: 1,
-              strokeColor: '#ffffff',
-              strokeWeight: 2
-            }
-          });
-          const info = new google.maps.InfoWindow({ content: popupContent });
-          marker.addListener('click', () => info.open(this.map, marker));
-          this.vulnerableLayers.push(marker);
-        } else {
-          const icon = L.divIcon({
-            className: 'custom-vuln-marker',
-            html: `<div style="background:${item.color}; border:2px solid #fff; border-radius:8px; padding:2px 6px; box-shadow:0 0 10px ${item.color}; color:#fff; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px; white-space:nowrap; transform:translate(-50%, -50%);"><span>${item.icon || '📍'}</span><span>${item.name.split(',')[0]}</span></div>`,
-            iconSize: [0, 0],
-            iconAnchor: [0, 0]
-          });
-          const marker = L.marker([lat, lng], { icon }).addTo(this.map);
-          marker.bindPopup(popupContent);
-          this.vulnerableLayers.push(marker);
-        }
-      });
-    } catch (err) {
-      console.warn('Map service temporarily unavailable (Vulnerable):', err.message);
-    }
+    // Unwanted cluttering area boxes (hospitals, schools, expressways, villages)
+    // removed to strictly keep map focused on the one nearest fire station building.
+    return;
   }
 
   clearVulnerableLocations() {
@@ -988,47 +948,8 @@ class ForestGuardMapEngine {
 
   drawPopulationExposureCircles(lat, lng, radii = [1000, 5000, 10000]) {
     this.clearPopulationExposureCircles();
-    if (!this.map || !lat || !lng) return;
-    if (this.layerVisibility.populationExposure === false) return;
-
-    try {
-      const specs = [
-        { radius: radii[0] || 1000, color: '#ef4444', label: '1 km Immediate Impact Zone', fillOpacity: 0 },
-        { radius: radii[1] || 5000, color: '#f97316', label: '5 km Population Buffer Zone', fillOpacity: 0 },
-        { radius: radii[2] || 10000, color: '#eab308', label: '10 km Regional Monitoring Zone', fillOpacity: 0 }
-      ];
-
-      specs.forEach(s => {
-        if (this.mode === 'google-api') {
-          const circle = new google.maps.Circle({
-            center: { lat, lng },
-            radius: s.radius,
-            strokeColor: s.color,
-            strokeOpacity: 0.75,
-            strokeWeight: 1.5,
-            fillColor: s.color,
-            fillOpacity: 0,
-            map: this.map
-          });
-          this.populationExposureLayers.push(circle);
-        } else {
-          const circle = L.circle([lat, lng], {
-            radius: s.radius,
-            color: s.color,
-            weight: 1.5,
-            opacity: 0.75,
-            fill: false,
-            fillColor: s.color,
-            fillOpacity: 0,
-            dashArray: '6, 8'
-          }).addTo(this.map);
-          circle.bindTooltip(`<b>POPULATION EXPOSURE</b><br>${s.label}`, { direction: 'top' });
-          this.populationExposureLayers.push(circle);
-        }
-      });
-    } catch (err) {
-      console.warn('Map service temporarily unavailable (Exposure):', err.message);
-    }
+    // Outer clutter rings omitted to maintain clean satellite ground visibility
+    return;
   }
 
   clearPopulationExposureCircles() {
