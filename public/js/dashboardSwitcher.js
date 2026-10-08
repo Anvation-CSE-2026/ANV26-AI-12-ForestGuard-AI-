@@ -1,7 +1,7 @@
 // dashboardSwitcher.js - ForestGuard AI Universal Dashboard Switcher (Port 8109)
 (function() {
-  const TARGET_PORT = 8109;
-  const BASE_URL = `http://localhost:${TARGET_PORT}`;
+  const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+  const BASE_URL = isLocal ? `${window.location.protocol}//${window.location.hostname}:${window.location.port || '8109'}` : (typeof window !== 'undefined' ? window.location.origin : '');
 
   function getPageType() {
     const p = window.location.pathname.toLowerCase();

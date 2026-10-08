@@ -1575,14 +1575,19 @@ function initFormAndModals() {
             body: formData
           });
         } catch (fetchErr) {
-          // If primary relative fetch fails, fallback to alternate port (8109 / 3000)
-          const currentPort = window.location.port;
-          const targetPort = currentPort === '8109' ? '3000' : '8109';
-          console.warn(`Primary fetch failed (${fetchErr.message}). Retrying on http://localhost:${targetPort}...`);
-          res = await fetch(`http://localhost:${targetPort}/api/incidents`, {
-            method: 'POST',
-            body: formData
-          });
+          // If primary relative fetch fails on localhost, retry alternate port (8109 / 3000)
+          const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+          if (isLocal) {
+            const currentPort = window.location.port;
+            const targetPort = currentPort === '8109' ? '3000' : '8109';
+            console.warn(`Primary fetch failed (${fetchErr.message}). Retrying on http://localhost:${targetPort}...`);
+            res = await fetch(`http://localhost:${targetPort}/api/incidents`, {
+              method: 'POST',
+              body: formData
+            });
+          } else {
+            throw fetchErr;
+          }
         }
 
         const data = await res.json();
@@ -1592,7 +1597,7 @@ function initFormAndModals() {
           alert('Submission error: ' + (data.message || 'Unknown error'));
         }
       } catch (err) {
-        alert('Transmission notice: Unable to contact server. Please verify http://localhost:8109 is online.');
+        alert('Transmission notice: Unable to contact server. Please verify network connection or server status.');
       }
     });
   }

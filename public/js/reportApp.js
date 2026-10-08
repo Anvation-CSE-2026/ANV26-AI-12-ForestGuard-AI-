@@ -247,11 +247,16 @@ function initForm() {
           body: formData
         });
       } catch (fetchErr) {
-        const targetPort = window.location.port === '8109' ? '3000' : '8109';
-        res = await fetch(`http://localhost:${targetPort}/api/incidents`, {
-          method: 'POST',
-          body: formData
-        });
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        if (isLocal) {
+          const targetPort = window.location.port === '8109' ? '3000' : '8109';
+          res = await fetch(`http://localhost:${targetPort}/api/incidents`, {
+            method: 'POST',
+            body: formData
+          });
+        } else {
+          throw fetchErr;
+        }
       }
 
       const data = await res.json();

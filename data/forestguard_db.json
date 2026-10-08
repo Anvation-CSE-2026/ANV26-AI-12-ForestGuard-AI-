@@ -4285,1438 +4285,6 @@
       }
     },
     {
-      "incidentId": "FG-2026-5804",
-      "reporterId": "REP-ANON-237",
-      "source": "Citizen Image",
-      "detectionMethod": "Image",
-      "imageUrl": "/uploads/fg_1791463022252_5291.jpg",
-      "videoUrl": null,
-      "latitude": 12.855,
-      "longitude": 77.542,
-      "title": "KS School of Engineering and Management (KSSEM), Holiday Village Road, Kanakapura Road, Bengaluru",
-      "alertTitle": "KS School of Engineering and Management (KSSEM), Holiday Village Road, Kanakapura Road, Bengaluru",
-      "forestName": "KS School of Engineering and Management (KSSEM), Holiday Village Road, Kanakapura Road, Bengaluru",
-      "state": "Karnataka",
-      "district": "Chamarajanagar",
-      "description": "Forest fire alert reported by citizen.",
-      "estimatedSize": "Large",
-      "smokeVisible": true,
-      "flamesVisible": true,
-      "peopleInDanger": false,
-      "aiConfidence": 98.8,
-      "severity": "HIGH",
-      "riskScore": 75,
-      "satelliteConfidence": 0,
-      "sensorConfidence": 0,
-      "status": "UNDER REVIEW",
-      "aiExplanation": "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire.",
-      "affectedAreaHectares": 3.6,
-      "affectedRadiiMeters": [
-        500,
-        1000,
-        5000
-      ],
-      "detectedFeatures": [
-        "Flames",
-        "Smoke",
-        "Heat-like region",
-        "Vegetation"
-      ],
-      "featureBreakdown": [],
-      "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
-      "nearestStation": {
-        "id": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-        "forestId": "FOR-KA-03",
-        "state": "Karnataka",
-        "coordinates": {
-          "lat": 12.859,
-          "lng": 77.546
-        },
-        "phone": "+91-80-22971550",
-        "etaMinutesBase": 5,
-        "unitType": "Kanakapura Highway Fire Squad",
-        "crewCount": 18,
-        "waterTenders": 4,
-        "aerialDrones": 2,
-        "status": "AVAILABLE",
-        "distanceKm": 0.6,
-        "distanceMeters": 600,
-        "etaMinutes": 5,
-        "routeWaypoints": [
-          [
-            12.859,
-            77.546
-          ],
-          [
-            12.85733,
-            77.54473
-          ],
-          [
-            12.8594,
-            77.54571
-          ],
-          [
-            12.855,
-            77.5428
-          ],
-          [
-            12.85807,
-            77.54437
-          ],
-          [
-            12.85467,
-            77.54207
-          ],
-          [
-            12.855,
-            77.542
-          ]
-        ]
-      },
-      "assignedStation": {
-        "stationId": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-        "distanceKm": 0.6,
-        "etaMinutes": 5,
-        "phone": "+91-80-22971550",
-        "availability": "AVAILABLE"
-      },
-      "rankedStations": [
-        {
-          "id": "STA-BLR-01",
-          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.859,
-            "lng": 77.546
-          },
-          "phone": "+91-80-22971550",
-          "etaMinutesBase": 5,
-          "unitType": "Kanakapura Highway Fire Squad",
-          "crewCount": 18,
-          "waterTenders": 4,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 0.6,
-          "distanceMeters": 600,
-          "etaMinutes": 5,
-          "routeWaypoints": [
-            [
-              12.859,
-              77.546
-            ],
-            [
-              12.85733,
-              77.54473
-            ],
-            [
-              12.8594,
-              77.54571
-            ],
-            [
-              12.855,
-              77.5428
-            ],
-            [
-              12.85807,
-              77.54437
-            ],
-            [
-              12.85467,
-              77.54207
-            ],
-            [
-              12.855,
-              77.542
-            ]
-          ]
-        },
-        {
-          "id": "STA-BLR-02",
-          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.829,
-            "lng": 77.518
-          },
-          "phone": "+91-80-22971565",
-          "etaMinutesBase": 6,
-          "unitType": "Campus & Reserve Forest Unit",
-          "crewCount": 14,
-          "waterTenders": 3,
-          "aerialDrones": 1,
-          "status": "AVAILABLE",
-          "distanceKm": 3.9,
-          "distanceMeters": 3900,
-          "etaMinutes": 10,
-          "routeWaypoints": [
-            [
-              12.829,
-              77.518
-            ],
-            [
-              12.83233,
-              77.5214
-            ],
-            [
-              12.8394,
-              77.52704
-            ],
-            [
-              12.84,
-              77.5288
-            ],
-            [
-              12.84807,
-              77.53504
-            ],
-            [
-              12.84967,
-              77.5374
-            ],
-            [
-              12.855,
-              77.542
-            ]
-          ]
-        },
-        {
-          "id": "STA-BLR-03",
-          "name": "Banashankari Fire & Rescue Command Station",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.925,
-            "lng": 77.568
-          },
-          "phone": "+91-80-22971540",
-          "etaMinutesBase": 14,
-          "unitType": "South Bengaluru Central Fleet",
-          "crewCount": 24,
-          "waterTenders": 6,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 8.3,
-          "distanceMeters": 8300,
-          "etaMinutes": 17,
-          "routeWaypoints": [
-            [
-              12.925,
-              77.568
-            ],
-            [
-              12.91233,
-              77.56307
-            ],
-            [
-              12.9034,
-              77.56037
-            ],
-            [
-              12.888,
-              77.5538
-            ],
-            [
-              12.88007,
-              77.55171
-            ],
-            [
-              12.86567,
-              77.54573
-            ],
-            [
-              12.855,
-              77.542
-            ]
-          ]
-        }
-      ],
-      "assignedTeam": {
-        "teamId": "TEAM-04",
-        "name": "Team 04",
-        "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "etaMinutes": 19
-      },
-      "nearestWaterBody": {
-        "id": "WB-BLR-01",
-        "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
-        "forestId": "FOR-KA-03",
-        "state": "Karnataka",
-        "coordinates": {
-          "lat": 12.868,
-          "lng": 77.538
-        },
-        "type": "Freshwater Lake & Fire Hydrant Terminal",
-        "capacity": "Continuous 25,000 Litres Aerial Drafting",
-        "waterSourceType": "LAKE",
-        "distanceKm": 1.5,
-        "distanceMeters": 1500,
-        "routeWaypoints": [
-          [
-            12.868,
-            77.538
-          ],
-          [
-            12.86422,
-            77.53809
-          ],
-          [
-            12.8647,
-            77.54074
-          ],
-          [
-            12.8583,
-            77.53926
-          ],
-          [
-            12.85878,
-            77.54191
-          ],
-          [
-            12.855,
-            77.542
-          ]
-        ]
-      },
-      "rankedWaterBodies": [
-        {
-          "id": "WB-01",
-          "name": "Kabini Reservoir & Backwaters",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.968,
-            "lng": 76.352
-          },
-          "type": "Dam / Large Reservoir",
-          "capacity": "19.52 TMC (High Volume Aerial Drafting Access)",
-          "waterSourceType": "RESERVOIR",
-          "distanceKm": 162.6,
-          "distanceMeters": 162600,
-          "routeWaypoints": [
-            [
-              11.968,
-              76.352
-            ],
-            [
-              12.18834,
-              76.64865
-            ],
-            [
-              12.4135,
-              76.9482
-            ],
-            [
-              12.63184,
-              77.24365
-            ],
-            [
-              12.855,
-              77.542
-            ]
-          ]
-        },
-        {
-          "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
-          },
-          "type": "River Gorge Pool",
-          "capacity": "Continuous 14,000 LPM",
-          "waterSourceType": "RIVER",
-          "distanceKm": 169.5,
-          "distanceMeters": 169500,
-          "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
-            [
-              11.91384,
-              76.87515
-            ],
-            [
-              12.2305,
-              77.0992
-            ],
-            [
-              12.54034,
-              77.31915
-            ],
-            [
-              12.855,
-              77.542
-            ]
-          ]
-        },
-        {
-          "id": "WB-03",
-          "name": "Periyar Lake Aquatic Sanctuary",
-          "forestId": "FOR-KL-01",
-          "state": "Kerala",
-          "coordinates": {
-            "lat": 9.532,
-            "lng": 77.17
-          },
-          "type": "Natural Freshwater Lake",
-          "capacity": "Unlimited Drafting Access",
-          "waterSourceType": "LAKE",
-          "distanceKm": 371.7,
-          "distanceMeters": 371700,
-          "routeWaypoints": [
-            [
-              9.532,
-              77.17
-            ],
-            [
-              10.36134,
-              77.26215
-            ],
-            [
-              11.1955,
-              77.3572
-            ],
-            [
-              12.02284,
-              77.44815
-            ],
-            [
-              12.855,
-              77.542
-            ]
-          ]
-        }
-      ],
-      "reporter": {
-        "name": "Citizen Observer",
-        "phone": "Undisclosed",
-        "notes": "Forest fire alert reported by citizen."
-      },
-      "timeline": [
-        {
-          "time": "06:07:02 pm",
-          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (12.855, 77.542)",
-          "type": "REPORT"
-        },
-        {
-          "time": "06:07:02 pm",
-          "message": "Evidence ingested (Image)",
-          "type": "INGEST"
-        },
-        {
-          "time": "06:07:02 pm",
-          "message": "AI Analysis complete: 98.8% confidence (HIGH)",
-          "type": "AI"
-        },
-        {
-          "time": "06:07:02 pm",
-          "message": "Risk score calculated: 75 / 100",
-          "type": "RISK"
-        },
-        {
-          "time": "06:07:02 pm",
-          "message": "Admin authority alerted in real-time via Socket.IO",
-          "type": "ALERT"
-        }
-      ],
-      "isPriority": true,
-      "priorityLevel": "PRIORITY 1 - CITIZEN REPORT",
-      "scoreboard": {
-        "fireScore": 98.8,
-        "fireLevel": "CRITICAL",
-        "fireConfidence": 98.8,
-        "smokeConfidence": 98.5,
-        "fireCoverage": 39.4,
-        "smokeLevel": 96,
-        "anomalyConfidence": 97.3,
-        "riskScore": 99,
-        "severity": "CRITICAL",
-        "objectsCount": 6,
-        "statusTitle": "FIRE DETECTED",
-        "statusText": "Status: Active Wildfire (6 Objects)",
-        "badgeText": "CRITICAL",
-        "earlyWarningAlert": "CRITICAL - IMMEDIATE DISPATCH",
-        "fakeProbability": 3,
-        "authenticityScore": 97,
-        "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-        "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
-        "isFake": false,
-        "aiFakeScore": {
-          "fakeProbability": 3,
-          "authenticityScore": 97,
-          "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-          "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
-          "isFake": false
-        },
-        "timestamp": "06:07:02 PM",
-        "engineName": "YOLOv8 ENGINE READY"
-      },
-      "routeWaypoints": [
-        [
-          12.91,
-          77.597
-        ],
-        [
-          12.89983,
-          77.58723
-        ],
-        [
-          12.8934,
-          77.57971
-        ],
-        [
-          12.8805,
-          77.5683
-        ],
-        [
-          12.87507,
-          77.56137
-        ],
-        [
-          12.86317,
-          77.55057
-        ],
-        [
-          12.855,
-          77.542
-        ]
-      ],
-      "routeProgressIndex": 0,
-      "createdAt": "2026-10-08T12:37:02.474Z",
-      "updatedAt": "2026-10-08T12:37:02.474Z",
-      "firePerimeter": {
-        "incidentId": "FG-2026-5804",
-        "center": {
-          "lat": 12.855,
-          "lng": 77.542
-        },
-        "estimatedAreaHectares": 3.6,
-        "severity": "HIGH",
-        "zones": {
-          "confirmed": {
-            "color": "#ef4444",
-            "fillColor": "#dc2626",
-            "fillOpacity": 0.35,
-            "strokeColor": "#b91c1c",
-            "strokeWeight": 2.5,
-            "radiusMeters": 107,
-            "polygonCoords": [
-              {
-                "lat": 12.855803,
-                "lng": 77.542
-              },
-              {
-                "lat": 12.855764,
-                "lng": 77.542569
-              },
-              {
-                "lat": 12.855349,
-                "lng": 77.543102
-              },
-              {
-                "lat": 12.85473,
-                "lng": 77.542852
-              },
-              {
-                "lat": 12.854315,
-                "lng": 77.54251
-              },
-              {
-                "lat": 12.85388,
-                "lng": 77.542
-              },
-              {
-                "lat": 12.854209,
-                "lng": 77.54141
-              },
-              {
-                "lat": 12.854755,
-                "lng": 77.541227
-              },
-              {
-                "lat": 12.855324,
-                "lng": 77.540977
-              },
-              {
-                "lat": 12.855871,
-                "lng": 77.541351
-              },
-              {
-                "lat": 12.855803,
-                "lng": 77.542
-              }
-            ],
-            "name": "Confirmed Active Fire Area",
-            "estimatedHectares": 3.6
-          },
-          "highRisk": {
-            "color": "#f97316",
-            "fillColor": "#ea580c",
-            "fillOpacity": 0.22,
-            "strokeColor": "#c2410c",
-            "strokeWeight": 2,
-            "radiusMeters": 235,
-            "polygonCoords": [
-              {
-                "lat": 12.856827,
-                "lng": 77.542
-              },
-              {
-                "lat": 12.856949,
-                "lng": 77.543154
-              },
-              {
-                "lat": 12.856198,
-                "lng": 77.544128
-              },
-              {
-                "lat": 12.855,
-                "lng": 77.544022
-              },
-              {
-                "lat": 12.854087,
-                "lng": 77.543623
-              },
-              {
-                "lat": 12.853051,
-                "lng": 77.543154
-              },
-              {
-                "lat": 12.852605,
-                "lng": 77.542
-              },
-              {
-                "lat": 12.853292,
-                "lng": 77.540989
-              },
-              {
-                "lat": 12.854087,
-                "lng": 77.540377
-              },
-              {
-                "lat": 12.855,
-                "lng": 77.539692
-              },
-              {
-                "lat": 12.856198,
-                "lng": 77.539872
-              },
-              {
-                "lat": 12.856708,
-                "lng": 77.540989
-              },
-              {
-                "lat": 12.856827,
-                "lng": 77.542
-              }
-            ],
-            "name": "High-Risk Surrounding Zone",
-            "estimatedHectares": 11.5
-          },
-          "potentialExpansion": {
-            "color": "#eab308",
-            "fillColor": "#ca8a04",
-            "fillOpacity": 0.14,
-            "strokeColor": "#a16207",
-            "strokeWeight": 1.5,
-            "radiusMeters": 407,
-            "polygonCoords": [
-              {
-                "lat": 12.858956,
-                "lng": 77.542
-              },
-              {
-                "lat": 12.858636,
-                "lng": 77.543796
-              },
-              {
-                "lat": 12.857198,
-                "lng": 77.544827
-              },
-              {
-                "lat": 12.855716,
-                "lng": 77.545219
-              },
-              {
-                "lat": 12.854201,
-                "lng": 77.545593
-              },
-              {
-                "lat": 12.852465,
-                "lng": 77.54526
-              },
-              {
-                "lat": 12.851485,
-                "lng": 77.543736
-              },
-              {
-                "lat": 12.851644,
-                "lng": 77.542
-              },
-              {
-                "lat": 12.852047,
-                "lng": 77.540542
-              },
-              {
-                "lat": 12.852639,
-                "lng": 77.538963
-              },
-              {
-                "lat": 12.854089,
-                "lng": 77.537907
-              },
-              {
-                "lat": 12.855828,
-                "lng": 77.53828
-              },
-              {
-                "lat": 12.857025,
-                "lng": 77.539396
-              },
-              {
-                "lat": 12.858073,
-                "lng": 77.540482
-              },
-              {
-                "lat": 12.858956,
-                "lng": 77.542
-              }
-            ],
-            "name": "Potential Expansion Zone",
-            "estimatedHectares": 23.4
-          }
-        },
-        "title": "ESTIMATED FIRE PERIMETER",
-        "disclaimer": "ESTIMATED FIRE PERIMETER - Prototype estimate based on incident coordinates, severity and affected-area value. Not satellite-derived GIS."
-      },
-      "fireDangerIndex": {
-        "score": 87,
-        "maxScore": 100,
-        "category": "CRITICAL",
-        "categoryBadge": "bg-red-950 text-red-400 border-red-500",
-        "factors": {
-          "temperature": "42°C",
-          "humidity": "19%",
-          "wind": "18 km/h",
-          "vegetation": "DRY",
-          "recentHistory": "HIGH",
-          "aiConfidence": "99%",
-          "smokeIndex": "85%"
-        },
-        "explanations": [
-          {
-            "factor": "Temperature",
-            "value": "42°C",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Humidity",
-            "value": "19%",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Wind",
-            "value": "18 km/h",
-            "contribution": "MEDIUM CONTRIBUTION",
-            "level": "MEDIUM"
-          },
-          {
-            "factor": "Dry vegetation",
-            "value": "DRY FUELS",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Recent fire activity",
-            "value": "3 DETECTIONS (48H)",
-            "contribution": "MEDIUM CONTRIBUTION",
-            "level": "MEDIUM"
-          },
-          {
-            "factor": "AI detection",
-            "value": "99% CONFIDENCE",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          }
-        ],
-        "label": "Prototype Fire Danger Index",
-        "disclaimer": "Prototype Fire Danger Index - DEMO WEATHER DATA. Not an official government fire-danger rating."
-      },
-      "vulnerableLocations": {
-        "incidentId": "FG-2026-5804",
-        "nearest": {
-          "village": {
-            "name": "Kaggalipura Village",
-            "distanceKm": 7.4
-          },
-          "town": {
-            "name": "Kanakapura Town",
-            "distanceKm": 36.9
-          },
-          "road": {
-            "name": "NH-948 Kanakapura Expressway",
-            "distanceKm": 3.7
-          },
-          "school": {
-            "name": "Rural Vidya Mandir, Kaggalipura",
-            "distanceKm": 6.2
-          },
-          "hospital": {
-            "name": "Sri Sri College of Ayurvedic Hospital & Clinic",
-            "distanceKm": 1.9
-          },
-          "populatedArea": {
-            "name": "Thalaghattapura Township Corridor",
-            "population": 14800
-          }
-        },
-        "populationEstimate": 14800,
-        "populationEstimateFormatted": "14,800",
-        "exposureLevel": "MODERATE",
-        "exposureBadge": "bg-amber-950 text-amber-400 border-amber-500",
-        "vulnerableLocations": [
-          {
-            "id": "VULN-VILLAGE-01",
-            "type": "VILLAGE",
-            "name": "Kaggalipura Village",
-            "distanceKm": 7.4,
-            "population": 4600,
-            "color": "#f97316",
-            "icon": "🟧",
-            "category": "Village Community",
-            "coordinates": {
-              "lat": 12.802,
-              "lng": 77.501
-            }
-          },
-          {
-            "id": "VULN-ROAD-01",
-            "type": "ROAD",
-            "name": "NH-948 Kanakapura Expressway",
-            "distanceKm": 3.7,
-            "color": "#e2e8f0",
-            "icon": "🛣️",
-            "category": "Major Highway & Evacuation Route",
-            "coordinates": {
-              "lat": 12.829,
-              "lng": 77.521
-            }
-          },
-          {
-            "id": "VULN-SCHOOL-01",
-            "type": "SCHOOL",
-            "name": "Rural Vidya Mandir, Kaggalipura",
-            "distanceKm": 6.2,
-            "color": "#eab308",
-            "icon": "🟨",
-            "category": "Educational Institute",
-            "coordinates": {
-              "lat": 12.809,
-              "lng": 77.509
-            }
-          },
-          {
-            "id": "VULN-HOSPITAL-01",
-            "type": "HOSPITAL",
-            "name": "Sri Sri College of Ayurvedic Hospital & Clinic",
-            "distanceKm": 1.9,
-            "color": "#38bdf8",
-            "icon": "🟦",
-            "category": "Emergency Medical Center",
-            "coordinates": {
-              "lat": 12.842,
-              "lng": 77.531
-            }
-          },
-          {
-            "id": "VULN-POPCENTER-01",
-            "type": "POPULATION_CENTER",
-            "name": "Thalaghattapura Township Corridor",
-            "distanceKm": 1.5,
-            "population": 14800,
-            "color": "#a855f7",
-            "icon": "👥",
-            "category": "Population Center",
-            "coordinates": {
-              "lat": 12.868,
-              "lng": 77.539
-            }
-          }
-        ],
-        "radiiMeters": [
-          1000,
-          5000,
-          10000
-        ],
-        "dataSourceNotice": "Population data: DEMO / API READY"
-      },
-      "spreadSimulation": {
-        "incidentId": "FG-2026-5804",
-        "currentLocation": {
-          "lat": 12.855,
-          "lng": 77.542
-        },
-        "currentEstimatedArea": "3.6 ha",
-        "selectedMinutes": 60,
-        "weather": {
-          "sourceLabel": "DEMO WEATHER DATA",
-          "temperatureC": 42,
-          "humidityPercent": 19,
-          "windSpeedKmH": 18,
-          "windDirection": "North-East",
-          "windBearingDeg": 45,
-          "vegetationRisk": "Dry Deciduous / High Fuel Load",
-          "terrainRisk": "Ridge Slope / Moderate Updraft"
-        },
-        "estimates": {
-          "currentArea": "3.6 ha",
-          "min30Area": "4.8 ha",
-          "min60Area": "6.6 ha",
-          "min90Area": "8.7 ha",
-          "projectedDirection": "North-East",
-          "risk": "HIGH"
-        },
-        "rawEstimates": {
-          "current": {
-            "minutes": 0,
-            "areaHectares": 3.6,
-            "radiusMeters": 107,
-            "color": "#ef4444",
-            "label": "CURRENT FIRE"
-          },
-          "min30": {
-            "minutes": 30,
-            "areaHectares": 4.8,
-            "radiusMeters": 123,
-            "color": "#f97316",
-            "label": "30 MIN SPREAD"
-          },
-          "min60": {
-            "minutes": 60,
-            "areaHectares": 6.6,
-            "radiusMeters": 144,
-            "color": "#f59e0b",
-            "label": "60 MIN SPREAD"
-          },
-          "min90": {
-            "minutes": 90,
-            "areaHectares": 8.7,
-            "radiusMeters": 167,
-            "color": "#eab308",
-            "label": "90 MIN SPREAD"
-          }
-        },
-        "spreadGeometries": {
-          "current": {
-            "center": {
-              "lat": 12.855,
-              "lng": 77.542
-            },
-            "polygon": [
-              {
-                "lat": 12.855883,
-                "lng": 77.542
-              },
-              {
-                "lat": 12.855658,
-                "lng": 77.542675
-              },
-              {
-                "lat": 12.855,
-                "lng": 77.54311
-              },
-              {
-                "lat": 12.85442,
-                "lng": 77.542595
-              },
-              {
-                "lat": 12.85396,
-                "lng": 77.542
-              },
-              {
-                "lat": 12.854299,
-                "lng": 77.541281
-              },
-              {
-                "lat": 12.855,
-                "lng": 77.541138
-              },
-              {
-                "lat": 12.855779,
-                "lng": 77.541201
-              },
-              {
-                "lat": 12.855883,
-                "lng": 77.542
-              }
-            ],
-            "color": "#ef4444"
-          },
-          "min30": {
-            "center": {
-              "lat": 12.856783692781372,
-              "lng": 77.54382954814848
-            },
-            "polygon": [
-              {
-                "lat": 12.85767,
-                "lng": 77.54383
-              },
-              {
-                "lat": 12.857758,
-                "lng": 77.544556
-              },
-              {
-                "lat": 12.857174,
-                "lng": 77.54506
-              },
-              {
-                "lat": 12.856503,
-                "lng": 77.544716
-              },
-              {
-                "lat": 12.855918,
-                "lng": 77.544475
-              },
-              {
-                "lat": 12.85546,
-                "lng": 77.54383
-              },
-              {
-                "lat": 12.855971,
-                "lng": 77.543224
-              },
-              {
-                "lat": 12.856491,
-                "lng": 77.542904
-              },
-              {
-                "lat": 12.857186,
-                "lng": 77.54256
-              },
-              {
-                "lat": 12.857706,
-                "lng": 77.543142
-              },
-              {
-                "lat": 12.85767,
-                "lng": 77.54383
-              }
-            ],
-            "color": "#f97316"
-          },
-          "min60": {
-            "center": {
-              "lat": 12.858949605444465,
-              "lng": 77.54605114232879
-            },
-            "polygon": [
-              {
-                "lat": 12.860156,
-                "lng": 77.546051
-              },
-              {
-                "lat": 12.859835,
-                "lng": 77.546576
-              },
-              {
-                "lat": 12.85964,
-                "lng": 77.547277
-              },
-              {
-                "lat": 12.85895,
-                "lng": 77.547656
-              },
-              {
-                "lat": 12.858346,
-                "lng": 77.547123
-              },
-              {
-                "lat": 12.858064,
-                "lng": 77.546576
-              },
-              {
-                "lat": 12.857569,
-                "lng": 77.546051
-              },
-              {
-                "lat": 12.857595,
-                "lng": 77.545249
-              },
-              {
-                "lat": 12.858346,
-                "lng": 77.544979
-              },
-              {
-                "lat": 12.85895,
-                "lng": 77.545002
-              },
-              {
-                "lat": 12.85964,
-                "lng": 77.544825
-              },
-              {
-                "lat": 12.860305,
-                "lng": 77.545249
-              },
-              {
-                "lat": 12.860156,
-                "lng": 77.546051
-              }
-            ],
-            "color": "#f59e0b"
-          },
-          "min90": {
-            "center": {
-              "lat": 12.861688847930143,
-              "lng": 77.54886080555681
-            },
-            "polygon": [
-              {
-                "lat": 12.863524,
-                "lng": 77.548861
-              },
-              {
-                "lat": 12.86296,
-                "lng": 77.549489
-              },
-              {
-                "lat": 12.86239,
-                "lng": 77.549763
-              },
-              {
-                "lat": 12.862005,
-                "lng": 77.550283
-              },
-              {
-                "lat": 12.861279,
-                "lng": 77.550701
-              },
-              {
-                "lat": 12.860611,
-                "lng": 77.550248
-              },
-              {
-                "lat": 12.860552,
-                "lng": 77.549422
-              },
-              {
-                "lat": 12.860524,
-                "lng": 77.548861
-              },
-              {
-                "lat": 12.860257,
-                "lng": 77.548153
-              },
-              {
-                "lat": 12.86052,
-                "lng": 77.547357
-              },
-              {
-                "lat": 12.861338,
-                "lng": 77.547283
-              },
-              {
-                "lat": 12.861947,
-                "lng": 77.547701
-              },
-              {
-                "lat": 12.862481,
-                "lng": 77.547842
-              },
-              {
-                "lat": 12.863255,
-                "lng": 77.548087
-              },
-              {
-                "lat": 12.863524,
-                "lng": 77.548861
-              }
-            ],
-            "color": "#eab308"
-          }
-        },
-        "arrowWaypoints": [
-          [
-            12.855,
-            77.542
-          ],
-          [
-            12.857229615976715,
-            77.54428693518561
-          ],
-          [
-            12.85977774852153,
-            77.54690057539773
-          ],
-          [
-            12.86264439763445,
-            77.54984092063636
-          ]
-        ],
-        "disclaimer": "SIMULATION - NOT AN OPERATIONAL FIRE-PREDICTION MODEL"
-      },
-      "teamRecommendations": {
-        "incidentId": "FG-2026-5804",
-        "recommendedTeam": {
-          "teamId": "TEAM-04",
-          "name": "Team 04",
-          "fullName": "Team 04 (Bandipur Rapid Response Squad)",
-          "stationId": "STA-KA-01",
-          "stationName": "Bandipur Forest Response Unit",
-          "status": "AVAILABLE",
-          "members": 6,
-          "equipment": [
-            "Water Tanker",
-            "Fire Vehicle (4x4 Brush Engine)",
-            "Aerial Thermal Drone",
-            "Protective Gear (Wildland PPE)"
-          ],
-          "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
-          },
-          "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
-          "currentWorkload": 0,
-          "fixedDistanceKm": 8.2,
-          "fixedEtaMinutes": 14,
-          "currentIncident": "FG-2026-4788",
-          "distanceKm": 8.2,
-          "etaMinutes": 14,
-          "rankingScore": 92,
-          "isRecommended": true,
-          "recommendationBadge": "BEST AVAILABLE TEAM",
-          "reason": "Shortest estimated response time + Available + Suitable equipment"
-        },
-        "alternatives": [
-          {
-            "teamId": "TEAM-01",
-            "name": "Team 01",
-            "fullName": "Team 01 (Bandipur Forest Unit)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Heavy Water Tender",
-              "Drone Patrol Unit"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Heavy Water Tender & Drone Patrol",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 9.6,
-            "fixedEtaMinutes": 16,
-            "currentIncident": null,
-            "distanceKm": 9.6,
-            "etaMinutes": 16,
-            "rankingScore": 73,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-02",
-            "name": "Team 02",
-            "fullName": "Team 02 (Gundlupet Municipal Squad)",
-            "stationId": "STA-KA-02",
-            "stationName": "Gundlupet Municipal Fire Brigade",
-            "status": "BUSY",
-            "members": 8,
-            "equipment": [
-              "Dual Attack Bowser",
-              "High-Pressure Foam Unit",
-              "Forest Chainsaws"
-            ],
-            "coordinates": {
-              "lat": 11.805,
-              "lng": 76.689
-            },
-            "vehicleType": "Dual Attack Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 11.4,
-            "fixedEtaMinutes": 19,
-            "currentIncident": null,
-            "distanceKm": 11.4,
-            "etaMinutes": 19,
-            "rankingScore": 18,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-07",
-            "name": "Team 07",
-            "fullName": "Team 07 (Nagarhole Wildlife Strike Force)",
-            "stationId": "STA-KA-03",
-            "stationName": "Nagarhole Rapid Post",
-            "status": "BUSY",
-            "members": 6,
-            "equipment": [
-              "Quick Response Tender",
-              "Forestry Backpack Water Pumps"
-            ],
-            "coordinates": {
-              "lat": 11.961,
-              "lng": 76.134
-            },
-            "vehicleType": "Quick Response Tender",
-            "currentWorkload": 1,
-            "fixedDistanceKm": 16.8,
-            "fixedEtaMinutes": 27,
-            "distanceKm": 16.8,
-            "etaMinutes": 27,
-            "rankingScore": 3,
-            "isRecommended": false
-          }
-        ],
-        "allRankedTeams": [
-          {
-            "teamId": "TEAM-04",
-            "name": "Team 04",
-            "fullName": "Team 04 (Bandipur Rapid Response Squad)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Water Tanker",
-              "Fire Vehicle (4x4 Brush Engine)",
-              "Aerial Thermal Drone",
-              "Protective Gear (Wildland PPE)"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 8.2,
-            "fixedEtaMinutes": 14,
-            "currentIncident": "FG-2026-4788",
-            "distanceKm": 8.2,
-            "etaMinutes": 14,
-            "rankingScore": 92,
-            "isRecommended": true,
-            "recommendationBadge": "BEST AVAILABLE TEAM",
-            "reason": "Shortest estimated response time + Available + Suitable equipment"
-          },
-          {
-            "teamId": "TEAM-01",
-            "name": "Team 01",
-            "fullName": "Team 01 (Bandipur Forest Unit)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Heavy Water Tender",
-              "Drone Patrol Unit"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Heavy Water Tender & Drone Patrol",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 9.6,
-            "fixedEtaMinutes": 16,
-            "currentIncident": null,
-            "distanceKm": 9.6,
-            "etaMinutes": 16,
-            "rankingScore": 73,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-02",
-            "name": "Team 02",
-            "fullName": "Team 02 (Gundlupet Municipal Squad)",
-            "stationId": "STA-KA-02",
-            "stationName": "Gundlupet Municipal Fire Brigade",
-            "status": "BUSY",
-            "members": 8,
-            "equipment": [
-              "Dual Attack Bowser",
-              "High-Pressure Foam Unit",
-              "Forest Chainsaws"
-            ],
-            "coordinates": {
-              "lat": 11.805,
-              "lng": 76.689
-            },
-            "vehicleType": "Dual Attack Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 11.4,
-            "fixedEtaMinutes": 19,
-            "currentIncident": null,
-            "distanceKm": 11.4,
-            "etaMinutes": 19,
-            "rankingScore": 18,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-07",
-            "name": "Team 07",
-            "fullName": "Team 07 (Nagarhole Wildlife Strike Force)",
-            "stationId": "STA-KA-03",
-            "stationName": "Nagarhole Rapid Post",
-            "status": "BUSY",
-            "members": 6,
-            "equipment": [
-              "Quick Response Tender",
-              "Forestry Backpack Water Pumps"
-            ],
-            "coordinates": {
-              "lat": 11.961,
-              "lng": 76.134
-            },
-            "vehicleType": "Quick Response Tender",
-            "currentWorkload": 1,
-            "fixedDistanceKm": 16.8,
-            "fixedEtaMinutes": 27,
-            "distanceKm": 16.8,
-            "etaMinutes": 27,
-            "rankingScore": 3,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-05",
-            "name": "Team 05",
-            "fullName": "Team 05 (Reserve Backup Squad)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "OFFLINE",
-            "members": 5,
-            "equipment": [
-              "Logistics Bowser"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Logistics Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 24,
-            "fixedEtaMinutes": 45,
-            "currentIncident": null,
-            "distanceKm": 24,
-            "etaMinutes": 45,
-            "rankingScore": -46,
-            "isRecommended": false
-          }
-        ],
-        "disclaimer": "Admin retains full command authority to dispatch response team."
-      }
-    },
-    {
       "incidentId": "FG-2026-9151",
       "reporterId": "REP-ANON-327",
       "source": "Citizen Image",
@@ -10013,30 +8581,30 @@
       }
     },
     {
-      "incidentId": "FG-2026-7775",
-      "reporterId": "REP-ANON-571",
+      "incidentId": "FG-2026-8769",
+      "reporterId": "REP-ANON-465",
       "source": "Citizen Image",
       "detectionMethod": "Image",
-      "imageUrl": "/uploads/fg_1791467702901_4398.jpg",
+      "imageUrl": "/uploads/fg_1791480180102_9227.jpg",
       "videoUrl": null,
-      "latitude": 12.8792,
-      "longitude": 77.5446,
-      "title": "KS Institute of Technology (KSIT), Kanakapura Road, Vajrahalli, Bengaluru",
-      "alertTitle": "KS Institute of Technology (KSIT), Kanakapura Road, Vajrahalli, Bengaluru",
-      "forestName": "KS Institute of Technology (KSIT), Kanakapura Road, Vajrahalli, Bengaluru",
-      "state": "Karnataka",
-      "district": "Chamarajanagar",
+      "latitude": 29.5258,
+      "longitude": 78.7723,
+      "title": "Jim Corbett National Park",
+      "alertTitle": "Jim Corbett National Park",
+      "forestName": "Jim Corbett National Park",
+      "state": "Uttarakhand",
+      "district": "Nainital & Pauri Garhwal",
       "description": "Forest fire alert reported by citizen.",
       "estimatedSize": "Large",
       "smokeVisible": true,
       "flamesVisible": true,
-      "peopleInDanger": false,
+      "peopleInDanger": true,
       "aiConfidence": 98.8,
-      "severity": "HIGH",
-      "riskScore": 75,
+      "severity": "CRITICAL",
+      "riskScore": 85,
       "satelliteConfidence": 0,
-      "sensorConfidence": 0,
-      "status": "UNDER REVIEW",
+      "sensorConfidence": 44,
+      "status": "TEAM DISPATCHED",
       "aiExplanation": "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire.",
       "affectedAreaHectares": 3.6,
       "affectedRadiiMeters": [
@@ -10051,113 +8619,163 @@
         "Vegetation"
       ],
       "featureBreakdown": [],
-      "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
+      "multiSourceSummary": "2 SOURCES CONFIRM POTENTIAL FIRE",
       "nearestStation": {
-        "id": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-        "forestId": "FOR-KA-03",
-        "state": "Karnataka",
+        "id": "STA-UK-01",
+        "name": "Corbett Special Tiger Protection Force (STPF) Station",
+        "forestId": "FOR-UK-01",
+        "state": "Uttarakhand",
         "coordinates": {
-          "lat": 12.859,
-          "lng": 77.546
+          "lat": 29.541,
+          "lng": 78.789
         },
-        "phone": "+91-80-22971550",
-        "etaMinutesBase": 5,
-        "unitType": "Kanakapura Highway Fire Squad",
+        "phone": "+91-5947-251489",
+        "etaMinutesBase": 14,
+        "unitType": "Himalayan Forest Fire Strike Team",
         "crewCount": 18,
-        "waterTenders": 4,
-        "aerialDrones": 2,
+        "waterTenders": 3,
+        "aerialDrones": 3,
         "status": "AVAILABLE",
         "distanceKm": 2.3,
         "distanceMeters": 2300,
         "etaMinutes": 7,
         "routeWaypoints": [
           [
-            12.859,
-            77.546
+            29.541,
+            78.789
           ],
           [
-            12.86137,
-            77.54517
+            29.53747,
+            78.78562
           ],
           [
-            12.86747,
-            77.54657
+            29.53767,
+            78.78447
           ],
           [
-            12.8671,
-            77.5441
+            29.5314,
+            78.77945
           ],
           [
-            12.8742,
-            77.54611
+            29.5326,
+            78.77891
           ],
           [
-            12.87483,
-            77.54423
+            29.52733,
+            78.77448
           ],
           [
-            12.8792,
-            77.5446
+            29.5258,
+            78.7723
           ]
         ]
       },
       "assignedStation": {
-        "stationId": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "stationId": "STA-UK-01",
+        "name": "Corbett Special Tiger Protection Force (STPF) Station",
         "distanceKm": 2.3,
         "etaMinutes": 7,
-        "phone": "+91-80-22971550",
+        "phone": "+91-5947-251489",
         "availability": "AVAILABLE"
       },
       "rankedStations": [
         {
-          "id": "STA-BLR-01",
-          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
+          "id": "STA-UK-01",
+          "name": "Corbett Special Tiger Protection Force (STPF) Station",
+          "forestId": "FOR-UK-01",
+          "state": "Uttarakhand",
           "coordinates": {
-            "lat": 12.859,
-            "lng": 77.546
+            "lat": 29.541,
+            "lng": 78.789
           },
-          "phone": "+91-80-22971550",
-          "etaMinutesBase": 5,
-          "unitType": "Kanakapura Highway Fire Squad",
+          "phone": "+91-5947-251489",
+          "etaMinutesBase": 14,
+          "unitType": "Himalayan Forest Fire Strike Team",
           "crewCount": 18,
-          "waterTenders": 4,
-          "aerialDrones": 2,
+          "waterTenders": 3,
+          "aerialDrones": 3,
           "status": "AVAILABLE",
           "distanceKm": 2.3,
           "distanceMeters": 2300,
           "etaMinutes": 7,
           "routeWaypoints": [
             [
-              12.859,
-              77.546
+              29.541,
+              78.789
             ],
             [
-              12.86137,
-              77.54517
+              29.53747,
+              78.78562
             ],
             [
-              12.86747,
-              77.54657
+              29.53767,
+              78.78447
             ],
             [
-              12.8671,
-              77.5441
+              29.5314,
+              78.77945
             ],
             [
-              12.8742,
-              77.54611
+              29.5326,
+              78.77891
             ],
             [
-              12.87483,
-              77.54423
+              29.52733,
+              78.77448
             ],
             [
-              12.8792,
-              77.5446
+              29.5258,
+              78.7723
+            ]
+          ]
+        },
+        {
+          "id": "STA-MP-01",
+          "name": "Kanha Khatia Fire Response Post",
+          "forestId": "FOR-MP-01",
+          "state": "Madhya Pradesh",
+          "coordinates": {
+            "lat": 22.351,
+            "lng": 80.592
+          },
+          "phone": "+91-7632-256312",
+          "etaMinutesBase": 20,
+          "unitType": "Central Reserve Fire Patrol",
+          "crewCount": 14,
+          "waterTenders": 2,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 818.2,
+          "distanceMeters": 818200,
+          "etaMinutes": 1406,
+          "routeWaypoints": [
+            [
+              22.351,
+              80.592
+            ],
+            [
+              23.5458,
+              80.28812
+            ],
+            [
+              24.74433,
+              79.98647
+            ],
+            [
+              25.9364,
+              79.68095
+            ],
+            [
+              27.13593,
+              79.37991
+            ],
+            [
+              28.329,
+              79.07498
+            ],
+            [
+              29.5258,
+              78.7723
             ]
           ]
         },
@@ -10177,248 +8795,214 @@
           "waterTenders": 6,
           "aerialDrones": 2,
           "status": "AVAILABLE",
-          "distanceKm": 5.7,
-          "distanceMeters": 5700,
-          "etaMinutes": 13,
+          "distanceKm": 1850.1,
+          "distanceMeters": 1850100,
+          "etaMinutes": 3175,
           "routeWaypoints": [
             [
               12.925,
               77.568
             ],
             [
-              12.91637,
-              77.5635
+              15.6908,
+              77.76812
             ],
             [
-              12.91147,
-              77.56124
+              18.46033,
+              77.97047
             ],
             [
-              12.9001,
-              77.5551
+              21.2234,
+              78.16895
             ],
             [
-              12.8962,
-              77.55344
+              23.99393,
+              78.37191
             ],
             [
-              12.88583,
-              77.5479
+              26.758,
+              78.57098
             ],
             [
-              12.8792,
-              77.5446
-            ]
-          ]
-        },
-        {
-          "id": "STA-BLR-02",
-          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.829,
-            "lng": 77.518
-          },
-          "phone": "+91-80-22971565",
-          "etaMinutesBase": 6,
-          "unitType": "Campus & Reserve Forest Unit",
-          "crewCount": 14,
-          "waterTenders": 3,
-          "aerialDrones": 1,
-          "status": "AVAILABLE",
-          "distanceKm": 6.3,
-          "distanceMeters": 6300,
-          "etaMinutes": 14,
-          "routeWaypoints": [
-            [
-              12.829,
-              77.518
-            ],
-            [
-              12.83637,
-              77.52183
-            ],
-            [
-              12.84747,
-              77.52791
-            ],
-            [
-              12.8521,
-              77.5301
-            ],
-            [
-              12.8642,
-              77.53677
-            ],
-            [
-              12.86983,
-              77.53957
-            ],
-            [
-              12.8792,
-              77.5446
+              29.5258,
+              78.7723
             ]
           ]
         }
       ],
       "assignedTeam": {
-        "teamId": "TEAM-04",
-        "name": "Team 04",
-        "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "etaMinutes": 19
+        "teamId": "STA-UK-01",
+        "name": "Corbett Special Tiger Protection Force (STPF) Station",
+        "status": "DISPATCHED",
+        "dispatchedAt": "2026-10-08T17:23:55.968Z",
+        "etaMinutes": 7,
+        "distanceKm": 2.3,
+        "instruction": "Deploy high-pressure water tender and aerial surveillance drones to Jim Corbett National Park.",
+        "distanceRemainingKm": 0.3,
+        "etaRemainingMin": 1
       },
       "nearestWaterBody": {
-        "id": "WB-BLR-01",
-        "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
-        "forestId": "FOR-KA-03",
-        "state": "Karnataka",
+        "id": "WB-02",
+        "name": "Ramganga Dam & River Reservoir",
+        "forestId": "FOR-UK-01",
+        "state": "Uttarakhand",
         "coordinates": {
-          "lat": 12.868,
-          "lng": 77.538
+          "lat": 29.585,
+          "lng": 78.752
         },
-        "type": "Freshwater Lake & Fire Hydrant Terminal",
-        "capacity": "Continuous 25,000 Litres Aerial Drafting",
-        "waterSourceType": "LAKE",
-        "distanceKm": 1.4,
-        "distanceMeters": 1400,
+        "type": "River / Reservoir",
+        "capacity": "Continuous Perennial River Flow (45,000 LPM)",
+        "waterSourceType": "RIVER",
+        "distanceKm": 6.9,
+        "distanceMeters": 6900,
         "routeWaypoints": [
           [
-            12.868,
-            77.538
+            29.585,
+            78.752
           ],
           [
-            12.86906,
-            77.53861
+            29.57198,
+            78.75535
           ],
           [
-            12.87438,
-            77.54178
+            29.56322,
+            78.76126
           ],
           [
-            12.87282,
-            77.54082
+            29.54758,
+            78.76304
           ],
           [
-            12.87814,
-            77.54399
+            29.53882,
+            78.76895
           ],
           [
-            12.8792,
-            77.5446
+            29.5258,
+            78.7723
           ]
         ]
       },
       "rankedWaterBodies": [
         {
-          "id": "WB-01",
-          "name": "Kabini Reservoir & Backwaters",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
+          "id": "WB-02",
+          "name": "Ramganga Dam & River Reservoir",
+          "forestId": "FOR-UK-01",
+          "state": "Uttarakhand",
           "coordinates": {
-            "lat": 11.968,
-            "lng": 76.352
+            "lat": 29.585,
+            "lng": 78.752
           },
-          "type": "Dam / Large Reservoir",
-          "capacity": "19.52 TMC (High Volume Aerial Drafting Access)",
-          "waterSourceType": "RESERVOIR",
-          "distanceKm": 164.4,
-          "distanceMeters": 164400,
-          "routeWaypoints": [
-            [
-              11.968,
-              76.352
-            ],
-            [
-              12.19439,
-              76.6493
-            ],
-            [
-              12.4256,
-              76.9495
-            ],
-            [
-              12.64999,
-              77.2456
-            ],
-            [
-              12.8792,
-              77.5446
-            ]
-          ]
-        },
-        {
-          "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
-          },
-          "type": "River Gorge Pool",
-          "capacity": "Continuous 14,000 LPM",
+          "type": "River / Reservoir",
+          "capacity": "Continuous Perennial River Flow (45,000 LPM)",
           "waterSourceType": "RIVER",
-          "distanceKm": 171.9,
-          "distanceMeters": 171900,
+          "distanceKm": 6.9,
+          "distanceMeters": 6900,
           "routeWaypoints": [
             [
-              11.602,
-              76.654
+              29.585,
+              78.752
             ],
             [
-              11.91989,
-              76.8758
+              29.57198,
+              78.75535
             ],
             [
-              12.2426,
-              77.1005
+              29.56322,
+              78.76126
             ],
             [
-              12.55849,
-              77.3211
+              29.54758,
+              78.76304
             ],
             [
-              12.8792,
-              77.5446
+              29.53882,
+              78.76895
+            ],
+            [
+              29.5258,
+              78.7723
             ]
           ]
         },
         {
-          "id": "WB-03",
-          "name": "Periyar Lake Aquatic Sanctuary",
-          "forestId": "FOR-KL-01",
-          "state": "Kerala",
+          "id": "WB-04",
+          "name": "Banjar River Water Extraction Point",
+          "forestId": "FOR-MP-01",
+          "state": "Madhya Pradesh",
           "coordinates": {
-            "lat": 9.532,
-            "lng": 77.17
+            "lat": 22.312,
+            "lng": 80.598
           },
-          "type": "Natural Freshwater Lake",
-          "capacity": "Unlimited Drafting Access",
-          "waterSourceType": "LAKE",
-          "distanceKm": 374.4,
-          "distanceMeters": 374400,
+          "type": "River / Sump Terminal",
+          "capacity": "12,000 LPM High Pressure Pump Draft",
+          "waterSourceType": "RIVER",
+          "distanceKm": 822.6,
+          "distanceMeters": 822600,
           "routeWaypoints": [
             [
-              9.532,
-              77.17
+              22.312,
+              80.598
             ],
             [
-              10.36739,
-              77.2628
+              23.75358,
+              80.23215
             ],
             [
-              11.2076,
-              77.3585
+              25.19942,
+              79.86886
             ],
             [
-              12.04099,
-              77.4501
+              26.63838,
+              79.50144
             ],
             [
-              12.8792,
-              77.5446
+              28.08422,
+              79.13815
+            ],
+            [
+              29.5258,
+              78.7723
+            ]
+          ]
+        },
+        {
+          "id": "WB-05",
+          "name": "Hiran River Emergency Draft Pier",
+          "forestId": "FOR-GJ-01",
+          "state": "Gujarat",
+          "coordinates": {
+            "lat": 21.145,
+            "lng": 70.795
+          },
+          "type": "Seasonal River Basin",
+          "capacity": "8,500 LPM Water Tender Shuttle Station",
+          "waterSourceType": "RIVER",
+          "distanceKm": 1228.4,
+          "distanceMeters": 1228400,
+          "routeWaypoints": [
+            [
+              21.145,
+              70.795
+            ],
+            [
+              22.81998,
+              72.38975
+            ],
+            [
+              24.49922,
+              73.98706
+            ],
+            [
+              26.17158,
+              75.58024
+            ],
+            [
+              27.85082,
+              77.17755
+            ],
+            [
+              29.5258,
+              78.7723
             ]
           ]
         }
@@ -10430,29 +9014,34 @@
       },
       "timeline": [
         {
-          "time": "07:25:03 pm",
-          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (12.8792, 77.5446)",
+          "time": "10:53:00 pm",
+          "message": "Citizen reported fire at Jim Corbett National Park (29.5258, 78.7723)",
           "type": "REPORT"
         },
         {
-          "time": "07:25:03 pm",
+          "time": "10:53:00 pm",
           "message": "Evidence ingested (Image)",
           "type": "INGEST"
         },
         {
-          "time": "07:25:03 pm",
-          "message": "AI Analysis complete: 98.8% confidence (HIGH)",
+          "time": "10:53:00 pm",
+          "message": "AI Analysis complete: 98.8% confidence (CRITICAL)",
           "type": "AI"
         },
         {
-          "time": "07:25:03 pm",
-          "message": "Risk score calculated: 75 / 100",
+          "time": "10:53:00 pm",
+          "message": "Risk score calculated: 85 / 100",
           "type": "RISK"
         },
         {
-          "time": "07:25:03 pm",
+          "time": "10:53:00 pm",
           "message": "Admin authority alerted in real-time via Socket.IO",
           "type": "ALERT"
+        },
+        {
+          "time": "10:53:55 pm",
+          "message": "Corbett Special Tiger Protection Force (STPF) Station dispatched by Admin Command",
+          "type": "DISPATCH"
         }
       ],
       "isPriority": true,
@@ -10462,8 +9051,8 @@
         "fireLevel": "CRITICAL",
         "fireConfidence": 98.8,
         "smokeConfidence": 98.5,
-        "fireCoverage": 86.4,
-        "smokeLevel": 82.1,
+        "fireCoverage": 78.9,
+        "smokeLevel": 94.7,
         "anomalyConfidence": 97.3,
         "riskScore": 99,
         "severity": "CRITICAL",
@@ -10472,1506 +9061,62 @@
         "statusText": "Status: Active Wildfire (6 Objects)",
         "badgeText": "CRITICAL",
         "earlyWarningAlert": "CRITICAL - IMMEDIATE DISPATCH",
-        "fakeProbability": 4.5,
-        "authenticityScore": 95.5,
+        "fakeProbability": 3.3,
+        "authenticityScore": 96.7,
         "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
         "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
         "isFake": false,
         "aiFakeScore": {
-          "fakeProbability": 4.5,
-          "authenticityScore": 95.5,
+          "fakeProbability": 3.3,
+          "authenticityScore": 96.7,
           "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
           "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
           "isFake": false
         },
-        "timestamp": "07:25:03 PM",
+        "timestamp": "10:53:00 PM",
         "engineName": "YOLOv8 ENGINE READY"
       },
       "routeWaypoints": [
         [
-          12.8242,
-          77.5996
+          29.541,
+          78.789
         ],
         [
-          12.83237,
-          77.58983
+          29.53747,
+          78.78562
         ],
         [
-          12.84427,
-          77.58231
+          29.53767,
+          78.78447
         ],
         [
-          12.8497,
-          77.5709
+          29.5314,
+          78.77945
         ],
         [
-          12.8626,
-          77.56397
+          29.5326,
+          78.77891
         ],
         [
-          12.86903,
-          77.55317
+          29.52733,
+          78.77448
         ],
         [
-          12.8792,
-          77.5446
+          29.5258,
+          78.7723
         ]
       ],
-      "routeProgressIndex": 0,
-      "createdAt": "2026-10-08T13:55:03.130Z",
-      "updatedAt": "2026-10-08T13:55:03.130Z",
+      "routeProgressIndex": 6,
+      "createdAt": "2026-10-08T17:23:00.914Z",
+      "updatedAt": "2026-10-08T17:24:07.658Z",
       "firePerimeter": {
-        "incidentId": "FG-2026-7775",
+        "incidentId": "FG-2026-8769",
         "center": {
-          "lat": 12.8792,
-          "lng": 77.5446
+          "lat": 29.5258,
+          "lng": 78.7723
         },
         "estimatedAreaHectares": 3.6,
-        "severity": "HIGH",
-        "zones": {
-          "confirmed": {
-            "color": "#ef4444",
-            "fillColor": "#dc2626",
-            "fillOpacity": 0.35,
-            "strokeColor": "#b91c1c",
-            "strokeWeight": 2.5,
-            "radiusMeters": 107,
-            "polygonCoords": [
-              {
-                "lat": 12.880003,
-                "lng": 77.5446
-              },
-              {
-                "lat": 12.879964,
-                "lng": 77.545169
-              },
-              {
-                "lat": 12.879549,
-                "lng": 77.545703
-              },
-              {
-                "lat": 12.87893,
-                "lng": 77.545452
-              },
-              {
-                "lat": 12.878515,
-                "lng": 77.54511
-              },
-              {
-                "lat": 12.87808,
-                "lng": 77.5446
-              },
-              {
-                "lat": 12.878409,
-                "lng": 77.54401
-              },
-              {
-                "lat": 12.878955,
-                "lng": 77.543827
-              },
-              {
-                "lat": 12.879524,
-                "lng": 77.543577
-              },
-              {
-                "lat": 12.880071,
-                "lng": 77.543951
-              },
-              {
-                "lat": 12.880003,
-                "lng": 77.5446
-              }
-            ],
-            "name": "Confirmed Active Fire Area",
-            "estimatedHectares": 3.6
-          },
-          "highRisk": {
-            "color": "#f97316",
-            "fillColor": "#ea580c",
-            "fillOpacity": 0.22,
-            "strokeColor": "#c2410c",
-            "strokeWeight": 2,
-            "radiusMeters": 235,
-            "polygonCoords": [
-              {
-                "lat": 12.881027,
-                "lng": 77.5446
-              },
-              {
-                "lat": 12.881149,
-                "lng": 77.545754
-              },
-              {
-                "lat": 12.880398,
-                "lng": 77.546728
-              },
-              {
-                "lat": 12.8792,
-                "lng": 77.546623
-              },
-              {
-                "lat": 12.878287,
-                "lng": 77.546223
-              },
-              {
-                "lat": 12.877251,
-                "lng": 77.545754
-              },
-              {
-                "lat": 12.876805,
-                "lng": 77.5446
-              },
-              {
-                "lat": 12.877492,
-                "lng": 77.543589
-              },
-              {
-                "lat": 12.878287,
-                "lng": 77.542977
-              },
-              {
-                "lat": 12.8792,
-                "lng": 77.542292
-              },
-              {
-                "lat": 12.880398,
-                "lng": 77.542472
-              },
-              {
-                "lat": 12.880908,
-                "lng": 77.543589
-              },
-              {
-                "lat": 12.881027,
-                "lng": 77.5446
-              }
-            ],
-            "name": "High-Risk Surrounding Zone",
-            "estimatedHectares": 11.5
-          },
-          "potentialExpansion": {
-            "color": "#eab308",
-            "fillColor": "#ca8a04",
-            "fillOpacity": 0.14,
-            "strokeColor": "#a16207",
-            "strokeWeight": 1.5,
-            "radiusMeters": 407,
-            "polygonCoords": [
-              {
-                "lat": 12.883156,
-                "lng": 77.5446
-              },
-              {
-                "lat": 12.882836,
-                "lng": 77.546396
-              },
-              {
-                "lat": 12.881398,
-                "lng": 77.547427
-              },
-              {
-                "lat": 12.879916,
-                "lng": 77.547819
-              },
-              {
-                "lat": 12.878401,
-                "lng": 77.548193
-              },
-              {
-                "lat": 12.876665,
-                "lng": 77.54786
-              },
-              {
-                "lat": 12.875685,
-                "lng": 77.546337
-              },
-              {
-                "lat": 12.875844,
-                "lng": 77.5446
-              },
-              {
-                "lat": 12.876247,
-                "lng": 77.543141
-              },
-              {
-                "lat": 12.876839,
-                "lng": 77.541563
-              },
-              {
-                "lat": 12.878289,
-                "lng": 77.540506
-              },
-              {
-                "lat": 12.880028,
-                "lng": 77.54088
-              },
-              {
-                "lat": 12.881225,
-                "lng": 77.541996
-              },
-              {
-                "lat": 12.882273,
-                "lng": 77.543082
-              },
-              {
-                "lat": 12.883156,
-                "lng": 77.5446
-              }
-            ],
-            "name": "Potential Expansion Zone",
-            "estimatedHectares": 23.4
-          }
-        },
-        "title": "ESTIMATED FIRE PERIMETER",
-        "disclaimer": "ESTIMATED FIRE PERIMETER - Prototype estimate based on incident coordinates, severity and affected-area value. Not satellite-derived GIS."
-      },
-      "fireDangerIndex": {
-        "score": 87,
-        "maxScore": 100,
-        "category": "CRITICAL",
-        "categoryBadge": "bg-red-950 text-red-400 border-red-500",
-        "factors": {
-          "temperature": "42°C",
-          "humidity": "19%",
-          "wind": "18 km/h",
-          "vegetation": "DRY",
-          "recentHistory": "HIGH",
-          "aiConfidence": "99%",
-          "smokeIndex": "85%"
-        },
-        "explanations": [
-          {
-            "factor": "Temperature",
-            "value": "42°C",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Humidity",
-            "value": "19%",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Wind",
-            "value": "18 km/h",
-            "contribution": "MEDIUM CONTRIBUTION",
-            "level": "MEDIUM"
-          },
-          {
-            "factor": "Dry vegetation",
-            "value": "DRY FUELS",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Recent fire activity",
-            "value": "3 DETECTIONS (48H)",
-            "contribution": "MEDIUM CONTRIBUTION",
-            "level": "MEDIUM"
-          },
-          {
-            "factor": "AI detection",
-            "value": "99% CONFIDENCE",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          }
-        ],
-        "label": "Prototype Fire Danger Index",
-        "disclaimer": "Prototype Fire Danger Index - DEMO WEATHER DATA. Not an official government fire-danger rating."
-      },
-      "vulnerableLocations": {
-        "incidentId": "FG-2026-7775",
-        "nearest": {
-          "village": {
-            "name": "Kaggalipura Village",
-            "distanceKm": 9.8
-          },
-          "town": {
-            "name": "Kanakapura Town",
-            "distanceKm": 39.5
-          },
-          "road": {
-            "name": "NH-948 Kanakapura Expressway",
-            "distanceKm": 6.1
-          },
-          "school": {
-            "name": "Rural Vidya Mandir, Kaggalipura",
-            "distanceKm": 8.7
-          },
-          "hospital": {
-            "name": "Sri Sri College of Ayurvedic Hospital & Clinic",
-            "distanceKm": 4.4
-          },
-          "populatedArea": {
-            "name": "Thalaghattapura Township Corridor",
-            "population": 14800
-          }
-        },
-        "populationEstimate": 14800,
-        "populationEstimateFormatted": "14,800",
-        "exposureLevel": "MODERATE",
-        "exposureBadge": "bg-amber-950 text-amber-400 border-amber-500",
-        "vulnerableLocations": [
-          {
-            "id": "VULN-VILLAGE-01",
-            "type": "VILLAGE",
-            "name": "Kaggalipura Village",
-            "distanceKm": 9.8,
-            "population": 4600,
-            "color": "#f97316",
-            "icon": "🟧",
-            "category": "Village Community",
-            "coordinates": {
-              "lat": 12.802,
-              "lng": 77.501
-            }
-          },
-          {
-            "id": "VULN-ROAD-01",
-            "type": "ROAD",
-            "name": "NH-948 Kanakapura Expressway",
-            "distanceKm": 6.1,
-            "color": "#e2e8f0",
-            "icon": "🛣️",
-            "category": "Major Highway & Evacuation Route",
-            "coordinates": {
-              "lat": 12.829,
-              "lng": 77.521
-            }
-          },
-          {
-            "id": "VULN-SCHOOL-01",
-            "type": "SCHOOL",
-            "name": "Rural Vidya Mandir, Kaggalipura",
-            "distanceKm": 8.7,
-            "color": "#eab308",
-            "icon": "🟨",
-            "category": "Educational Institute",
-            "coordinates": {
-              "lat": 12.809,
-              "lng": 77.509
-            }
-          },
-          {
-            "id": "VULN-HOSPITAL-01",
-            "type": "HOSPITAL",
-            "name": "Sri Sri College of Ayurvedic Hospital & Clinic",
-            "distanceKm": 4.4,
-            "color": "#38bdf8",
-            "icon": "🟦",
-            "category": "Emergency Medical Center",
-            "coordinates": {
-              "lat": 12.842,
-              "lng": 77.531
-            }
-          },
-          {
-            "id": "VULN-POPCENTER-01",
-            "type": "POPULATION_CENTER",
-            "name": "Thalaghattapura Township Corridor",
-            "distanceKm": 1.4,
-            "population": 14800,
-            "color": "#a855f7",
-            "icon": "👥",
-            "category": "Population Center",
-            "coordinates": {
-              "lat": 12.868,
-              "lng": 77.539
-            }
-          }
-        ],
-        "radiiMeters": [
-          1000,
-          5000,
-          10000
-        ],
-        "dataSourceNotice": "Population data: DEMO / API READY"
-      },
-      "spreadSimulation": {
-        "incidentId": "FG-2026-7775",
-        "currentLocation": {
-          "lat": 12.8792,
-          "lng": 77.5446
-        },
-        "currentEstimatedArea": "3.6 ha",
-        "selectedMinutes": 60,
-        "weather": {
-          "sourceLabel": "DEMO WEATHER DATA",
-          "temperatureC": 42,
-          "humidityPercent": 19,
-          "windSpeedKmH": 18,
-          "windDirection": "North-East",
-          "windBearingDeg": 45,
-          "vegetationRisk": "Dry Deciduous / High Fuel Load",
-          "terrainRisk": "Ridge Slope / Moderate Updraft"
-        },
-        "estimates": {
-          "currentArea": "3.6 ha",
-          "min30Area": "4.8 ha",
-          "min60Area": "6.6 ha",
-          "min90Area": "8.7 ha",
-          "projectedDirection": "North-East",
-          "risk": "HIGH"
-        },
-        "rawEstimates": {
-          "current": {
-            "minutes": 0,
-            "areaHectares": 3.6,
-            "radiusMeters": 107,
-            "color": "#ef4444",
-            "label": "CURRENT FIRE"
-          },
-          "min30": {
-            "minutes": 30,
-            "areaHectares": 4.8,
-            "radiusMeters": 123,
-            "color": "#f97316",
-            "label": "30 MIN SPREAD"
-          },
-          "min60": {
-            "minutes": 60,
-            "areaHectares": 6.6,
-            "radiusMeters": 144,
-            "color": "#f59e0b",
-            "label": "60 MIN SPREAD"
-          },
-          "min90": {
-            "minutes": 90,
-            "areaHectares": 8.7,
-            "radiusMeters": 167,
-            "color": "#eab308",
-            "label": "90 MIN SPREAD"
-          }
-        },
-        "spreadGeometries": {
-          "current": {
-            "center": {
-              "lat": 12.8792,
-              "lng": 77.5446
-            },
-            "polygon": [
-              {
-                "lat": 12.880083,
-                "lng": 77.5446
-              },
-              {
-                "lat": 12.879858,
-                "lng": 77.545275
-              },
-              {
-                "lat": 12.8792,
-                "lng": 77.54571
-              },
-              {
-                "lat": 12.87862,
-                "lng": 77.545195
-              },
-              {
-                "lat": 12.87816,
-                "lng": 77.5446
-              },
-              {
-                "lat": 12.878499,
-                "lng": 77.543881
-              },
-              {
-                "lat": 12.8792,
-                "lng": 77.543738
-              },
-              {
-                "lat": 12.879979,
-                "lng": 77.543801
-              },
-              {
-                "lat": 12.880083,
-                "lng": 77.5446
-              }
-            ],
-            "color": "#ef4444"
-          },
-          "min30": {
-            "center": {
-              "lat": 12.880983692781372,
-              "lng": 77.54642972467245
-            },
-            "polygon": [
-              {
-                "lat": 12.88187,
-                "lng": 77.54643
-              },
-              {
-                "lat": 12.881958,
-                "lng": 77.547156
-              },
-              {
-                "lat": 12.881374,
-                "lng": 77.54766
-              },
-              {
-                "lat": 12.880703,
-                "lng": 77.547316
-              },
-              {
-                "lat": 12.880118,
-                "lng": 77.547075
-              },
-              {
-                "lat": 12.87966,
-                "lng": 77.54643
-              },
-              {
-                "lat": 12.880171,
-                "lng": 77.545824
-              },
-              {
-                "lat": 12.880691,
-                "lng": 77.545505
-              },
-              {
-                "lat": 12.881386,
-                "lng": 77.54516
-              },
-              {
-                "lat": 12.881906,
-                "lng": 77.545742
-              },
-              {
-                "lat": 12.88187,
-                "lng": 77.54643
-              }
-            ],
-            "color": "#f97316"
-          },
-          "min60": {
-            "center": {
-              "lat": 12.883149605444466,
-              "lng": 77.54865153320328
-            },
-            "polygon": [
-              {
-                "lat": 12.884356,
-                "lng": 77.548652
-              },
-              {
-                "lat": 12.884035,
-                "lng": 77.549176
-              },
-              {
-                "lat": 12.88384,
-                "lng": 77.549878
-              },
-              {
-                "lat": 12.88315,
-                "lng": 77.550257
-              },
-              {
-                "lat": 12.882546,
-                "lng": 77.549724
-              },
-              {
-                "lat": 12.882264,
-                "lng": 77.549176
-              },
-              {
-                "lat": 12.881769,
-                "lng": 77.548652
-              },
-              {
-                "lat": 12.881795,
-                "lng": 77.547849
-              },
-              {
-                "lat": 12.882546,
-                "lng": 77.547579
-              },
-              {
-                "lat": 12.88315,
-                "lng": 77.547603
-              },
-              {
-                "lat": 12.88384,
-                "lng": 77.547425
-              },
-              {
-                "lat": 12.884505,
-                "lng": 77.547849
-              },
-              {
-                "lat": 12.884356,
-                "lng": 77.548652
-              }
-            ],
-            "color": "#f59e0b"
-          },
-          "min90": {
-            "center": {
-              "lat": 12.885888847930143,
-              "lng": 77.55146146752169
-            },
-            "polygon": [
-              {
-                "lat": 12.887724,
-                "lng": 77.551461
-              },
-              {
-                "lat": 12.88716,
-                "lng": 77.552089
-              },
-              {
-                "lat": 12.88659,
-                "lng": 77.552364
-              },
-              {
-                "lat": 12.886205,
-                "lng": 77.552884
-              },
-              {
-                "lat": 12.885479,
-                "lng": 77.553302
-              },
-              {
-                "lat": 12.884811,
-                "lng": 77.552848
-              },
-              {
-                "lat": 12.884752,
-                "lng": 77.552023
-              },
-              {
-                "lat": 12.884724,
-                "lng": 77.551461
-              },
-              {
-                "lat": 12.884457,
-                "lng": 77.550754
-              },
-              {
-                "lat": 12.88472,
-                "lng": 77.549958
-              },
-              {
-                "lat": 12.885538,
-                "lng": 77.549883
-              },
-              {
-                "lat": 12.886147,
-                "lng": 77.550302
-              },
-              {
-                "lat": 12.886681,
-                "lng": 77.550442
-              },
-              {
-                "lat": 12.887455,
-                "lng": 77.550688
-              },
-              {
-                "lat": 12.887724,
-                "lng": 77.551461
-              }
-            ],
-            "color": "#eab308"
-          }
-        },
-        "arrowWaypoints": [
-          [
-            12.8792,
-            77.5446
-          ],
-          [
-            12.881429615976716,
-            77.54688715584057
-          ],
-          [
-            12.88397774852153,
-            77.54950104822979
-          ],
-          [
-            12.88684439763445,
-            77.55244167716765
-          ]
-        ],
-        "disclaimer": "SIMULATION - NOT AN OPERATIONAL FIRE-PREDICTION MODEL"
-      },
-      "teamRecommendations": {
-        "incidentId": "FG-2026-7775",
-        "recommendedTeam": {
-          "teamId": "TEAM-04",
-          "name": "Team 04",
-          "fullName": "Team 04 (Bandipur Rapid Response Squad)",
-          "stationId": "STA-KA-01",
-          "stationName": "Bandipur Forest Response Unit",
-          "status": "AVAILABLE",
-          "members": 6,
-          "equipment": [
-            "Water Tanker",
-            "Fire Vehicle (4x4 Brush Engine)",
-            "Aerial Thermal Drone",
-            "Protective Gear (Wildland PPE)"
-          ],
-          "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
-          },
-          "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
-          "currentWorkload": 0,
-          "fixedDistanceKm": 8.2,
-          "fixedEtaMinutes": 14,
-          "currentIncident": "FG-2026-4788",
-          "distanceKm": 8.2,
-          "etaMinutes": 14,
-          "rankingScore": 92,
-          "isRecommended": true,
-          "recommendationBadge": "BEST AVAILABLE TEAM",
-          "reason": "Shortest estimated response time + Available + Suitable equipment"
-        },
-        "alternatives": [
-          {
-            "teamId": "TEAM-01",
-            "name": "Team 01",
-            "fullName": "Team 01 (Bandipur Forest Unit)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Heavy Water Tender",
-              "Drone Patrol Unit"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Heavy Water Tender & Drone Patrol",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 9.6,
-            "fixedEtaMinutes": 16,
-            "currentIncident": null,
-            "distanceKm": 9.6,
-            "etaMinutes": 16,
-            "rankingScore": 73,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-02",
-            "name": "Team 02",
-            "fullName": "Team 02 (Gundlupet Municipal Squad)",
-            "stationId": "STA-KA-02",
-            "stationName": "Gundlupet Municipal Fire Brigade",
-            "status": "BUSY",
-            "members": 8,
-            "equipment": [
-              "Dual Attack Bowser",
-              "High-Pressure Foam Unit",
-              "Forest Chainsaws"
-            ],
-            "coordinates": {
-              "lat": 11.805,
-              "lng": 76.689
-            },
-            "vehicleType": "Dual Attack Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 11.4,
-            "fixedEtaMinutes": 19,
-            "currentIncident": null,
-            "distanceKm": 11.4,
-            "etaMinutes": 19,
-            "rankingScore": 18,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-07",
-            "name": "Team 07",
-            "fullName": "Team 07 (Nagarhole Wildlife Strike Force)",
-            "stationId": "STA-KA-03",
-            "stationName": "Nagarhole Rapid Post",
-            "status": "BUSY",
-            "members": 6,
-            "equipment": [
-              "Quick Response Tender",
-              "Forestry Backpack Water Pumps"
-            ],
-            "coordinates": {
-              "lat": 11.961,
-              "lng": 76.134
-            },
-            "vehicleType": "Quick Response Tender",
-            "currentWorkload": 1,
-            "fixedDistanceKm": 16.8,
-            "fixedEtaMinutes": 27,
-            "distanceKm": 16.8,
-            "etaMinutes": 27,
-            "rankingScore": 3,
-            "isRecommended": false
-          }
-        ],
-        "allRankedTeams": [
-          {
-            "teamId": "TEAM-04",
-            "name": "Team 04",
-            "fullName": "Team 04 (Bandipur Rapid Response Squad)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Water Tanker",
-              "Fire Vehicle (4x4 Brush Engine)",
-              "Aerial Thermal Drone",
-              "Protective Gear (Wildland PPE)"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 8.2,
-            "fixedEtaMinutes": 14,
-            "currentIncident": "FG-2026-4788",
-            "distanceKm": 8.2,
-            "etaMinutes": 14,
-            "rankingScore": 92,
-            "isRecommended": true,
-            "recommendationBadge": "BEST AVAILABLE TEAM",
-            "reason": "Shortest estimated response time + Available + Suitable equipment"
-          },
-          {
-            "teamId": "TEAM-01",
-            "name": "Team 01",
-            "fullName": "Team 01 (Bandipur Forest Unit)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Heavy Water Tender",
-              "Drone Patrol Unit"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Heavy Water Tender & Drone Patrol",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 9.6,
-            "fixedEtaMinutes": 16,
-            "currentIncident": null,
-            "distanceKm": 9.6,
-            "etaMinutes": 16,
-            "rankingScore": 73,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-02",
-            "name": "Team 02",
-            "fullName": "Team 02 (Gundlupet Municipal Squad)",
-            "stationId": "STA-KA-02",
-            "stationName": "Gundlupet Municipal Fire Brigade",
-            "status": "BUSY",
-            "members": 8,
-            "equipment": [
-              "Dual Attack Bowser",
-              "High-Pressure Foam Unit",
-              "Forest Chainsaws"
-            ],
-            "coordinates": {
-              "lat": 11.805,
-              "lng": 76.689
-            },
-            "vehicleType": "Dual Attack Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 11.4,
-            "fixedEtaMinutes": 19,
-            "currentIncident": null,
-            "distanceKm": 11.4,
-            "etaMinutes": 19,
-            "rankingScore": 18,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-07",
-            "name": "Team 07",
-            "fullName": "Team 07 (Nagarhole Wildlife Strike Force)",
-            "stationId": "STA-KA-03",
-            "stationName": "Nagarhole Rapid Post",
-            "status": "BUSY",
-            "members": 6,
-            "equipment": [
-              "Quick Response Tender",
-              "Forestry Backpack Water Pumps"
-            ],
-            "coordinates": {
-              "lat": 11.961,
-              "lng": 76.134
-            },
-            "vehicleType": "Quick Response Tender",
-            "currentWorkload": 1,
-            "fixedDistanceKm": 16.8,
-            "fixedEtaMinutes": 27,
-            "distanceKm": 16.8,
-            "etaMinutes": 27,
-            "rankingScore": 3,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-05",
-            "name": "Team 05",
-            "fullName": "Team 05 (Reserve Backup Squad)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "OFFLINE",
-            "members": 5,
-            "equipment": [
-              "Logistics Bowser"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Logistics Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 24,
-            "fixedEtaMinutes": 45,
-            "currentIncident": null,
-            "distanceKm": 24,
-            "etaMinutes": 45,
-            "rankingScore": -46,
-            "isRecommended": false
-          }
-        ],
-        "disclaimer": "Admin retains full command authority to dispatch response team."
-      }
-    },
-    {
-      "incidentId": "FG-2026-8194",
-      "reporterId": "REP-ANON-669",
-      "source": "Citizen Image",
-      "detectionMethod": "Image",
-      "imageUrl": "/uploads/fg_1791473567215_2774.jpg",
-      "videoUrl": null,
-      "latitude": 12.8596,
-      "longitude": 77.5427,
-      "title": "KS School of Engineering and Management (KSSEM), Kanakapura Road",
-      "alertTitle": "KS School of Engineering and Management (KSSEM), Kanakapura Road",
-      "forestName": "KS School of Engineering and Management (KSSEM), Kanakapura Road",
-      "state": "Karnataka",
-      "district": "Chamarajanagar",
-      "description": "Forest fire alert reported by citizen.",
-      "estimatedSize": "Large",
-      "smokeVisible": true,
-      "flamesVisible": true,
-      "peopleInDanger": true,
-      "aiConfidence": 98.8,
-      "severity": "HIGH",
-      "riskScore": 75,
-      "satelliteConfidence": 0,
-      "sensorConfidence": 0,
-      "status": "UNDER REVIEW",
-      "aiExplanation": "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire.",
-      "affectedAreaHectares": 3.6,
-      "affectedRadiiMeters": [
-        500,
-        1000,
-        5000
-      ],
-      "detectedFeatures": [
-        "Flames",
-        "Smoke",
-        "Heat-like region",
-        "Vegetation"
-      ],
-      "featureBreakdown": [],
-      "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
-      "nearestStation": {
-        "id": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-        "forestId": "FOR-KA-03",
-        "state": "Karnataka",
-        "coordinates": {
-          "lat": 12.859,
-          "lng": 77.546
-        },
-        "phone": "+91-80-22971550",
-        "etaMinutesBase": 5,
-        "unitType": "Kanakapura Highway Fire Squad",
-        "crewCount": 18,
-        "waterTenders": 4,
-        "aerialDrones": 2,
-        "status": "AVAILABLE",
-        "distanceKm": 0.4,
-        "distanceMeters": 400,
-        "etaMinutes": 5,
-        "routeWaypoints": [
-          [
-            12.859,
-            77.546
-          ],
-          [
-            12.8581,
-            77.54485
-          ],
-          [
-            12.86093,
-            77.54594
-          ],
-          [
-            12.8573,
-            77.54315
-          ],
-          [
-            12.86113,
-            77.54484
-          ],
-          [
-            12.8585,
-            77.54265
-          ],
-          [
-            12.8596,
-            77.5427
-          ]
-        ]
-      },
-      "assignedStation": {
-        "stationId": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-        "distanceKm": 0.4,
-        "etaMinutes": 5,
-        "phone": "+91-80-22971550",
-        "availability": "AVAILABLE"
-      },
-      "rankedStations": [
-        {
-          "id": "STA-BLR-01",
-          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.859,
-            "lng": 77.546
-          },
-          "phone": "+91-80-22971550",
-          "etaMinutesBase": 5,
-          "unitType": "Kanakapura Highway Fire Squad",
-          "crewCount": 18,
-          "waterTenders": 4,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 0.4,
-          "distanceMeters": 400,
-          "etaMinutes": 5,
-          "routeWaypoints": [
-            [
-              12.859,
-              77.546
-            ],
-            [
-              12.8581,
-              77.54485
-            ],
-            [
-              12.86093,
-              77.54594
-            ],
-            [
-              12.8573,
-              77.54315
-            ],
-            [
-              12.86113,
-              77.54484
-            ],
-            [
-              12.8585,
-              77.54265
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        },
-        {
-          "id": "STA-BLR-02",
-          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.829,
-            "lng": 77.518
-          },
-          "phone": "+91-80-22971565",
-          "etaMinutesBase": 6,
-          "unitType": "Campus & Reserve Forest Unit",
-          "crewCount": 14,
-          "waterTenders": 3,
-          "aerialDrones": 1,
-          "status": "AVAILABLE",
-          "distanceKm": 4.3,
-          "distanceMeters": 4300,
-          "etaMinutes": 10,
-          "routeWaypoints": [
-            [
-              12.829,
-              77.518
-            ],
-            [
-              12.8331,
-              77.52152
-            ],
-            [
-              12.84093,
-              77.52727
-            ],
-            [
-              12.8423,
-              77.52915
-            ],
-            [
-              12.85113,
-              77.53551
-            ],
-            [
-              12.8535,
-              77.53798
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        },
-        {
-          "id": "STA-BLR-03",
-          "name": "Banashankari Fire & Rescue Command Station",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.925,
-            "lng": 77.568
-          },
-          "phone": "+91-80-22971540",
-          "etaMinutesBase": 14,
-          "unitType": "South Bengaluru Central Fleet",
-          "crewCount": 24,
-          "waterTenders": 6,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 7.8,
-          "distanceMeters": 7800,
-          "etaMinutes": 16,
-          "routeWaypoints": [
-            [
-              12.925,
-              77.568
-            ],
-            [
-              12.9131,
-              77.56318
-            ],
-            [
-              12.90493,
-              77.56061
-            ],
-            [
-              12.8903,
-              77.55415
-            ],
-            [
-              12.88313,
-              77.55217
-            ],
-            [
-              12.8695,
-              77.54632
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        }
-      ],
-      "assignedTeam": {
-        "teamId": "TEAM-04",
-        "name": "Team 04",
-        "status": "AVAILABLE",
-        "distanceKm": 0.4,
-        "etaMinutes": 5
-      },
-      "nearestWaterBody": {
-        "id": "WB-BLR-01",
-        "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
-        "forestId": "FOR-KA-03",
-        "state": "Karnataka",
-        "coordinates": {
-          "lat": 12.868,
-          "lng": 77.538
-        },
-        "type": "Freshwater Lake & Fire Hydrant Terminal",
-        "capacity": "Continuous 25,000 Litres Aerial Drafting",
-        "waterSourceType": "LAKE",
-        "distanceKm": 1.1,
-        "distanceMeters": 1100,
-        "routeWaypoints": [
-          [
-            12.868,
-            77.538
-          ],
-          [
-            12.86514,
-            77.53823
-          ],
-          [
-            12.86654,
-            77.54102
-          ],
-          [
-            12.86106,
-            77.53968
-          ],
-          [
-            12.86246,
-            77.54247
-          ],
-          [
-            12.8596,
-            77.5427
-          ]
-        ]
-      },
-      "rankedWaterBodies": [
-        {
-          "id": "WB-BLR-01",
-          "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.868,
-            "lng": 77.538
-          },
-          "type": "Freshwater Lake & Fire Hydrant Terminal",
-          "capacity": "Continuous 25,000 Litres Aerial Drafting",
-          "waterSourceType": "LAKE",
-          "distanceKm": 1.1,
-          "distanceMeters": 1100,
-          "routeWaypoints": [
-            [
-              12.868,
-              77.538
-            ],
-            [
-              12.86514,
-              77.53823
-            ],
-            [
-              12.86654,
-              77.54102
-            ],
-            [
-              12.86106,
-              77.53968
-            ],
-            [
-              12.86246,
-              77.54247
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        },
-        {
-          "id": "WB-BLR-02",
-          "name": "Kaggalipura Lake Emergency Reservoir (DSATM)",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.812,
-            "lng": 77.51
-          },
-          "type": "Emergency Water Reservoir",
-          "capacity": "50,000 Litres Rapid Pump Draft",
-          "waterSourceType": "RESERVOIR",
-          "distanceKm": 6.4,
-          "distanceMeters": 6400,
-          "routeWaypoints": [
-            [
-              12.812,
-              77.51
-            ],
-            [
-              12.82034,
-              77.51583
-            ],
-            [
-              12.83294,
-              77.52422
-            ],
-            [
-              12.83866,
-              77.52848
-            ],
-            [
-              12.85126,
-              77.53687
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        },
-        {
-          "id": "WB-BLR-03",
-          "name": "Bannerghatta Forest Suvarnamukhi Reservoir",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.795,
-            "lng": 77.568
-          },
-          "type": "Protected Forest Dam & Reservoir",
-          "capacity": "High Volume Aerial Helicopter Drafting",
-          "waterSourceType": "RESERVOIR",
-          "distanceKm": 7.7,
-          "distanceMeters": 7700,
-          "routeWaypoints": [
-            [
-              12.795,
-              77.568
-            ],
-            [
-              12.80674,
-              77.56223
-            ],
-            [
-              12.82274,
-              77.55902
-            ],
-            [
-              12.83186,
-              77.55168
-            ],
-            [
-              12.84786,
-              77.54847
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        }
-      ],
-      "reporter": {
-        "name": "Citizen Observer",
-        "phone": "Undisclosed",
-        "notes": "Forest fire alert reported by citizen."
-      },
-      "timeline": [
-        {
-          "time": "09:02:47 pm",
-          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (12.8596, 77.5427)",
-          "type": "REPORT"
-        },
-        {
-          "time": "09:02:47 pm",
-          "message": "Evidence ingested (Image)",
-          "type": "INGEST"
-        },
-        {
-          "time": "09:02:47 pm",
-          "message": "AI Analysis complete: 98.8% confidence (HIGH)",
-          "type": "AI"
-        },
-        {
-          "time": "09:02:47 pm",
-          "message": "Risk score calculated: 75 / 100",
-          "type": "RISK"
-        },
-        {
-          "time": "09:02:47 pm",
-          "message": "Admin authority alerted in real-time via Socket.IO",
-          "type": "ALERT"
-        }
-      ],
-      "isPriority": true,
-      "priorityLevel": "PRIORITY 1 - CITIZEN REPORT",
-      "scoreboard": {
-        "fireScore": 98.8,
-        "fireLevel": "CRITICAL",
-        "fireConfidence": 98.8,
-        "smokeConfidence": 86.4,
-        "fireCoverage": 94,
-        "smokeLevel": 44.5,
-        "anomalyConfidence": 97.3,
-        "riskScore": 98,
         "severity": "CRITICAL",
-        "objectsCount": 6,
-        "statusTitle": "FIRE DETECTED",
-        "statusText": "Status: Active Wildfire (6 Objects)",
-        "badgeText": "CRITICAL",
-        "earlyWarningAlert": "CRITICAL - IMMEDIATE DISPATCH",
-        "fakeProbability": 3.2,
-        "authenticityScore": 96.8,
-        "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-        "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
-        "isFake": false,
-        "aiFakeScore": {
-          "fakeProbability": 3.2,
-          "authenticityScore": 96.8,
-          "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-          "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
-          "isFake": false
-        },
-        "timestamp": "09:02:47 PM",
-        "engineName": "YOLOv8 ENGINE READY"
-      },
-      "routeWaypoints": [
-        [
-          12.859,
-          77.546
-        ],
-        [
-          12.8581,
-          77.54485
-        ],
-        [
-          12.86093,
-          77.54594
-        ],
-        [
-          12.8573,
-          77.54315
-        ],
-        [
-          12.86113,
-          77.54484
-        ],
-        [
-          12.8585,
-          77.54265
-        ],
-        [
-          12.8596,
-          77.5427
-        ]
-      ],
-      "routeProgressIndex": 0,
-      "createdAt": "2026-10-08T15:32:47.823Z",
-      "updatedAt": "2026-10-08T15:32:47.823Z",
-      "firePerimeter": {
-        "incidentId": "FG-2026-8194",
-        "center": {
-          "lat": 12.8596,
-          "lng": 77.5427
-        },
-        "estimatedAreaHectares": 3.6,
-        "severity": "HIGH",
         "zones": {
           "confirmed": {
             "color": "#ef4444",
@@ -11982,48 +9127,48 @@
             "radiusMeters": 107,
             "polygonCoords": [
               {
-                "lat": 12.860403,
-                "lng": 77.5427
+                "lat": 29.526603,
+                "lng": 78.7723
               },
               {
-                "lat": 12.860364,
-                "lng": 77.543269
+                "lat": 29.526564,
+                "lng": 78.772938
               },
               {
-                "lat": 12.859949,
-                "lng": 77.543803
+                "lat": 29.526149,
+                "lng": 78.773535
               },
               {
-                "lat": 12.85933,
-                "lng": 77.543552
+                "lat": 29.52553,
+                "lng": 78.773255
               },
               {
-                "lat": 12.858915,
-                "lng": 77.54321
+                "lat": 29.525115,
+                "lng": 78.772872
               },
               {
-                "lat": 12.85848,
-                "lng": 77.5427
+                "lat": 29.52468,
+                "lng": 78.7723
               },
               {
-                "lat": 12.858809,
-                "lng": 77.54211
+                "lat": 29.525009,
+                "lng": 78.771639
               },
               {
-                "lat": 12.859355,
-                "lng": 77.541927
+                "lat": 29.525555,
+                "lng": 78.771434
               },
               {
-                "lat": 12.859924,
-                "lng": 77.541677
+                "lat": 29.526124,
+                "lng": 78.771154
               },
               {
-                "lat": 12.860471,
-                "lng": 77.542051
+                "lat": 29.526671,
+                "lng": 78.771573
               },
               {
-                "lat": 12.860403,
-                "lng": 77.5427
+                "lat": 29.526603,
+                "lng": 78.7723
               }
             ],
             "name": "Confirmed Active Fire Area",
@@ -12038,56 +9183,56 @@
             "radiusMeters": 235,
             "polygonCoords": [
               {
-                "lat": 12.861427,
-                "lng": 77.5427
+                "lat": 29.527627,
+                "lng": 78.7723
               },
               {
-                "lat": 12.861549,
-                "lng": 77.543854
+                "lat": 29.527749,
+                "lng": 78.773593
               },
               {
-                "lat": 12.860798,
-                "lng": 77.544828
+                "lat": 29.526998,
+                "lng": 78.774684
               },
               {
-                "lat": 12.8596,
-                "lng": 77.544722
+                "lat": 29.5258,
+                "lng": 78.774566
               },
               {
-                "lat": 12.858687,
-                "lng": 77.544323
+                "lat": 29.524887,
+                "lng": 78.774118
               },
               {
-                "lat": 12.857651,
-                "lng": 77.543854
+                "lat": 29.523851,
+                "lng": 78.773593
               },
               {
-                "lat": 12.857205,
-                "lng": 77.5427
+                "lat": 29.523405,
+                "lng": 78.7723
               },
               {
-                "lat": 12.857892,
-                "lng": 77.541689
+                "lat": 29.524092,
+                "lng": 78.771167
               },
               {
-                "lat": 12.858687,
-                "lng": 77.541077
+                "lat": 29.524887,
+                "lng": 78.770482
               },
               {
-                "lat": 12.8596,
-                "lng": 77.540392
+                "lat": 29.5258,
+                "lng": 78.769714
               },
               {
-                "lat": 12.860798,
-                "lng": 77.540572
+                "lat": 29.526998,
+                "lng": 78.769916
               },
               {
-                "lat": 12.861308,
-                "lng": 77.541689
+                "lat": 29.527508,
+                "lng": 78.771167
               },
               {
-                "lat": 12.861427,
-                "lng": 77.5427
+                "lat": 29.527627,
+                "lng": 78.7723
               }
             ],
             "name": "High-Risk Surrounding Zone",
@@ -12102,64 +9247,64 @@
             "radiusMeters": 407,
             "polygonCoords": [
               {
-                "lat": 12.863556,
-                "lng": 77.5427
+                "lat": 29.529756,
+                "lng": 78.7723
               },
               {
-                "lat": 12.863236,
-                "lng": 77.544496
+                "lat": 29.529436,
+                "lng": 78.774312
               },
               {
-                "lat": 12.861798,
-                "lng": 77.545527
+                "lat": 29.527998,
+                "lng": 78.775467
               },
               {
-                "lat": 12.860316,
-                "lng": 77.545919
+                "lat": 29.526516,
+                "lng": 78.775906
               },
               {
-                "lat": 12.858801,
-                "lng": 77.546293
+                "lat": 29.525001,
+                "lng": 78.776325
               },
               {
-                "lat": 12.857065,
-                "lng": 77.54596
+                "lat": 29.523265,
+                "lng": 78.775953
               },
               {
-                "lat": 12.856085,
-                "lng": 77.544436
+                "lat": 29.522285,
+                "lng": 78.774246
               },
               {
-                "lat": 12.856244,
-                "lng": 77.5427
+                "lat": 29.522444,
+                "lng": 78.7723
               },
               {
-                "lat": 12.856647,
-                "lng": 77.541242
+                "lat": 29.522847,
+                "lng": 78.770666
               },
               {
-                "lat": 12.857239,
-                "lng": 77.539663
+                "lat": 29.523439,
+                "lng": 78.768897
               },
               {
-                "lat": 12.858689,
-                "lng": 77.538606
+                "lat": 29.524889,
+                "lng": 78.767713
               },
               {
-                "lat": 12.860428,
-                "lng": 77.53898
+                "lat": 29.526628,
+                "lng": 78.768132
               },
               {
-                "lat": 12.861625,
-                "lng": 77.540096
+                "lat": 29.527825,
+                "lng": 78.769382
               },
               {
-                "lat": 12.862673,
-                "lng": 77.541182
+                "lat": 29.528873,
+                "lng": 78.770599
               },
               {
-                "lat": 12.863556,
-                "lng": 77.5427
+                "lat": 29.529756,
+                "lng": 78.7723
               }
             ],
             "name": "Potential Expansion Zone",
@@ -12181,7 +9326,7 @@
           "vegetation": "DRY",
           "recentHistory": "HIGH",
           "aiConfidence": "99%",
-          "smokeIndex": "85%"
+          "smokeIndex": "44%"
         },
         "explanations": [
           {
@@ -12225,27 +9370,27 @@
         "disclaimer": "Prototype Fire Danger Index - DEMO WEATHER DATA. Not an official government fire-danger rating."
       },
       "vulnerableLocations": {
-        "incidentId": "FG-2026-8194",
+        "incidentId": "FG-2026-8769",
         "nearest": {
           "village": {
             "name": "Kaggalipura Village",
-            "distanceKm": 7.8
+            "distanceKm": 1864.2
           },
           "town": {
             "name": "Kanakapura Town",
-            "distanceKm": 37.4
+            "distanceKm": 1893.2
           },
           "road": {
             "name": "NH-948 Kanakapura Expressway",
-            "distanceKm": 4.1
+            "distanceKm": 1861.1
           },
           "school": {
             "name": "Rural Vidya Mandir, Kaggalipura",
-            "distanceKm": 6.7
+            "distanceKm": 1863.4
           },
           "hospital": {
             "name": "Sri Sri College of Ayurvedic Hospital & Clinic",
-            "distanceKm": 2.3
+            "distanceKm": 1859.6
           },
           "populatedArea": {
             "name": "Thalaghattapura Township Corridor",
@@ -12254,14 +9399,14 @@
         },
         "populationEstimate": 14800,
         "populationEstimateFormatted": "14,800",
-        "exposureLevel": "MODERATE",
+        "exposureLevel": "LOW",
         "exposureBadge": "bg-amber-950 text-amber-400 border-amber-500",
         "vulnerableLocations": [
           {
             "id": "VULN-VILLAGE-01",
             "type": "VILLAGE",
             "name": "Kaggalipura Village",
-            "distanceKm": 7.8,
+            "distanceKm": 1864.2,
             "population": 4600,
             "color": "#f97316",
             "icon": "🟧",
@@ -12275,7 +9420,7 @@
             "id": "VULN-ROAD-01",
             "type": "ROAD",
             "name": "NH-948 Kanakapura Expressway",
-            "distanceKm": 4.1,
+            "distanceKm": 1861.1,
             "color": "#e2e8f0",
             "icon": "🛣️",
             "category": "Major Highway & Evacuation Route",
@@ -12288,7 +9433,7 @@
             "id": "VULN-SCHOOL-01",
             "type": "SCHOOL",
             "name": "Rural Vidya Mandir, Kaggalipura",
-            "distanceKm": 6.7,
+            "distanceKm": 1863.4,
             "color": "#eab308",
             "icon": "🟨",
             "category": "Educational Institute",
@@ -12301,7 +9446,7 @@
             "id": "VULN-HOSPITAL-01",
             "type": "HOSPITAL",
             "name": "Sri Sri College of Ayurvedic Hospital & Clinic",
-            "distanceKm": 2.3,
+            "distanceKm": 1859.6,
             "color": "#38bdf8",
             "icon": "🟦",
             "category": "Emergency Medical Center",
@@ -12314,7 +9459,7 @@
             "id": "VULN-POPCENTER-01",
             "type": "POPULATION_CENTER",
             "name": "Thalaghattapura Township Corridor",
-            "distanceKm": 1,
+            "distanceKm": 1856.6,
             "population": 14800,
             "color": "#a855f7",
             "icon": "👥",
@@ -12333,10 +9478,10 @@
         "dataSourceNotice": "Population data: DEMO / API READY"
       },
       "spreadSimulation": {
-        "incidentId": "FG-2026-8194",
+        "incidentId": "FG-2026-8769",
         "currentLocation": {
-          "lat": 12.8596,
-          "lng": 77.5427
+          "lat": 29.5258,
+          "lng": 78.7723
         },
         "currentEstimatedArea": "3.6 ha",
         "selectedMinutes": 60,
@@ -12391,228 +9536,228 @@
         "spreadGeometries": {
           "current": {
             "center": {
-              "lat": 12.8596,
-              "lng": 77.5427
+              "lat": 29.5258,
+              "lng": 78.7723
             },
             "polygon": [
               {
-                "lat": 12.860483,
-                "lng": 77.5427
+                "lat": 29.526683,
+                "lng": 78.7723
               },
               {
-                "lat": 12.860258,
-                "lng": 77.543375
+                "lat": 29.526458,
+                "lng": 78.773057
               },
               {
-                "lat": 12.8596,
-                "lng": 77.54381
+                "lat": 29.5258,
+                "lng": 78.773544
               },
               {
-                "lat": 12.85902,
-                "lng": 77.543295
+                "lat": 29.52522,
+                "lng": 78.772967
               },
               {
-                "lat": 12.85856,
-                "lng": 77.5427
+                "lat": 29.52476,
+                "lng": 78.7723
               },
               {
-                "lat": 12.858899,
-                "lng": 77.541981
+                "lat": 29.525099,
+                "lng": 78.771494
               },
               {
-                "lat": 12.8596,
-                "lng": 77.541838
+                "lat": 29.5258,
+                "lng": 78.771334
               },
               {
-                "lat": 12.860379,
-                "lng": 77.541901
+                "lat": 29.526579,
+                "lng": 78.771404
               },
               {
-                "lat": 12.860483,
-                "lng": 77.5427
+                "lat": 29.526683,
+                "lng": 78.7723
               }
             ],
             "color": "#ef4444"
           },
           "min30": {
             "center": {
-              "lat": 12.861383692781372,
-              "lng": 77.54452958167488
+              "lat": 29.527583692781374,
+              "lng": 78.77434990615701
             },
             "polygon": [
               {
-                "lat": 12.86227,
-                "lng": 77.54453
+                "lat": 29.52847,
+                "lng": 78.77435
               },
               {
-                "lat": 12.862358,
-                "lng": 77.545256
+                "lat": 29.528558,
+                "lng": 78.775164
               },
               {
-                "lat": 12.861774,
-                "lng": 77.54576
+                "lat": 29.527974,
+                "lng": 78.775729
               },
               {
-                "lat": 12.861103,
-                "lng": 77.545416
+                "lat": 29.527303,
+                "lng": 78.775343
               },
               {
-                "lat": 12.860518,
-                "lng": 77.545175
+                "lat": 29.526718,
+                "lng": 78.775073
               },
               {
-                "lat": 12.86006,
-                "lng": 77.54453
+                "lat": 29.52626,
+                "lng": 78.77435
               },
               {
-                "lat": 12.860571,
-                "lng": 77.543924
+                "lat": 29.526771,
+                "lng": 78.773671
               },
               {
-                "lat": 12.861091,
-                "lng": 77.543604
+                "lat": 29.527291,
+                "lng": 78.773313
               },
               {
-                "lat": 12.861786,
-                "lng": 77.54326
+                "lat": 29.527986,
+                "lng": 78.772927
               },
               {
-                "lat": 12.862306,
-                "lng": 77.543842
+                "lat": 29.528506,
+                "lng": 78.77358
               },
               {
-                "lat": 12.86227,
-                "lng": 77.54453
+                "lat": 29.52847,
+                "lng": 78.77435
               }
             ],
             "color": "#f97316"
           },
           "min60": {
             "center": {
-              "lat": 12.863549605444465,
-              "lng": 77.54675121656581
+              "lat": 29.529749605444465,
+              "lng": 78.77683907791912
             },
             "polygon": [
               {
-                "lat": 12.864756,
-                "lng": 77.546751
+                "lat": 29.530956,
+                "lng": 78.776839
               },
               {
-                "lat": 12.864435,
-                "lng": 77.547276
+                "lat": 29.530635,
+                "lng": 78.777427
               },
               {
-                "lat": 12.86424,
-                "lng": 77.547977
+                "lat": 29.53044,
+                "lng": 78.778213
               },
               {
-                "lat": 12.86355,
-                "lng": 77.548356
+                "lat": 29.52975,
+                "lng": 78.778637
               },
               {
-                "lat": 12.862946,
-                "lng": 77.547823
+                "lat": 29.529146,
+                "lng": 78.77804
               },
               {
-                "lat": 12.862664,
-                "lng": 77.547276
+                "lat": 29.528864,
+                "lng": 78.777427
               },
               {
-                "lat": 12.862169,
-                "lng": 77.546751
+                "lat": 29.528369,
+                "lng": 78.776839
               },
               {
-                "lat": 12.862195,
-                "lng": 77.545949
+                "lat": 29.528395,
+                "lng": 78.77594
               },
               {
-                "lat": 12.862946,
-                "lng": 77.545679
+                "lat": 29.529146,
+                "lng": 78.775638
               },
               {
-                "lat": 12.86355,
-                "lng": 77.545702
+                "lat": 29.52975,
+                "lng": 78.775664
               },
               {
-                "lat": 12.86424,
-                "lng": 77.545525
+                "lat": 29.53044,
+                "lng": 78.775465
               },
               {
-                "lat": 12.864905,
-                "lng": 77.545949
+                "lat": 29.531105,
+                "lng": 78.77594
               },
               {
-                "lat": 12.864756,
-                "lng": 77.546751
+                "lat": 29.530956,
+                "lng": 78.776839
               }
             ],
             "color": "#f59e0b"
           },
           "min90": {
             "center": {
-              "lat": 12.866288847930143,
-              "lng": 77.5495609312808
+              "lat": 29.532488847930143,
+              "lng": 78.77998714808882
             },
             "polygon": [
               {
-                "lat": 12.868124,
-                "lng": 77.549561
+                "lat": 29.534324,
+                "lng": 78.779987
               },
               {
-                "lat": 12.86756,
-                "lng": 77.550189
+                "lat": 29.53376,
+                "lng": 78.780691
               },
               {
-                "lat": 12.86699,
-                "lng": 77.550463
+                "lat": 29.53319,
+                "lng": 78.780998
               },
               {
-                "lat": 12.866605,
-                "lng": 77.550984
+                "lat": 29.532805,
+                "lng": 78.781581
               },
               {
-                "lat": 12.865879,
-                "lng": 77.551402
+                "lat": 29.532079,
+                "lng": 78.78205
               },
               {
-                "lat": 12.865211,
-                "lng": 77.550948
+                "lat": 29.531411,
+                "lng": 78.781541
               },
               {
-                "lat": 12.865152,
-                "lng": 77.550122
+                "lat": 29.531352,
+                "lng": 78.780616
               },
               {
-                "lat": 12.865124,
-                "lng": 77.549561
+                "lat": 29.531324,
+                "lng": 78.779987
               },
               {
-                "lat": 12.864857,
-                "lng": 77.548854
+                "lat": 29.531057,
+                "lng": 78.779195
               },
               {
-                "lat": 12.86512,
-                "lng": 77.548057
+                "lat": 29.53132,
+                "lng": 78.778302
               },
               {
-                "lat": 12.865938,
-                "lng": 77.547983
+                "lat": 29.532138,
+                "lng": 78.778219
               },
               {
-                "lat": 12.866547,
-                "lng": 77.548401
+                "lat": 29.532747,
+                "lng": 78.778688
               },
               {
-                "lat": 12.867081,
-                "lng": 77.548542
+                "lat": 29.533281,
+                "lng": 78.778845
               },
               {
-                "lat": 12.867855,
-                "lng": 77.548787
+                "lat": 29.534055,
+                "lng": 78.77912
               },
               {
-                "lat": 12.868124,
-                "lng": 77.549561
+                "lat": 29.534324,
+                "lng": 78.779987
               }
             ],
             "color": "#eab308"
@@ -12620,1470 +9765,26 @@
         },
         "arrowWaypoints": [
           [
-            12.8596,
-            77.5427
+            29.5258,
+            78.7723
           ],
           [
-            12.861829615976715,
-            77.5449869770936
+            29.528029615976713,
+            78.77486238269627
           ],
           [
-            12.86437774852153,
-            77.54760066520056
+            29.53057774852153,
+            78.77779082006344
           ],
           [
-            12.86724439763445,
-            77.55054106432091
+            29.53344439763445,
+            78.78108531210151
           ]
         ],
         "disclaimer": "SIMULATION - NOT AN OPERATIONAL FIRE-PREDICTION MODEL"
       },
       "teamRecommendations": {
-        "incidentId": "FG-2026-8194",
-        "recommendedTeam": {
-          "teamId": "TEAM-04",
-          "name": "Team 04",
-          "fullName": "Team 04 (Bandipur Rapid Response Squad)",
-          "stationId": "STA-KA-01",
-          "stationName": "Bandipur Forest Response Unit",
-          "status": "AVAILABLE",
-          "members": 6,
-          "equipment": [
-            "Water Tanker",
-            "Fire Vehicle (4x4 Brush Engine)",
-            "Aerial Thermal Drone",
-            "Protective Gear (Wildland PPE)"
-          ],
-          "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
-          },
-          "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
-          "currentWorkload": 0,
-          "fixedDistanceKm": 8.2,
-          "fixedEtaMinutes": 14,
-          "currentIncident": "FG-2026-4788",
-          "distanceKm": 8.2,
-          "etaMinutes": 14,
-          "rankingScore": 92,
-          "isRecommended": true,
-          "recommendationBadge": "BEST AVAILABLE TEAM",
-          "reason": "Shortest estimated response time + Available + Suitable equipment"
-        },
-        "alternatives": [
-          {
-            "teamId": "TEAM-01",
-            "name": "Team 01",
-            "fullName": "Team 01 (Bandipur Forest Unit)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Heavy Water Tender",
-              "Drone Patrol Unit"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Heavy Water Tender & Drone Patrol",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 9.6,
-            "fixedEtaMinutes": 16,
-            "currentIncident": null,
-            "distanceKm": 9.6,
-            "etaMinutes": 16,
-            "rankingScore": 73,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-02",
-            "name": "Team 02",
-            "fullName": "Team 02 (Gundlupet Municipal Squad)",
-            "stationId": "STA-KA-02",
-            "stationName": "Gundlupet Municipal Fire Brigade",
-            "status": "BUSY",
-            "members": 8,
-            "equipment": [
-              "Dual Attack Bowser",
-              "High-Pressure Foam Unit",
-              "Forest Chainsaws"
-            ],
-            "coordinates": {
-              "lat": 11.805,
-              "lng": 76.689
-            },
-            "vehicleType": "Dual Attack Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 11.4,
-            "fixedEtaMinutes": 19,
-            "currentIncident": null,
-            "distanceKm": 11.4,
-            "etaMinutes": 19,
-            "rankingScore": 18,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-07",
-            "name": "Team 07",
-            "fullName": "Team 07 (Nagarhole Wildlife Strike Force)",
-            "stationId": "STA-KA-03",
-            "stationName": "Nagarhole Rapid Post",
-            "status": "BUSY",
-            "members": 6,
-            "equipment": [
-              "Quick Response Tender",
-              "Forestry Backpack Water Pumps"
-            ],
-            "coordinates": {
-              "lat": 11.961,
-              "lng": 76.134
-            },
-            "vehicleType": "Quick Response Tender",
-            "currentWorkload": 1,
-            "fixedDistanceKm": 16.8,
-            "fixedEtaMinutes": 27,
-            "distanceKm": 16.8,
-            "etaMinutes": 27,
-            "rankingScore": 3,
-            "isRecommended": false
-          }
-        ],
-        "allRankedTeams": [
-          {
-            "teamId": "TEAM-04",
-            "name": "Team 04",
-            "fullName": "Team 04 (Bandipur Rapid Response Squad)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Water Tanker",
-              "Fire Vehicle (4x4 Brush Engine)",
-              "Aerial Thermal Drone",
-              "Protective Gear (Wildland PPE)"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 8.2,
-            "fixedEtaMinutes": 14,
-            "currentIncident": "FG-2026-4788",
-            "distanceKm": 8.2,
-            "etaMinutes": 14,
-            "rankingScore": 92,
-            "isRecommended": true,
-            "recommendationBadge": "BEST AVAILABLE TEAM",
-            "reason": "Shortest estimated response time + Available + Suitable equipment"
-          },
-          {
-            "teamId": "TEAM-01",
-            "name": "Team 01",
-            "fullName": "Team 01 (Bandipur Forest Unit)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "AVAILABLE",
-            "members": 6,
-            "equipment": [
-              "Heavy Water Tender",
-              "Drone Patrol Unit"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Heavy Water Tender & Drone Patrol",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 9.6,
-            "fixedEtaMinutes": 16,
-            "currentIncident": null,
-            "distanceKm": 9.6,
-            "etaMinutes": 16,
-            "rankingScore": 73,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-02",
-            "name": "Team 02",
-            "fullName": "Team 02 (Gundlupet Municipal Squad)",
-            "stationId": "STA-KA-02",
-            "stationName": "Gundlupet Municipal Fire Brigade",
-            "status": "BUSY",
-            "members": 8,
-            "equipment": [
-              "Dual Attack Bowser",
-              "High-Pressure Foam Unit",
-              "Forest Chainsaws"
-            ],
-            "coordinates": {
-              "lat": 11.805,
-              "lng": 76.689
-            },
-            "vehicleType": "Dual Attack Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 11.4,
-            "fixedEtaMinutes": 19,
-            "currentIncident": null,
-            "distanceKm": 11.4,
-            "etaMinutes": 19,
-            "rankingScore": 18,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-07",
-            "name": "Team 07",
-            "fullName": "Team 07 (Nagarhole Wildlife Strike Force)",
-            "stationId": "STA-KA-03",
-            "stationName": "Nagarhole Rapid Post",
-            "status": "BUSY",
-            "members": 6,
-            "equipment": [
-              "Quick Response Tender",
-              "Forestry Backpack Water Pumps"
-            ],
-            "coordinates": {
-              "lat": 11.961,
-              "lng": 76.134
-            },
-            "vehicleType": "Quick Response Tender",
-            "currentWorkload": 1,
-            "fixedDistanceKm": 16.8,
-            "fixedEtaMinutes": 27,
-            "distanceKm": 16.8,
-            "etaMinutes": 27,
-            "rankingScore": 3,
-            "isRecommended": false
-          },
-          {
-            "teamId": "TEAM-05",
-            "name": "Team 05",
-            "fullName": "Team 05 (Reserve Backup Squad)",
-            "stationId": "STA-KA-01",
-            "stationName": "Bandipur Forest Response Unit",
-            "status": "OFFLINE",
-            "members": 5,
-            "equipment": [
-              "Logistics Bowser"
-            ],
-            "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
-            },
-            "vehicleType": "Logistics Bowser",
-            "currentWorkload": 0,
-            "fixedDistanceKm": 24,
-            "fixedEtaMinutes": 45,
-            "currentIncident": null,
-            "distanceKm": 24,
-            "etaMinutes": 45,
-            "rankingScore": -46,
-            "isRecommended": false
-          }
-        ],
-        "disclaimer": "Admin retains full command authority to dispatch response team."
-      }
-    },
-    {
-      "incidentId": "FG-2026-1024",
-      "reporterId": "REP-ANON-102",
-      "source": "Citizen Image",
-      "detectionMethod": "Image",
-      "imageUrl": "/uploads/fg_1791473635035_9252.jpg",
-      "videoUrl": null,
-      "latitude": 12.8596,
-      "longitude": 77.5427,
-      "title": "KS School of Engineering and Management (KSSEM), Kanakapura Road",
-      "alertTitle": "KS School of Engineering and Management (KSSEM), Kanakapura Road",
-      "forestName": "KS School of Engineering and Management (KSSEM), Kanakapura Road",
-      "state": "Karnataka",
-      "district": "Chamarajanagar",
-      "description": "Forest fire alert reported by citizen.",
-      "estimatedSize": "Large",
-      "smokeVisible": true,
-      "flamesVisible": true,
-      "peopleInDanger": true,
-      "aiConfidence": 98.8,
-      "severity": "HIGH",
-      "riskScore": 75,
-      "satelliteConfidence": 0,
-      "sensorConfidence": 0,
-      "status": "UNDER REVIEW",
-      "aiExplanation": "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire.",
-      "affectedAreaHectares": 3.6,
-      "affectedRadiiMeters": [
-        500,
-        1000,
-        5000
-      ],
-      "detectedFeatures": [
-        "Flames",
-        "Smoke",
-        "Heat-like region",
-        "Vegetation"
-      ],
-      "featureBreakdown": [],
-      "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
-      "nearestStation": {
-        "id": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-        "forestId": "FOR-KA-03",
-        "state": "Karnataka",
-        "coordinates": {
-          "lat": 12.859,
-          "lng": 77.546
-        },
-        "phone": "+91-80-22971550",
-        "etaMinutesBase": 5,
-        "unitType": "Kanakapura Highway Fire Squad",
-        "crewCount": 18,
-        "waterTenders": 4,
-        "aerialDrones": 2,
-        "status": "AVAILABLE",
-        "distanceKm": 0.4,
-        "distanceMeters": 400,
-        "etaMinutes": 5,
-        "routeWaypoints": [
-          [
-            12.859,
-            77.546
-          ],
-          [
-            12.8581,
-            77.54485
-          ],
-          [
-            12.86093,
-            77.54594
-          ],
-          [
-            12.8573,
-            77.54315
-          ],
-          [
-            12.86113,
-            77.54484
-          ],
-          [
-            12.8585,
-            77.54265
-          ],
-          [
-            12.8596,
-            77.5427
-          ]
-        ]
-      },
-      "assignedStation": {
-        "stationId": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-        "distanceKm": 0.4,
-        "etaMinutes": 5,
-        "phone": "+91-80-22971550",
-        "availability": "AVAILABLE"
-      },
-      "rankedStations": [
-        {
-          "id": "STA-BLR-01",
-          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.859,
-            "lng": 77.546
-          },
-          "phone": "+91-80-22971550",
-          "etaMinutesBase": 5,
-          "unitType": "Kanakapura Highway Fire Squad",
-          "crewCount": 18,
-          "waterTenders": 4,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 0.4,
-          "distanceMeters": 400,
-          "etaMinutes": 5,
-          "routeWaypoints": [
-            [
-              12.859,
-              77.546
-            ],
-            [
-              12.8581,
-              77.54485
-            ],
-            [
-              12.86093,
-              77.54594
-            ],
-            [
-              12.8573,
-              77.54315
-            ],
-            [
-              12.86113,
-              77.54484
-            ],
-            [
-              12.8585,
-              77.54265
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        },
-        {
-          "id": "STA-BLR-02",
-          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.829,
-            "lng": 77.518
-          },
-          "phone": "+91-80-22971565",
-          "etaMinutesBase": 6,
-          "unitType": "Campus & Reserve Forest Unit",
-          "crewCount": 14,
-          "waterTenders": 3,
-          "aerialDrones": 1,
-          "status": "AVAILABLE",
-          "distanceKm": 4.3,
-          "distanceMeters": 4300,
-          "etaMinutes": 10,
-          "routeWaypoints": [
-            [
-              12.829,
-              77.518
-            ],
-            [
-              12.8331,
-              77.52152
-            ],
-            [
-              12.84093,
-              77.52727
-            ],
-            [
-              12.8423,
-              77.52915
-            ],
-            [
-              12.85113,
-              77.53551
-            ],
-            [
-              12.8535,
-              77.53798
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        },
-        {
-          "id": "STA-BLR-03",
-          "name": "Banashankari Fire & Rescue Command Station",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.925,
-            "lng": 77.568
-          },
-          "phone": "+91-80-22971540",
-          "etaMinutesBase": 14,
-          "unitType": "South Bengaluru Central Fleet",
-          "crewCount": 24,
-          "waterTenders": 6,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 7.8,
-          "distanceMeters": 7800,
-          "etaMinutes": 16,
-          "routeWaypoints": [
-            [
-              12.925,
-              77.568
-            ],
-            [
-              12.9131,
-              77.56318
-            ],
-            [
-              12.90493,
-              77.56061
-            ],
-            [
-              12.8903,
-              77.55415
-            ],
-            [
-              12.88313,
-              77.55217
-            ],
-            [
-              12.8695,
-              77.54632
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        }
-      ],
-      "assignedTeam": {
-        "teamId": "TEAM-04",
-        "name": "Team 04",
-        "status": "AVAILABLE",
-        "distanceKm": 0.4,
-        "etaMinutes": 5
-      },
-      "nearestWaterBody": {
-        "id": "WB-BLR-01",
-        "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
-        "forestId": "FOR-KA-03",
-        "state": "Karnataka",
-        "coordinates": {
-          "lat": 12.868,
-          "lng": 77.538
-        },
-        "type": "Freshwater Lake & Fire Hydrant Terminal",
-        "capacity": "Continuous 25,000 Litres Aerial Drafting",
-        "waterSourceType": "LAKE",
-        "distanceKm": 1.1,
-        "distanceMeters": 1100,
-        "routeWaypoints": [
-          [
-            12.868,
-            77.538
-          ],
-          [
-            12.86514,
-            77.53823
-          ],
-          [
-            12.86654,
-            77.54102
-          ],
-          [
-            12.86106,
-            77.53968
-          ],
-          [
-            12.86246,
-            77.54247
-          ],
-          [
-            12.8596,
-            77.5427
-          ]
-        ]
-      },
-      "rankedWaterBodies": [
-        {
-          "id": "WB-BLR-01",
-          "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.868,
-            "lng": 77.538
-          },
-          "type": "Freshwater Lake & Fire Hydrant Terminal",
-          "capacity": "Continuous 25,000 Litres Aerial Drafting",
-          "waterSourceType": "LAKE",
-          "distanceKm": 1.1,
-          "distanceMeters": 1100,
-          "routeWaypoints": [
-            [
-              12.868,
-              77.538
-            ],
-            [
-              12.86514,
-              77.53823
-            ],
-            [
-              12.86654,
-              77.54102
-            ],
-            [
-              12.86106,
-              77.53968
-            ],
-            [
-              12.86246,
-              77.54247
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        },
-        {
-          "id": "WB-BLR-02",
-          "name": "Kaggalipura Lake Emergency Reservoir (DSATM)",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.812,
-            "lng": 77.51
-          },
-          "type": "Emergency Water Reservoir",
-          "capacity": "50,000 Litres Rapid Pump Draft",
-          "waterSourceType": "RESERVOIR",
-          "distanceKm": 6.4,
-          "distanceMeters": 6400,
-          "routeWaypoints": [
-            [
-              12.812,
-              77.51
-            ],
-            [
-              12.82034,
-              77.51583
-            ],
-            [
-              12.83294,
-              77.52422
-            ],
-            [
-              12.83866,
-              77.52848
-            ],
-            [
-              12.85126,
-              77.53687
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        },
-        {
-          "id": "WB-BLR-03",
-          "name": "Bannerghatta Forest Suvarnamukhi Reservoir",
-          "forestId": "FOR-KA-03",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 12.795,
-            "lng": 77.568
-          },
-          "type": "Protected Forest Dam & Reservoir",
-          "capacity": "High Volume Aerial Helicopter Drafting",
-          "waterSourceType": "RESERVOIR",
-          "distanceKm": 7.7,
-          "distanceMeters": 7700,
-          "routeWaypoints": [
-            [
-              12.795,
-              77.568
-            ],
-            [
-              12.80674,
-              77.56223
-            ],
-            [
-              12.82274,
-              77.55902
-            ],
-            [
-              12.83186,
-              77.55168
-            ],
-            [
-              12.84786,
-              77.54847
-            ],
-            [
-              12.8596,
-              77.5427
-            ]
-          ]
-        }
-      ],
-      "reporter": {
-        "name": "Citizen Observer",
-        "phone": "Undisclosed",
-        "notes": "Forest fire alert reported by citizen."
-      },
-      "timeline": [
-        {
-          "time": "09:03:55 pm",
-          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (12.8596, 77.5427)",
-          "type": "REPORT"
-        },
-        {
-          "time": "09:03:55 pm",
-          "message": "Evidence ingested (Image)",
-          "type": "INGEST"
-        },
-        {
-          "time": "09:03:55 pm",
-          "message": "AI Analysis complete: 98.8% confidence (HIGH)",
-          "type": "AI"
-        },
-        {
-          "time": "09:03:55 pm",
-          "message": "Risk score calculated: 75 / 100",
-          "type": "RISK"
-        },
-        {
-          "time": "09:03:55 pm",
-          "message": "Admin authority alerted in real-time via Socket.IO",
-          "type": "ALERT"
-        }
-      ],
-      "isPriority": true,
-      "priorityLevel": "PRIORITY 1 - CITIZEN REPORT",
-      "scoreboard": {
-        "fireScore": 98.8,
-        "fireLevel": "CRITICAL",
-        "fireConfidence": 98.8,
-        "smokeConfidence": 86.4,
-        "fireCoverage": 94,
-        "smokeLevel": 44.5,
-        "anomalyConfidence": 97.3,
-        "riskScore": 98,
-        "severity": "CRITICAL",
-        "objectsCount": 6,
-        "statusTitle": "FIRE DETECTED",
-        "statusText": "Status: Active Wildfire (6 Objects)",
-        "badgeText": "CRITICAL",
-        "earlyWarningAlert": "CRITICAL - IMMEDIATE DISPATCH",
-        "fakeProbability": 2.7,
-        "authenticityScore": 97.3,
-        "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-        "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
-        "isFake": false,
-        "aiFakeScore": {
-          "fakeProbability": 2.7,
-          "authenticityScore": 97.3,
-          "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-          "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
-          "isFake": false
-        },
-        "timestamp": "09:03:55 PM",
-        "engineName": "YOLOv8 ENGINE READY"
-      },
-      "routeWaypoints": [
-        [
-          12.859,
-          77.546
-        ],
-        [
-          12.8581,
-          77.54485
-        ],
-        [
-          12.86093,
-          77.54594
-        ],
-        [
-          12.8573,
-          77.54315
-        ],
-        [
-          12.86113,
-          77.54484
-        ],
-        [
-          12.8585,
-          77.54265
-        ],
-        [
-          12.8596,
-          77.5427
-        ]
-      ],
-      "routeProgressIndex": 0,
-      "createdAt": "2026-10-08T15:33:55.485Z",
-      "updatedAt": "2026-10-08T15:33:55.485Z",
-      "firePerimeter": {
-        "incidentId": "FG-2026-1024",
-        "center": {
-          "lat": 12.8596,
-          "lng": 77.5427
-        },
-        "estimatedAreaHectares": 3.6,
-        "severity": "HIGH",
-        "zones": {
-          "confirmed": {
-            "color": "#ef4444",
-            "fillColor": "#dc2626",
-            "fillOpacity": 0.35,
-            "strokeColor": "#b91c1c",
-            "strokeWeight": 2.5,
-            "radiusMeters": 107,
-            "polygonCoords": [
-              {
-                "lat": 12.860403,
-                "lng": 77.5427
-              },
-              {
-                "lat": 12.860364,
-                "lng": 77.543269
-              },
-              {
-                "lat": 12.859949,
-                "lng": 77.543803
-              },
-              {
-                "lat": 12.85933,
-                "lng": 77.543552
-              },
-              {
-                "lat": 12.858915,
-                "lng": 77.54321
-              },
-              {
-                "lat": 12.85848,
-                "lng": 77.5427
-              },
-              {
-                "lat": 12.858809,
-                "lng": 77.54211
-              },
-              {
-                "lat": 12.859355,
-                "lng": 77.541927
-              },
-              {
-                "lat": 12.859924,
-                "lng": 77.541677
-              },
-              {
-                "lat": 12.860471,
-                "lng": 77.542051
-              },
-              {
-                "lat": 12.860403,
-                "lng": 77.5427
-              }
-            ],
-            "name": "Confirmed Active Fire Area",
-            "estimatedHectares": 3.6
-          },
-          "highRisk": {
-            "color": "#f97316",
-            "fillColor": "#ea580c",
-            "fillOpacity": 0.22,
-            "strokeColor": "#c2410c",
-            "strokeWeight": 2,
-            "radiusMeters": 235,
-            "polygonCoords": [
-              {
-                "lat": 12.861427,
-                "lng": 77.5427
-              },
-              {
-                "lat": 12.861549,
-                "lng": 77.543854
-              },
-              {
-                "lat": 12.860798,
-                "lng": 77.544828
-              },
-              {
-                "lat": 12.8596,
-                "lng": 77.544722
-              },
-              {
-                "lat": 12.858687,
-                "lng": 77.544323
-              },
-              {
-                "lat": 12.857651,
-                "lng": 77.543854
-              },
-              {
-                "lat": 12.857205,
-                "lng": 77.5427
-              },
-              {
-                "lat": 12.857892,
-                "lng": 77.541689
-              },
-              {
-                "lat": 12.858687,
-                "lng": 77.541077
-              },
-              {
-                "lat": 12.8596,
-                "lng": 77.540392
-              },
-              {
-                "lat": 12.860798,
-                "lng": 77.540572
-              },
-              {
-                "lat": 12.861308,
-                "lng": 77.541689
-              },
-              {
-                "lat": 12.861427,
-                "lng": 77.5427
-              }
-            ],
-            "name": "High-Risk Surrounding Zone",
-            "estimatedHectares": 11.5
-          },
-          "potentialExpansion": {
-            "color": "#eab308",
-            "fillColor": "#ca8a04",
-            "fillOpacity": 0.14,
-            "strokeColor": "#a16207",
-            "strokeWeight": 1.5,
-            "radiusMeters": 407,
-            "polygonCoords": [
-              {
-                "lat": 12.863556,
-                "lng": 77.5427
-              },
-              {
-                "lat": 12.863236,
-                "lng": 77.544496
-              },
-              {
-                "lat": 12.861798,
-                "lng": 77.545527
-              },
-              {
-                "lat": 12.860316,
-                "lng": 77.545919
-              },
-              {
-                "lat": 12.858801,
-                "lng": 77.546293
-              },
-              {
-                "lat": 12.857065,
-                "lng": 77.54596
-              },
-              {
-                "lat": 12.856085,
-                "lng": 77.544436
-              },
-              {
-                "lat": 12.856244,
-                "lng": 77.5427
-              },
-              {
-                "lat": 12.856647,
-                "lng": 77.541242
-              },
-              {
-                "lat": 12.857239,
-                "lng": 77.539663
-              },
-              {
-                "lat": 12.858689,
-                "lng": 77.538606
-              },
-              {
-                "lat": 12.860428,
-                "lng": 77.53898
-              },
-              {
-                "lat": 12.861625,
-                "lng": 77.540096
-              },
-              {
-                "lat": 12.862673,
-                "lng": 77.541182
-              },
-              {
-                "lat": 12.863556,
-                "lng": 77.5427
-              }
-            ],
-            "name": "Potential Expansion Zone",
-            "estimatedHectares": 23.4
-          }
-        },
-        "title": "ESTIMATED FIRE PERIMETER",
-        "disclaimer": "ESTIMATED FIRE PERIMETER - Prototype estimate based on incident coordinates, severity and affected-area value. Not satellite-derived GIS."
-      },
-      "fireDangerIndex": {
-        "score": 87,
-        "maxScore": 100,
-        "category": "CRITICAL",
-        "categoryBadge": "bg-red-950 text-red-400 border-red-500",
-        "factors": {
-          "temperature": "42°C",
-          "humidity": "19%",
-          "wind": "18 km/h",
-          "vegetation": "DRY",
-          "recentHistory": "HIGH",
-          "aiConfidence": "99%",
-          "smokeIndex": "85%"
-        },
-        "explanations": [
-          {
-            "factor": "Temperature",
-            "value": "42°C",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Humidity",
-            "value": "19%",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Wind",
-            "value": "18 km/h",
-            "contribution": "MEDIUM CONTRIBUTION",
-            "level": "MEDIUM"
-          },
-          {
-            "factor": "Dry vegetation",
-            "value": "DRY FUELS",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          },
-          {
-            "factor": "Recent fire activity",
-            "value": "3 DETECTIONS (48H)",
-            "contribution": "MEDIUM CONTRIBUTION",
-            "level": "MEDIUM"
-          },
-          {
-            "factor": "AI detection",
-            "value": "99% CONFIDENCE",
-            "contribution": "HIGH CONTRIBUTION",
-            "level": "HIGH"
-          }
-        ],
-        "label": "Prototype Fire Danger Index",
-        "disclaimer": "Prototype Fire Danger Index - DEMO WEATHER DATA. Not an official government fire-danger rating."
-      },
-      "vulnerableLocations": {
-        "incidentId": "FG-2026-1024",
-        "nearest": {
-          "village": {
-            "name": "Kaggalipura Village",
-            "distanceKm": 7.8
-          },
-          "town": {
-            "name": "Kanakapura Town",
-            "distanceKm": 37.4
-          },
-          "road": {
-            "name": "NH-948 Kanakapura Expressway",
-            "distanceKm": 4.1
-          },
-          "school": {
-            "name": "Rural Vidya Mandir, Kaggalipura",
-            "distanceKm": 6.7
-          },
-          "hospital": {
-            "name": "Sri Sri College of Ayurvedic Hospital & Clinic",
-            "distanceKm": 2.3
-          },
-          "populatedArea": {
-            "name": "Thalaghattapura Township Corridor",
-            "population": 14800
-          }
-        },
-        "populationEstimate": 14800,
-        "populationEstimateFormatted": "14,800",
-        "exposureLevel": "MODERATE",
-        "exposureBadge": "bg-amber-950 text-amber-400 border-amber-500",
-        "vulnerableLocations": [
-          {
-            "id": "VULN-VILLAGE-01",
-            "type": "VILLAGE",
-            "name": "Kaggalipura Village",
-            "distanceKm": 7.8,
-            "population": 4600,
-            "color": "#f97316",
-            "icon": "🟧",
-            "category": "Village Community",
-            "coordinates": {
-              "lat": 12.802,
-              "lng": 77.501
-            }
-          },
-          {
-            "id": "VULN-ROAD-01",
-            "type": "ROAD",
-            "name": "NH-948 Kanakapura Expressway",
-            "distanceKm": 4.1,
-            "color": "#e2e8f0",
-            "icon": "🛣️",
-            "category": "Major Highway & Evacuation Route",
-            "coordinates": {
-              "lat": 12.829,
-              "lng": 77.521
-            }
-          },
-          {
-            "id": "VULN-SCHOOL-01",
-            "type": "SCHOOL",
-            "name": "Rural Vidya Mandir, Kaggalipura",
-            "distanceKm": 6.7,
-            "color": "#eab308",
-            "icon": "🟨",
-            "category": "Educational Institute",
-            "coordinates": {
-              "lat": 12.809,
-              "lng": 77.509
-            }
-          },
-          {
-            "id": "VULN-HOSPITAL-01",
-            "type": "HOSPITAL",
-            "name": "Sri Sri College of Ayurvedic Hospital & Clinic",
-            "distanceKm": 2.3,
-            "color": "#38bdf8",
-            "icon": "🟦",
-            "category": "Emergency Medical Center",
-            "coordinates": {
-              "lat": 12.842,
-              "lng": 77.531
-            }
-          },
-          {
-            "id": "VULN-POPCENTER-01",
-            "type": "POPULATION_CENTER",
-            "name": "Thalaghattapura Township Corridor",
-            "distanceKm": 1,
-            "population": 14800,
-            "color": "#a855f7",
-            "icon": "👥",
-            "category": "Population Center",
-            "coordinates": {
-              "lat": 12.868,
-              "lng": 77.539
-            }
-          }
-        ],
-        "radiiMeters": [
-          1000,
-          5000,
-          10000
-        ],
-        "dataSourceNotice": "Population data: DEMO / API READY"
-      },
-      "spreadSimulation": {
-        "incidentId": "FG-2026-1024",
-        "currentLocation": {
-          "lat": 12.8596,
-          "lng": 77.5427
-        },
-        "currentEstimatedArea": "3.6 ha",
-        "selectedMinutes": 60,
-        "weather": {
-          "sourceLabel": "DEMO WEATHER DATA",
-          "temperatureC": 42,
-          "humidityPercent": 19,
-          "windSpeedKmH": 18,
-          "windDirection": "North-East",
-          "windBearingDeg": 45,
-          "vegetationRisk": "Dry Deciduous / High Fuel Load",
-          "terrainRisk": "Ridge Slope / Moderate Updraft"
-        },
-        "estimates": {
-          "currentArea": "3.6 ha",
-          "min30Area": "4.8 ha",
-          "min60Area": "6.6 ha",
-          "min90Area": "8.7 ha",
-          "projectedDirection": "North-East",
-          "risk": "HIGH"
-        },
-        "rawEstimates": {
-          "current": {
-            "minutes": 0,
-            "areaHectares": 3.6,
-            "radiusMeters": 107,
-            "color": "#ef4444",
-            "label": "CURRENT FIRE"
-          },
-          "min30": {
-            "minutes": 30,
-            "areaHectares": 4.8,
-            "radiusMeters": 123,
-            "color": "#f97316",
-            "label": "30 MIN SPREAD"
-          },
-          "min60": {
-            "minutes": 60,
-            "areaHectares": 6.6,
-            "radiusMeters": 144,
-            "color": "#f59e0b",
-            "label": "60 MIN SPREAD"
-          },
-          "min90": {
-            "minutes": 90,
-            "areaHectares": 8.7,
-            "radiusMeters": 167,
-            "color": "#eab308",
-            "label": "90 MIN SPREAD"
-          }
-        },
-        "spreadGeometries": {
-          "current": {
-            "center": {
-              "lat": 12.8596,
-              "lng": 77.5427
-            },
-            "polygon": [
-              {
-                "lat": 12.860483,
-                "lng": 77.5427
-              },
-              {
-                "lat": 12.860258,
-                "lng": 77.543375
-              },
-              {
-                "lat": 12.8596,
-                "lng": 77.54381
-              },
-              {
-                "lat": 12.85902,
-                "lng": 77.543295
-              },
-              {
-                "lat": 12.85856,
-                "lng": 77.5427
-              },
-              {
-                "lat": 12.858899,
-                "lng": 77.541981
-              },
-              {
-                "lat": 12.8596,
-                "lng": 77.541838
-              },
-              {
-                "lat": 12.860379,
-                "lng": 77.541901
-              },
-              {
-                "lat": 12.860483,
-                "lng": 77.5427
-              }
-            ],
-            "color": "#ef4444"
-          },
-          "min30": {
-            "center": {
-              "lat": 12.861383692781372,
-              "lng": 77.54452958167488
-            },
-            "polygon": [
-              {
-                "lat": 12.86227,
-                "lng": 77.54453
-              },
-              {
-                "lat": 12.862358,
-                "lng": 77.545256
-              },
-              {
-                "lat": 12.861774,
-                "lng": 77.54576
-              },
-              {
-                "lat": 12.861103,
-                "lng": 77.545416
-              },
-              {
-                "lat": 12.860518,
-                "lng": 77.545175
-              },
-              {
-                "lat": 12.86006,
-                "lng": 77.54453
-              },
-              {
-                "lat": 12.860571,
-                "lng": 77.543924
-              },
-              {
-                "lat": 12.861091,
-                "lng": 77.543604
-              },
-              {
-                "lat": 12.861786,
-                "lng": 77.54326
-              },
-              {
-                "lat": 12.862306,
-                "lng": 77.543842
-              },
-              {
-                "lat": 12.86227,
-                "lng": 77.54453
-              }
-            ],
-            "color": "#f97316"
-          },
-          "min60": {
-            "center": {
-              "lat": 12.863549605444465,
-              "lng": 77.54675121656581
-            },
-            "polygon": [
-              {
-                "lat": 12.864756,
-                "lng": 77.546751
-              },
-              {
-                "lat": 12.864435,
-                "lng": 77.547276
-              },
-              {
-                "lat": 12.86424,
-                "lng": 77.547977
-              },
-              {
-                "lat": 12.86355,
-                "lng": 77.548356
-              },
-              {
-                "lat": 12.862946,
-                "lng": 77.547823
-              },
-              {
-                "lat": 12.862664,
-                "lng": 77.547276
-              },
-              {
-                "lat": 12.862169,
-                "lng": 77.546751
-              },
-              {
-                "lat": 12.862195,
-                "lng": 77.545949
-              },
-              {
-                "lat": 12.862946,
-                "lng": 77.545679
-              },
-              {
-                "lat": 12.86355,
-                "lng": 77.545702
-              },
-              {
-                "lat": 12.86424,
-                "lng": 77.545525
-              },
-              {
-                "lat": 12.864905,
-                "lng": 77.545949
-              },
-              {
-                "lat": 12.864756,
-                "lng": 77.546751
-              }
-            ],
-            "color": "#f59e0b"
-          },
-          "min90": {
-            "center": {
-              "lat": 12.866288847930143,
-              "lng": 77.5495609312808
-            },
-            "polygon": [
-              {
-                "lat": 12.868124,
-                "lng": 77.549561
-              },
-              {
-                "lat": 12.86756,
-                "lng": 77.550189
-              },
-              {
-                "lat": 12.86699,
-                "lng": 77.550463
-              },
-              {
-                "lat": 12.866605,
-                "lng": 77.550984
-              },
-              {
-                "lat": 12.865879,
-                "lng": 77.551402
-              },
-              {
-                "lat": 12.865211,
-                "lng": 77.550948
-              },
-              {
-                "lat": 12.865152,
-                "lng": 77.550122
-              },
-              {
-                "lat": 12.865124,
-                "lng": 77.549561
-              },
-              {
-                "lat": 12.864857,
-                "lng": 77.548854
-              },
-              {
-                "lat": 12.86512,
-                "lng": 77.548057
-              },
-              {
-                "lat": 12.865938,
-                "lng": 77.547983
-              },
-              {
-                "lat": 12.866547,
-                "lng": 77.548401
-              },
-              {
-                "lat": 12.867081,
-                "lng": 77.548542
-              },
-              {
-                "lat": 12.867855,
-                "lng": 77.548787
-              },
-              {
-                "lat": 12.868124,
-                "lng": 77.549561
-              }
-            ],
-            "color": "#eab308"
-          }
-        },
-        "arrowWaypoints": [
-          [
-            12.8596,
-            77.5427
-          ],
-          [
-            12.861829615976715,
-            77.5449869770936
-          ],
-          [
-            12.86437774852153,
-            77.54760066520056
-          ],
-          [
-            12.86724439763445,
-            77.55054106432091
-          ]
-        ],
-        "disclaimer": "SIMULATION - NOT AN OPERATIONAL FIRE-PREDICTION MODEL"
-      },
-      "teamRecommendations": {
-        "incidentId": "FG-2026-1024",
+        "incidentId": "FG-2026-8769",
         "recommendedTeam": {
           "teamId": "TEAM-04",
           "name": "Team 04",
@@ -14415,6 +10116,17 @@
       "status": "AVAILABLE",
       "members": 6,
       "currentIncident": "FG-2026-1052"
+    },
+    {
+      "teamId": "STA-UK-01",
+      "name": "Corbett Special Tiger Protection Force (STPF) Station",
+      "status": "ASSIGNED",
+      "members": 6,
+      "currentIncident": "FG-2026-8769",
+      "coordinates": {
+        "lat": 29.5258,
+        "lng": 78.7723
+      }
     }
   ],
   "emergencyContacts": [
@@ -14485,5 +10197,5 @@
       "description": "Periyar Reserve Forest Emergency response cell."
     }
   ],
-  "lastSaved": "2026-10-08T15:33:55.486Z"
+  "lastSaved": "2026-10-08T17:24:07.658Z"
 }

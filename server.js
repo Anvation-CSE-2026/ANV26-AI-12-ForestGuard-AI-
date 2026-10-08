@@ -28,11 +28,16 @@ let userConfig = {
   googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ''
 };
 
-// Ensure directories
-const uploadsDir = path.join(__dirname, 'public', 'uploads');
+// Ensure directories (safe for local disk and Vercel serverless)
+const isVercel = !!process.env.VERCEL;
+const uploadsDir = isVercel ? path.join('/tmp', 'uploads') : path.join(__dirname, 'public', 'uploads');
 const sampleImagesDir = path.join(__dirname, 'public', 'sample_images');
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-if (!fs.existsSync(sampleImagesDir)) fs.mkdirSync(sampleImagesDir, { recursive: true });
+try {
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+} catch (e) {}
+try {
+  if (!fs.existsSync(sampleImagesDir)) fs.mkdirSync(sampleImagesDir, { recursive: true });
+} catch (e) {}
 
 // Configure Multer for Images and Videos
 const storage = multer.diskStorage({
@@ -620,35 +625,40 @@ app.get(['/demo', '/live-demo'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'demo.html'));
 });
 
-// Start Server
-server.listen(PORT, () => {
-  console.log(`================================================================`);
-  console.log(`🌲 FORESTGUARD AI - Live AI Forest Fire Detection & Mapping System`);
-  console.log(`🚀 Server listening on: http://localhost:${PORT}`);
-  console.log(`🔀 Unified Live Demo Hub:   http://localhost:${PORT}/demo.html`);
-  console.log(`👤 User/Citizen Dashboard:  http://localhost:${PORT}/user.html`);
-  console.log(`🚨 Admin Command Center:    http://localhost:${PORT}/admin.html`);
-  console.log(`🌐 Landing Page:            http://localhost:${PORT}/index.html`);
-  console.log(`================================================================`);
-});
+// Export Express app for Vercel Serverless Function & Testing
+module.exports = app;
 
-// Dual-Port Bridge: Listen on port 8109 AND port 3000 simultaneously so users on either port work seamlessly!
-if (PORT !== 3000) {
-  const serverFallback = http.createServer(app);
-  serverFallback.on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
-      console.log('ℹ️ Port 3000 is occupied by an external project. ForestGuard running isolated on port ' + PORT);
-    } else {
-      console.warn('[PORT 3000 Notice]:', err.message);
-    }
+// Start Server (when running locally or in dedicated container)
+if (!process.env.VERCEL) {
+  server.listen(PORT, () => {
+    console.log(`================================================================`);
+    console.log(`🌲 FORESTGUARD AI - Live AI Forest Fire Detection & Mapping System`);
+    console.log(`🚀 Server listening on: http://localhost:${PORT}`);
+    console.log(`🔀 Unified Live Demo Hub:   http://localhost:${PORT}/demo.html`);
+    console.log(`👤 User/Citizen Dashboard:  http://localhost:${PORT}/user.html`);
+    console.log(`🚨 Admin Command Center:    http://localhost:${PORT}/admin.html`);
+    console.log(`🌐 Landing Page:            http://localhost:${PORT}/index.html`);
+    console.log(`================================================================`);
   });
 
-  try {
-    io.attach(serverFallback);
-    serverFallback.listen(3000, () => {
-      console.log(`🌐 Compatibility Bridge: Also listening on http://localhost:3000`);
+  // Dual-Port Bridge: Listen on port 8109 AND port 3000 simultaneously so users on either port work seamlessly!
+  if (PORT !== 3000) {
+    const serverFallback = http.createServer(app);
+    serverFallback.on('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        console.log('ℹ️ Port 3000 is occupied by an external project. ForestGuard running isolated on port ' + PORT);
+      } else {
+        console.warn('[PORT 3000 Notice]:', err.message);
+      }
     });
-  } catch (e) {
-    console.warn('Bridge attach error:', e.message);
+
+    try {
+      io.attach(serverFallback);
+      serverFallback.listen(3000, () => {
+        console.log(`🌐 Compatibility Bridge: Also listening on http://localhost:3000`);
+      });
+    } catch (e) {
+      console.warn('Bridge attach error:', e.message);
+    }
   }
 }

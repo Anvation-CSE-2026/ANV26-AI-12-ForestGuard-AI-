@@ -1,76 +1,120 @@
-# 🌲🔥 FORESTGUARD AI
-### Live AI Forest Fire Detection, Mapping & Rapid Emergency Response System for India
+# 🌲🔥 FORESTGUARD AI (AGNI-RAKSHAK)
+### Live AI Forest Fire Detection, Geospatial Mapping & Rapid Emergency Response System for India
 
 > **TAGLINE: "Report. Locate. Alert. Respond."**  
-> *"An AI-powered real-time forest fire emergency platform connecting citizens, forest authorities, and response teams through one live geospatial command center."*
+> *"An AI-powered real-time forest fire emergency ecosystem connecting citizens, forest authorities, and response teams through one live geospatial command center."*
+
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Demo-success?logo=vercel&style=for-the-badge)](https://agni-rakshak.vercel.app/demo.html)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Suhas--Saur%2FAgniRakshak-181717?logo=github&style=for-the-badge)](https://github.com/Suhas-Saur/AgniRakshak)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+---
+
+## 🌐 Live Demo & Cloud Deployment Links
+
+| Environment | Interface / Portal | Direct Live Link | Features |
+| :--- | :--- | :--- | :--- |
+| 🔀 **Vercel Cloud** | **Unified Dual Live Demo Hub** | [**Open Dual Split Demo ➔**](https://agni-rakshak.vercel.app/demo.html) | Side-by-side synchronized Citizen + Admin view |
+| 👤 **Vercel Cloud** | **Citizen Reporting Dashboard** | [**Open Citizen Portal ➔**](https://agni-rakshak.vercel.app/user.html) | 6 reporting methods, YOLOv8 scoreboard, GPS |
+| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Center ➔**](https://agni-rakshak.vercel.app/admin.html?auth=demo) | Live radar, team dispatch, water routing |
+| 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Page ➔**](https://agni-rakshak.vercel.app) | 3s flash intro, dashboard launchpad |
+| 🚒 **Vercel Cloud** | **Fire Station Turnout Terminal** | [**Open Station Terminal ➔**](https://agni-rakshak.vercel.app/station.html) | Turnout acceptance & route navigation |
+| 🛰️ **Vercel Cloud** | **Satellite Thermal Radar** | [**Open Satellite Radar ➔**](https://agni-rakshak.vercel.app/satellite.html) | ISRO / MODIS thermal hotspots |
+| 📡 **Vercel Cloud** | **IoT Microclimate Grid** | [**Open IoT Sensor Grid ➔**](https://agni-rakshak.vercel.app/iot.html) | Temperature, humidity, wind telemetry |
+| 📊 **Vercel Cloud** | **Analytics & Risk Intelligence** | [**Open Analytics ➔**](https://agni-rakshak.vercel.app/analytics.html) | Fire spread simulation & history |
+| 🐙 **GitHub** | **Source Code Repository** | [**github.com/Suhas-Saur/AgniRakshak**](https://github.com/Suhas-Saur/AgniRakshak) | Full source code, test data, and models |
+
+> 💡 **Mirror Cloud URL**: [https://agnirakshak.vercel.app/demo.html](https://agnirakshak.vercel.app/demo.html)
+
+---
+
+## 💻 Local Presentation Links (When Running Locally)
+
+When running the project locally (`node server.js` or `npm start`):
+
+- 🔀 **Unified Dual Live Demo**: [http://localhost:8109/demo.html](http://localhost:8109/demo.html) *(or [http://localhost:3000/demo.html](http://localhost:3000/demo.html))*
+- 👤 **Citizen Emergency Dashboard**: [http://localhost:8109/user.html](http://localhost:8109/user.html)
+- 🚨 **Admin Command Center**: [http://localhost:8109/admin.html?auth=demo](http://localhost:8109/admin.html?auth=demo)
+- 🏠 **Home Landing Page**: [http://localhost:8109/index.html](http://localhost:8109/index.html)
 
 ---
 
 ## 📑 Core Concept & Architecture
 
-Forest fires in India threaten vital biodiversity reserves such as **Bandipur**, **Nagarhole**, **Kanha**, and **Jim Corbett**. Traditional alerts are often fragmented, slow, or plagued by false alarms (such as sunset twilight, ambient haze, or agricultural burning).
+Forest fires in India threaten vital biodiversity reserves such as **Bandipur**, **Nagarhole**, **Kanha**, and **Jim Corbett**, as well as urban forest interface corridors along **Kanakapura Road (KSSEM, DSATM, Bannerghatta)**. Traditional alerts are often fragmented, slow, or plagued by false alarms (such as sunset twilight, ambient haze, or agricultural burning).
 
-**FORESTGUARD AI** establishes a closed-loop emergency ecosystem centered on a **LIVE GOOGLE MAP**:
-1. **User / Citizen Emergency Dashboard** (`/user.html`): 6 reporting methods (Image upload, camera snapshot, video upload, manual map pin, GPS geolocation, location search), dynamic pre-send confirmation modal, real-time report tracker, and state-wise emergency telephone directory.
-2. **Admin Command Operations Center** (`/admin.html`): Live Socket.IO alerts without refreshing, auto-zooming Google Map to ground zero, red pulsing marker with 500m/1km/5km impact rings, multi-source verification (Citizen + Satellite + IoT), ranked emergency response fleet, nearest water drafting source, and dispatch controls (preventing fake alerts).
-3. **Fire Station & Response Team Terminal** (`/station.html`): Mission assignment reception, turnout acceptance, road transit simulation with live vehicle GPS telemetry, on-site arrival, and containment controls.
+**FORESTGUARD AI** establishes a closed-loop emergency ecosystem centered on a **LIVE GEOSPATIAL MAP ENGINE**:
 
-Instead of treating fire reports in isolation, the platform cross-references all 3 streams into a **Multi-Source Risk Score (0–100)**. When a critical threshold (≥75) is crossed, it transmits an instantaneous **Socket.IO alert to the Admin Command Center**, auto-zooms Google Maps, drops an animated **red pulsing fire marker**, calculates the **nearest Forest Response Unit** and **nearest water drafting source**, and coordinates simulated rapid dispatch!
+1. **User / Citizen Emergency Dashboard** (`/user.html`):
+   - **6 Reporting Methods**: Image upload, camera snapshot, video upload, manual map pin, GPS geolocation, and location autocomplete search.
+   - **YOLOv8 AI Scoreboard**: Displays **Fire Coverage %** (primary criticality driver), Criticality Level, AI Authenticity Score (Anti-Hoax), Fire Confidence, Smoke Level, and Anomaly Detection.
+   - **Hyper-Local Entity Mapping**: Instantly connects Ground Zero to the nearest local fire station (within 0.4–1.5 km) and emergency water draft reservoirs (within 1.5–2.5 km) via neat dotted routes.
+   - **Default Zoom Restore (`🎯`)**: 1-click restore to sector view showing fire, station, and water bodies together.
+
+2. **Admin Command Operations Center** (`/admin.html`):
+   - **Real-Time Streaming**: Live incident reception without page refresh via Socket.IO.
+   - **Geospatial Radar**: High-resolution Google Hybrid satellite tiles, 500m/1.5km/5km impact rings, fire perimeters, and spread simulation.
+   - **Hyper-Local Response Dispatch**: Ranked fire response units strictly in the same state/district, direct route plotting from the fire station building to the fire pin, and water draft pipeline relays.
+   - **Anti-Overlap Tactical Layout**: Expanded 60% central map display with responsive sidebar management.
+
+3. **Unified Live Demo Hub** (`/demo.html`):
+   - **Synchronized Split Screen**: Citizen dashboard on the left, Admin command radar on the right.
+   - Entering or searching any location on the Citizen panel immediately transmits telemetry to the Admin map in real time.
 
 ---
 
-## 🗺️ Live Google Map Color Specifications
+## 🗺️ Live Map Color Specifications
 
 As defined in the project architecture:
 - 🔴 **RED**: Critical active fire (Animated pulsing radar shockwaves)
-- 🟠 **ORANGE**: High-risk fire
-- 🟡 **YELLOW**: Possible fire / verification required
+- 🟥 **RED OUTLINE**: Fire perimeter & 500m Hot Zone
+- 🟠 **ORANGE**: High-risk fire buffer & Dotted response route from fire station
+- 🟡 **YELLOW**: 5km Response sector & fire spread projection
+- 🟣 **PURPLE**: Fire response station building pin
+- 🔵 **BLUE / SKY-BLUE**: Water drafting terminal / emergency lake & hose relay route
 - 🟢 **GREEN**: Safe / resolved incident
-- 🔵 **BLUE**: Water body / reservoir / river draft terminal
-- 🟣 **PURPLE**: Fire / forest department response station
 - 🔷 **CYAN**: IoT microclimate sensor node
 
 ---
 
 ## 🚀 Live Demo Flow for Judges (Step-by-Step)
 
-1. **Launch the Application**:
-   Run `node server.js` (or double-click `start.bat`). Open [http://localhost:3000/admin.html](http://localhost:3000/admin.html) and [http://localhost:3000/report.html](http://localhost:3000/report.html).
-2. **Step 1: Open Report Page**:
-   Go to `/report.html`.
-3. **Step 2: Select/Upload Fire Photograph**:
-   Upload a fire image, or click one of the 1-click test scenarios (e.g. `🔥 Bandipur Wildfire` or `🌅 Sunset False-Alarm Test`).
-4. **Step 3: Select Location on Google Map**:
-   Click anywhere on the interactive map or click `📍 Use GPS Location`.
-5. **Step 4: Click SUBMIT FIRE ALERT**:
-   The backend AI pipeline runs, saves the incident, and transmits the `new_fire_alert` event.
-6. **Step 5: Instant Real-Time Alert on Admin Dashboard**:
-   **Without refreshing the page**:
-   - 🚨 A flashing red emergency alert banner appears!
-   - 🔊 The emergency dispatch siren sounds!
-   - 🗺️ The Google Map smoothly **auto-zooms** to the exact fire coordinates!
-   - 🔴 A glowing **red pulsing fire marker** appears!
-   - 🧠 Admin sees: AI Confidence (e.g. `94.6%`), Severity (`CRITICAL`), Multi-Source Consensus (`3 SOURCES CONFIRM`), Nearest Response Unit (`Bandipur Forest Unit - 8.7 km, ETA 18 min`), and Nearest Water Body (`Kabini Reservoir - 14.2 km`).
-7. **Step 6: Click DISPATCH RESPONSE**:
-   Admin clicks `DISPATCH RESPONSE` → Confirms turnout in the tactical modal → Status advances to `RESPONSE DISPATCHED` → Logged on the live timeline!
+1. **Open the Dual Live Demo**:
+   Open [https://agni-rakshak.vercel.app/demo.html](https://agni-rakshak.vercel.app/demo.html) *(or [http://localhost:8109/demo.html](http://localhost:8109/demo.html))*.
+2. **Step 1: Test Location Autocomplete**:
+   In the Citizen search box (Left pane), type **"DSATM Campus"** or **"KSSEM"** or **"Bandipur"**.
+   - Ground zero is pinned.
+   - Dotted orange line connects the local fire station (0.4–1.1 km away).
+   - Dotted blue line connects the emergency water draft terminal.
+   - Admin map (Right pane) syncs automatically!
+3. **Step 2: Upload Fire Evidence**:
+   Upload a fire photograph or choose a test scenario.
+   - Watch the **Fire & Criticality Scoreboard** calculate Fire Coverage, Severity, and Authenticity.
+4. **Step 3: Click SEND FIRE ALERT**:
+   - Audio siren triggers on the Admin dashboard.
+   - Incident card appears in the Admin queue.
+   - Admin map focuses on the ground zero sector.
+5. **Step 4: Dispatch Response Team**:
+   - Admin selects the recommended local unit and clicks **DEPLOY UNIT**.
+   - Live vehicle tracking animates along the dotted route to the fire ground zero!
+6. **Step 5: Test Default Zoom Button**:
+   - Zoom deep into a building footprint (zoom 18–20).
+   - Click the **🎯 Default Zoom** button to instantly restore the sector view containing the fire, station, and waterbody.
 
 ---
 
 ## 🛠️ Challenge Requirement Coverage
 
-- [x] **Image-based fire detection**: Python FastAPI with OpenCV & native JavaScript computer vision fallback.
-- [x] **AI confidence score**: 0–100% confidence gauge.
+- [x] **Image-based fire detection**: Python FastAPI with OpenCV + Native Computer Vision Fallback.
+- [x] **AI confidence score**: 0–100% confidence gauge with YOLOv8 feature breakdown.
 - [x] **False-positive handling**: Sunset and non-fire test cases return safe classification with explainable reasoning.
-- [x] **Fire localization**: GPS & interactive map coordinate pinning.
-- [x] **Fire severity classification**: CRITICAL, HIGH, MODERATE, LOW.
+- [x] **Fire localization**: GPS & interactive map coordinate pinning with autocomplete catalog.
+- [x] **Fire severity classification**: CRITICAL, HIGH, MODERATE, NORMAL.
 - [x] **Explainable AI**: Visual feature breakdown (Flames, Smoke, Heat, Vegetation, Haze, Cloud).
-- [x] **Geospatial visualization**: Google Maps JS API + High-res Google Hybrid satellite engine.
-- [x] **Simulated alert & dispatch**: Turnout workflow with ETA and unit tracking.
-- [x] **Multiple image testing**: Built-in test scenarios (Wildfire, Canopy Blaze, Sal Woods, Sunset).
-- [x] **Non-fire test case**: Validated safe classification (97.1%).
-- [x] **Risk threshold trigger**: Multi-source combined risk score (≥75 triggers critical alert).
-- [x] **Multi-source verification**: Cross-references Citizen + Satellite + IoT.
-- [x] **Real-time admin alert**: WebSockets / Socket.IO live streaming without page refresh.
+- [x] **Geospatial visualization**: Google Maps JS API + High-res Google Hybrid satellite engine with building-level zoom.
+- [x] **Simulated alert & dispatch**: Turnout workflow with ETA, waterbody drafting, and vehicle tracking.
+- [x] **Anti-Hoax Verification**: AI fake score vs. authenticity evaluation.
+- [x] **Cloud & Local Deployment**: Configured for Vercel Serverless and local Node.js.
 
 ---
 
@@ -79,28 +123,24 @@ As defined in the project architecture:
 - **Frontend**: Tailwind CSS, HTML5, Leaflet & Google Maps JavaScript API, Web Audio API (Synthesized dispatch sirens).
 - **Backend**: Node.js, Express, Socket.IO, Multer, UUID.
 - **AI Service**: Python FastAPI, OpenCV, NumPy, Pillow (`ai_service.py`) + Native Computer Vision Fallback (`aiVisionService.js`).
-- **Database**: MongoDB / Mongoose schema definitions (`models/schemas.js`) with persistent JSON storage.
+- **Database**: Persistent JSON store with Mongoose-compatible schema design (`data/forestguard_db.json`).
 - **Geospatial Engine**: Haversine distance matrix, waypoint synthesis, Indian forest GIS dataset.
+- **Cloud Hosting**: Vercel Serverless Functions (`vercel.json`, `api/index.js`).
 
 ---
 
-## 🏃‍♂️ How to Run
+## 🏃‍♂️ How to Run Locally
 
-### Option 1: Quick Start (Node.js Server)
+### Quick Start (Node.js Server)
 ```bash
+npm install
 npm start
 ```
-Open:
-- 🌐 Landing Page: [http://localhost:3000](http://localhost:3000)
-- 👤 User Emergency Dashboard: [http://localhost:3000/user.html](http://localhost:3000/user.html)
-- 🚨 Admin Command Operations Center: [http://localhost:3000/admin.html](http://localhost:3000/admin.html)
-- 🚒 Fire Station & Response Terminal: [http://localhost:3000/station.html](http://localhost:3000/station.html)
-- 📸 Dedicated Fire Report: [http://localhost:3000/report.html](http://localhost:3000/report.html)
-- 🛰️ Satellite Thermal Radar: [http://localhost:3000/satellite.html](http://localhost:3000/satellite.html)
-- 📡 IoT Sensor Grid: [http://localhost:3000/iot.html](http://localhost:3000/iot.html)
-- 📊 Incident Analytics: [http://localhost:3000/analytics.html](http://localhost:3000/analytics.html)
+Server listens simultaneously on:
+- Primary Port: **http://localhost:8109**
+- Compatibility Bridge: **http://localhost:3000**
 
-### Option 2: Full Dual-Stack (Python AI + Node.js)
+### Full Dual-Stack (Python AI + Node.js)
 ```bash
 # Terminal 1: Python AI Vision Engine
 python ai_service.py
@@ -108,8 +148,11 @@ python ai_service.py
 # Terminal 2: Node.js Command Server
 npm start
 ```
-*(On Windows, you can simply double-click `start.bat`)*
+*(On Windows, you can double-click `start.bat`)*
 
 ---
 
-*Note: Emergency notifications to government agencies, fire departments, or helplines are simulated for hackathon evaluation purposes.*
+## 📄 License & Notes
+
+Distributed under the MIT License.  
+*Note: Emergency notifications to government agencies, fire departments, or helplines are simulated for hackathon evaluation and demonstration purposes.*
