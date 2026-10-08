@@ -132,6 +132,13 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
       affectedAreaHectares: aiResult.affectedAreaEstimateHectares || 2.4,
       detectedFeatures: aiResult.detectedFeatures,
       featureBreakdown: aiResult.featureBreakdown,
+      scoreboard: aiResult.scoreboard,
+      anomalyConfidence: aiResult.anomalyConfidence,
+      smokeConfidence: aiResult.smokeConfidence,
+      fireCoverage: aiResult.fireCoverage,
+      smokeLevel: aiResult.smokeLevel,
+      riskScore: aiResult.riskScore,
+      objectsCount: aiResult.objectsCount,
       isPriority: true,
       priorityLevel: 'PRIORITY 1 - CITIZEN REPORT',
       reporter: {
@@ -155,6 +162,39 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
   } catch (err) {
     console.error('[REPORT ERROR]', err);
     return res.status(500).json({ success: false, message: 'Failed to process report: ' + err.message });
+  }
+});
+
+// 1.1 Dedicated AI Vision Scoreboard Analyzer Endpoint (Instant Pre-Submission & Inspector)
+app.post(['/api/analyze-image', '/api/analyze-scoreboard'], upload.single('fireImage'), async (req, res) => {
+  try {
+    let imageDiskPath = '';
+    let locationName = req.body.forestRegion || req.body.forestName || 'Bandipur Forest Region';
+
+    if (req.file) {
+      imageDiskPath = req.file.path;
+    } else if (req.body.base64Image) {
+      const base64Data = req.body.base64Image;
+      const matches = base64Data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      const buffer = matches ? Buffer.from(matches[2], 'base64') : Buffer.from(base64Data, 'base64');
+      const tempFilename = `temp_scan_${Date.now()}_${Math.round(Math.random() * 1e4)}.jpg`;
+      imageDiskPath = path.join(uploadsDir, tempFilename);
+      fs.writeFileSync(imageDiskPath, buffer);
+    } else if (req.body.imageUrl) {
+      const relPath = req.body.imageUrl.replace(/^\//, '');
+      imageDiskPath = path.join(__dirname, 'public', relPath);
+    } else {
+      imageDiskPath = path.join(__dirname, 'public', 'sample_images', 'sample_wildfire.jpg');
+    }
+
+    const aiResult = await aiVisionService.analyzeFireImage(imageDiskPath, locationName);
+    return res.json({
+      success: true,
+      ...aiResult
+    });
+  } catch (err) {
+    console.error('[AI ANALYZE ERROR]', err);
+    return res.status(500).json({ success: false, message: 'AI Analysis failed: ' + err.message });
   }
 });
 

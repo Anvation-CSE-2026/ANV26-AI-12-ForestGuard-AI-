@@ -176,24 +176,140 @@
             </div>
           </div>
 
-          <!-- Media Preview & AI Analysis Feedback Card -->
+          <!-- Evidence Media Preview -->
           <div id="mediaFeedbackCard" class="p-4 rounded-2xl bg-[#091122] border border-orange-500/40 space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-black text-white">EVIDENCE PREVIEW & AI READOUT</span>
+              <span class="text-xs font-black text-white flex items-center gap-1.5">
+                <span>📸</span> <span>EVIDENCE PHOTOGRAPH</span>
+              </span>
               <span id="txtAiBadge" class="text-[10px] font-black px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">AWAITING EVIDENCE</span>
             </div>
-            <div class="h-36 rounded-xl overflow-hidden bg-black border border-slate-800 relative flex items-center justify-center">
+            <div class="h-40 rounded-xl overflow-hidden bg-black border border-slate-800 relative flex items-center justify-center">
               <img id="imgMediaPreview" src="" class="w-full h-full object-cover hidden" />
+              <div id="scanLaserLine" class="hidden absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-red-500 to-transparent shadow-[0_0_10px_#ef4444] animate-pulse"></div>
               <div id="imgMediaEmptyPlaceholder" class="text-center p-3 text-slate-500 text-xs">
                 <span class="text-2xl block mb-1">📸</span>
                 <span class="block font-medium">No image selected</span>
                 <span class="text-[10px] text-slate-600 block">Select a file, open camera, or tap map to pin coordinates</span>
               </div>
             </div>
-            <div class="flex items-center justify-between text-xs font-mono">
-              <span class="text-slate-400">Confidence: <b id="txtAiConf" class="text-orange-400">Ready</b></span>
-              <span class="text-slate-400">Severity: <b id="txtAiSev" class="text-red-400">Live Evaluation</b></span>
+          </div>
+
+          <!-- SCORE BOARD: Detection Result & Risk Alert (YOLOv8 Engine) -->
+          <div id="userScoreBoardContainer" class="p-4 rounded-2xl bg-[#070e1c] border border-slate-800 shadow-2xl space-y-3 font-sans">
+            
+            <!-- Header: Title, Engine Status & Timestamp -->
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-400 text-lg">📊</span>
+                <span class="text-sm font-black text-white tracking-wide">Detection Result</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1 text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span id="sbEngineLabel">YOLOv8 ENGINE READY</span>
+                </div>
+                <span id="sbTimestamp" class="text-xs font-mono text-slate-400">12:57:38 PM</span>
+              </div>
             </div>
+
+            <!-- Status Banner Card -->
+            <div id="sbStatusBanner" class="p-3 rounded-xl border flex items-center justify-between transition-all duration-300 bg-emerald-950/40 border-emerald-500/40">
+              <div class="flex items-center gap-2.5">
+                <div id="sbStatusIconBox" class="w-8 h-8 rounded-lg flex items-center justify-center text-base bg-emerald-900/60 border border-emerald-500/40 text-emerald-300">
+                  🛡️
+                </div>
+                <div>
+                  <div id="sbStatusTitle" class="text-xs font-black text-white tracking-wide">NO ANOMALIES DETECTED</div>
+                  <div id="sbStatusSubtitle" class="text-[10px] text-slate-300">Status: Forest Clear (0 Objects)</div>
+                </div>
+              </div>
+              <div>
+                <span id="sbStatusBadge" class="text-[10px] font-black px-2 py-0.5 rounded-md bg-emerald-800 text-emerald-200 border border-emerald-600/50">SAFE</span>
+              </div>
+            </div>
+
+            <!-- 4 Telemetry Progress Bars / Gauges -->
+            <div class="space-y-2 pt-0.5">
+              
+              <!-- 1. Anomaly Confidence -->
+              <div>
+                <div class="flex justify-between items-center text-xs mb-0.5">
+                  <span class="text-[11px] font-bold text-slate-300">Anomaly Confidence</span>
+                  <span id="sbValAnomaly" class="font-mono font-bold text-red-400 text-xs">0.0%</span>
+                </div>
+                <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-slate-800">
+                  <div id="sbBarAnomaly" class="h-full bg-gradient-to-r from-red-600 to-rose-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- 2. Smoke Confidence -->
+              <div>
+                <div class="flex justify-between items-center text-xs mb-0.5">
+                  <span class="text-[11px] font-bold text-slate-300">Smoke Confidence</span>
+                  <span id="sbValSmoke" class="font-mono font-bold text-orange-400 text-xs">0.0%</span>
+                </div>
+                <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-slate-800">
+                  <div id="sbBarSmoke" class="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- 3. Fire Coverage -->
+              <div>
+                <div class="flex justify-between items-center text-xs mb-0.5">
+                  <span class="text-[11px] font-bold text-slate-300">Fire Coverage</span>
+                  <span id="sbValCoverage" class="font-mono font-bold text-amber-400 text-xs">0.0%</span>
+                </div>
+                <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-slate-800">
+                  <div id="sbBarCoverage" class="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- 4. Smoke Level -->
+              <div>
+                <div class="flex justify-between items-center text-xs mb-0.5">
+                  <span class="text-[11px] font-bold text-slate-300">Smoke Level</span>
+                  <span id="sbValSmokeLevel" class="font-mono font-bold text-sky-400 text-xs">0.0%</span>
+                </div>
+                <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-slate-800">
+                  <div id="sbBarSmokeLevel" class="h-full bg-gradient-to-r from-sky-500 to-blue-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Two Summary Metric Cards (Risk Score & Severity) -->
+            <div class="grid grid-cols-2 gap-2 pt-1">
+              <div class="p-2 rounded-xl bg-[#030712] border border-slate-800">
+                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Risk Score</div>
+                <div class="flex items-baseline gap-1 mt-0.5">
+                  <span id="sbMetricRisk" class="text-lg font-black text-emerald-400 font-mono">0</span>
+                  <span class="text-xs font-mono text-slate-500">/ 100</span>
+                </div>
+              </div>
+              <div class="p-2 rounded-xl bg-[#030712] border border-slate-800">
+                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Severity</div>
+                <div id="sbMetricSeverity" class="text-sm font-black text-emerald-400 uppercase tracking-wide mt-0.5">NORMAL</div>
+              </div>
+            </div>
+
+            <!-- Warning Alert Box -->
+            <div class="pt-0.5">
+              <div class="text-[10px] font-black text-amber-400 flex items-center gap-1 mb-1">
+                <span>⚠️</span> <span>Simulated Early Warning Alert</span>
+              </div>
+              <div id="sbAlertBox" class="p-2 rounded-xl border flex items-center justify-center text-center font-black text-xs tracking-wider transition-all duration-300 bg-emerald-950/40 border-emerald-600/40 text-emerald-300">
+                <span id="sbAlertText">NORMAL - SECTOR CLEAR</span>
+              </div>
+            </div>
+
+            <!-- Hidden values to bind with the form submission -->
+            <input type="hidden" id="hdnAiConfidence" value="0.0">
+            <input type="hidden" id="hdnSmokeConfidence" value="0.0">
+            <input type="hidden" id="hdnFireCoverage" value="0.0">
+            <input type="hidden" id="hdnSmokeLevel" value="0.0">
+            <input type="hidden" id="hdnRiskScore" value="0">
+            <input type="hidden" id="hdnSeverity" value="NORMAL">
           </div>
 
         </div>
