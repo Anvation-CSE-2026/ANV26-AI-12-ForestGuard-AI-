@@ -617,26 +617,29 @@ class ForestGuardMapEngine {
     }
   }
   // --- Draw Radius Circles (500m, 1.5km, 5km) Matching Image 4 ---
+  // Keeps shade ONLY in the first radius (500m Hot Zone), retains clean dotted radius lines around outer perimeters without orange wash
   drawRadiusCircles(lat, lng, radii = [500, 1500, 5000]) {
     this.clearCircles();
     this.circles = [];
     if (!this.map) return;
 
     const colors = [
-      { color: '#ef4444', fill: 'rgba(239, 68, 68, 0.16)', name: '500m Hot Zone' },
-      { color: '#f97316', fill: 'rgba(249, 115, 22, 0.09)', name: '1.5km Buffer Perimeter' },
-      { color: '#eab308', fill: 'rgba(234, 179, 8, 0.05)', name: '5km Response Sector' }
+      { color: '#ef4444', name: '500m Hot Zone' },
+      { color: '#f97316', name: '1.5km Buffer Perimeter' },
+      { color: '#eab308', name: '5km Response Sector' }
     ];
 
     radii.forEach((radiusMeters, idx) => {
       const col = colors[idx] || colors[0];
+      const isFirstRadius = (idx === 0); // Keep shade ONLY in the first radius
+
       if (this.mode === 'google-api') {
         const circle = new google.maps.Circle({
           strokeColor: col.color,
           strokeOpacity: 0.85,
           strokeWeight: 1.8,
           fillColor: col.color,
-          fillOpacity: 0.1,
+          fillOpacity: isFirstRadius ? 0.16 : 0,
           map: this.map,
           center: { lat, lng },
           radius: radiusMeters
@@ -647,8 +650,10 @@ class ForestGuardMapEngine {
           radius: radiusMeters,
           color: col.color,
           weight: 1.8,
+          opacity: 0.85,
+          fill: isFirstRadius,
           fillColor: col.color,
-          fillOpacity: 0.09,
+          fillOpacity: isFirstRadius ? 0.16 : 0,
           dashArray: '6, 6'
         }).addTo(this.map);
         circle.bindTooltip(col.name, { permanent: false, direction: 'top' });
@@ -725,7 +730,8 @@ class ForestGuardMapEngine {
       zones.forEach(z => {
         if (!z.data) return;
         const color = z.data.color || '#ef4444';
-        const fillOpacity = z.data.fillOpacity || 0.2;
+        const isConfirmed = (z.key === 'confirmed'); // Keep shade ONLY in the innermost confirmed fire zone
+        const fillOpacity = isConfirmed ? 0.22 : 0;
         const tooltipText = `<b>ESTIMATED FIRE PERIMETER</b><br><span style="color:${color};font-weight:bold;">${z.label}</span><br>Estimated Area: <b>${z.data.estimatedHectares || perimeterData.estimatedAreaHectares} ha</b><br><span style="font-size:10px;color:#94a3b8;">Prototype estimate based on coordinates & severity</span>`;
 
         if (this.mode === 'google-api') {
@@ -766,10 +772,11 @@ class ForestGuardMapEngine {
             const latLngs = z.data.polygonCoords.map(c => [c.lat, c.lng]);
             const poly = L.polygon(latLngs, {
               color: color,
+              fill: isConfirmed,
               fillColor: color,
               fillOpacity: fillOpacity,
               weight: z.data.strokeWeight || 2,
-              dashArray: z.key !== 'confirmed' ? '4, 4' : undefined
+              dashArray: !isConfirmed ? '4, 4' : undefined
             }).addTo(this.map);
             poly.bindTooltip(tooltipText, { permanent: false, direction: 'top' });
             this.perimeterLayers.push(poly);
@@ -777,9 +784,11 @@ class ForestGuardMapEngine {
             const circle = L.circle([perimeterData.center.lat, perimeterData.center.lng], {
               radius: z.data.radiusMeters,
               color: color,
+              fill: isConfirmed,
               fillColor: color,
               fillOpacity: fillOpacity,
-              weight: z.data.strokeWeight || 2
+              weight: z.data.strokeWeight || 2,
+              dashArray: !isConfirmed ? '4, 4' : undefined
             }).addTo(this.map);
             circle.bindTooltip(tooltipText, { permanent: false, direction: 'top' });
             this.perimeterLayers.push(circle);
@@ -834,7 +843,7 @@ class ForestGuardMapEngine {
             strokeOpacity: 0.9,
             strokeWeight: 2,
             fillColor: s.color,
-            fillOpacity: s.min === 0 ? 0.35 : 0.18,
+            fillOpacity: s.min === 0 ? 0.25 : 0,
             map: this.map,
             zIndex: 15 - Math.round(s.min / 10)
           });
@@ -848,8 +857,9 @@ class ForestGuardMapEngine {
           const latLngs = s.geom.polygon.map(c => [c.lat, c.lng]);
           const poly = L.polygon(latLngs, {
             color: s.color,
+            fill: s.min === 0,
             fillColor: s.color,
-            fillOpacity: s.min === 0 ? 0.35 : 0.18,
+            fillOpacity: s.min === 0 ? 0.25 : 0,
             weight: 2,
             dashArray: s.min > 0 ? '5, 5' : undefined
           }).addTo(this.map);
@@ -982,9 +992,9 @@ class ForestGuardMapEngine {
 
     try {
       const specs = [
-        { radius: radii[0] || 1000, color: '#ef4444', label: '1 km Immediate Impact Zone', fillOpacity: 0.12 },
-        { radius: radii[1] || 5000, color: '#f97316', label: '5 km Population Buffer Zone', fillOpacity: 0.08 },
-        { radius: radii[2] || 10000, color: '#eab308', label: '10 km Regional Monitoring Zone', fillOpacity: 0.04 }
+        { radius: radii[0] || 1000, color: '#ef4444', label: '1 km Immediate Impact Zone', fillOpacity: 0 },
+        { radius: radii[1] || 5000, color: '#f97316', label: '5 km Population Buffer Zone', fillOpacity: 0 },
+        { radius: radii[2] || 10000, color: '#eab308', label: '10 km Regional Monitoring Zone', fillOpacity: 0 }
       ];
 
       specs.forEach(s => {
@@ -996,7 +1006,7 @@ class ForestGuardMapEngine {
             strokeOpacity: 0.75,
             strokeWeight: 1.5,
             fillColor: s.color,
-            fillOpacity: s.fillOpacity,
+            fillOpacity: 0,
             map: this.map
           });
           this.populationExposureLayers.push(circle);
@@ -1005,8 +1015,10 @@ class ForestGuardMapEngine {
             radius: s.radius,
             color: s.color,
             weight: 1.5,
+            opacity: 0.75,
+            fill: false,
             fillColor: s.color,
-            fillOpacity: s.fillOpacity,
+            fillOpacity: 0,
             dashArray: '6, 8'
           }).addTo(this.map);
           circle.bindTooltip(`<b>POPULATION EXPOSURE</b><br>${s.label}`, { direction: 'top' });

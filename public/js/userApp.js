@@ -248,18 +248,22 @@ function renderUserMapOverlays(lat, lng) {
   if (userAuxLayers.markerWater) { try { userMap.removeLayer(userAuxLayers.markerWater); } catch(e){} }
 
   // 1. Concentric Alert Radius Circles (500m, 1.5km, 5km in neat dotted outline)
+  // Keeps shade ONLY in the first radius (500m Hot Zone), retains clean dotted radius lines around area
   const rings = [
     { r: 500, col: '#ef4444', name: '500m Hot Zone' },
     { r: 1500, col: '#f97316', name: '1.5km Buffer Perimeter' },
     { r: 5000, col: '#eab308', name: '5km Response Sector' }
   ];
-  rings.forEach(ring => {
+  rings.forEach((ring, idx) => {
+    const isFirstRadius = (idx === 0);
     const c = L.circle([lat, lng], {
       radius: ring.r,
       color: ring.col,
       weight: 1.8,
+      opacity: 0.85,
+      fill: isFirstRadius,
       fillColor: ring.col,
-      fillOpacity: 0.08,
+      fillOpacity: isFirstRadius ? 0.16 : 0,
       dashArray: '6, 6'
     }).addTo(userMap);
     c.bindTooltip(ring.name, { direction: 'top' });
@@ -1938,17 +1942,21 @@ function initFullMap() {
     .bindTooltip(`<b>Reported Fire at Bandipur National Park (Sector 4B)</b><br><span style="color:#ef4444;font-size:11px;">CRITICAL • ACTIVE FIRE</span>`, { direction: 'top', offset: [0, -16] });
 
   // 2. Concentric Danger Rings (500m, 1.5km, 5km)
+  // Keeps shade ONLY in the first radius (500m Hot Zone), retains clean dotted radius lines
   [
     { r: 500, col: '#ef4444', label: '500m Hot Zone' },
     { r: 1500, col: '#f97316', label: '1.5km Buffer Perimeter' },
     { r: 5000, col: '#eab308', label: '5km Response Sector' }
-  ].forEach(c => {
+  ].forEach((c, idx) => {
+    const isFirstRadius = (idx === 0);
     L.circle([bandipurLat, bandipurLng], {
       radius: c.r,
       color: c.col,
       weight: 1.8,
+      opacity: 0.85,
+      fill: isFirstRadius,
       fillColor: c.col,
-      fillOpacity: 0.08,
+      fillOpacity: isFirstRadius ? 0.16 : 0,
       dashArray: '6, 6'
     }).addTo(fullMap).bindTooltip(c.label, { direction: 'top' });
   });
