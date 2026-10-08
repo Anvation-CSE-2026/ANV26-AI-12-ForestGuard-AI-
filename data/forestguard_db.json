@@ -19,11 +19,11 @@
       "flamesVisible": true,
       "peopleInDanger": false,
       "aiConfidence": 94.2,
-      "severity": "LOW",
-      "riskScore": 5,
+      "severity": "CRITICAL",
+      "riskScore": 95,
       "satelliteConfidence": 89.2,
       "sensorConfidence": 78.5,
-      "status": "CANCELLED",
+      "status": "UNDER REVIEW",
       "aiExplanation": "Visible smoke and flame-like regions detected. Image evidence indicates a high probability of forest fire with rapid crown propagation risk.",
       "affectedAreaHectares": 2.4,
       "affectedRadiiMeters": [
@@ -251,10 +251,10 @@
         "teamId": "STA-KA-01",
         "name": "Bandipur Forest Rapid Response Unit (HQ)",
         "status": "DISPATCHED",
-        "dispatchedAt": "2026-10-08T10:57:55.783Z",
+        "dispatchedAt": "2026-10-08T11:55:59.401Z",
         "etaMinutes": 8,
         "distanceKm": 1.1,
-        "instruction": "Deploy high-pressure water tender and aerial surveillance drones to Bandipur Forest, Karnataka."
+        "instruction": "Proceed to incident location and begin fire containment."
       },
       "nearestWaterBody": {
         "id": "WB-06",
@@ -461,6 +461,26 @@
           "time": "04:45:25 pm",
           "message": "Alert CANCELLED: Alert cancelled by operator",
           "type": "CANCEL"
+        },
+        {
+          "time": "05:14:19 pm",
+          "message": "Alert CANCELLED: Alert cancelled by operator",
+          "type": "CANCEL"
+        },
+        {
+          "time": "05:25:59 pm",
+          "message": "Fire verified by Test Admin",
+          "type": "VERIFY"
+        },
+        {
+          "time": "05:25:59 pm",
+          "message": "Bandipur Forest Rapid Response Unit (HQ) dispatched by Admin Command",
+          "type": "DISPATCH"
+        },
+        {
+          "time": "05:25:59 pm",
+          "message": "Fire contained by forestry response crew",
+          "type": "CONTAINED"
         }
       ],
       "isPriority": true,
@@ -519,9 +539,9 @@
       ],
       "routeProgressIndex": 0,
       "createdAt": "2026-10-08T10:48:26.849Z",
-      "updatedAt": "2026-10-08T11:15:25.857Z",
-      "verifiedBy": "Forest Authority Admin",
-      "verifiedAt": "2026-10-08T11:15:20.051Z"
+      "updatedAt": "2026-10-08T11:55:59.452Z",
+      "verifiedBy": "Test Admin",
+      "verifiedAt": "2026-10-08T11:55:59.172Z"
     },
     {
       "incidentId": "FG-2026-5078",
@@ -2111,7 +2131,7 @@
     {
       "teamId": "STA-KA-01",
       "name": "Bandipur Forest Rapid Response Unit (HQ)",
-      "status": "ASSIGNED",
+      "status": "AVAILABLE",
       "members": 6,
       "currentIncident": "FG-2026-1052"
     }
@@ -2184,5 +2204,5 @@
       "description": "Periyar Reserve Forest Emergency response cell."
     }
   ],
-  "lastSaved": "2026-10-08T11:15:25.858Z"
+  "lastSaved": "2026-10-08T11:55:59.453Z"
 }

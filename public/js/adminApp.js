@@ -10,6 +10,8 @@ let allStations = [];
 let allWaterBodies = [];
 let allSensors = [];
 let allSatellites = [];
+let selectedDeployStation = null;
+let transitInterval = null;
 let socket = null;
 let audioMuted = false;
 
@@ -102,10 +104,15 @@ function initSocket() {
   });
 
   // TEAM DISPATCHED
-  socket.on('team_dispatched', (updated) => {
-    updateIncidentInList(updated);
-    if (activeIncident && activeIncident.incidentId === updated.incidentId) {
-      selectIncident(updated, false);
+  socket.on('team_dispatched', (data) => {
+    const inc = (data && data.incident) ? data.incident : data;
+    updateIncidentInList(inc);
+    if (activeIncident && activeIncident.incidentId === inc.incidentId) {
+      selectIncident(inc, false);
+    }
+    const teamToTrack = (data && data.team) || selectedDeployStation;
+    if (teamToTrack) {
+      startLiveVehicleTransit(inc, teamToTrack);
     }
   });
 
@@ -208,6 +215,21 @@ function handleNewFireAlert(incident) {
 function selectIncident(incident, shouldCenter = true) {
   activeIncident = incident;
 
+  // Clear any existing vehicle transit animation if switching incident
+  if (transitInterval) {
+    clearInterval(transitInterval);
+    transitInterval = null;
+  }
+
+  // Determine initial selected station for deployment
+  const stations = (incident.rankedStations && incident.rankedStations.length > 0)
+    ? incident.rankedStations
+    : (incident.nearestStation ? [incident.nearestStation] : []);
+
+  if (!selectedDeployStation || !stations.some(s => (s.id || s.stationId) === (selectedDeployStation.id || selectedDeployStation.stationId))) {
+    selectedDeployStation = stations[0] || incident.nearestStation || incident.assignedStation || null;
+  }
+
   // Highlight active card
   document.querySelectorAll('.incident-feed-card').forEach(card => {
     card.classList.toggle('border-orange-500', card.dataset.id === incident.incidentId);
@@ -229,9 +251,10 @@ function selectIncident(incident, shouldCenter = true) {
   // Draw 500m, 1km, 5km affected radius circles (Section 11)
   window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1000, 5000]);
 
-  // Draw Route to Nearest Response Station (PURPLE route)
-  if (incident.nearestStation && incident.nearestStation.routeWaypoints) {
-    window.forestMapEngine.drawRoute(incident.nearestStation.routeWaypoints, '#9333ea', false);
+  // Draw Route to Selected Response Station (PURPLE route)
+  const deployStation = selectedDeployStation || incident.nearestStation;
+  if (deployStation && deployStation.routeWaypoints) {
+    window.forestMapEngine.drawRoute(deployStation.routeWaypoints, '#9333ea', false);
   }
 
   // Draw Hose Relay Line to Nearest Water Body (BLUE dashed route)
@@ -304,6 +327,8 @@ function renderIncidentDetailPanel(incident) {
     statEl.className = `${baseStatusClass} bg-blue-950 border border-blue-500 text-blue-300`;
   } else if (incident.status === 'VERIFIED') {
     statEl.className = `${baseStatusClass} bg-purple-950 border border-purple-500 text-purple-300`;
+  } else if (incident.status === 'FALSE ALARM') {
+    statEl.className = `${baseStatusClass} bg-slate-900 border border-slate-600 text-slate-300`;
   } else {
     statEl.className = `${baseStatusClass} bg-amber-950/90 border border-amber-600 text-amber-300`;
   }
@@ -345,61 +370,137 @@ function renderIncidentDetailPanel(incident) {
     }
   }
 
-  // Nearby Station (PURPLE)
+  // Nearby Station (PURPLE) & Ranked Response Stations Selection
   const st = incident.nearestStation || incident.assignedStation || {};
-  document.getElementById('detailStationName').textContent = st.name || 'Bandipur Forest Response Unit';
-  document.getElementById('detailStationDist').textContent = `${st.distanceKm || 8.7} km`;
-  document.getElementById('detailStationEta').textContent = `ETA: ${st.etaMinutes || 18} min`;
-  document.getElementById('detailStationPhone').textContent = st.phone || '+91-8229-236021';
+  const stations = (incident.rankedStations && incident.rankedStations.length > 0)
+    ? incident.rankedStations
+    : (st.name ? [st] : []);
 
-  // Ranked Response Stations List
-  const rankedContainer = document.getElementById('detailRankedStationsList');
-  if (rankedContainer) {
-    const stations = incident.rankedStations && incident.rankedStations.length > 0
-      ? incident.rankedStations
-      : (st.name ? [st] : []);
-
-    rankedContainer.innerHTML = stations.map((s, idx) => {
-      const isFirst = idx === 0;
-      const rankTag = isFirst ? '#1 RECOMMENDED' : (idx === 1 ? '#2 STANDBY' : `#${idx + 1} MUTUAL AID`);
-      const rankBg = isFirst ? 'bg-purple-950 text-purple-300 border-purple-600' : 'bg-slate-800 text-slate-400 border-slate-700';
-      const statusColor = s.status === 'AVAILABLE' ? 'text-emerald-400' : 'text-amber-400';
-
-      return `
-        <div class="p-2 rounded-lg bg-[#040814] border border-slate-800 flex items-center justify-between">
-          <div>
-            <div class="flex items-center gap-1.5">
-              <span class="text-[9px] font-black px-1.5 py-0.2 rounded border ${rankBg}">${rankTag}</span>
-              <span class="font-bold text-white text-[11px] truncate max-w-[150px]">${s.name}</span>
-            </div>
-            <div class="text-[10px] text-slate-400 mt-0.5">
-              Status: <span class="font-bold ${statusColor}">${s.status || 'AVAILABLE'}</span> • ${s.waterTenders || 2} Tenders
-            </div>
-          </div>
-          <div class="text-right">
-            <div class="font-mono font-bold text-purple-300 text-xs">${s.distanceKm} km</div>
-            <div class="text-[10px] text-slate-400">ETA: ${s.etaMinutes} min</div>
-          </div>
-        </div>
-      `;
-    }).join('');
+  if (!selectedDeployStation || !stations.some(s => (s.id || s.stationId) === (selectedDeployStation.id || selectedDeployStation.stationId))) {
+    selectedDeployStation = stations[0] || st;
   }
+
+  // Update selected station display readout
+  updateSelectedStationDisplay(selectedDeployStation);
+
+  // Render ranked response stations with interactive selection
+  renderRankedStationsList(stations, incident);
 
   // Nearby Water Body (BLUE)
   const wb = incident.nearestWaterBody || {};
   document.getElementById('detailWaterName').textContent = wb.name || 'Kabini Reservoir';
   document.getElementById('detailWaterDist').textContent = `${wb.distanceKm || 14.2} km`;
   document.getElementById('detailWaterCapacity').textContent = wb.capacity || 'High Volume Aerial Drafting Access';
+}
 
-  // Dispatch Button Status
+function updateSelectedStationDisplay(station) {
+  if (!station) return;
+  const nameEl = document.getElementById('detailStationName');
+  const distEl = document.getElementById('detailStationDist');
+  const etaEl = document.getElementById('detailStationEta');
+  const phoneEl = document.getElementById('detailStationPhone');
+
+  if (nameEl) nameEl.textContent = station.name || 'Forest Fire Response Unit';
+  if (distEl) distEl.textContent = `${station.distanceKm || 8.4} km`;
+  if (etaEl) etaEl.textContent = `ETA: ${station.etaMinutes || 16} min`;
+  if (phoneEl) phoneEl.textContent = station.phone || '+91-8229-236021';
+
+  // Update Dispatch Button text to reflect chosen unit
   const btnDisp = document.getElementById('btnDispatchAction');
-  if (incident.status === 'RESPONSE_DISPATCHED') {
-    btnDisp.innerHTML = '<span>✅</span> <span>RESPONSE TEAM DISPATCHED</span>';
-    btnDisp.className = 'w-full py-3 rounded-xl bg-emerald-600 text-white font-black text-sm tracking-wider uppercase transition flex items-center justify-center gap-2 cursor-default';
-  } else {
-    btnDisp.innerHTML = '<span>🚒</span> <span>DISPATCH RESPONSE</span>';
-    btnDisp.className = 'btn-shimmer w-full py-3 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white font-black text-sm tracking-wider uppercase shadow-lg shadow-red-950/60 hover:brightness-110 active:scale-[0.99] transition flex items-center justify-center gap-2';
+  if (btnDisp) {
+    const isDispatched = activeIncident && (activeIncident.status === 'RESPONSE_DISPATCHED' || activeIncident.status === 'TEAM DISPATCHED' || activeIncident.status === 'TEAM EN ROUTE');
+    if (isDispatched) {
+      btnDisp.className = 'w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm tracking-wider uppercase shadow-lg shadow-emerald-950/60 transition flex items-center justify-center gap-2 cursor-pointer';
+      btnDisp.innerHTML = `<span>🚑</span> <span>${station.name.split(' ')[0]} EN ROUTE (LIVE TRACKING)</span>`;
+    } else {
+      btnDisp.className = 'btn-shimmer w-full py-3 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white font-black text-sm tracking-wider uppercase shadow-lg shadow-red-950/60 hover:brightness-110 active:scale-[0.99] transition flex items-center justify-center gap-2 cursor-pointer';
+      btnDisp.innerHTML = `<span>🚒</span> <span>DEPLOY ${station.name.split(' ')[0]} UNIT (${station.distanceKm} KM)</span>`;
+    }
   }
+}
+
+function renderRankedStationsList(stations, incident) {
+  const rankedContainer = document.getElementById('detailRankedStationsList');
+  if (!rankedContainer) return;
+
+  rankedContainer.innerHTML = stations.map((s, idx) => {
+    const sId = s.id || s.stationId;
+    const isSelected = selectedDeployStation && ((selectedDeployStation.id || selectedDeployStation.stationId) === sId);
+    const isFirst = idx === 0;
+    const rankTag = isFirst ? '#1 RECOMMENDED' : (idx === 1 ? '#2 STANDBY' : `#${idx + 1} MUTUAL AID`);
+    const rankBg = isFirst ? 'bg-purple-950 text-purple-300 border-purple-600' : 'bg-slate-800 text-slate-400 border-slate-700';
+    const statusColor = s.status === 'AVAILABLE' ? 'text-emerald-400' : 'text-amber-400';
+
+    const cardClasses = isSelected
+      ? 'p-2.5 rounded-xl border-2 border-purple-500 bg-purple-950/50 shadow-[0_0_16px_rgba(168,85,247,0.4)] ring-1 ring-purple-400 cursor-pointer transition-all'
+      : 'p-2.5 rounded-xl border border-slate-800 bg-[#040814] hover:border-purple-600/70 hover:bg-[#0c152a] cursor-pointer transition-all group';
+
+    const actionPill = isSelected
+      ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-[10px] font-black shadow-sm animate-pulse">✓ SELECTED FOR DEPLOYMENT</span>`
+      : `<button type="button" class="btn-station-pick px-2 py-0.5 rounded bg-slate-800 group-hover:bg-purple-900 group-hover:text-purple-200 text-slate-300 text-[10px] font-bold border border-slate-700 transition">Select Team</button>`;
+
+    return `
+      <div class="ranked-station-card ${cardClasses}" data-id="${sId}" title="Click to select ${s.name} for deployment">
+        <div class="flex items-center justify-between mb-1.5">
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="text-[9px] font-black px-1.5 py-0.5 rounded border ${rankBg} shrink-0">${rankTag}</span>
+            <span class="font-bold text-white text-xs truncate">${s.name}</span>
+          </div>
+          <div class="shrink-0">
+            ${actionPill}
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-[11px] pt-1 border-t border-slate-800/80">
+          <div class="text-[10px] text-slate-400">
+            Status: <span class="font-bold ${statusColor}">${s.status || 'AVAILABLE'}</span> • ${s.waterTenders || 2} Tenders
+          </div>
+          <div class="text-right flex items-center gap-2">
+            <span class="font-mono font-black text-purple-300 text-xs">${s.distanceKm} km</span>
+            <span class="text-[10px] text-slate-400 font-mono">ETA: ${s.etaMinutes} min</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  rankedContainer.querySelectorAll('.ranked-station-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const targetId = card.dataset.id;
+      const chosen = stations.find(s => (s.id || s.stationId) === targetId);
+      if (chosen) {
+        selectStationForDeployment(chosen, incident);
+      }
+    });
+  });
+}
+
+function selectStationForDeployment(station, incident) {
+  selectedDeployStation = station;
+  if (window.emergencyAudio && !audioMuted) window.emergencyAudio.playDispatchChime();
+
+  // 1. Update Display Readouts and Button Label
+  updateSelectedStationDisplay(station);
+
+  // 2. Re-render Ranked Stations list to show active highlight
+  const stations = (incident.rankedStations && incident.rankedStations.length > 0)
+    ? incident.rankedStations
+    : [station];
+  renderRankedStationsList(stations, incident);
+
+  // 3. Redraw Leaflet Route on Map from the chosen station to fire
+  if (window.forestMapEngine) {
+    window.forestMapEngine.clearRoutes();
+    const waypoints = station.routeWaypoints || incident.routeWaypoints;
+    if (waypoints && waypoints.length > 0) {
+      window.forestMapEngine.drawRoute(waypoints, '#9333ea', false);
+    }
+    if (incident.nearestWaterBody && incident.nearestWaterBody.routeWaypoints) {
+      window.forestMapEngine.drawRoute(incident.nearestWaterBody.routeWaypoints, '#0284c7', true);
+    }
+  }
+
+  // 4. Show Feedback Toast
+  showToast(`✓ Selected for Deployment: ${station.name} (${station.distanceKm} km, ETA: ${station.etaMinutes} min)`, 'purple');
 }
 
 // 7. Render Incident Cards Feed (Left Column)
@@ -476,17 +577,26 @@ function renderIncidentList() {
 
 // Cancel / Dismiss an Alert One at a Time
 async function cancelIncidentById(incidentId) {
+  if (!incidentId || incidentId === 'undefined' || incidentId === '--') {
+    alert('Cannot cancel: Invalid or missing incident identifier.');
+    return;
+  }
   if (!confirm(`Are you sure you want to cancel and remove alert ${incidentId}?`)) return;
   try {
     const res = await fetch(`/api/incidents/${incidentId}/cancel`, { method: 'POST' });
+    if (!res.ok) {
+      const errTxt = await res.text();
+      throw new Error(`Server returned status ${res.status}`);
+    }
     const data = await res.json();
     if (data.success) {
       removeIncidentFromState(incidentId);
+      showToast(`✕ Alert ${incidentId} cancelled and removed.`, 'red');
     } else {
       alert('Failed to cancel alert: ' + (data.message || 'Error'));
     }
   } catch (e) {
-    alert('Cancellation error: ' + e.message);
+    alert('Cancellation notice: ' + e.message);
   }
 }
 
@@ -499,7 +609,15 @@ function removeIncidentFromState(incidentId) {
       selectIncident(allIncidents[0], true);
     } else {
       activeIncident = null;
-      if (window.forestMapEngine) window.forestMapEngine.clearRoutes();
+      if (window.forestMapEngine) {
+        window.forestMapEngine.clearRoutes();
+        window.forestMapEngine.clearMarkers('fires');
+      }
+      // Reset UI to clean standby state
+      document.getElementById('detailIncidentId').textContent = '--';
+      document.getElementById('detailAlertTitle').textContent = 'No Active Incident';
+      document.getElementById('detailStatusPill').textContent = 'STANDBY';
+      document.getElementById('detailStatusPill').className = 'inline-flex items-center justify-center whitespace-nowrap shrink-0 text-xs font-black px-3 py-1.5 rounded-full bg-slate-800 text-slate-400';
     }
   }
 
@@ -512,7 +630,10 @@ function removeIncidentFromState(incidentId) {
   }
 }
 
-function updateIncidentInList(updated) {
+function updateIncidentInList(payload) {
+  if (!payload) return;
+  const updated = (payload && payload.incident) ? payload.incident : payload;
+  if (!updated || !updated.incidentId || updated.incidentId === 'undefined' || updated.incidentId === '--') return;
   const idx = allIncidents.findIndex(i => i.incidentId === updated.incidentId);
   if (idx !== -1) allIncidents[idx] = updated;
   else allIncidents.unshift(updated);
@@ -622,28 +743,49 @@ function closeAdminModal(modalEl) {
 
   if (btnDisp) {
     btnDisp.addEventListener('click', () => {
-      if (!activeIncident) return;
+      if (!activeIncident || !activeIncident.incidentId || activeIncident.incidentId === '--') {
+        alert('Please select an active incident from the queue first.');
+        return;
+      }
       document.getElementById('modalIncidentId').textContent = activeIncident.incidentId;
       document.getElementById('modalLocation').textContent = activeIncident.forestName;
 
       const selectEl = document.getElementById('modalSelectTeam');
-      const primaryStation = activeIncident.nearestStation || activeIncident.assignedStation || { id: 'STA-KA-01', name: 'Bandipur Forest Response Unit', distanceKm: 8.4, etaMinutes: 16 };
-      const stations = activeIncident.rankedStations && activeIncident.rankedStations.length > 0
+      const primaryStation = selectedDeployStation || activeIncident.nearestStation || activeIncident.assignedStation || { id: 'STA-KA-01', name: 'Bandipur Forest Response Unit', distanceKm: 8.4, etaMinutes: 16 };
+      const stations = (activeIncident.rankedStations && activeIncident.rankedStations.length > 0)
         ? activeIncident.rankedStations
         : [primaryStation];
 
       if (selectEl) {
-        selectEl.innerHTML = stations.map((s, idx) => `
-          <option value="${s.id || s.stationId}" data-dist="${s.distanceKm}" data-eta="${s.etaMinutes}" data-name="${s.name}">
-            ${idx === 0 ? '⭐ [Recommended #1] ' : `[Rank #${idx + 1}] `}${s.name} (${s.distanceKm} km, ETA: ${s.etaMinutes} min)
-          </option>
-        `).join('');
+        const chosenTargetId = selectedDeployStation ? (selectedDeployStation.id || selectedDeployStation.stationId) : (primaryStation.id || primaryStation.stationId);
+        selectEl.innerHTML = stations.map((s, idx) => {
+          const sId = s.id || s.stationId;
+          const isSel = sId === chosenTargetId;
+          return `
+            <option value="${sId}" data-dist="${s.distanceKm}" data-eta="${s.etaMinutes}" data-name="${s.name}" ${isSel ? 'selected' : ''}>
+              ${idx === 0 ? '⭐ [Recommended #1] ' : `[Rank #${idx + 1}] `}${s.name} (${s.distanceKm} km, ETA: ${s.etaMinutes} min)
+            </option>
+          `;
+        }).join('');
 
         const updateSelectedTelemetry = () => {
           const opt = selectEl.options[selectEl.selectedIndex];
           if (opt) {
             document.getElementById('modalDistance').textContent = `${opt.dataset.dist} km`;
             document.getElementById('modalEta').textContent = `${opt.dataset.eta} Minutes`;
+            const matched = stations.find(s => (s.id || s.stationId) === opt.value);
+            if (matched) {
+              selectedDeployStation = matched;
+              updateSelectedStationDisplay(matched);
+              renderRankedStationsList(stations, activeIncident);
+              if (window.forestMapEngine && matched.routeWaypoints) {
+                window.forestMapEngine.clearRoutes();
+                window.forestMapEngine.drawRoute(matched.routeWaypoints, '#9333ea', false);
+                if (activeIncident.nearestWaterBody && activeIncident.nearestWaterBody.routeWaypoints) {
+                  window.forestMapEngine.drawRoute(activeIncident.nearestWaterBody.routeWaypoints, '#0284c7', true);
+                }
+              }
+            }
           }
         };
 
@@ -677,12 +819,12 @@ function closeAdminModal(modalEl) {
 
   if (btnConfirmDisp) {
     btnConfirmDisp.addEventListener('click', async () => {
-      if (!activeIncident) return;
+      if (!activeIncident || !activeIncident.incidentId || activeIncident.incidentId === '--') return;
       closeAdminModal(dispModal);
 
       const selectEl = document.getElementById('modalSelectTeam');
       const opt = selectEl ? selectEl.options[selectEl.selectedIndex] : null;
-      const primaryStation = activeIncident.nearestStation || activeIncident.assignedStation || {};
+      const primaryStation = selectedDeployStation || activeIncident.nearestStation || activeIncident.assignedStation || {};
       const chosenId = opt ? opt.value : (primaryStation.id || 'STA-KA-01');
       const chosenName = opt ? opt.dataset.name : (primaryStation.name || 'Forest Fire Rapid Response Unit');
       const chosenEta = opt ? parseInt(opt.dataset.eta) : (primaryStation.etaMinutes || 16);
@@ -701,10 +843,19 @@ function closeAdminModal(modalEl) {
           })
         });
 
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (data.success) {
           if (window.emergencyAudio && !audioMuted) window.emergencyAudio.playDispatchChime();
-          selectIncident(data.incident, false);
+          activeIncident.status = 'RESPONSE_DISPATCHED';
+          selectIncident(data.incident || activeIncident, false);
+          showToast(`🚨 ${chosenName} Dispatched to ${activeIncident.forestName}!`, 'emerald');
+
+          // Launch live vehicle transit animation toward forest fire area
+          const chosenStationObj = (activeIncident.rankedStations || []).find(s => (s.id || s.stationId) === chosenId) || selectedDeployStation || primaryStation;
+          startLiveVehicleTransit(data.incident || activeIncident, chosenStationObj);
+        } else {
+          alert('Dispatch error: ' + (data.message || 'Unknown error'));
         }
       } catch (err) {
         alert('Dispatch error: ' + err.message);
@@ -712,14 +863,38 @@ function closeAdminModal(modalEl) {
     });
   }
 
-  // Verify Action
+  // Verify Action (Confirm Real Fire / Prevent Fake Alerts)
   const btnVerify = document.getElementById('btnVerifyAction');
   if (btnVerify) {
     btnVerify.addEventListener('click', async () => {
-      if (!activeIncident) return;
-      const res = await fetch(`/api/incidents/${activeIncident.incidentId}/verify`, { method: 'POST' });
-      const data = await res.json();
-      if (data.success) selectIncident(data.incident, false);
+      if (!activeIncident || !activeIncident.incidentId || activeIncident.incidentId === '--') {
+        alert('Please select an active incident from the queue first.');
+        return;
+      }
+      try {
+        btnVerify.disabled = true;
+        btnVerify.classList.add('opacity-50');
+        const res = await fetch(`/api/incidents/${activeIncident.incidentId}/verify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ adminUser: 'Forest Authority Command' })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (data.success && data.incident) {
+          if (window.emergencyAudio && !audioMuted) window.emergencyAudio.playDispatchChime();
+          updateIncidentInList(data.incident);
+          selectIncident(data.incident, false);
+          showToast(`✓ Fire Alert ${data.incident.incidentId} Verified by Command`, 'emerald');
+        } else {
+          alert('Verification error: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Failed to verify alert: ' + err.message);
+      } finally {
+        btnVerify.disabled = false;
+        btnVerify.classList.remove('opacity-50');
+      }
     });
   }
 
@@ -727,10 +902,37 @@ function closeAdminModal(modalEl) {
   const btnFalsePos = document.getElementById('btnFalsePosAction');
   if (btnFalsePos) {
     btnFalsePos.addEventListener('click', async () => {
-      if (!activeIncident) return;
-      const res = await fetch(`/api/incidents/${activeIncident.incidentId}/false-positive`, { method: 'POST' });
-      const data = await res.json();
-      if (data.success) selectIncident(data.incident, false);
+      if (!activeIncident || !activeIncident.incidentId || activeIncident.incidentId === '--') {
+        alert('Please select an active incident from the queue first.');
+        return;
+      }
+      if (!confirm(`Mark Incident ${activeIncident.incidentId} as FALSE ALARM (No active wildfire detected)?`)) {
+        return;
+      }
+      try {
+        btnFalsePos.disabled = true;
+        btnFalsePos.classList.add('opacity-50');
+        const res = await fetch(`/api/incidents/${activeIncident.incidentId}/false-positive`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reason: 'Verified as non-hazardous ambient haze / atmospheric condition' })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (data.success && data.incident) {
+          if (window.emergencyAudio && !audioMuted) window.emergencyAudio.playDispatchChime();
+          updateIncidentInList(data.incident);
+          selectIncident(data.incident, false);
+          showToast(`✕ Incident ${data.incident.incidentId} marked as FALSE ALARM`, 'blue');
+        } else {
+          alert('Error: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Failed to update status: ' + err.message);
+      } finally {
+        btnFalsePos.disabled = false;
+        btnFalsePos.classList.remove('opacity-50');
+      }
     });
   }
 
@@ -738,10 +940,34 @@ function closeAdminModal(modalEl) {
   const btnContain = document.getElementById('btnContainAction');
   if (btnContain) {
     btnContain.addEventListener('click', async () => {
-      if (!activeIncident) return;
-      const res = await fetch(`/api/incidents/${activeIncident.incidentId}/contain`, { method: 'POST' });
-      const data = await res.json();
-      if (data.success) selectIncident(data.incident, false);
+      if (!activeIncident || !activeIncident.incidentId || activeIncident.incidentId === '--') {
+        alert('Please select an active incident from the queue first.');
+        return;
+      }
+      try {
+        btnContain.disabled = true;
+        btnContain.classList.add('opacity-50');
+        const res = await fetch(`/api/incidents/${activeIncident.incidentId}/contain`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ teamId: selectedDeployStation ? (selectedDeployStation.id || selectedDeployStation.stationId) : 'TEAM-04' })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (data.success && data.incident) {
+          if (window.emergencyAudio && !audioMuted) window.emergencyAudio.playDispatchChime();
+          updateIncidentInList(data.incident);
+          selectIncident(data.incident, false);
+          showToast(`🔒 Fire ${data.incident.incidentId} Successfully Marked as CONTAINED`, 'amber');
+        } else {
+          alert('Containment notice: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Failed to mark contained: ' + err.message);
+      } finally {
+        btnContain.disabled = false;
+        btnContain.classList.remove('opacity-50');
+      }
     });
   }
 
@@ -760,7 +986,10 @@ function closeAdminModal(modalEl) {
   const btnCancelActive = document.getElementById('btnCancelActiveAlert');
   if (btnCancelActive) {
     btnCancelActive.addEventListener('click', () => {
-      if (!activeIncident) return;
+      if (!activeIncident || !activeIncident.incidentId || activeIncident.incidentId === '--') {
+        alert('Please select an active incident from the queue first.');
+        return;
+      }
       cancelIncidentById(activeIncident.incidentId);
     });
   }
@@ -790,6 +1019,136 @@ function closeAdminModal(modalEl) {
       }
     });
   }
+}
+
+// Live Vehicle Transit Simulation (Dispatches Selected Unit to Forest Fire Ground Zero)
+function startLiveVehicleTransit(incident, station) {
+  if (transitInterval) {
+    clearInterval(transitInterval);
+    transitInterval = null;
+  }
+
+  const waypoints = (station && station.routeWaypoints && station.routeWaypoints.length > 0)
+    ? station.routeWaypoints
+    : (incident.routeWaypoints || [[incident.latitude, incident.longitude]]);
+
+  if (waypoints.length < 2) return;
+
+  const totalWaypoints = waypoints.length;
+  const totalDist = (station && station.distanceKm) || incident.assignedStation?.distanceKm || 8.4;
+  const totalEta = (station && station.etaMinutes) || incident.assignedStation?.etaMinutes || 16;
+  let currentIdx = 0;
+
+  // Place initial moving vehicle marker at station coordinates
+  if (window.forestMapEngine) {
+    window.forestMapEngine.updateTeamVehicleMarker(waypoints[0][0], waypoints[0][1], (station && station.name) || 'Response Unit');
+  }
+
+  transitInterval = setInterval(async () => {
+    currentIdx++;
+    if (currentIdx < totalWaypoints) {
+      const pos = waypoints[currentIdx];
+      if (window.forestMapEngine) {
+        window.forestMapEngine.updateTeamVehicleMarker(pos[0], pos[1], (station && station.name) || 'Response Unit');
+      }
+
+      const ratio = 1 - (currentIdx / totalWaypoints);
+      const remDist = Math.max(0.1, (totalDist * ratio)).toFixed(1);
+      const remEta = Math.max(1, Math.round(totalEta * ratio));
+
+      const distEl = document.getElementById('detailStationDist');
+      const etaEl = document.getElementById('detailStationEta');
+      if (distEl) distEl.textContent = `${remDist} km`;
+      if (etaEl) etaEl.textContent = `ETA: ${remEta} min`;
+
+      // Broadcast progress along route
+      try {
+        fetch(`/api/incidents/${incident.incidentId}/team-progress`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            teamId: (station && (station.id || station.stationId)) || 'STA-KA-01',
+            waypointIndex: currentIdx,
+            remainingDistanceKm: parseFloat(remDist),
+            remainingEtaMin: remEta
+          })
+        }).catch(() => {});
+      } catch (e) {}
+    } else {
+      clearInterval(transitInterval);
+      transitInterval = null;
+
+      const distEl = document.getElementById('detailStationDist');
+      const etaEl = document.getElementById('detailStationEta');
+      if (distEl) distEl.textContent = `0.0 km`;
+      if (etaEl) etaEl.textContent = `ON SITE`;
+
+      // Mark unit arrived on site
+      try {
+        await fetch(`/api/incidents/${incident.incidentId}/arrive-site`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ teamId: (station && (station.id || station.stationId)) || 'STA-KA-01' })
+        });
+      } catch (e) {}
+
+      incident.status = 'TEAM ON SITE';
+      const statEl = document.getElementById('detailStatusPill');
+      if (statEl) {
+        statEl.textContent = 'TEAM ON SITE';
+        statEl.className = 'inline-flex items-center justify-center whitespace-nowrap shrink-0 text-xs font-black px-3 py-1.5 rounded-full shadow-sm leading-none tracking-wide uppercase bg-emerald-950 border border-emerald-500 text-emerald-300';
+      }
+
+      const btnDisp = document.getElementById('btnDispatchAction');
+      if (btnDisp) {
+        btnDisp.className = 'w-full py-3 rounded-xl bg-emerald-600 text-white font-black text-sm tracking-wider uppercase shadow-lg shadow-emerald-950/60 flex items-center justify-center gap-2 cursor-pointer';
+        btnDisp.innerHTML = `<span>✓</span> <span>TEAM ON SITE • ACTIVE CONTAINMENT</span>`;
+      }
+
+      if (window.emergencyAudio && !audioMuted) window.emergencyAudio.playDispatchChime();
+      addTimelineItem(new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), `${(station && station.name) || 'Response Unit'} arrived at forest site - Containment active`, 'ON_SITE');
+      showToast(`🚒 ${(station && station.name) || 'Response Unit'} arrived at forest site - Containment active!`, 'emerald');
+    }
+  }, 1800);
+}
+
+// Tactical Floating Toast Notification
+function showToast(message, type = 'emerald') {
+  let toastContainer = document.getElementById('adminToastContainer');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.id = 'adminToastContainer';
+    toastContainer.className = 'fixed bottom-28 right-6 z-[2147483647] flex flex-col gap-2 pointer-events-none';
+    document.body.appendChild(toastContainer);
+  }
+
+  const colorStyles = {
+    emerald: 'bg-emerald-950/95 border-emerald-500 text-emerald-200 shadow-emerald-950/80',
+    purple: 'bg-purple-950/95 border-purple-500 text-purple-200 shadow-purple-950/80',
+    amber: 'bg-amber-950/95 border-amber-500 text-amber-200 shadow-amber-950/80',
+    blue: 'bg-sky-950/95 border-sky-500 text-sky-200 shadow-sky-950/80',
+    red: 'bg-red-950/95 border-red-500 text-red-200 shadow-red-950/80'
+  };
+
+  const style = colorStyles[type] || colorStyles.emerald;
+  const toast = document.createElement('div');
+  toast.className = `p-3 rounded-xl border text-xs font-bold shadow-2xl transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto flex items-center gap-2 min-w-[280px] max-w-sm ${style}`;
+  toast.innerHTML = `
+    <span class="text-base">${type === 'red' ? '🚨' : (type === 'amber' ? '🔒' : (type === 'purple' ? '🚒' : '✓'))}</span>
+    <span class="flex-1">${message}</span>
+  `;
+
+  toastContainer.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.classList.remove('translate-y-2', 'opacity-0');
+  });
+
+  setTimeout(() => {
+    toast.classList.add('opacity-0', 'translate-y-2');
+    setTimeout(() => {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 300);
+  }, 3200);
 }
 
 // 11. Fetch Initial Incidents from Backend

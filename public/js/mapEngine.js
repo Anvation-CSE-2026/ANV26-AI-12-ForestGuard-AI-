@@ -403,6 +403,17 @@ class ForestGuardMapEngine {
       this.routes.forEach(r => this.map.removeLayer(r));
     }
     this.routes = [];
+    this.clearVehicleMarker();
+  }
+
+  clearVehicleMarker() {
+    if (this.teamVehicleMarker) {
+      try {
+        if (this.mode === 'google-api') this.teamVehicleMarker.setMap(null);
+        else this.map.removeLayer(this.teamVehicleMarker);
+      } catch (e) {}
+      this.teamVehicleMarker = null;
+    }
   }
 
   clearMarkers(category = 'all') {

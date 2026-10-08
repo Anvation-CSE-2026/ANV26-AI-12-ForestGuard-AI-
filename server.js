@@ -336,13 +336,17 @@ app.post(['/api/incidents/:id/false-alarm', '/api/incidents/:id/false-positive']
 // 13.1 Cancel Alert One at a Time
 app.post('/api/incidents/:id/cancel', (req, res) => {
   const incidentId = req.params.id;
+  if (!incidentId || incidentId === 'undefined' || incidentId === '--') {
+    return res.status(400).json({ success: false, message: 'Invalid or missing incident ID' });
+  }
   const reason = (req.body && req.body.reason) || 'Alert cancelled by operator';
   const updated = incidentStore.cancelIncident(incidentId, reason);
-  if (!updated) return res.status(404).json({ success: false, message: 'Incident not found' });
+  // Also delete from incident store so it doesn't linger in database
+  incidentStore.deleteIncident(incidentId);
 
-  io.emit('incident_cancelled', { incidentId, incident: updated });
+  io.emit('incident_cancelled', { incidentId, incident: updated || { incidentId } });
   io.emit('incident_deleted', { incidentId }); // Also emit deleted so cards remove smoothly
-  io.emit('response_status_updated', updated);
+  if (updated) io.emit('response_status_updated', updated);
   res.json({ success: true, message: `Incident ${incidentId} cancelled successfully.`, incident: updated });
 });
 
