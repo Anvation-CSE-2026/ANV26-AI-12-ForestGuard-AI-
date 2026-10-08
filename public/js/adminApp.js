@@ -267,12 +267,20 @@ function selectIncident(incident, shouldCenter = true) {
 
   // Safely perform map operations if map engine is ready
   if (window.forestMapEngine && window.forestMapEngine.map) {
+    const incName = ((incident.forestName || '') + ' ' + (incident.title || '') + ' ' + (incident.alertTitle || '')).toLowerCase();
+    const isCampus = incName.includes('kssem') || incName.includes('kseam') || incName.includes('ks school') || 
+                     incName.includes('dsatm') || incName.includes('college') || incName.includes('campus') || 
+                     incName.includes('institute') || incName.includes('university');
+    const targetZoom = isCampus ? 17 : (incName.includes('bandipur') ? 16 : 16);
+
     if (shouldCenter && lat !== undefined && lng !== undefined) {
-      window.forestMapEngine.centerOn(lat, lng, 14);
+      window.forestMapEngine.centerOn(lat, lng, targetZoom);
     }
 
-    // Clear previous routes & add marker
+    // Clear previous routes & auxiliary markers
     window.forestMapEngine.clearRoutes();
+    window.forestMapEngine.clearMarkers('stations');
+    window.forestMapEngine.clearMarkers('water');
     window.forestMapEngine.addFireMarker(incident, () => selectIncident(incident, false));
 
     // Draw 500m, 1.5km, 5km affected radius circles (Image 4)
@@ -282,13 +290,30 @@ function selectIncident(incident, shouldCenter = true) {
 
     // Draw Dotted Route to Selected Response Station (Image 4)
     const deployStation = selectedDeployStation || incident.nearestStation || incident.assignedStation;
-    if (deployStation && deployStation.routeWaypoints) {
-      window.forestMapEngine.drawRoute(deployStation.routeWaypoints, '#f97316', true);
+    if (deployStation) {
+      if (deployStation.coordinates) {
+        window.forestMapEngine.addStationMarker(deployStation);
+      }
+      if (deployStation.routeWaypoints && deployStation.routeWaypoints.length > 0) {
+        window.forestMapEngine.drawRoute(deployStation.routeWaypoints, '#f97316', true);
+      } else if (deployStation.coordinates && lat !== undefined && lng !== undefined) {
+        const sLat = deployStation.coordinates.lat;
+        const sLng = deployStation.coordinates.lng;
+        window.forestMapEngine.drawRoute([[sLat, sLng], [(sLat + lat) / 2 + 0.001, (sLng + lng) / 2], [lat, lng]], '#f97316', true);
+      }
     }
 
     // Draw Hose Relay Line to Nearest Water Body (BLUE dashed route)
-    if (incident.nearestWaterBody && incident.nearestWaterBody.routeWaypoints) {
-      window.forestMapEngine.drawRoute(incident.nearestWaterBody.routeWaypoints, '#0284c7', true);
+    const wb = incident.nearestWaterBody;
+    if (wb) {
+      if (wb.coordinates) {
+        window.forestMapEngine.addWaterMarker(wb);
+      }
+      if (wb.routeWaypoints && wb.routeWaypoints.length > 0) {
+        window.forestMapEngine.drawRoute(wb.routeWaypoints, '#0284c7', true);
+      } else if (wb.coordinates && lat !== undefined && lng !== undefined) {
+        window.forestMapEngine.drawRoute([[wb.coordinates.lat, wb.coordinates.lng], [lat, lng]], '#0284c7', true);
+      }
     }
 
     // Update floating map status card
@@ -1029,26 +1054,77 @@ function closeAdminModal(modalEl) {
     const q = (inputMapSearch?.value || '').toLowerCase().trim();
     if (!q) return;
 
-    if (q.includes('kssem') || q.includes('ks school')) {
-      window.forestMapEngine.centerOn(12.8550, 77.5420, 17);
-      showToast('📍 Pinpointed: KS School of Engineering & Management (KSSEM)', 'emerald');
+    if (q.includes('kssem') || q.includes('ks school') || q.includes('kseam')) {
+      const match = allIncidents.find(i => {
+        const text = ((i.forestName || '') + ' ' + (i.title || '') + ' ' + (i.locationName || '')).toLowerCase();
+        return text.includes('kssem') || text.includes('kseam') || text.includes('ks school');
+      });
+      if (match) {
+        selectIncident(match, true);
+      } else {
+        window.forestMapEngine.centerOn(12.8550, 77.5420, 17);
+        window.forestMapEngine.clearRoutes();
+        window.forestMapEngine.clearMarkers('stations');
+        window.forestMapEngine.clearMarkers('water');
+        window.forestMapEngine.drawRadiusCircles(12.8550, 77.5420, [500, 1500, 5000]);
+        window.forestMapEngine.addStationMarker({ name: 'Kanakapura Road Fire & Emergency Station (KSSEM)', coordinates: { lat: 12.8590, lng: 77.5460 }, etaMinutes: 4 });
+        window.forestMapEngine.drawRoute([[12.8590, 77.5460], [12.8570, 77.5440], [12.8550, 77.5420]], '#f97316', true);
+        window.forestMapEngine.addWaterMarker({ name: 'Gubbalala Lake & Forest Hydrant Pier (KSSEM)', coordinates: { lat: 12.8680, lng: 77.5380 }, capacity: 'Continuous 25,000 LPM' });
+        window.forestMapEngine.drawRoute([[12.8680, 77.5380], [12.8550, 77.5420]], '#0284c7', true);
+      }
+      showToast('📍 Pinpointed: KS School of Engineering & Management (KSSEM) - High Detail (Zoom 17)', 'emerald');
     } else if (q.includes('dsatm')) {
-      window.forestMapEngine.centerOn(12.8258, 77.5158, 17);
-      showToast('📍 Pinpointed: DSATM Bengaluru Campus', 'emerald');
+      const match = allIncidents.find(i => {
+        const text = ((i.forestName || '') + ' ' + (i.title || '') + ' ' + (i.locationName || '')).toLowerCase();
+        return text.includes('dsatm');
+      });
+      if (match) {
+        selectIncident(match, true);
+      } else {
+        window.forestMapEngine.centerOn(12.8258, 77.5158, 17);
+        window.forestMapEngine.clearRoutes();
+        window.forestMapEngine.clearMarkers('stations');
+        window.forestMapEngine.clearMarkers('water');
+        window.forestMapEngine.drawRadiusCircles(12.8258, 77.5158, [500, 1500, 5000]);
+        window.forestMapEngine.addStationMarker({ name: 'DSATM Campus & Kaggalipura Rapid Fire Post', coordinates: { lat: 12.8290, lng: 77.5180 }, etaMinutes: 3 });
+        window.forestMapEngine.drawRoute([[12.8290, 77.5180], [12.8258, 77.5158]], '#f97316', true);
+        window.forestMapEngine.addWaterMarker({ name: 'Kaggalipura Lake Emergency Reservoir (DSATM)', coordinates: { lat: 12.8120, lng: 77.5100 }, capacity: 'High Capacity Drafting Pier' });
+        window.forestMapEngine.drawRoute([[12.8120, 77.5100], [12.8258, 77.5158]], '#0284c7', true);
+      }
+      showToast('📍 Pinpointed: DSATM Bengaluru Campus - High Detail (Zoom 17)', 'emerald');
     } else if (q.includes('bandipur')) {
-      window.forestMapEngine.centerOn(11.6643, 76.6250, 15);
-      showToast('📍 Pinpointed: Bandipur Tiger Reserve Forest Sector', 'emerald');
+      const match = allIncidents.find(i => {
+        const text = ((i.forestName || '') + ' ' + (i.title || '') + ' ' + (i.locationName || '')).toLowerCase();
+        return text.includes('bandipur');
+      });
+      if (match) {
+        selectIncident(match, true);
+      } else {
+        window.forestMapEngine.centerOn(11.6643, 76.6250, 16);
+        window.forestMapEngine.clearRoutes();
+        window.forestMapEngine.clearMarkers('stations');
+        window.forestMapEngine.clearMarkers('water');
+        window.forestMapEngine.drawRadiusCircles(11.6643, 76.6250, [500, 1500, 5000]);
+        window.forestMapEngine.addStationMarker({ name: 'Bandipur Forest Response Unit (HQ)', coordinates: { lat: 11.6680, lng: 76.6340 }, etaMinutes: 5 });
+        window.forestMapEngine.drawRoute([[11.6680, 76.6340], [11.6643, 76.6250]], '#f97316', true);
+        window.forestMapEngine.addWaterMarker({ name: 'Moyar River Deep Pool Draft Terminal', coordinates: { lat: 11.6020, lng: 76.6540 }, capacity: 'Continuous 14,000 LPM' });
+        window.forestMapEngine.drawRoute([[11.6020, 76.6540], [11.6643, 76.6250]], '#0284c7', true);
+      }
+      showToast('📍 Pinpointed: Bandipur Tiger Reserve Forest Sector - Detailed (Zoom 16)', 'emerald');
     } else if (q.includes('corbett')) {
-      window.forestMapEngine.centerOn(29.5300, 78.7747, 14);
+      window.forestMapEngine.centerOn(29.5300, 78.7747, 15);
       showToast('📍 Pinpointed: Jim Corbett National Park', 'emerald');
     } else if (q.includes('kanha')) {
-      window.forestMapEngine.centerOn(22.3345, 80.6115, 14);
+      window.forestMapEngine.centerOn(22.3345, 80.6115, 15);
       showToast('📍 Pinpointed: Kanha Tiger Reserve', 'emerald');
     } else if (q.includes('wayanad')) {
-      window.forestMapEngine.centerOn(11.6854, 76.3670, 14);
+      window.forestMapEngine.centerOn(11.6854, 76.3670, 15);
       showToast('📍 Pinpointed: Wayanad Wildlife Sanctuary', 'emerald');
     } else {
-      const match = allIncidents.find(i => (i.forestName || i.title || '').toLowerCase().includes(q));
+      const match = allIncidents.find(i => {
+        const text = ((i.forestName || '') + ' ' + (i.title || '') + ' ' + (i.locationName || '')).toLowerCase();
+        return text.includes(q);
+      });
       if (match) {
         selectIncident(match, true);
         showToast(`📍 Found Alert: ${match.forestName || match.title}`, 'emerald');

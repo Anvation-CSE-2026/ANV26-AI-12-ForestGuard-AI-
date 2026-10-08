@@ -56,7 +56,7 @@
         "status": "AVAILABLE",
         "distanceKm": 1.1,
         "distanceMeters": 1100,
-        "etaMinutes": 8,
+        "etaMinutes": 5,
         "routeWaypoints": [
           [
             11.668,
@@ -92,7 +92,7 @@
         "stationId": "STA-KA-01",
         "name": "Bandipur Forest Rapid Response Unit (HQ)",
         "distanceKm": 1.1,
-        "etaMinutes": 8,
+        "etaMinutes": 5,
         "phone": "+91-8229-236021",
         "availability": "AVAILABLE"
       },
@@ -115,7 +115,7 @@
           "status": "AVAILABLE",
           "distanceKm": 1.1,
           "distanceMeters": 1100,
-          "etaMinutes": 8,
+          "etaMinutes": 5,
           "routeWaypoints": [
             [
               11.668,
@@ -165,7 +165,7 @@
           "status": "AVAILABLE",
           "distanceKm": 17.1,
           "distanceMeters": 17100,
-          "etaMinutes": 33,
+          "etaMinutes": 32,
           "routeWaypoints": [
             [
               11.805,
@@ -198,48 +198,48 @@
           ]
         },
         {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
+          "id": "STA-BLR-02",
+          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
           "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
+            "lat": 12.829,
+            "lng": 77.518
           },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
+          "phone": "+91-80-22971565",
+          "etaMinutesBase": 6,
+          "unitType": "Campus & Reserve Forest Unit",
           "crewCount": 14,
-          "waterTenders": 2,
-          "aerialDrones": 2,
+          "waterTenders": 3,
+          "aerialDrones": 1,
           "status": "AVAILABLE",
-          "distanceKm": 1260.7,
-          "distanceMeters": 1260700,
-          "etaMinutes": 2165,
+          "distanceKm": 161.8,
+          "distanceMeters": 161800,
+          "etaMinutes": 280,
           "routeWaypoints": [
             [
-              22.351,
-              80.592
+              12.829,
+              77.518
             ],
             [
-              20.56888,
-              79.93023
+              12.63388,
+              77.36857
             ],
             [
-              18.7905,
-              79.27071
+              12.4425,
+              77.22137
             ],
             [
-              17.00565,
-              78.6073
+              12.24465,
+              77.0703
             ],
             [
-              15.22827,
-              77.94837
+              12.05427,
+              76.92371
             ],
             [
-              13.44442,
-              77.28557
+              11.85742,
+              76.77323
             ],
             [
               11.6643,
@@ -275,16 +275,20 @@
             76.654
           ],
           [
-            11.61616,
-            76.6459
+            11.61328,
+            76.64749
           ],
           [
-            11.63515,
-            76.6407
+            11.62882,
+            76.64354
           ],
           [
-            11.64731,
-            76.6314
+            11.63748,
+            76.63546
+          ],
+          [
+            11.65302,
+            76.63151
           ],
           [
             11.6643,
@@ -551,7 +555,7 @@
         "status": "AVAILABLE",
         "distanceKm": 1.1,
         "distanceMeters": 1100,
-        "etaMinutes": 8,
+        "etaMinutes": 5,
         "routeWaypoints": [
           [
             11.668,
@@ -587,7 +591,7 @@
         "stationId": "STA-KA-01",
         "name": "Bandipur Forest Rapid Response Unit (HQ)",
         "distanceKm": 1.1,
-        "etaMinutes": 8,
+        "etaMinutes": 5,
         "phone": "+91-8229-236021",
         "availability": "AVAILABLE"
       },
@@ -610,7 +614,7 @@
           "status": "AVAILABLE",
           "distanceKm": 1.1,
           "distanceMeters": 1100,
-          "etaMinutes": 8,
+          "etaMinutes": 5,
           "routeWaypoints": [
             [
               11.668,
@@ -660,7 +664,7 @@
           "status": "AVAILABLE",
           "distanceKm": 17.1,
           "distanceMeters": 17100,
-          "etaMinutes": 33,
+          "etaMinutes": 32,
           "routeWaypoints": [
             [
               11.805,
@@ -693,48 +697,48 @@
           ]
         },
         {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
+          "id": "STA-BLR-02",
+          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
           "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
+            "lat": 12.829,
+            "lng": 77.518
           },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
+          "phone": "+91-80-22971565",
+          "etaMinutesBase": 6,
+          "unitType": "Campus & Reserve Forest Unit",
           "crewCount": 14,
-          "waterTenders": 2,
-          "aerialDrones": 2,
+          "waterTenders": 3,
+          "aerialDrones": 1,
           "status": "AVAILABLE",
-          "distanceKm": 1260.7,
-          "distanceMeters": 1260700,
-          "etaMinutes": 2165,
+          "distanceKm": 161.8,
+          "distanceMeters": 161800,
+          "etaMinutes": 280,
           "routeWaypoints": [
             [
-              22.351,
-              80.592
+              12.829,
+              77.518
             ],
             [
-              20.56888,
-              79.93023
+              12.63388,
+              77.36857
             ],
             [
-              18.7905,
-              79.27071
+              12.4425,
+              77.22137
             ],
             [
-              17.00565,
-              78.6073
+              12.24465,
+              77.0703
             ],
             [
-              15.22827,
-              77.94837
+              12.05427,
+              76.92371
             ],
             [
-              13.44442,
-              77.28557
+              11.85742,
+              76.77323
             ],
             [
               11.6643,
@@ -770,16 +774,20 @@
             76.654
           ],
           [
-            11.61616,
-            76.6459
+            11.61328,
+            76.64749
           ],
           [
-            11.63515,
-            76.6407
+            11.62882,
+            76.64354
           ],
           [
-            11.64731,
-            76.6314
+            11.63748,
+            76.63546
+          ],
+          [
+            11.65302,
+            76.63151
           ],
           [
             11.6643,
@@ -1039,46 +1047,48 @@
       "featureBreakdown": [],
       "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
       "nearestStation": {
-        "id": "STA-LOC-12",
-        "name": "Forest Range Fire Strike Squad #4",
+        "id": "STA-BLR-02",
+        "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.7708,
-          "lng": 77.5708
+          "lat": 12.829,
+          "lng": 77.518
         },
-        "phone": "+91-1800-425-FIRE",
-        "etaMinutesBase": 15,
-        "unitType": "Forest Fire Rapid Response Unit",
+        "phone": "+91-80-22971565",
+        "etaMinutesBase": 6,
+        "unitType": "Campus & Reserve Forest Unit",
         "crewCount": 14,
-        "waterTenders": 2,
+        "waterTenders": 3,
         "aerialDrones": 1,
         "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "distanceMeters": 8500,
-        "etaMinutes": 19,
+        "distanceKm": 0.4,
+        "distanceMeters": 400,
+        "etaMinutes": 5,
         "routeWaypoints": [
           [
-            12.7708,
-            77.5708
+            12.829,
+            77.518
           ],
           [
-            12.77897,
-            77.56103
+            12.82747,
+            77.51703
           ],
           [
-            12.79087,
-            77.55351
+            12.82967,
+            77.51831
           ],
           [
-            12.7963,
-            77.5421
+            12.8254,
+            77.5157
           ],
           [
-            12.8092,
-            77.53517
+            12.8286,
+            77.51757
           ],
           [
-            12.81563,
-            77.52437
+            12.82533,
+            77.51557
           ],
           [
             12.8258,
@@ -1087,57 +1097,57 @@
         ]
       },
       "assignedStation": {
-        "stationId": "STA-LOC-12",
-        "name": "Forest Range Fire Strike Squad #4",
-        "distanceKm": 8.5,
-        "etaMinutes": 19,
-        "phone": "+91-1800-425-FIRE",
+        "stationId": "STA-BLR-02",
+        "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+        "distanceKm": 0.4,
+        "etaMinutes": 5,
+        "phone": "+91-80-22971565",
         "availability": "AVAILABLE"
       },
       "rankedStations": [
         {
-          "id": "STA-KA-02",
-          "name": "Gundlupet Municipal Fire Brigade Station",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-02",
+          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.805,
-            "lng": 76.689
+            "lat": 12.829,
+            "lng": 77.518
           },
-          "phone": "+91-8229-222101",
-          "etaMinutesBase": 28,
-          "unitType": "Municipal Heavy Tender Fleet",
-          "crewCount": 22,
-          "waterTenders": 5,
+          "phone": "+91-80-22971565",
+          "etaMinutesBase": 6,
+          "unitType": "Campus & Reserve Forest Unit",
+          "crewCount": 14,
+          "waterTenders": 3,
           "aerialDrones": 1,
           "status": "AVAILABLE",
-          "distanceKm": 144.7,
-          "distanceMeters": 144700,
-          "etaMinutes": 252,
+          "distanceKm": 0.4,
+          "distanceMeters": 400,
+          "etaMinutes": 5,
           "routeWaypoints": [
             [
-              11.805,
-              76.689
+              12.829,
+              77.518
             ],
             [
-              11.97413,
-              76.8262
+              12.82747,
+              77.51703
             ],
             [
-              12.147,
-              76.96564
+              12.82967,
+              77.51831
             ],
             [
-              12.3134,
-              77.1012
+              12.8254,
+              77.5157
             ],
             [
-              12.48727,
-              77.24124
+              12.8286,
+              77.51757
             ],
             [
-              12.65467,
-              77.3774
+              12.82533,
+              77.51557
             ],
             [
               12.8258,
@@ -1146,48 +1156,48 @@
           ]
         },
         {
-          "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-01",
+          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 12.859,
+            "lng": 77.546
           },
-          "phone": "+91-8229-236021",
-          "etaMinutesBase": 18,
-          "unitType": "Forest Fire Squad Alpha",
-          "crewCount": 16,
-          "waterTenders": 3,
+          "phone": "+91-80-22971550",
+          "etaMinutesBase": 5,
+          "unitType": "Kanakapura Highway Fire Squad",
+          "crewCount": 18,
+          "waterTenders": 4,
           "aerialDrones": 2,
           "status": "AVAILABLE",
-          "distanceKm": 160.5,
-          "distanceMeters": 160500,
-          "etaMinutes": 279,
+          "distanceKm": 4.9,
+          "distanceMeters": 4900,
+          "etaMinutes": 11,
           "routeWaypoints": [
             [
-              11.668,
-              76.634
+              12.859,
+              77.546
             ],
             [
-              11.85997,
-              76.78037
+              12.85247,
+              77.54037
             ],
             [
-              12.05567,
-              76.92897
+              12.84967,
+              77.53697
             ],
             [
-              12.2449,
-              77.0737
+              12.8404,
+              77.5297
             ],
             [
-              12.4416,
-              77.22291
+              12.8386,
+              77.52691
             ],
             [
-              12.63183,
-              77.36823
+              12.83033,
+              77.52023
             ],
             [
               12.8258,
@@ -1196,48 +1206,48 @@
           ]
         },
         {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
+          "id": "STA-BLR-03",
+          "name": "Banashankari Fire & Rescue Command Station",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
           "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
+            "lat": 12.925,
+            "lng": 77.568
           },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
-          "crewCount": 14,
-          "waterTenders": 2,
+          "phone": "+91-80-22971540",
+          "etaMinutesBase": 14,
+          "unitType": "South Bengaluru Central Fleet",
+          "crewCount": 24,
+          "waterTenders": 6,
           "aerialDrones": 2,
           "status": "AVAILABLE",
-          "distanceKm": 1108.1,
-          "distanceMeters": 1108100,
-          "etaMinutes": 1904,
+          "distanceKm": 12.4,
+          "distanceMeters": 12400,
+          "etaMinutes": 24,
           "routeWaypoints": [
             [
-              22.351,
-              80.592
+              12.925,
+              77.568
             ],
             [
-              20.76247,
-              80.0787
+              12.90747,
+              77.5587
             ],
             [
-              19.17767,
-              79.56764
+              12.89367,
+              77.55164
             ],
             [
-              17.5864,
-              79.0527
+              12.8734,
+              77.5407
             ],
             [
-              16.0026,
-              78.54224
+              12.8606,
+              77.53424
             ],
             [
-              14.41233,
-              78.0279
+              12.84133,
+              77.5239
             ],
             [
               12.8258,
@@ -1254,33 +1264,39 @@
         "etaMinutes": 19
       },
       "nearestWaterBody": {
-        "id": "WB-LOC-838",
-        "name": "Forest Department Rainwater Reservoir Tank #24",
+        "id": "WB-BLR-02",
+        "name": "Kaggalipura Lake Emergency Reservoir (DSATM)",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.8478,
-          "lng": 77.4938
+          "lat": 12.812,
+          "lng": 77.51
         },
-        "type": "Underground Forest Water Sump",
-        "capacity": "45,000 Litres (Continuous High Pressure Pump)",
+        "type": "Emergency Water Reservoir",
+        "capacity": "50,000 Litres Rapid Pump Draft",
         "waterSourceType": "RESERVOIR",
-        "distanceKm": 3.4,
-        "distanceMeters": 3400,
+        "distanceKm": 1.7,
+        "distanceMeters": 1700,
         "routeWaypoints": [
           [
-            12.8478,
-            77.4938
+            12.812,
+            77.51
           ],
           [
-            12.84089,
-            77.49845
+            12.81358,
+            77.51045
           ],
           [
-            12.8388,
-            77.506
+            12.81942,
+            77.51346
           ],
           [
-            12.82989,
-            77.50945
+            12.81838,
+            77.51234
+          ],
+          [
+            12.82422,
+            77.51535
           ],
           [
             12.8258,
@@ -1540,46 +1556,48 @@
       "featureBreakdown": [],
       "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
       "nearestStation": {
-        "id": "STA-LOC-21",
-        "name": "Forest Range Fire Strike Squad #8",
+        "id": "STA-BLR-01",
+        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.91,
-          "lng": 77.597
+          "lat": 12.859,
+          "lng": 77.546
         },
-        "phone": "+91-1800-425-FIRE",
-        "etaMinutesBase": 15,
-        "unitType": "Forest Fire Rapid Response Unit",
-        "crewCount": 14,
-        "waterTenders": 2,
-        "aerialDrones": 1,
+        "phone": "+91-80-22971550",
+        "etaMinutesBase": 5,
+        "unitType": "Kanakapura Highway Fire Squad",
+        "crewCount": 18,
+        "waterTenders": 4,
+        "aerialDrones": 2,
         "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "distanceMeters": 8500,
-        "etaMinutes": 19,
+        "distanceKm": 0.6,
+        "distanceMeters": 600,
+        "etaMinutes": 5,
         "routeWaypoints": [
           [
-            12.91,
-            77.597
+            12.859,
+            77.546
           ],
           [
-            12.89983,
-            77.58723
+            12.85733,
+            77.54473
           ],
           [
-            12.8934,
-            77.57971
+            12.8594,
+            77.54571
           ],
           [
-            12.8805,
-            77.5683
+            12.855,
+            77.5428
           ],
           [
-            12.87507,
-            77.56137
+            12.85807,
+            77.54437
           ],
           [
-            12.86317,
-            77.55057
+            12.85467,
+            77.54207
           ],
           [
             12.855,
@@ -1588,57 +1606,107 @@
         ]
       },
       "assignedStation": {
-        "stationId": "STA-LOC-21",
-        "name": "Forest Range Fire Strike Squad #8",
-        "distanceKm": 8.5,
-        "etaMinutes": 19,
-        "phone": "+91-1800-425-FIRE",
+        "stationId": "STA-BLR-01",
+        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "distanceKm": 0.6,
+        "etaMinutes": 5,
+        "phone": "+91-80-22971550",
         "availability": "AVAILABLE"
       },
       "rankedStations": [
         {
-          "id": "STA-KA-02",
-          "name": "Gundlupet Municipal Fire Brigade Station",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-01",
+          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.805,
-            "lng": 76.689
+            "lat": 12.859,
+            "lng": 77.546
           },
-          "phone": "+91-8229-222101",
-          "etaMinutesBase": 28,
-          "unitType": "Municipal Heavy Tender Fleet",
-          "crewCount": 22,
-          "waterTenders": 5,
+          "phone": "+91-80-22971550",
+          "etaMinutesBase": 5,
+          "unitType": "Kanakapura Highway Fire Squad",
+          "crewCount": 18,
+          "waterTenders": 4,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 0.6,
+          "distanceMeters": 600,
+          "etaMinutes": 5,
+          "routeWaypoints": [
+            [
+              12.859,
+              77.546
+            ],
+            [
+              12.85733,
+              77.54473
+            ],
+            [
+              12.8594,
+              77.54571
+            ],
+            [
+              12.855,
+              77.5428
+            ],
+            [
+              12.85807,
+              77.54437
+            ],
+            [
+              12.85467,
+              77.54207
+            ],
+            [
+              12.855,
+              77.542
+            ]
+          ]
+        },
+        {
+          "id": "STA-BLR-02",
+          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 12.829,
+            "lng": 77.518
+          },
+          "phone": "+91-80-22971565",
+          "etaMinutesBase": 6,
+          "unitType": "Campus & Reserve Forest Unit",
+          "crewCount": 14,
+          "waterTenders": 3,
           "aerialDrones": 1,
           "status": "AVAILABLE",
-          "distanceKm": 149.1,
-          "distanceMeters": 149100,
-          "etaMinutes": 260,
+          "distanceKm": 3.9,
+          "distanceMeters": 3900,
+          "etaMinutes": 10,
           "routeWaypoints": [
             [
-              11.805,
-              76.689
+              12.829,
+              77.518
             ],
             [
-              11.979,
-              76.83057
+              12.83233,
+              77.5214
             ],
             [
-              12.15673,
-              76.97437
+              12.8394,
+              77.52704
             ],
             [
-              12.328,
-              77.1143
+              12.84,
+              77.5288
             ],
             [
-              12.50673,
-              77.25871
+              12.84807,
+              77.53504
             ],
             [
-              12.679,
-              77.39923
+              12.84967,
+              77.5374
             ],
             [
               12.855,
@@ -1647,98 +1715,48 @@
           ]
         },
         {
-          "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-03",
+          "name": "Banashankari Fire & Rescue Command Station",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 12.925,
+            "lng": 77.568
           },
-          "phone": "+91-8229-236021",
-          "etaMinutesBase": 18,
-          "unitType": "Forest Fire Squad Alpha",
-          "crewCount": 16,
-          "waterTenders": 3,
+          "phone": "+91-80-22971540",
+          "etaMinutesBase": 14,
+          "unitType": "South Bengaluru Central Fleet",
+          "crewCount": 24,
+          "waterTenders": 6,
           "aerialDrones": 2,
           "status": "AVAILABLE",
-          "distanceKm": 164.8,
-          "distanceMeters": 164800,
-          "etaMinutes": 287,
+          "distanceKm": 8.3,
+          "distanceMeters": 8300,
+          "etaMinutes": 17,
           "routeWaypoints": [
             [
-              11.668,
-              76.634
+              12.925,
+              77.568
             ],
             [
-              11.86483,
-              76.78473
+              12.91233,
+              77.56307
             ],
             [
-              12.0654,
-              76.93771
+              12.9034,
+              77.56037
             ],
             [
-              12.2595,
-              77.0868
+              12.888,
+              77.5538
             ],
             [
-              12.46107,
-              77.24037
+              12.88007,
+              77.55171
             ],
             [
-              12.65617,
-              77.39007
-            ],
-            [
-              12.855,
-              77.542
-            ]
-          ]
-        },
-        {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
-          "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
-          },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
-          "crewCount": 14,
-          "waterTenders": 2,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 1104.1,
-          "distanceMeters": 1104100,
-          "etaMinutes": 1897,
-          "routeWaypoints": [
-            [
-              22.351,
-              80.592
-            ],
-            [
-              20.76733,
-              80.08307
-            ],
-            [
-              19.1874,
-              79.57637
-            ],
-            [
-              17.601,
-              79.0658
-            ],
-            [
-              16.02207,
-              78.55971
-            ],
-            [
-              14.43667,
-              78.04973
+              12.86567,
+              77.54573
             ],
             [
               12.855,
@@ -1755,33 +1773,39 @@
         "etaMinutes": 19
       },
       "nearestWaterBody": {
-        "id": "WB-LOC-397",
-        "name": "Forest Department Rainwater Reservoir Tank #63",
+        "id": "WB-BLR-01",
+        "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.877,
-          "lng": 77.52
+          "lat": 12.868,
+          "lng": 77.538
         },
-        "type": "Underground Forest Water Sump",
-        "capacity": "45,000 Litres (Continuous High Pressure Pump)",
-        "waterSourceType": "RESERVOIR",
-        "distanceKm": 3.4,
-        "distanceMeters": 3400,
+        "type": "Freshwater Lake & Fire Hydrant Terminal",
+        "capacity": "Continuous 25,000 Litres Aerial Drafting",
+        "waterSourceType": "LAKE",
+        "distanceKm": 1.5,
+        "distanceMeters": 1500,
         "routeWaypoints": [
           [
-            12.877,
-            77.52
-          ],
-          [
-            12.87009,
-            77.52465
-          ],
-          [
             12.868,
-            77.5322
+            77.538
           ],
           [
-            12.85909,
-            77.53565
+            12.86422,
+            77.53809
+          ],
+          [
+            12.8647,
+            77.54074
+          ],
+          [
+            12.8583,
+            77.53926
+          ],
+          [
+            12.85878,
+            77.54191
           ],
           [
             12.855,
@@ -2041,46 +2065,48 @@
       "featureBreakdown": [],
       "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
       "nearestStation": {
-        "id": "STA-LOC-12",
-        "name": "Forest Range Fire Strike Squad #7",
+        "id": "STA-BLR-02",
+        "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.7708,
-          "lng": 77.4608
+          "lat": 12.829,
+          "lng": 77.518
         },
-        "phone": "+91-1800-425-FIRE",
-        "etaMinutesBase": 15,
-        "unitType": "Forest Fire Rapid Response Unit",
+        "phone": "+91-80-22971565",
+        "etaMinutesBase": 6,
+        "unitType": "Campus & Reserve Forest Unit",
         "crewCount": 14,
-        "waterTenders": 2,
+        "waterTenders": 3,
         "aerialDrones": 1,
         "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "distanceMeters": 8500,
-        "etaMinutes": 19,
+        "distanceKm": 0.4,
+        "distanceMeters": 400,
+        "etaMinutes": 5,
         "routeWaypoints": [
           [
-            12.7708,
-            77.4608
+            12.829,
+            77.518
           ],
           [
-            12.77897,
-            77.46937
+            12.82747,
+            77.51703
           ],
           [
-            12.79087,
-            77.48017
+            12.82967,
+            77.51831
           ],
           [
-            12.7963,
-            77.4871
+            12.8254,
+            77.5157
           ],
           [
-            12.8092,
-            77.49851
+            12.8286,
+            77.51757
           ],
           [
-            12.81563,
-            77.50603
+            12.82533,
+            77.51557
           ],
           [
             12.8258,
@@ -2089,57 +2115,57 @@
         ]
       },
       "assignedStation": {
-        "stationId": "STA-LOC-12",
-        "name": "Forest Range Fire Strike Squad #7",
-        "distanceKm": 8.5,
-        "etaMinutes": 19,
-        "phone": "+91-1800-425-FIRE",
+        "stationId": "STA-BLR-02",
+        "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+        "distanceKm": 0.4,
+        "etaMinutes": 5,
+        "phone": "+91-80-22971565",
         "availability": "AVAILABLE"
       },
       "rankedStations": [
         {
-          "id": "STA-KA-02",
-          "name": "Gundlupet Municipal Fire Brigade Station",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-02",
+          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.805,
-            "lng": 76.689
+            "lat": 12.829,
+            "lng": 77.518
           },
-          "phone": "+91-8229-222101",
-          "etaMinutesBase": 28,
-          "unitType": "Municipal Heavy Tender Fleet",
-          "crewCount": 22,
-          "waterTenders": 5,
+          "phone": "+91-80-22971565",
+          "etaMinutesBase": 6,
+          "unitType": "Campus & Reserve Forest Unit",
+          "crewCount": 14,
+          "waterTenders": 3,
           "aerialDrones": 1,
           "status": "AVAILABLE",
-          "distanceKm": 144.7,
-          "distanceMeters": 144700,
-          "etaMinutes": 252,
+          "distanceKm": 0.4,
+          "distanceMeters": 400,
+          "etaMinutes": 5,
           "routeWaypoints": [
             [
-              11.805,
-              76.689
+              12.829,
+              77.518
             ],
             [
-              11.97413,
-              76.8262
+              12.82747,
+              77.51703
             ],
             [
-              12.147,
-              76.96564
+              12.82967,
+              77.51831
             ],
             [
-              12.3134,
-              77.1012
+              12.8254,
+              77.5157
             ],
             [
-              12.48727,
-              77.24124
+              12.8286,
+              77.51757
             ],
             [
-              12.65467,
-              77.3774
+              12.82533,
+              77.51557
             ],
             [
               12.8258,
@@ -2148,48 +2174,48 @@
           ]
         },
         {
-          "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-01",
+          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 12.859,
+            "lng": 77.546
           },
-          "phone": "+91-8229-236021",
-          "etaMinutesBase": 18,
-          "unitType": "Forest Fire Squad Alpha",
-          "crewCount": 16,
-          "waterTenders": 3,
+          "phone": "+91-80-22971550",
+          "etaMinutesBase": 5,
+          "unitType": "Kanakapura Highway Fire Squad",
+          "crewCount": 18,
+          "waterTenders": 4,
           "aerialDrones": 2,
           "status": "AVAILABLE",
-          "distanceKm": 160.5,
-          "distanceMeters": 160500,
-          "etaMinutes": 279,
+          "distanceKm": 4.9,
+          "distanceMeters": 4900,
+          "etaMinutes": 11,
           "routeWaypoints": [
             [
-              11.668,
-              76.634
+              12.859,
+              77.546
             ],
             [
-              11.85997,
-              76.78037
+              12.85247,
+              77.54037
             ],
             [
-              12.05567,
-              76.92897
+              12.84967,
+              77.53697
             ],
             [
-              12.2449,
-              77.0737
+              12.8404,
+              77.5297
             ],
             [
-              12.4416,
-              77.22291
+              12.8386,
+              77.52691
             ],
             [
-              12.63183,
-              77.36823
+              12.83033,
+              77.52023
             ],
             [
               12.8258,
@@ -2198,48 +2224,48 @@
           ]
         },
         {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
+          "id": "STA-BLR-03",
+          "name": "Banashankari Fire & Rescue Command Station",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
           "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
+            "lat": 12.925,
+            "lng": 77.568
           },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
-          "crewCount": 14,
-          "waterTenders": 2,
+          "phone": "+91-80-22971540",
+          "etaMinutesBase": 14,
+          "unitType": "South Bengaluru Central Fleet",
+          "crewCount": 24,
+          "waterTenders": 6,
           "aerialDrones": 2,
           "status": "AVAILABLE",
-          "distanceKm": 1108.1,
-          "distanceMeters": 1108100,
-          "etaMinutes": 1904,
+          "distanceKm": 12.4,
+          "distanceMeters": 12400,
+          "etaMinutes": 24,
           "routeWaypoints": [
             [
-              22.351,
-              80.592
+              12.925,
+              77.568
             ],
             [
-              20.76247,
-              80.0787
+              12.90747,
+              77.5587
             ],
             [
-              19.17767,
-              79.56764
+              12.89367,
+              77.55164
             ],
             [
-              17.5864,
-              79.0527
+              12.8734,
+              77.5407
             ],
             [
-              16.0026,
-              78.54224
+              12.8606,
+              77.53424
             ],
             [
-              14.41233,
-              78.0279
+              12.84133,
+              77.5239
             ],
             [
               12.8258,
@@ -2256,33 +2282,39 @@
         "etaMinutes": 19
       },
       "nearestWaterBody": {
-        "id": "WB-LOC-593",
-        "name": "Forest Department Rainwater Reservoir Tank #66",
+        "id": "WB-BLR-02",
+        "name": "Kaggalipura Lake Emergency Reservoir (DSATM)",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.8038,
-          "lng": 77.4938
+          "lat": 12.812,
+          "lng": 77.51
         },
-        "type": "Underground Forest Water Sump",
-        "capacity": "45,000 Litres (Continuous High Pressure Pump)",
+        "type": "Emergency Water Reservoir",
+        "capacity": "50,000 Litres Rapid Pump Draft",
         "waterSourceType": "RESERVOIR",
-        "distanceKm": 3.4,
-        "distanceMeters": 3400,
+        "distanceKm": 1.7,
+        "distanceMeters": 1700,
         "routeWaypoints": [
           [
-            12.8038,
-            77.4938
+            12.812,
+            77.51
           ],
           [
-            12.80789,
-            77.49845
+            12.81358,
+            77.51045
           ],
           [
-            12.8168,
-            77.506
+            12.81942,
+            77.51346
           ],
           [
-            12.81889,
-            77.50945
+            12.81838,
+            77.51234
+          ],
+          [
+            12.82422,
+            77.51535
           ],
           [
             12.8258,
@@ -2559,7 +2591,7 @@
         "status": "AVAILABLE",
         "distanceKm": 1.4,
         "distanceMeters": 1400,
-        "etaMinutes": 8,
+        "etaMinutes": 5,
         "routeWaypoints": [
           [
             11.668,
@@ -2595,7 +2627,7 @@
         "stationId": "STA-KA-01",
         "name": "Bandipur Forest Rapid Response Unit (HQ)",
         "distanceKm": 1.4,
-        "etaMinutes": 8,
+        "etaMinutes": 5,
         "phone": "+91-8229-236021",
         "availability": "AVAILABLE"
       },
@@ -2618,7 +2650,7 @@
           "status": "AVAILABLE",
           "distanceKm": 1.4,
           "distanceMeters": 1400,
-          "etaMinutes": 8,
+          "etaMinutes": 5,
           "routeWaypoints": [
             [
               11.668,
@@ -2668,7 +2700,7 @@
           "status": "AVAILABLE",
           "distanceKm": 17.4,
           "distanceMeters": 17400,
-          "etaMinutes": 34,
+          "etaMinutes": 33,
           "routeWaypoints": [
             [
               11.805,
@@ -2701,48 +2733,48 @@
           ]
         },
         {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
+          "id": "STA-BLR-02",
+          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
           "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
+            "lat": 12.829,
+            "lng": 77.518
           },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
+          "phone": "+91-80-22971565",
+          "etaMinutesBase": 6,
+          "unitType": "Campus & Reserve Forest Unit",
           "crewCount": 14,
-          "waterTenders": 2,
-          "aerialDrones": 2,
+          "waterTenders": 3,
+          "aerialDrones": 1,
           "status": "AVAILABLE",
-          "distanceKm": 1260.9,
-          "distanceMeters": 1260900,
-          "etaMinutes": 2166,
+          "distanceKm": 162.1,
+          "distanceMeters": 162100,
+          "etaMinutes": 281,
           "routeWaypoints": [
             [
-              22.351,
-              80.592
+              12.829,
+              77.518
             ],
             [
-              20.56875,
-              79.92967
+              12.63375,
+              77.368
             ],
             [
-              18.79023,
-              79.26957
+              12.44223,
+              77.22024
             ],
             [
-              17.00525,
-              78.6056
+              12.24425,
+              77.0686
             ],
             [
-              15.22773,
-              77.94611
+              12.05373,
+              76.92144
             ],
             [
-              13.44375,
-              77.28273
+              11.85675,
+              76.7704
             ],
             [
               11.6635,
@@ -2778,16 +2810,20 @@
             76.654
           ],
           [
-            11.61596,
-            76.64505
+            11.61312,
+            76.64681
           ],
           [
-            11.63475,
-            76.639
+            11.6285,
+            76.64218
           ],
           [
-            11.64671,
-            76.62885
+            11.637,
+            76.63342
+          ],
+          [
+            11.65238,
+            76.62879
           ],
           [
             11.6635,
@@ -3047,46 +3083,48 @@
       "featureBreakdown": [],
       "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
       "nearestStation": {
-        "id": "STA-LOC-21",
-        "name": "Forest Range Fire Strike Squad #5",
+        "id": "STA-BLR-01",
+        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.9092,
-          "lng": 77.4863
+          "lat": 12.859,
+          "lng": 77.546
         },
-        "phone": "+91-1800-425-FIRE",
-        "etaMinutesBase": 15,
-        "unitType": "Forest Fire Rapid Response Unit",
-        "crewCount": 14,
-        "waterTenders": 2,
-        "aerialDrones": 1,
+        "phone": "+91-80-22971550",
+        "etaMinutesBase": 5,
+        "unitType": "Kanakapura Highway Fire Squad",
+        "crewCount": 18,
+        "waterTenders": 4,
+        "aerialDrones": 2,
         "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "distanceMeters": 8500,
-        "etaMinutes": 19,
+        "distanceKm": 0.7,
+        "distanceMeters": 700,
+        "etaMinutes": 5,
         "routeWaypoints": [
           [
-            12.9092,
-            77.4863
+            12.859,
+            77.546
           ],
           [
-            12.89903,
-            77.49487
+            12.8572,
+            77.54462
           ],
           [
-            12.8926,
-            77.50567
+            12.85913,
+            77.54547
           ],
           [
-            12.8797,
-            77.5126
+            12.8546,
+            77.54245
           ],
           [
-            12.87427,
-            77.52401
+            12.85753,
+            77.54391
           ],
           [
-            12.86237,
-            77.53153
+            12.854,
+            77.54148
           ],
           [
             12.8542,
@@ -3095,57 +3133,107 @@
         ]
       },
       "assignedStation": {
-        "stationId": "STA-LOC-21",
-        "name": "Forest Range Fire Strike Squad #5",
-        "distanceKm": 8.5,
-        "etaMinutes": 19,
-        "phone": "+91-1800-425-FIRE",
+        "stationId": "STA-BLR-01",
+        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "distanceKm": 0.7,
+        "etaMinutes": 5,
+        "phone": "+91-80-22971550",
         "availability": "AVAILABLE"
       },
       "rankedStations": [
         {
-          "id": "STA-KA-02",
-          "name": "Gundlupet Municipal Fire Brigade Station",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-01",
+          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.805,
-            "lng": 76.689
+            "lat": 12.859,
+            "lng": 77.546
           },
-          "phone": "+91-8229-222101",
-          "etaMinutesBase": 28,
-          "unitType": "Municipal Heavy Tender Fleet",
-          "crewCount": 22,
-          "waterTenders": 5,
+          "phone": "+91-80-22971550",
+          "etaMinutesBase": 5,
+          "unitType": "Kanakapura Highway Fire Squad",
+          "crewCount": 18,
+          "waterTenders": 4,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 0.7,
+          "distanceMeters": 700,
+          "etaMinutes": 5,
+          "routeWaypoints": [
+            [
+              12.859,
+              77.546
+            ],
+            [
+              12.8572,
+              77.54462
+            ],
+            [
+              12.85913,
+              77.54547
+            ],
+            [
+              12.8546,
+              77.54245
+            ],
+            [
+              12.85753,
+              77.54391
+            ],
+            [
+              12.854,
+              77.54148
+            ],
+            [
+              12.8542,
+              77.5413
+            ]
+          ]
+        },
+        {
+          "id": "STA-BLR-02",
+          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 12.829,
+            "lng": 77.518
+          },
+          "phone": "+91-80-22971565",
+          "etaMinutesBase": 6,
+          "unitType": "Campus & Reserve Forest Unit",
+          "crewCount": 14,
+          "waterTenders": 3,
           "aerialDrones": 1,
           "status": "AVAILABLE",
-          "distanceKm": 148.9,
-          "distanceMeters": 148900,
-          "etaMinutes": 259,
+          "distanceKm": 3.8,
+          "distanceMeters": 3800,
+          "etaMinutes": 10,
           "routeWaypoints": [
             [
-              11.805,
-              76.689
+              12.829,
+              77.518
             ],
             [
-              11.97887,
-              76.83045
+              12.8322,
+              77.52128
             ],
             [
-              12.15647,
-              76.97414
+              12.83913,
+              77.52681
             ],
             [
-              12.3276,
-              77.11395
+              12.8396,
+              77.52845
             ],
             [
-              12.5062,
-              77.25824
+              12.84753,
+              77.53457
             ],
             [
-              12.67833,
-              77.39865
+              12.849,
+              77.53682
             ],
             [
               12.8542,
@@ -3154,98 +3242,48 @@
           ]
         },
         {
-          "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-03",
+          "name": "Banashankari Fire & Rescue Command Station",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 12.925,
+            "lng": 77.568
           },
-          "phone": "+91-8229-236021",
-          "etaMinutesBase": 18,
-          "unitType": "Forest Fire Squad Alpha",
-          "crewCount": 16,
-          "waterTenders": 3,
+          "phone": "+91-80-22971540",
+          "etaMinutesBase": 14,
+          "unitType": "South Bengaluru Central Fleet",
+          "crewCount": 24,
+          "waterTenders": 6,
           "aerialDrones": 2,
           "status": "AVAILABLE",
-          "distanceKm": 164.7,
-          "distanceMeters": 164700,
-          "etaMinutes": 286,
+          "distanceKm": 8.4,
+          "distanceMeters": 8400,
+          "etaMinutes": 17,
           "routeWaypoints": [
             [
-              11.668,
-              76.634
+              12.925,
+              77.568
             ],
             [
-              11.8647,
-              76.78462
+              12.9122,
+              77.56295
             ],
             [
-              12.06513,
-              76.93747
+              12.90313,
+              77.56014
             ],
             [
-              12.2591,
-              77.08645
+              12.8876,
+              77.55345
             ],
             [
-              12.46053,
-              77.23991
+              12.87953,
+              77.55124
             ],
             [
-              12.6555,
-              77.38948
-            ],
-            [
-              12.8542,
-              77.5413
-            ]
-          ]
-        },
-        {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
-          "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
-          },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
-          "crewCount": 14,
-          "waterTenders": 2,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 1104.2,
-          "distanceMeters": 1104200,
-          "etaMinutes": 1897,
-          "routeWaypoints": [
-            [
-              22.351,
-              80.592
-            ],
-            [
-              20.7672,
-              80.08295
-            ],
-            [
-              19.18713,
-              79.57614
-            ],
-            [
-              17.6006,
-              79.06545
-            ],
-            [
-              16.02153,
-              78.55924
-            ],
-            [
-              14.436,
-              78.04915
+              12.865,
+              77.54515
             ],
             [
               12.8542,
@@ -3262,33 +3300,39 @@
         "etaMinutes": 19
       },
       "nearestWaterBody": {
-        "id": "WB-LOC-589",
-        "name": "Forest Department Rainwater Reservoir Tank #48",
+        "id": "WB-BLR-01",
+        "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.8762,
-          "lng": 77.5193
+          "lat": 12.868,
+          "lng": 77.538
         },
-        "type": "Underground Forest Water Sump",
-        "capacity": "45,000 Litres (Continuous High Pressure Pump)",
-        "waterSourceType": "RESERVOIR",
-        "distanceKm": 3.4,
-        "distanceMeters": 3400,
+        "type": "Freshwater Lake & Fire Hydrant Terminal",
+        "capacity": "Continuous 25,000 Litres Aerial Drafting",
+        "waterSourceType": "LAKE",
+        "distanceKm": 1.6,
+        "distanceMeters": 1600,
         "routeWaypoints": [
           [
-            12.8762,
-            77.5193
+            12.868,
+            77.538
           ],
           [
-            12.86929,
-            77.52395
+            12.86406,
+            77.53795
           ],
           [
-            12.8672,
-            77.5315
+            12.86438,
+            77.54046
           ],
           [
-            12.85829,
-            77.53495
+            12.85782,
+            77.53884
+          ],
+          [
+            12.85814,
+            77.54135
           ],
           [
             12.8542,
@@ -3548,46 +3592,48 @@
       "featureBreakdown": [],
       "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
       "nearestStation": {
-        "id": "STA-LOC-15",
-        "name": "Forest Range Fire Strike Squad #5",
+        "id": "STA-BLR-01",
+        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.8242,
-          "lng": 77.5996
+          "lat": 12.859,
+          "lng": 77.546
         },
-        "phone": "+91-1800-425-FIRE",
-        "etaMinutesBase": 15,
-        "unitType": "Forest Fire Rapid Response Unit",
-        "crewCount": 14,
-        "waterTenders": 2,
-        "aerialDrones": 1,
+        "phone": "+91-80-22971550",
+        "etaMinutesBase": 5,
+        "unitType": "Kanakapura Highway Fire Squad",
+        "crewCount": 18,
+        "waterTenders": 4,
+        "aerialDrones": 2,
         "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "distanceMeters": 8500,
-        "etaMinutes": 19,
+        "distanceKm": 2.3,
+        "distanceMeters": 2300,
+        "etaMinutes": 7,
         "routeWaypoints": [
           [
-            12.8242,
-            77.5996
+            12.859,
+            77.546
           ],
           [
-            12.83237,
-            77.58983
+            12.86137,
+            77.54517
           ],
           [
-            12.84427,
-            77.58231
+            12.86747,
+            77.54657
           ],
           [
-            12.8497,
-            77.5709
+            12.8671,
+            77.5441
           ],
           [
-            12.8626,
-            77.56397
+            12.8742,
+            77.54611
           ],
           [
-            12.86903,
-            77.55317
+            12.87483,
+            77.54423
           ],
           [
             12.8792,
@@ -3596,157 +3642,157 @@
         ]
       },
       "assignedStation": {
-        "stationId": "STA-LOC-15",
-        "name": "Forest Range Fire Strike Squad #5",
-        "distanceKm": 8.5,
-        "etaMinutes": 19,
-        "phone": "+91-1800-425-FIRE",
+        "stationId": "STA-BLR-01",
+        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "distanceKm": 2.3,
+        "etaMinutes": 7,
+        "phone": "+91-80-22971550",
         "availability": "AVAILABLE"
       },
       "rankedStations": [
         {
-          "id": "STA-KA-02",
-          "name": "Gundlupet Municipal Fire Brigade Station",
-          "forestId": "FOR-KA-01",
+          "id": "STA-BLR-01",
+          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+          "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.805,
-            "lng": 76.689
+            "lat": 12.859,
+            "lng": 77.546
           },
-          "phone": "+91-8229-222101",
-          "etaMinutesBase": 28,
-          "unitType": "Municipal Heavy Tender Fleet",
-          "crewCount": 22,
-          "waterTenders": 5,
+          "phone": "+91-80-22971550",
+          "etaMinutesBase": 5,
+          "unitType": "Kanakapura Highway Fire Squad",
+          "crewCount": 18,
+          "waterTenders": 4,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 2.3,
+          "distanceMeters": 2300,
+          "etaMinutes": 7,
+          "routeWaypoints": [
+            [
+              12.859,
+              77.546
+            ],
+            [
+              12.86137,
+              77.54517
+            ],
+            [
+              12.86747,
+              77.54657
+            ],
+            [
+              12.8671,
+              77.5441
+            ],
+            [
+              12.8742,
+              77.54611
+            ],
+            [
+              12.87483,
+              77.54423
+            ],
+            [
+              12.8792,
+              77.5446
+            ]
+          ]
+        },
+        {
+          "id": "STA-BLR-03",
+          "name": "Banashankari Fire & Rescue Command Station",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 12.925,
+            "lng": 77.568
+          },
+          "phone": "+91-80-22971540",
+          "etaMinutesBase": 14,
+          "unitType": "South Bengaluru Central Fleet",
+          "crewCount": 24,
+          "waterTenders": 6,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 5.7,
+          "distanceMeters": 5700,
+          "etaMinutes": 13,
+          "routeWaypoints": [
+            [
+              12.925,
+              77.568
+            ],
+            [
+              12.91637,
+              77.5635
+            ],
+            [
+              12.91147,
+              77.56124
+            ],
+            [
+              12.9001,
+              77.5551
+            ],
+            [
+              12.8962,
+              77.55344
+            ],
+            [
+              12.88583,
+              77.5479
+            ],
+            [
+              12.8792,
+              77.5446
+            ]
+          ]
+        },
+        {
+          "id": "STA-BLR-02",
+          "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 12.829,
+            "lng": 77.518
+          },
+          "phone": "+91-80-22971565",
+          "etaMinutesBase": 6,
+          "unitType": "Campus & Reserve Forest Unit",
+          "crewCount": 14,
+          "waterTenders": 3,
           "aerialDrones": 1,
           "status": "AVAILABLE",
-          "distanceKm": 151.3,
-          "distanceMeters": 151300,
-          "etaMinutes": 263,
+          "distanceKm": 6.3,
+          "distanceMeters": 6300,
+          "etaMinutes": 14,
           "routeWaypoints": [
             [
-              11.805,
-              76.689
+              12.829,
+              77.518
             ],
             [
-              11.98303,
-              76.831
+              12.83637,
+              77.52183
             ],
             [
-              12.1648,
-              76.97524
+              12.84747,
+              77.52791
             ],
             [
-              12.3401,
-              77.1156
+              12.8521,
+              77.5301
             ],
             [
-              12.52287,
-              77.26044
+              12.8642,
+              77.53677
             ],
             [
-              12.69917,
-              77.4014
-            ],
-            [
-              12.8792,
-              77.5446
-            ]
-          ]
-        },
-        {
-          "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
-          },
-          "phone": "+91-8229-236021",
-          "etaMinutesBase": 18,
-          "unitType": "Forest Fire Squad Alpha",
-          "crewCount": 16,
-          "waterTenders": 3,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 167.1,
-          "distanceMeters": 167100,
-          "etaMinutes": 290,
-          "routeWaypoints": [
-            [
-              11.668,
-              76.634
-            ],
-            [
-              11.86887,
-              76.78517
-            ],
-            [
-              12.07347,
-              76.93857
-            ],
-            [
-              12.2716,
-              77.0881
-            ],
-            [
-              12.4772,
-              77.24211
-            ],
-            [
-              12.67633,
-              77.39223
-            ],
-            [
-              12.8792,
-              77.5446
-            ]
-          ]
-        },
-        {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
-          "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
-          },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
-          "crewCount": 14,
-          "waterTenders": 2,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 1101.5,
-          "distanceMeters": 1101500,
-          "etaMinutes": 1892,
-          "routeWaypoints": [
-            [
-              22.351,
-              80.592
-            ],
-            [
-              20.77137,
-              80.0835
-            ],
-            [
-              19.19547,
-              79.57724
-            ],
-            [
-              17.6131,
-              79.0671
-            ],
-            [
-              16.0382,
-              78.56144
-            ],
-            [
-              14.45683,
-              78.0519
+              12.86983,
+              77.53957
             ],
             [
               12.8792,
@@ -3763,33 +3809,39 @@
         "etaMinutes": 19
       },
       "nearestWaterBody": {
-        "id": "WB-LOC-461",
-        "name": "Forest Department Rainwater Reservoir Tank #95",
+        "id": "WB-BLR-01",
+        "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
+        "forestId": "FOR-KA-03",
+        "state": "Karnataka",
         "coordinates": {
-          "lat": 12.8572,
-          "lng": 77.5226
+          "lat": 12.868,
+          "lng": 77.538
         },
-        "type": "Underground Forest Water Sump",
-        "capacity": "45,000 Litres (Continuous High Pressure Pump)",
-        "waterSourceType": "RESERVOIR",
-        "distanceKm": 3.4,
-        "distanceMeters": 3400,
+        "type": "Freshwater Lake & Fire Hydrant Terminal",
+        "capacity": "Continuous 25,000 Litres Aerial Drafting",
+        "waterSourceType": "LAKE",
+        "distanceKm": 1.4,
+        "distanceMeters": 1400,
         "routeWaypoints": [
           [
-            12.8572,
-            77.5226
+            12.868,
+            77.538
           ],
           [
-            12.86129,
-            77.52725
+            12.86906,
+            77.53861
           ],
           [
-            12.8702,
-            77.5348
+            12.87438,
+            77.54178
           ],
           [
-            12.87229,
-            77.53825
+            12.87282,
+            77.54082
+          ],
+          [
+            12.87814,
+            77.54399
           ],
           [
             12.8792,

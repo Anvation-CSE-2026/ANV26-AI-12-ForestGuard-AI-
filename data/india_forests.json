@@ -178,9 +178,81 @@
       "type": "River Gorge Pool",
       "capacity": "Continuous 14,000 LPM",
       "waterSourceType": "RIVER"
+    },
+    {
+      "id": "WB-BLR-01",
+      "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
+      "forestId": "FOR-KA-03",
+      "state": "Karnataka",
+      "coordinates": { "lat": 12.8680, "lng": 77.5380 },
+      "type": "Freshwater Lake & Fire Hydrant Terminal",
+      "capacity": "Continuous 25,000 Litres Aerial Drafting",
+      "waterSourceType": "LAKE"
+    },
+    {
+      "id": "WB-BLR-02",
+      "name": "Kaggalipura Lake Emergency Reservoir (DSATM)",
+      "forestId": "FOR-KA-03",
+      "state": "Karnataka",
+      "coordinates": { "lat": 12.8120, "lng": 77.5100 },
+      "type": "Emergency Water Reservoir",
+      "capacity": "50,000 Litres Rapid Pump Draft",
+      "waterSourceType": "RESERVOIR"
+    },
+    {
+      "id": "WB-BLR-03",
+      "name": "Bannerghatta Forest Suvarnamukhi Reservoir",
+      "forestId": "FOR-KA-03",
+      "state": "Karnataka",
+      "coordinates": { "lat": 12.7950, "lng": 77.5680 },
+      "type": "Protected Forest Dam & Reservoir",
+      "capacity": "High Volume Aerial Helicopter Drafting",
+      "waterSourceType": "RESERVOIR"
     }
   ],
   "responseStations": [
+    {
+      "id": "STA-BLR-01",
+      "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+      "forestId": "FOR-KA-03",
+      "state": "Karnataka",
+      "coordinates": { "lat": 12.8590, "lng": 77.5460 },
+      "phone": "+91-80-22971550",
+      "etaMinutesBase": 5,
+      "unitType": "Kanakapura Highway Fire Squad",
+      "crewCount": 18,
+      "waterTenders": 4,
+      "aerialDrones": 2,
+      "status": "AVAILABLE"
+    },
+    {
+      "id": "STA-BLR-02",
+      "name": "DSATM Campus & Kaggalipura Rapid Fire Post",
+      "forestId": "FOR-KA-03",
+      "state": "Karnataka",
+      "coordinates": { "lat": 12.8290, "lng": 77.5180 },
+      "phone": "+91-80-22971565",
+      "etaMinutesBase": 6,
+      "unitType": "Campus & Reserve Forest Unit",
+      "crewCount": 14,
+      "waterTenders": 3,
+      "aerialDrones": 1,
+      "status": "AVAILABLE"
+    },
+    {
+      "id": "STA-BLR-03",
+      "name": "Banashankari Fire & Rescue Command Station",
+      "forestId": "FOR-KA-03",
+      "state": "Karnataka",
+      "coordinates": { "lat": 12.9250, "lng": 77.5680 },
+      "phone": "+91-80-22971540",
+      "etaMinutesBase": 14,
+      "unitType": "South Bengaluru Central Fleet",
+      "crewCount": 24,
+      "waterTenders": 6,
+      "aerialDrones": 2,
+      "status": "AVAILABLE"
+    },
     {
       "id": "STA-KA-01",
       "name": "Bandipur Forest Rapid Response Unit (HQ)",

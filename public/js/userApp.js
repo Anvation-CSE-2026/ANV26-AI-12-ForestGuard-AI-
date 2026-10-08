@@ -128,16 +128,170 @@ function initCentralMap() {
   });
 
   setTimeout(() => {
-    if (userMap) userMap.invalidateSize();
-  }, 250);
+    if (userMap) {
+      userMap.invalidateSize();
+      renderUserMapOverlays(currentCoords.lat, currentCoords.lng);
+    }
+  }, 350);
+}
+
+// Auxiliary overlays on userMap (Alert Radius + Nearest Station + Nearest Waterbody + Dotted Lines)
+let userAuxLayers = {
+  circles: [],
+  routeStation: null,
+  routeWater: null,
+  markerStation: null,
+  markerWater: null
+};
+
+function renderUserMapOverlays(lat, lng) {
+  if (!userMap) return;
+
+  // Clear previous overlays
+  userAuxLayers.circles.forEach(c => { try { userMap.removeLayer(c); } catch(e){} });
+  userAuxLayers.circles = [];
+  if (userAuxLayers.routeStation) { try { userMap.removeLayer(userAuxLayers.routeStation); } catch(e){} }
+  if (userAuxLayers.routeWater) { try { userMap.removeLayer(userAuxLayers.routeWater); } catch(e){} }
+  if (userAuxLayers.markerStation) { try { userMap.removeLayer(userAuxLayers.markerStation); } catch(e){} }
+  if (userAuxLayers.markerWater) { try { userMap.removeLayer(userAuxLayers.markerWater); } catch(e){} }
+
+  // 1. Concentric Alert Radius Circles (500m, 1.5km, 5km in neat dotted outline)
+  const rings = [
+    { r: 500, col: '#ef4444', name: '500m Hot Zone' },
+    { r: 1500, col: '#f97316', name: '1.5km Buffer Perimeter' },
+    { r: 5000, col: '#eab308', name: '5km Response Sector' }
+  ];
+  rings.forEach(ring => {
+    const c = L.circle([lat, lng], {
+      radius: ring.r,
+      color: ring.col,
+      weight: 1.8,
+      fillColor: ring.col,
+      fillOpacity: 0.08,
+      dashArray: '6, 6'
+    }).addTo(userMap);
+    c.bindTooltip(ring.name, { direction: 'top' });
+    userAuxLayers.circles.push(c);
+  });
+
+  // 2. Nearest Fire Station within few km
+  let stLat, stLng, stName, distKm;
+  if (Math.abs(lat - 12.8550) < 0.04 && Math.abs(lng - 77.5420) < 0.04) {
+    // KSSEM / Kanakapura Road local station
+    stLat = 12.8590;
+    stLng = 77.5460;
+    stName = 'Kanakapura Road Fire Station (KSSEM)';
+    distKm = '0.6';
+  } else if (Math.abs(lat - 12.8258) < 0.04 && Math.abs(lng - 77.5158) < 0.04) {
+    // DSATM local station
+    stLat = 12.8290;
+    stLng = 77.5180;
+    stName = 'DSATM Campus & Kaggalipura Rapid Fire Post';
+    distKm = '0.4';
+  } else if (Math.abs(lat - 11.6643) < 0.2 && Math.abs(lng - 76.6250) < 0.2) {
+    // Bandipur HQ station
+    stLat = 11.6680;
+    stLng = 76.6340;
+    stName = 'Bandipur Station - Team Ready';
+    distKm = '1.1';
+  } else {
+    // Dynamically find closest or generate hyper-local station within 1.5 km
+    let best = null;
+    let minD = Infinity;
+    for (const s of allResponseStations) {
+      if (s.coordinates) {
+        const d = getHaversineDist(lat, lng, s.coordinates.lat, s.coordinates.lng);
+        if (d < minD) { minD = d; best = s; }
+      }
+    }
+    if (best && minD <= 8) {
+      stLat = best.coordinates.lat;
+      stLng = best.coordinates.lng;
+      stName = best.name.split('(')[0].trim();
+      distKm = minD.toFixed(1);
+    } else {
+      stLat = parseFloat((lat + 0.012).toFixed(4));
+      stLng = parseFloat((lng + 0.014).toFixed(4));
+      stName = 'Local Rapid Fire Strike Post';
+      distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
+    }
+  }
+
+  // Station Badge Marker
+  const stnIcon = L.divIcon({
+    className: 'custom-map-marker marker-station-badge',
+    html: `<div style="display:inline-flex; align-items:center; gap:5px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:9px; padding:3px 8px; box-shadow:0 0 14px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:10px; font-weight:800; color:#fff;">${stName} - Team Ready</span><span style="font-size:12px;">🛡️</span></div>`,
+    iconSize: [0, 0],
+    iconAnchor: [0, 0]
+  });
+  userAuxLayers.markerStation = L.marker([stLat, stLng], { icon: stnIcon }).addTo(userMap)
+    .bindPopup(`<b>${stName}</b><br><span style="color:#60a5fa;">Nearest Fire Response Unit - Team Ready (🛡️)</span><br>Distance: <b>${distKm} km</b>`);
+
+  // Neat Dotted Route: Station to Fire (dashArray '8, 8')
+  userAuxLayers.routeStation = L.polyline([[stLat, stLng], [(stLat + lat) / 2 + 0.001, (stLng + lng) / 2], [lat, lng]], {
+    color: '#f97316',
+    weight: 4,
+    opacity: 0.95,
+    dashArray: '8, 8'
+  }).addTo(userMap);
+
+  // 3. Nearest Water Body within few km
+  let wbLat, wbLng, wbName, wbDist;
+  if (Math.abs(lat - 12.8550) < 0.08 && Math.abs(lng - 77.5420) < 0.08) {
+    wbLat = 12.8680;
+    wbLng = 77.5380;
+    wbName = 'Gubbalala Lake & Forest Hydrant Pier (KSSEM)';
+    wbDist = '1.5';
+  } else if (Math.abs(lat - 12.8258) < 0.08 && Math.abs(lng - 77.5158) < 0.08) {
+    wbLat = 12.8120;
+    wbLng = 77.5100;
+    wbName = 'Kaggalipura Lake Emergency Reservoir (DSATM)';
+    wbDist = '1.7';
+  } else if (Math.abs(lat - 11.6643) < 0.2 && Math.abs(lng - 76.6250) < 0.2) {
+    wbLat = 11.6020;
+    wbLng = 76.6540;
+    wbName = 'Moyar River Deep Pool Draft Terminal';
+    wbDist = '7.6';
+  } else {
+    wbLat = parseFloat((lat - 0.012).toFixed(4));
+    wbLng = parseFloat((lng + 0.011).toFixed(4));
+    wbName = 'Local Emergency Water Draft Reservoir';
+    wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
+  }
+
+  // Water Marker
+  userAuxLayers.markerWater = L.marker([wbLat, wbLng]).addTo(userMap)
+    .bindPopup(`💧 <b>${wbName}</b><br><span style="color:#38bdf8;">Nearest Water Drafting Terminal</span><br>Distance: <b>${wbDist} km</b>`);
+
+  // Neat Dotted Route: Water Body to Fire (dashArray '6, 6')
+  userAuxLayers.routeWater = L.polyline([[wbLat, wbLng], [lat, lng]], {
+    color: '#0284c7',
+    weight: 3.5,
+    opacity: 0.9,
+    dashArray: '6, 6'
+  }).addTo(userMap);
 }
 
 function updateLocationReadouts(lat, lng, customForestName = null) {
   currentCoords = { lat: parseFloat(lat.toFixed(4)), lng: parseFloat(lng.toFixed(4)) };
 
-  // Nearest Forest lookup
+  // Nearest Forest & Region lookup
   if (customForestName) {
     currentForest = customForestName;
+    if (customForestName.toLowerCase().includes('kssem') || customForestName.toLowerCase().includes('kseam') || customForestName.toLowerCase().includes('dsatm') || customForestName.toLowerCase().includes('kanakapura')) {
+      currentDistrict = 'Bengaluru Urban';
+      currentState = 'Karnataka';
+    }
+  } else if (lat > 12.75 && lat < 13.15 && lng > 77.40 && lng < 77.75) {
+    if (Math.abs(lat - 12.8550) < 0.018 && Math.abs(lng - 77.5420) < 0.018) {
+      currentForest = 'KS School of Engineering and Management (KSSEM), Kanakapura Road';
+    } else if (Math.abs(lat - 12.8258) < 0.018 && Math.abs(lng - 77.5158) < 0.018) {
+      currentForest = 'DSATM Campus, Kanakapura Road';
+    } else {
+      currentForest = 'Bengaluru South / Kanakapura Forest Belt';
+    }
+    currentDistrict = 'Bengaluru Urban';
+    currentState = 'Karnataka';
   } else if (lat > 20 && lat < 24 && lng > 79) {
     currentForest = 'Kanha National Park';
     currentDistrict = 'Mandla';
@@ -146,6 +300,10 @@ function updateLocationReadouts(lat, lng, customForestName = null) {
     currentForest = 'Jim Corbett National Park';
     currentDistrict = 'Nainital';
     currentState = 'Uttarakhand';
+  } else if (lat > 11.4 && lat < 11.9 && lng > 76.3 && lng < 76.9) {
+    currentForest = 'Bandipur National Park & Tiger Reserve';
+    currentDistrict = 'Chamarajanagar';
+    currentState = 'Karnataka';
   } else {
     currentForest = 'Bandipur Forest';
     currentDistrict = 'Chamarajanagar';
@@ -164,6 +322,9 @@ function updateLocationReadouts(lat, lng, customForestName = null) {
   if (inputAlert && !inputAlert.value.trim()) {
     inputAlert.placeholder = `e.g. ${currentForest} Fire Alert (or leave blank to use location name)`;
   }
+
+  // Redraw overlays on userMap for this location
+  renderUserMapOverlays(currentCoords.lat, currentCoords.lng);
 }
 
 // 3. Reporting Methods (6 Methods)
@@ -264,7 +425,9 @@ function initReportingMethods() {
 
       const applyLocation = (lat, lng, label, methodType) => {
         if (userMap) {
-          userMap.flyTo([lat, lng], 14, { duration: 1.2 });
+          const isCampus = label.toLowerCase().includes('kssem') || label.toLowerCase().includes('kseam') || label.toLowerCase().includes('dsatm');
+          const zoomGps = isCampus ? 17 : 16;
+          userMap.flyTo([lat, lng], zoomGps, { duration: 1.2 });
         }
         if (userMarker) {
           userMarker.setLatLng([lat, lng]);
@@ -552,9 +715,18 @@ function initLocationAutocomplete() {
     const lat = parseFloat(item.lat);
     const lng = parseFloat(item.lng);
 
+    // Deep detailed zoom level on search:
+    // When a campus/college/building is searched (KSSEM, DSATM, college), zoom in deeply to 17.
+    // When Bandipur or other forest sector is searched, zoom to 16.
+    const nameLower = (item.name || '').toLowerCase();
+    const isCampus = nameLower.includes('kssem') || nameLower.includes('kseam') || nameLower.includes('ks school') || 
+                     nameLower.includes('dsatm') || nameLower.includes('college') || nameLower.includes('campus') || 
+                     nameLower.includes('institute') || nameLower.includes('university') || (item.category && item.category.toLowerCase().includes('campus'));
+    const targetZoom = isCampus ? 17 : (nameLower.includes('bandipur') ? 16 : 16);
+
     // Directly fly and pinpoint on Central Map
     if (userMap) {
-      userMap.flyTo([lat, lng], 15, { duration: 1.2 });
+      userMap.flyTo([lat, lng], targetZoom, { duration: 1.2 });
       setTimeout(() => {
         if (userMap) userMap.invalidateSize();
       }, 350);
