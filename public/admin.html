@@ -619,21 +619,23 @@
               <span id="modalSbBadge" class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-800 text-emerald-200">SAFE</span>
             </div>
 
-            <!-- Gauges -->
+            <!-- Gauges: Fire & Smoke ABOVE Anomaly (More fire = More seriousness) -->
             <div class="space-y-1.5 pt-0.5">
+              <!-- 1. Fire Confidence (TOP) -->
               <div>
                 <div class="flex justify-between text-[11px] mb-0.5">
-                  <span class="font-bold text-slate-300">Anomaly Confidence</span>
-                  <span id="modalSbAnomaly" class="font-mono font-bold text-red-400">0.0%</span>
+                  <span class="font-bold text-red-300 flex items-center gap-1"><span>🔥</span> Fire Confidence</span>
+                  <span id="modalSbFireConfidence" class="font-mono font-bold text-red-400">0.0%</span>
                 </div>
                 <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-slate-800">
-                  <div id="modalSbBarAnomaly" class="h-full bg-gradient-to-r from-red-600 to-rose-500 rounded-full transition-all duration-700" style="width: 0%"></div>
+                  <div id="modalSbBarFireConfidence" class="h-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 rounded-full transition-all duration-700" style="width: 0%"></div>
                 </div>
               </div>
 
+              <!-- 2. Smoke Confidence (SECOND) -->
               <div>
                 <div class="flex justify-between text-[11px] mb-0.5">
-                  <span class="font-bold text-slate-300">Smoke Confidence</span>
+                  <span class="font-bold text-orange-300 flex items-center gap-1"><span>💨</span> Smoke Confidence</span>
                   <span id="modalSbSmoke" class="font-mono font-bold text-orange-400">0.0%</span>
                 </div>
                 <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-slate-800">
@@ -641,9 +643,10 @@
                 </div>
               </div>
 
+              <!-- 3. Fire Coverage (THIRD) -->
               <div>
                 <div class="flex justify-between text-[11px] mb-0.5">
-                  <span class="font-bold text-slate-300">Fire Coverage</span>
+                  <span class="font-bold text-amber-300 flex items-center gap-1"><span>🌲</span> Fire Coverage</span>
                   <span id="modalSbCoverage" class="font-mono font-bold text-amber-400">0.0%</span>
                 </div>
                 <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-slate-800">
@@ -651,13 +654,25 @@
                 </div>
               </div>
 
+              <!-- 4. Smoke Level (FOURTH) -->
               <div>
                 <div class="flex justify-between text-[11px] mb-0.5">
-                  <span class="font-bold text-slate-300">Smoke Level</span>
+                  <span class="font-bold text-sky-300 flex items-center gap-1"><span>🌫️</span> Smoke Level</span>
                   <span id="modalSbSmokeLevel" class="font-mono font-bold text-sky-400">0.0%</span>
                 </div>
                 <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-slate-800">
                   <div id="modalSbBarSmokeLevel" class="h-full bg-gradient-to-r from-sky-500 to-blue-500 rounded-full transition-all duration-700" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <!-- 5. Anomaly Confidence (BELOW FIRE & SMOKE) -->
+              <div>
+                <div class="flex justify-between text-[11px] mb-0.5">
+                  <span class="font-bold text-slate-400 flex items-center gap-1"><span>⚡</span> Anomaly Confidence</span>
+                  <span id="modalSbAnomaly" class="font-mono font-bold text-purple-400">0.0%</span>
+                </div>
+                <div class="w-full bg-[#030712] rounded-full h-1.5 overflow-hidden border border-slate-800">
+                  <div id="modalSbBarAnomaly" class="h-full bg-gradient-to-r from-purple-600 to-indigo-500 rounded-full transition-all duration-700" style="width: 0%"></div>
                 </div>
               </div>
             </div>

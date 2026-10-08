@@ -980,32 +980,44 @@ function initImageInspectorModal() {
   function updateInspectorScoreboard(sb, isFire) {
     const ts = document.getElementById('modalSbTimestamp');
     if (ts) ts.textContent = sb.timestamp || new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-    const anomEl = document.getElementById('modalSbAnomaly');
-    if (anomEl) anomEl.textContent = `${sb.anomalyConfidence}%`;
-    const barAnom = document.getElementById('modalSbBarAnomaly');
-    if (barAnom) barAnom.style.width = `${sb.anomalyConfidence}%`;
 
+    // 1. Fire Confidence (TOP)
+    const fireConfVal = parseFloat(sb.fireConfidence !== undefined ? sb.fireConfidence : (isFire ? sb.anomalyConfidence || 96.5 : 0.0)).toFixed(1);
+    const fireConfEl = document.getElementById('modalSbFireConfidence');
+    if (fireConfEl) fireConfEl.textContent = `${fireConfVal}%`;
+    const barFireConf = document.getElementById('modalSbBarFireConfidence');
+    if (barFireConf) barFireConf.style.width = `${Math.min(100, Math.max(0, fireConfVal))}%`;
+
+    // 2. Smoke Confidence (SECOND)
     const smkEl = document.getElementById('modalSbSmoke');
     if (smkEl) smkEl.textContent = `${sb.smokeConfidence}%`;
     const barSmk = document.getElementById('modalSbBarSmoke');
     if (barSmk) barSmk.style.width = `${sb.smokeConfidence}%`;
 
+    // 3. Fire Coverage (THIRD)
     const covEl = document.getElementById('modalSbCoverage');
     if (covEl) covEl.textContent = `${sb.fireCoverage}%`;
     const barCov = document.getElementById('modalSbBarCoverage');
     if (barCov) barCov.style.width = `${sb.fireCoverage}%`;
 
+    // 4. Smoke Level (FOURTH)
     const smkLvlEl = document.getElementById('modalSbSmokeLevel');
     if (smkLvlEl) smkLvlEl.textContent = `${sb.smokeLevel}%`;
     const barSmkLvl = document.getElementById('modalSbBarSmokeLevel');
     if (barSmkLvl) barSmkLvl.style.width = `${sb.smokeLevel}%`;
+
+    // 5. Anomaly Confidence (BELOW FIRE & SMOKE)
+    const anomEl = document.getElementById('modalSbAnomaly');
+    if (anomEl) anomEl.textContent = `${sb.anomalyConfidence}%`;
+    const barAnom = document.getElementById('modalSbBarAnomaly');
+    if (barAnom) barAnom.style.width = `${sb.anomalyConfidence}%`;
 
     const rEl = document.getElementById('modalSbRisk');
     if (rEl) rEl.textContent = sb.riskScore;
     const sevEl = document.getElementById('modalSbSeverity');
     if (sevEl) sevEl.textContent = sb.severity;
     const alText = document.getElementById('modalSbAlertText');
-    if (alText) alText.textContent = sb.earlyWarningAlert || (isFire ? 'CRITICAL - IMMEDIATE DISPATCH' : 'NORMAL - SECTOR CLEAR');
+    if (alText) alText.textContent = sb.earlyWarningAlert || (isFire ? (sb.severity === 'CRITICAL' ? 'CRITICAL - IMMEDIATE DISPATCH' : 'HIGH RISK HAZARD DETECTED') : 'NORMAL - SECTOR CLEAR');
 
     const banner = document.getElementById('modalSbStatusBanner');
     const icon = document.getElementById('modalSbIcon');
@@ -1069,19 +1081,27 @@ function initImageInspectorModal() {
       const isFire = fireRatio > 0.004 || (fireRatio > 0.002 && smokeRatio > 0.08);
 
       if (isFire) {
-        const anom = Math.min(99.4, Math.max(88.0, 86.0 + fireRatio * 90 + smokeRatio * 25));
+        const fireConf = Math.min(99.6, Math.max(90.0, 88.0 + fireRatio * 110));
         const smkConf = Math.min(98.0, Math.max(76.0, 78.0 + smokeRatio * 110));
-        const cov = Math.min(92.0, Math.max(18.0, fireRatio * 210 + 15));
+        const cov = Math.min(94.0, Math.max(18.0, fireRatio * 220 + 15));
         const smkLvl = Math.min(96.0, Math.max(30.0, smokeRatio * 170 + 30));
-        const risk = Math.min(99, Math.max(72, Math.round(anom * 0.45 + cov * 0.35 + smkLvl * 0.20)));
-        const sev = risk >= 85 ? 'CRITICAL' : 'HIGH';
+        const anom = Math.min(99.4, Math.max(84.0, 84.0 + fireRatio * 85 + smokeRatio * 25));
+
+        // "More the fire, more the seriousness":
+        // Base risk scales directly with fire coverage and flame spread
+        const fireScale = Math.min(1.0, (cov / 34.0));
+        const baseRisk = 74 + Math.round(fireScale * 23); // Scales from 74 to 97 points
+        const smokeBonus = Math.min(2.0, (smkLvl / 50.0));
+        const risk = Math.min(99, Math.max(74, Math.round(baseRisk + smokeBonus)));
+        const sev = risk >= 84 ? 'CRITICAL' : 'HIGH';
 
         const quickSb = {
           fireDetected: true,
-          anomalyConfidence: parseFloat(anom.toFixed(1)),
+          fireConfidence: parseFloat(fireConf.toFixed(1)),
           smokeConfidence: parseFloat(smkConf.toFixed(1)),
           fireCoverage: parseFloat(cov.toFixed(1)),
           smokeLevel: parseFloat(smkLvl.toFixed(1)),
+          anomalyConfidence: parseFloat(anom.toFixed(1)),
           riskScore: risk,
           severity: sev,
           objectsCount: Math.max(1, Math.min(6, Math.round(fireRatio * 35 + 2))),
@@ -1092,10 +1112,11 @@ function initImageInspectorModal() {
       } else {
         const clearSb = {
           fireDetected: false,
-          anomalyConfidence: 0.0,
+          fireConfidence: 0.0,
           smokeConfidence: 0.0,
           fireCoverage: 0.0,
           smokeLevel: 0.0,
+          anomalyConfidence: 0.0,
           riskScore: 0,
           severity: 'NORMAL',
           objectsCount: 0,

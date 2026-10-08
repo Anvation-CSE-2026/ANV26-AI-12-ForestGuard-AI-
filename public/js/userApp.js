@@ -413,31 +413,42 @@ function updateScoreboardUI(data) {
     }
   }
 
-  // 4 Telemetry Progress Bars
-  const anomVal = parseFloat(data.anomalyConfidence !== undefined ? data.anomalyConfidence : (isFire ? 94.6 : 0.0)).toFixed(1);
+  // 5 Telemetry Progress Bars (Fire & Smoke ABOVE Anomaly)
+  const fireConfVal = parseFloat(data.fireConfidence !== undefined ? data.fireConfidence : (data.fireScore !== undefined ? data.fireScore : (isFire ? 96.8 : 0.0))).toFixed(1);
   const smokeVal = parseFloat(data.smokeConfidence !== undefined ? data.smokeConfidence : (isFire ? 92.0 : 0.0)).toFixed(1);
   const covVal = parseFloat(data.fireCoverage !== undefined ? data.fireCoverage : (isFire ? 38.5 : 0.0)).toFixed(1);
   const smkLvlVal = parseFloat(data.smokeLevel !== undefined ? data.smokeLevel : (isFire ? 85.0 : 0.0)).toFixed(1);
+  const anomVal = parseFloat(data.anomalyConfidence !== undefined ? data.anomalyConfidence : (isFire ? 94.6 : 0.0)).toFixed(1);
 
-  const elAnom = document.getElementById('sbValAnomaly');
-  const barAnom = document.getElementById('sbBarAnomaly');
-  if (elAnom) elAnom.textContent = `${anomVal}%`;
-  if (barAnom) barAnom.style.width = `${Math.min(100, Math.max(0, anomVal))}%`;
+  // 1. Fire Confidence (TOP)
+  const elFireConf = document.getElementById('sbValFireConfidence');
+  const barFireConf = document.getElementById('sbBarFireConfidence');
+  if (elFireConf) elFireConf.textContent = `${fireConfVal}%`;
+  if (barFireConf) barFireConf.style.width = `${Math.min(100, Math.max(0, fireConfVal))}%`;
 
+  // 2. Smoke Confidence
   const elSmk = document.getElementById('sbValSmoke');
   const barSmk = document.getElementById('sbBarSmoke');
   if (elSmk) elSmk.textContent = `${smokeVal}%`;
   if (barSmk) barSmk.style.width = `${Math.min(100, Math.max(0, smokeVal))}%`;
 
+  // 3. Fire Coverage
   const elCov = document.getElementById('sbValCoverage');
   const barCov = document.getElementById('sbBarCoverage');
   if (elCov) elCov.textContent = `${covVal}%`;
   if (barCov) barCov.style.width = `${Math.min(100, Math.max(0, covVal))}%`;
 
+  // 4. Smoke Level
   const elSmkLvl = document.getElementById('sbValSmokeLevel');
   const barSmkLvl = document.getElementById('sbBarSmokeLevel');
   if (elSmkLvl) elSmkLvl.textContent = `${smkLvlVal}%`;
   if (barSmkLvl) barSmkLvl.style.width = `${Math.min(100, Math.max(0, smkLvlVal))}%`;
+
+  // 5. Anomaly Confidence (BELOW FIRE & SMOKE)
+  const elAnom = document.getElementById('sbValAnomaly');
+  const barAnom = document.getElementById('sbBarAnomaly');
+  if (elAnom) elAnom.textContent = `${anomVal}%`;
+  if (barAnom) barAnom.style.width = `${Math.min(100, Math.max(0, anomVal))}%`;
 
   // Unhide Scoreboard container now that image is uploaded & analyzed
   const sbContainer = document.getElementById('userScoreBoardContainer');
@@ -586,19 +597,28 @@ function analyzeImageFast(imgElement, callback) {
     const isFire = fireRatio > 0.004 || (fireRatio > 0.002 && smokeRatio > 0.08);
 
     if (isFire) {
-      const anom = Math.min(99.4, Math.max(85.0, 85.0 + fireRatio * 120 + smokeRatio * 30));
+      const fireConf = Math.min(99.6, Math.max(90.0, 88.0 + fireRatio * 110));
       const smkConf = Math.min(98.0, Math.max(76.0, 78.0 + smokeRatio * 110));
-      const cov = Math.min(90.0, Math.max(15.0, fireRatio * 220 + 15));
-      const smkLvl = Math.min(95.0, Math.max(25.0, smokeRatio * 180 + 30));
-      const risk = Math.min(99, Math.max(72, Math.round(anom * 0.45 + cov * 0.35 + smkLvl * 0.20)));
-      const sev = risk >= 85 ? 'CRITICAL' : 'HIGH';
+      const cov = Math.min(94.0, Math.max(18.0, fireRatio * 220 + 15));
+      const smkLvl = Math.min(96.0, Math.max(30.0, smokeRatio * 170 + 30));
+      const anom = Math.min(99.4, Math.max(84.0, 84.0 + fireRatio * 85 + smokeRatio * 25));
+
+      // "More the fire, more the seriousness":
+      // Base risk scales directly with fire coverage and flame spread
+      const fireScale = Math.min(1.0, (cov / 34.0));
+      const baseRisk = 74 + Math.round(fireScale * 23); // Scales from 74 to 97 points
+      const smokeBonus = Math.min(2.0, (smkLvl / 50.0));
+      const risk = Math.min(99, Math.max(74, Math.round(baseRisk + smokeBonus)));
+      const sev = risk >= 84 ? 'CRITICAL' : 'HIGH';
 
       callback({
         fireDetected: true,
-        anomalyConfidence: parseFloat(anom.toFixed(1)),
+        fireConfidence: parseFloat(fireConf.toFixed(1)),
+        fireScore: parseFloat(fireConf.toFixed(1)),
         smokeConfidence: parseFloat(smkConf.toFixed(1)),
         fireCoverage: parseFloat(cov.toFixed(1)),
         smokeLevel: parseFloat(smkLvl.toFixed(1)),
+        anomalyConfidence: parseFloat(anom.toFixed(1)),
         riskScore: risk,
         severity: sev,
         objectsCount: Math.max(1, Math.min(6, Math.round(fireRatio * 35 + 2))),

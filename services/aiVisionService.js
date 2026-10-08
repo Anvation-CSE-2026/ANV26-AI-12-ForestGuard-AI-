@@ -55,13 +55,15 @@ class AIVisionService {
           const authenticityScore = parseFloat((100 - fakeProbability).toFixed(1));
           const isFake = !isFire || fakeProbability > 50;
 
+          const fireConfidence = pyData.confidence || (isFire ? 96.5 : 0.0);
           const scoreboard = {
-            fireScore: isFire ? anomalyConfidence : 0.0,
+            fireScore: isFire ? fireConfidence : 0.0,
             fireLevel: isFire ? severity : 'SAFE',
-            anomalyConfidence,
+            fireConfidence: isFire ? fireConfidence : 0.0,
             smokeConfidence,
             fireCoverage,
             smokeLevel,
+            anomalyConfidence,
             riskScore,
             severity,
             objectsCount: isFire ? 3 : 0,
@@ -231,6 +233,7 @@ class AIVisionService {
     const latency = Date.now() - startTime;
     const nowTimeStr = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
 
+    let fireConfidence = 0.0;
     let anomalyConfidence = 0.0;
     let smokeConfidence = 0.0;
     let fireCoverage = 0.0;
@@ -247,15 +250,24 @@ class AIVisionService {
     let fakeStatus = 'FLAGGED - NON-FIRE PHOTO / POTENTIAL HOAX';
 
     if (isFire) {
-      anomalyConfidence = parseFloat((Math.min(99.4, Math.max(84.0, confidence))).toFixed(1));
+      fireConfidence = parseFloat((Math.min(99.6, Math.max(90.0, confidence))).toFixed(1));
+      anomalyConfidence = parseFloat((Math.min(99.2, Math.max(84.0, confidence - 1.5))).toFixed(1));
       smokeConfidence = parseFloat((Math.min(98.5, Math.max(76.0, 78.0 + (smokeRatio * 105)))).toFixed(1));
-      fireCoverage = parseFloat((Math.min(92.0, Math.max(15.0, flameRatio * 220 + 12.0))).toFixed(1));
-      smokeLevel = parseFloat((Math.min(96.0, Math.max(25.0, smokeRatio * 180 + 30.0))).toFixed(1));
-      riskScore = Math.min(99, Math.max(70, Math.round(anomalyConfidence * 0.45 + fireCoverage * 0.35 + smokeLevel * 0.20)));
+      fireCoverage = parseFloat((Math.min(94.0, Math.max(16.0, flameRatio * 220 + 14.0))).toFixed(1));
+      smokeLevel = parseFloat((Math.min(96.0, Math.max(28.0, smokeRatio * 180 + 30.0))).toFixed(1));
+
+      // "More the fire, more the seriousness":
+      // Base risk scales directly with fire coverage and flame spread
+      const fireScale = Math.min(1.0, (fireCoverage / 34.0));
+      const baseRisk = 74 + Math.round(fireScale * 23); // Scales from 74 to 97 points
+      const smokeBonus = Math.min(2.0, (smokeLevel / 50.0));
+      riskScore = Math.min(99, Math.max(74, Math.round(baseRisk + smokeBonus)));
+      severity = riskScore >= 84 ? 'CRITICAL' : 'HIGH';
+
       objectsCount = Math.max(1, Math.min(6, Math.round(flameRatio * 35 + 2)));
       statusTitle = 'FIRE DETECTED';
       statusText = `Status: Active Wildfire (${objectsCount} Objects)`;
-      badgeText = severity === 'CRITICAL' ? 'CRITICAL' : 'HIGH';
+      badgeText = severity;
       earlyWarningAlert = severity === 'CRITICAL' ? 'CRITICAL - IMMEDIATE DISPATCH' : 'HIGH RISK HAZARD DETECTED';
       
       // Real wildfire detected -> Low fake risk, high authentic ground evidence
@@ -265,6 +277,7 @@ class AIVisionService {
       fakeStatus = 'PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)';
     } else {
       severity = 'NORMAL';
+      fireConfidence = 0.0;
       anomalyConfidence = 0.0;
       smokeConfidence = 0.0;
       fireCoverage = 0.0;
@@ -284,12 +297,13 @@ class AIVisionService {
     }
 
     const scoreboard = {
-      fireScore: isFire ? anomalyConfidence : 0.0,
+      fireScore: isFire ? fireConfidence : 0.0,
       fireLevel: isFire ? severity : 'SAFE',
-      anomalyConfidence,
+      fireConfidence: isFire ? fireConfidence : 0.0,
       smokeConfidence,
       fireCoverage,
       smokeLevel,
+      anomalyConfidence,
       riskScore,
       severity,
       objectsCount,

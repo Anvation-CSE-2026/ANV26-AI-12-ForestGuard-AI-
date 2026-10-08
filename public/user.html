@@ -295,24 +295,24 @@
                 </div>
               </div>
 
-              <!-- 4 Telemetry Progress Bars / Gauges -->
+              <!-- 5 Telemetry Progress Bars / Gauges (Fire & Smoke ABOVE Anomaly) -->
               <div class="space-y-1.5 pt-0.5">
                 
-                <!-- Anomaly Confidence -->
+                <!-- 1. Fire Confidence (TOP) -->
                 <div>
                   <div class="flex justify-between items-center text-[10px] mb-0.5">
-                    <span class="font-bold text-slate-300">Anomaly Confidence</span>
-                    <span id="sbValAnomaly" class="font-mono font-bold text-red-400">0.0%</span>
+                    <span class="font-bold text-red-300 flex items-center gap-1"><span>🔥</span> Fire Confidence</span>
+                    <span id="sbValFireConfidence" class="font-mono font-bold text-red-400">0.0%</span>
                   </div>
                   <div class="w-full bg-[#030712] rounded-full h-1.5 overflow-hidden border border-slate-800">
-                    <div id="sbBarAnomaly" class="h-full bg-gradient-to-r from-red-600 to-rose-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                    <div id="sbBarFireConfidence" class="h-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
                   </div>
                 </div>
 
-                <!-- Smoke Confidence -->
+                <!-- 2. Smoke Confidence (SECOND) -->
                 <div>
                   <div class="flex justify-between items-center text-[10px] mb-0.5">
-                    <span class="font-bold text-slate-300">Smoke Confidence</span>
+                    <span class="font-bold text-orange-300 flex items-center gap-1"><span>💨</span> Smoke Confidence</span>
                     <span id="sbValSmoke" class="font-mono font-bold text-orange-400">0.0%</span>
                   </div>
                   <div class="w-full bg-[#030712] rounded-full h-1.5 overflow-hidden border border-slate-800">
@@ -320,10 +320,10 @@
                   </div>
                 </div>
 
-                <!-- Fire Coverage -->
+                <!-- 3. Fire Coverage (THIRD) -->
                 <div>
                   <div class="flex justify-between items-center text-[10px] mb-0.5">
-                    <span class="font-bold text-slate-300">Fire Coverage</span>
+                    <span class="font-bold text-amber-300 flex items-center gap-1"><span>🌲</span> Fire Coverage</span>
                     <span id="sbValCoverage" class="font-mono font-bold text-amber-400">0.0%</span>
                   </div>
                   <div class="w-full bg-[#030712] rounded-full h-1.5 overflow-hidden border border-slate-800">
@@ -331,14 +331,25 @@
                   </div>
                 </div>
 
-                <!-- Smoke Level -->
+                <!-- 4. Smoke Level (FOURTH) -->
                 <div>
                   <div class="flex justify-between items-center text-[10px] mb-0.5">
-                    <span class="font-bold text-slate-300">Smoke Level</span>
+                    <span class="font-bold text-sky-300 flex items-center gap-1"><span>🌫️</span> Smoke Level</span>
                     <span id="sbValSmokeLevel" class="font-mono font-bold text-sky-400">0.0%</span>
                   </div>
                   <div class="w-full bg-[#030712] rounded-full h-1.5 overflow-hidden border border-slate-800">
                     <div id="sbBarSmokeLevel" class="h-full bg-gradient-to-r from-sky-500 to-blue-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                  </div>
+                </div>
+
+                <!-- 5. Anomaly Confidence (BELOW FIRE & SMOKE) -->
+                <div>
+                  <div class="flex justify-between items-center text-[10px] mb-0.5">
+                    <span class="font-bold text-slate-400 flex items-center gap-1"><span>⚡</span> Anomaly Confidence</span>
+                    <span id="sbValAnomaly" class="font-mono font-bold text-purple-400">0.0%</span>
+                  </div>
+                  <div class="w-full bg-[#030712] rounded-full h-1.5 overflow-hidden border border-slate-800">
+                    <div id="sbBarAnomaly" class="h-full bg-gradient-to-r from-purple-600 to-indigo-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
                   </div>
                 </div>
 
