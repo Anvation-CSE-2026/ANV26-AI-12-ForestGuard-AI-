@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORESTGUARD AI | Live AI Forest Fire Detection & Emergency Response Network</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/tailwind-custom.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white">
+
+  <!-- 1.5-SECOND CINEMATIC INTRO FLASH CARD (AUTO-REDIRECTS TO HOME DASHBOARD BUTTONS) -->
+  <div id="introFlashCard" onclick="dismissIntroFlashCard()" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-500 cursor-pointer">
+    <!-- Cinematic High-Res Fire Background with Breathing Glow -->
+    <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-90 contrast-125 saturate-150 transform scale-105 animate-pulse" style="background-image: url('/images/forestfire_hero_bg.jpg');"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/60 to-[#02050e]/80 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(239,68,68,0.25)_0%,_rgba(0,0,0,0.85)_75%)] pointer-events-none"></div>
+
+    <!-- Glowing Flash Card Box -->
+    <div class="relative z-10 max-w-xl w-full mx-4 p-8 rounded-3xl bg-[#070e1c]/95 border-2 border-orange-500/70 shadow-[0_0_60px_rgba(249,115,22,0.45)] backdrop-blur-xl text-center transform transition-all duration-300">
+      <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center text-3xl shadow-xl shadow-red-950/80 border border-orange-400/60 animate-bounce">
+        🔥
+      </div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/90 border border-red-500/70 text-red-300 text-[10px] font-black tracking-widest uppercase mb-2 shadow">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+        <span>NATIONAL FORESTRY DEFENSE PLATFORM</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-wider mb-1 drop-shadow-[0_2px_12px_rgba(239,68,68,0.8)]">
+        AGNIRAKSHAK AI
+      </h1>
+      <p class="text-xs sm:text-sm font-bold text-amber-300 tracking-wide uppercase mb-2">
+        Forest Fire Early Warning & Geospatial Response System
+      </p>
+      <p class="text-xs text-slate-300 leading-relaxed mb-4 max-w-md mx-auto">
+        Dual-spectrum AI vision and geospatial command center for instant wildfire containment.
+      </p>
+
+      <!-- Quick Skip Button -->
+      <button id="btnSkipFlashCard" onclick="dismissIntroFlashCard(); event.stopPropagation();" class="px-7 py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2 mx-auto cursor-pointer">
+        <span>ENTER HOME DASHBOARDS</span> <span>→</span>
+      </button>
+      <div class="text-[10px] text-slate-400 mt-2">Tap anywhere or wait 1.5s to view Citizen & Admin options</div>
+    </div>
+  </div>
+  <script>
+    function dismissIntroFlashCard() {
+      const flash = document.getElementById('introFlashCard');
+      if (flash) {
+        flash.style.opacity = '0';
+        flash.style.pointerEvents = 'none';
+        setTimeout(() => { if (flash && flash.parentNode) flash.parentNode.removeChild(flash); }, 400);
+      }
+    }
+    // Auto-dismiss within 1.5 seconds so home buttons are immediately visible
+    setTimeout(dismissIntroFlashCard, 1500);
+  </script>
+
+  <!-- Top Navigation -->
+  <header class="border-b border-slate-800 bg-[#070e1c]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-3xl filter drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]">🌲🔥</span>
+        <div>
+          <span class="text-xl font-black tracking-wider bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">AGNIRAKSHAK AI</span>
+          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-[10px] font-bold tracking-widest bg-red-950/80 border border-red-700/60 text-red-400 rounded">INDIA NATIONAL GRID</span>
+        </div>
+      </div>
+      
+      <nav class="flex items-center gap-2 sm:gap-3">
+        <a href="/index.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 transition flex items-center gap-1">
+          <span>🏠</span> <span>Home</span>
+        </a>
+        <a href="/user.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-600/20 border border-orange-500/50 text-orange-400 hover:bg-orange-600/30 transition flex items-center gap-1">
+          <span>👤</span> <span class="hidden sm:inline">Citizen Dashboard</span><span class="sm:hidden">Citizen</span>
+        </a>
+        <a href="/admin.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md shadow-red-900/40 hover:brightness-110 transition flex items-center gap-1.5">
+          <span>🚨</span> <span class="hidden sm:inline">Admin Dashboard</span><span class="sm:hidden">Admin</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="flex-1">
+    <section class="relative overflow-hidden pt-16 pb-24 px-4 sm:px-6 lg:px-8 border-b border-orange-950/70 bg-[#030712] min-h-[90vh] flex items-center justify-center">
+      
+      <!-- High-Resolution Cinematic Forest Fire Background Image with Slow Breathing Motion -->
+      <div class="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none transform scale-105 animate-hero-breath" style="background-image: url('/images/forestfire_hero_bg.jpg'); filter: brightness(0.9) contrast(1.15) saturate(1.2);"></div>
+
+      <!-- Multi-Layer Atmospheric Dark Gradients & Vignette for Maximum Contrast & Readability -->
+      <div class="absolute inset-0 bg-gradient-to-b from-[#070e1c]/85 via-[#030712]/60 to-[#030712] pointer-events-none"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(7,14,28,0.35)_0%,_rgba(3,7,18,0.75)_65%,_#030712_100%)] pointer-events-none"></div>
+
+      <!-- Glowing Fire Horizon & Ember Glow -->
+      <div class="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-[#030712] via-[#030712]/80 to-transparent pointer-events-none"></div>
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-r from-red-600/30 via-orange-500/25 to-amber-500/20 blur-[140px] pointer-events-none"></div>
+
+      <!-- Dynamic Floating Embers Canvas -->
+      <canvas id="heroEmbersCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+      <div class="max-w-5xl mx-auto text-center relative z-20">
+        <!-- Live Pill -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/80 border border-red-500/60 text-red-300 text-xs font-black tracking-wider mb-6 shadow-lg shadow-red-950/80 backdrop-blur-md">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-ping"></span>
+          <span>LIVE GEOSPATIAL EMERGENCY PLATFORM • PRESENTATION READY</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-2 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+          AGNIRAKSHAK AI
+        </h1>
+        <div class="text-xl sm:text-3xl font-black tracking-widest bg-gradient-to-r from-red-500 via-orange-400 to-amber-300 bg-clip-text text-transparent mb-4 drop-shadow-[0_2px_10px_rgba(249,115,22,0.4)]">
+          REPORT. LOCATE. ALERT. RESPOND.
+        </div>
+        <p class="text-base sm:text-lg text-slate-200 max-w-3xl mx-auto mb-10 leading-relaxed font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+          "An AI-powered real-time forest fire emergency platform connecting citizens, forest authorities and response teams through one live geospatial command center."
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <a href="/user.html" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-black text-sm sm:text-base shadow-2xl shadow-red-950/80 hover:brightness-110 active:scale-[0.99] transition flex items-center gap-2 border border-orange-400/60 backdrop-blur-md">
+            <span>📸</span> <span>CITIZEN DASHBOARD (REPORT FIRE)</span>
+          </a>
+          <a href="/admin.html" class="px-7 py-3.5 rounded-xl bg-[#070e1c]/90 border-2 border-red-500/70 hover:border-red-400 hover:bg-red-950/80 text-white font-black text-sm sm:text-base transition flex items-center gap-2 shadow-2xl shadow-black backdrop-blur-md">
+            <span>🚨</span> <span>ADMIN COMMAND CENTER</span>
+          </a>
+          <button id="btnLaunchDemoHero" class="px-5 py-3.5 rounded-xl bg-orange-950/80 border border-orange-500/80 text-orange-300 hover:text-white hover:bg-orange-600 font-bold text-sm sm:text-base transition flex items-center gap-2 shadow-lg backdrop-blur-md">
+            <span>⚡</span> <span>SIMULATE SCENARIOS</span>
+          </button>
+        </div>
+
+        <!-- Telemetry HUD Badges with Glassmorphism -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mt-14">
+          <div class="p-4 rounded-2xl bg-[#070e1c]/80 backdrop-blur-md border border-orange-500/30 text-left hover:border-orange-500/70 transition shadow-2xl shadow-black/80">
+            <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Major Forests Mapped</div>
+            <div class="text-2xl font-black text-white mt-1">9 Reserves</div>
+            <div class="text-[11px] text-emerald-400 mt-0.5 font-semibold">● Bandipur, Kanha, Corbett</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-[#070e1c]/80 backdrop-blur-md border border-orange-500/30 text-left hover:border-cyan-500/70 transition shadow-2xl shadow-black/80">
+            <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">IoT Sensor Nodes</div>
+            <div class="text-2xl font-black text-cyan-400 mt-1">84 Active</div>
+            <div class="text-[11px] text-cyan-400 mt-0.5 font-semibold">LoRaWAN Mesh Telemetry</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-[#070e1c]/80 backdrop-blur-md border border-orange-500/30 text-left hover:border-sky-500/70 transition shadow-2xl shadow-black/80">
+            <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Water Bodies Mapped</div>
+            <div class="text-2xl font-black text-sky-400 mt-1">6 Sources</div>
+            <div class="text-[11px] text-sky-400 mt-0.5 font-semibold">Reservoirs, Rivers, Lakes</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-[#070e1c]/80 backdrop-blur-md border border-orange-500/30 text-left hover:border-amber-500/70 transition shadow-2xl shadow-black/80">
+            <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Avg Response Time</div>
+            <div class="text-2xl font-black text-amber-400 mt-1">16.4 Min</div>
+            <div class="text-[11px] text-amber-400 mt-0.5 font-semibold">Simulated Dispatch Fleet</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE INNOVATION SECTION (Section 27) -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 border-b border-slate-800 bg-[#050a14]">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+          <div class="text-xs font-extrabold uppercase tracking-widest text-orange-400 mb-2">PROJECT CORE INNOVATION</div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">MULTI-SOURCE FIRE INTELLIGENCE</h2>
+          <p class="text-slate-400 mt-3 text-lg font-medium">
+            "Every detected fire becomes a live geospatial incident instead of an isolated report."
+          </p>
+        </div>
+
+        <!-- Visual Architecture Pipeline -->
+        <div class="p-8 rounded-2xl bg-[#0a1426] border border-orange-500/25 shadow-2xl relative overflow-hidden">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            
+            <div class="p-5 rounded-xl bg-[#0d182e] border border-slate-700/80">
+              <div class="text-3xl mb-2">📸</div>
+              <div class="font-black text-white text-base">CITIZEN PHOTO</div>
+              <div class="text-xs text-orange-400 font-bold mt-1">Computer Vision & Explainable AI</div>
+              <p class="text-xs text-slate-400 mt-2">Thermal color segmentation, flame core luminescence, smoke plume dispersion, and false-alarm screening.</p>
+            </div>
+
+            <div class="p-5 rounded-xl bg-[#0d182e] border border-slate-700/80">
+              <div class="text-3xl mb-2">🛰️</div>
+              <div class="font-black text-white text-base">SATELLITE DETECTION</div>
+              <div class="text-xs text-amber-400 font-bold mt-1">MODIS & SNPP-VIIRS Hotspots</div>
+              <p class="text-xs text-slate-400 mt-2">Orbital 375m thermal infrared radiative power anomalies crossed with Forest Survey of India fire risk zones.</p>
+            </div>
+
+            <div class="p-5 rounded-xl bg-[#0d182e] border border-slate-700/80">
+              <div class="text-3xl mb-2">📡</div>
+              <div class="font-black text-white text-base">IOT SENSOR GRID</div>
+              <div class="text-xs text-cyan-400 font-bold mt-1">Environmental Microclimate Nodes</div>
+              <p class="text-xs text-slate-400 mt-2">Continuous telemetry measuring temperature spike (&gt;45°C), low humidity (&lt;20%), and optical smoke index.</p>
+            </div>
+
+          </div>
+
+          <!-- Flow Arrow & Combined Evaluation -->
+          <div class="my-6 flex items-center justify-center">
+            <div class="h-10 w-0.5 bg-gradient-to-b from-slate-600 via-orange-500 to-red-600"></div>
+          </div>
+
+          <div class="p-6 rounded-xl bg-gradient-to-r from-red-950/60 via-orange-950/40 to-amber-950/60 border border-red-600/50 text-center">
+            <div class="text-xs font-black tracking-widest text-red-400 uppercase">SYNTHESIZED EVALUATION</div>
+            <div class="text-xl sm:text-2xl font-black text-white mt-1">
+              AI Verification → Dynamic Risk Score (0–100) → Live Socket.IO Broadcast
+            </div>
+            <div class="mt-4 flex flex-wrap items-center justify-center gap-4 text-xs font-bold">
+              <span class="px-3 py-1 rounded-full bg-red-900/60 text-red-300 border border-red-700/50">🚨 Auto-Zoom Google Map</span>
+              <span class="px-3 py-1 rounded-full bg-orange-900/60 text-orange-300 border border-orange-700/50">🔴 Pulsing Fire Marker</span>
+              <span class="px-3 py-1 rounded-full bg-purple-900/60 text-purple-300 border border-purple-700/50">🚒 Nearest Forest Response Station</span>
+              <span class="px-3 py-1 rounded-full bg-sky-900/60 text-sky-300 border border-sky-700/50">💧 Nearest Water Body & Drafting Route</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHALLENGE REQUIREMENT COVERAGE SECTION (Section 28) -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-[#030712]">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-10">
+          <div class="text-xs font-extrabold uppercase tracking-widest text-emerald-400 mb-2">HACKATHON EVALUATION MATRIX</div>
+          <h2 class="text-3xl font-extrabold text-white">CHALLENGE REQUIREMENT COVERAGE</h2>
+          <p class="text-slate-400 mt-2 text-sm">Full-stack implementation status across all technical criteria:</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Image-based fire detection</div>
+              <div class="text-xs text-slate-400">Python FastAPI + OpenCV & Native Fallback</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">AI confidence score</div>
+              <div class="text-xs text-slate-400">Calibrated 0-100% confidence gauge</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">False-positive handling</div>
+              <div class="text-xs text-slate-400">Screens sunsets, haze & non-fire scenes</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Fire localization</div>
+              <div class="text-xs text-slate-400">GPS coords & reverse geocoding on India map</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Fire severity classification</div>
+              <div class="text-xs text-slate-400">CRITICAL / HIGH / MODERATE / LOW</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Explainable AI rationale</div>
+              <div class="text-xs text-slate-400">Breakdown: Flames, Smoke, Heat, Veg, Haze</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Geospatial visualization</div>
+              <div class="text-xs text-slate-400">Live Google Map with customized markers</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Simulated alert & dispatch</div>
+              <div class="text-xs text-slate-400">Clearly labeled simulation with timeline</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Multiple image testing</div>
+              <div class="text-xs text-slate-400">Wildfire, structural, chemical & non-fire</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Non-fire test case</div>
+              <div class="text-xs text-slate-400">Demonstrates safe classification 97.1%</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Risk threshold trigger</div>
+              <div class="text-xs text-slate-400">Risk &gt;= 75 auto-initiates CRITICAL alert</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50 flex items-start gap-3">
+            <span class="text-emerald-400 text-lg font-bold">✓</span>
+            <div>
+              <div class="text-sm font-bold text-white">Real-time admin alert</div>
+              <div class="text-xs text-slate-400">Instant Socket.IO push without page refresh</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Demo Stepper Modal -->
+  <div id="demoModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0b1528] border-2 border-orange-500/60 rounded-2xl max-w-2xl w-full p-6 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-orange-950 border border-orange-600/60 flex items-center justify-center text-xl">⚡</div>
+          <div>
+            <h3 class="text-lg font-black text-white tracking-wide">FORESTGUARD AI LIVE SHOWCASE</h3>
+            <p class="text-xs text-slate-400">Interactive Emergency Lifecycle & Real-Time Geospatial Simulator</p>
+          </div>
+        </div>
+        <button id="btnCloseDemoModal" class="text-slate-400 hover:text-white text-2xl font-bold leading-none px-2">✕</button>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="flex border-b border-slate-800 shrink-0 mb-4 text-xs font-black">
+        <button id="tabBtnStepper" class="flex-1 py-2.5 border-b-2 border-orange-500 text-orange-400 bg-orange-950/20 transition flex items-center justify-center gap-2">
+          <span>🚀</span> <span>10-STEP CLOSED-LOOP TOUR</span>
+        </button>
+        <button id="tabBtnPresets" class="flex-1 py-2.5 border-b-2 border-transparent text-slate-400 hover:text-white transition flex items-center justify-center gap-2">
+          <span>⚡</span> <span>1-CLICK PRESET SCENARIOS</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: Guided 10-Step Stepper -->
+      <div id="tabContentStepper" class="flex-1 overflow-y-auto space-y-4 pr-1">
+        
+        <!-- Controls & Status Bar -->
+        <div class="p-3.5 rounded-xl bg-[#070e1c] border border-slate-800 flex items-center justify-between">
+          <div>
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">TOUR STATUS</span>
+            <span id="stepperStatusText" class="text-xs font-black text-orange-400">Ready to start automated walkthrough</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnStartTour" class="px-4 py-2 rounded-xl bg-gradient-to-r from-orange-600 to-red-600 text-white text-xs font-black tracking-wider uppercase hover:brightness-110 shadow-lg shadow-orange-950 transition flex items-center gap-1.5">
+              <span>▶</span> <span>START AUTO-TOUR</span>
+            </button>
+            <button id="btnNextStep" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition">
+              Step ❯
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="space-y-1">
+          <div class="flex justify-between text-[11px] font-mono text-slate-400">
+            <span>Progress: <b id="stepperStepCount" class="text-white">0 / 10</b></span>
+            <span>Completed: <b id="stepperPct" class="text-orange-400">0%</b></span>
+          </div>
+          <div class="w-full h-2 rounded-full bg-slate-900 border border-slate-800 overflow-hidden">
+            <div id="stepperProgressBar" class="h-full bg-gradient-to-r from-orange-500 to-red-500 transition-all duration-500" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- 10 Step Cards -->
+        <div class="space-y-2 text-xs font-sans" id="stepperCardsContainer">
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="1">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">01.</span> 📸 Citizen Photo & Location Pin</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Citizen reports fire at Bandipur Tiger Reserve (11.6643, 76.6250) with ground smoke evidence.</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="2">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">02.</span> 🧠 AI Vision Engine Analysis</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Deep computer vision segments flames (95%) and smoke (92%) with 94.6% confidence; marks CRITICAL severity.</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="3">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">03.</span> ⚡ Multi-Source Satellite & IoT Fusion</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Cross-references SNPP-VIIRS 375m thermal infrared anomaly + IoT temperature spike. Risk: 96/100.</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="4">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">04.</span> 🚨 Real-Time Socket.IO Alert Push</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Instant push to Admin Command Center without page refresh; audio siren synth triggered.</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="5">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">05.</span> 🗺️ Google Map Auto-Zoom & Impact Radii</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Live Map auto-zooms to ground zero; renders pulsing red marker with 500m, 1km, 5km concentric circles.</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="6">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">06.</span> 🚒 Geospatial Response Fleet Ranking</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Ranks nearest available units: Bandipur Rapid Response Unit HQ (8.4 km, ETA 16 min, 3 tenders, 2 drones).</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="7">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">07.</span> 💧 Water Source Drafting Navigation</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Kabini Reservoir identified at 14.2 km; high-volume aerial drafting route plotted.</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="8">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">08.</span> 🛡️ Admin Verification & Unit Turnout</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Admin verifies incident (preventing fake alert) and issues simulated emergency turnout order.</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="9">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">09.</span> 🚑 Response Vehicle Live GPS Transit</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Station terminal accepts mission; vehicle icon animates along road route streaming real-time ETA countdown.</p>
+          </div>
+
+          <div class="step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all" data-step="10">
+            <div class="flex items-center justify-between font-bold text-white">
+              <span class="flex items-center gap-2"><span class="step-num text-orange-400 font-mono">10.</span> 🔒 Ground Containment & Incident Closed</span>
+              <span class="step-badge text-[10px] text-slate-500">PENDING</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-1">Team arrives on-site, suppression sprays foam barrier, fire contained, and incident marked RESOLVED.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tab 2: 1-Click Fast Presets -->
+      <div id="tabContentPresets" class="hidden flex-1 overflow-y-auto space-y-3 pr-1">
+        <button class="btn-scenario w-full text-left p-4 rounded-xl bg-[#070e1c] hover:bg-[#13223f] border border-red-500/40 transition" data-scenario="1">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-black text-red-400">SCENARIO 1: MULTI-SOURCE FIRE (Bandipur)</span>
+            <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-red-950 text-red-300 border border-red-600">CRITICAL</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1">Citizen photo (92%) + Satellite SNPP-VIIRS (89%) + IoT Sensor (94%). Combined Risk: 96/100.</p>
+        </button>
+
+        <button class="btn-scenario w-full text-left p-4 rounded-xl bg-[#070e1c] hover:bg-[#13223f] border border-yellow-500/40 transition" data-scenario="2">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-black text-yellow-400">SCENARIO 2: FALSE POSITIVE (Bannerghatta)</span>
+            <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-yellow-950 text-yellow-300 border border-yellow-600">VERIFY</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1">Citizen sunset photo + No satellite thermal anomaly + Normal sensors. Risk: 42/100.</p>
+        </button>
+
+        <button class="btn-scenario w-full text-left p-4 rounded-xl bg-[#070e1c] hover:bg-[#13223f] border border-orange-500/40 transition" data-scenario="3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-black text-orange-400">SCENARIO 3: EARLY WARNING (Kanha Core)</span>
+            <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-orange-950 text-orange-300 border border-orange-600">PRE-FIRE</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-1">IoT sensor spike: Temp 48.5°C + Humidity 18% + Smoke 82%. Automated early warning alert.</p>
+        </button>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between shrink-0">
+        <span class="text-[11px] text-slate-400 font-mono">SIMULATION ENGINE: READY</span>
+        <a href="/admin.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white text-xs font-black hover:brightness-110 shadow-lg shadow-red-950 transition">
+          <span>Open Live Command Center</span> <span>→</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 bg-[#02050c] py-6 px-4 text-center text-xs text-slate-500">
+    FORESTGUARD AI &copy; 2026. Live Geospatial Forest Fire Early Warning Prototype. Emergency services simulated for evaluation.
+  </footer>
+
+  <script>
+    const modal = document.getElementById('demoModal');
+    const btnHero = document.getElementById('btnLaunchDemoHero');
+    const btnClose = document.getElementById('btnCloseDemoModal');
+
+    const tabBtnStepper = document.getElementById('tabBtnStepper');
+    const tabBtnPresets = document.getElementById('tabBtnPresets');
+    const tabContentStepper = document.getElementById('tabContentStepper');
+    const tabContentPresets = document.getElementById('tabContentPresets');
+
+    if (btnHero) btnHero.addEventListener('click', () => modal.classList.remove('hidden'));
+    if (btnClose) btnClose.addEventListener('click', () => modal.classList.add('hidden'));
+
+    // Tab Switch
+    if (tabBtnStepper && tabBtnPresets) {
+      tabBtnStepper.addEventListener('click', () => {
+        tabBtnStepper.className = 'flex-1 py-2.5 border-b-2 border-orange-500 text-orange-400 bg-orange-950/20 transition flex items-center justify-center gap-2';
+        tabBtnPresets.className = 'flex-1 py-2.5 border-b-2 border-transparent text-slate-400 hover:text-white transition flex items-center justify-center gap-2';
+        tabContentStepper.classList.remove('hidden');
+        tabContentPresets.classList.add('hidden');
+      });
+
+      tabBtnPresets.addEventListener('click', () => {
+        tabBtnPresets.className = 'flex-1 py-2.5 border-b-2 border-orange-500 text-orange-400 bg-orange-950/20 transition flex items-center justify-center gap-2';
+        tabBtnStepper.className = 'flex-1 py-2.5 border-b-2 border-transparent text-slate-400 hover:text-white transition flex items-center justify-center gap-2';
+        tabContentPresets.classList.remove('hidden');
+        tabContentStepper.classList.add('hidden');
+      });
+    }
+
+    // 1-Click Fast Scenarios
+    document.querySelectorAll('.btn-scenario').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.scenario;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="text-xs font-bold text-orange-400">Triggering live scenario...</span>';
+        try {
+          const res = await fetch(`/api/demo/scenario/${id}`, { method: 'POST' });
+          const data = await res.json();
+          window.location.href = '/admin.html';
+        } catch (e) {
+          alert('Error executing scenario: ' + e.message);
+          btn.innerHTML = originalText;
+        }
+      });
+    });
+
+    // 10-Step Automated Guided Walkthrough Engine
+    let currentStep = 0;
+    let tourTimer = null;
+    let tourIncidentId = null;
+
+    const btnStartTour = document.getElementById('btnStartTour');
+    const btnNextStep = document.getElementById('btnNextStep');
+    const progressBar = document.getElementById('stepperProgressBar');
+    const stepCountEl = document.getElementById('stepperStepCount');
+    const pctEl = document.getElementById('stepperPct');
+    const statusText = document.getElementById('stepperStatusText');
+    const cards = document.querySelectorAll('.step-card');
+
+    async function executeStep(step) {
+      if (step < 1 || step > 10) return;
+      currentStep = step;
+
+      // Update progress bar
+      const pct = Math.round((step / 10) * 100);
+      progressBar.style.width = `${pct}%`;
+      stepCountEl.textContent = `${step} / 10`;
+      pctEl.textContent = `${pct}%`;
+
+      // Update card styles
+      cards.forEach(card => {
+        const cardStep = parseInt(card.dataset.step);
+        const badge = card.querySelector('.step-badge');
+        if (cardStep < step) {
+          card.className = 'step-card p-3 rounded-xl border border-emerald-800 bg-[#06151f] transition-all opacity-85';
+          if (badge) {
+            badge.textContent = 'COMPLETED ✓';
+            badge.className = 'step-badge text-[10px] font-bold text-emerald-400';
+          }
+        } else if (cardStep === step) {
+          card.className = 'step-card p-3 rounded-xl border-2 border-orange-500 bg-[#13223f] shadow-lg shadow-orange-950/60 scale-[1.01] transition-all';
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          if (badge) {
+            badge.textContent = 'ACTIVE NOW ⚡';
+            badge.className = 'step-badge text-[10px] font-black text-orange-400 animate-pulse';
+          }
+        } else {
+          card.className = 'step-card p-3 rounded-xl border border-slate-800 bg-[#070e1c] transition-all opacity-50';
+          if (badge) {
+            badge.textContent = 'PENDING';
+            badge.className = 'step-badge text-[10px] text-slate-500';
+          }
+        }
+      });
+
+      // API calls linked to steps
+      try {
+        if (step === 1) {
+          statusText.textContent = 'Step 1: Submitting citizen report at Bandipur Forest...';
+          const res = await fetch('/api/incidents', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              latitude: 11.6643,
+              longitude: 76.6250,
+              forestName: 'Bandipur Tiger Reserve',
+              detectionMethod: 'Image',
+              description: 'Citizen captured canopy smoke near Moyar gorge.',
+              reporterName: 'Forest Warden Arjun',
+              reporterPhone: '+91-98765-01234'
+            })
+          });
+          const data = await res.json();
+          if (data.incident) tourIncidentId = data.incident.incidentId;
+        } else if (step === 8 && tourIncidentId) {
+          statusText.textContent = 'Step 8: Admin Authority verifying and dispatching team...';
+          await fetch(`/api/incidents/${tourIncidentId}/verify`, { method: 'POST' });
+          await fetch(`/api/incidents/${tourIncidentId}/dispatch`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ teamId: 'STA-KA-01', teamName: 'Bandipur Forest Rapid Response Unit', etaMinutes: 16 })
+          });
+        } else if (step === 9 && tourIncidentId) {
+          statusText.textContent = 'Step 9: Response team accepting mission & en route...';
+          await fetch(`/api/incidents/${tourIncidentId}/accept-mission`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ teamId: 'STA-KA-01' }) });
+          await fetch(`/api/incidents/${tourIncidentId}/start-travel`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ teamId: 'STA-KA-01' }) });
+        } else if (step === 10 && tourIncidentId) {
+          statusText.textContent = 'Step 10: Arrived at site, containment complete & incident resolved!';
+          await fetch(`/api/incidents/${tourIncidentId}/arrive-site`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ teamId: 'STA-KA-01' }) });
+          await fetch(`/api/incidents/${tourIncidentId}/contain`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ teamId: 'STA-KA-01' }) });
+          await fetch(`/api/incidents/${tourIncidentId}/resolve`, { method: 'POST' });
+        }
+      } catch (e) {
+        console.warn('Stepper API step notice:', e.message);
+      }
+    }
+
+    if (btnStartTour) {
+      btnStartTour.addEventListener('click', () => {
+        if (tourTimer) {
+          clearInterval(tourTimer);
+          tourTimer = null;
+          btnStartTour.innerHTML = '<span>▶</span> <span>RESUME AUTO-TOUR</span>';
+          return;
+        }
+
+        btnStartTour.innerHTML = '<span>⏸</span> <span>PAUSE TOUR</span>';
+        currentStep = 0;
+        executeStep(1);
+
+        tourTimer = setInterval(() => {
+          if (currentStep < 10) {
+            executeStep(currentStep + 1);
+          } else {
+            clearInterval(tourTimer);
+            tourTimer = null;
+            btnStartTour.innerHTML = '<span>✓</span> <span>TOUR FINISHED</span>';
+            statusText.textContent = 'Tour complete! Opening Admin Command Center...';
+            setTimeout(() => {
+              window.location.href = '/admin.html';
+            }, 1800);
+          }
+        }, 1600);
+      });
+    }
+
+    if (btnNextStep) {
+      btnNextStep.addEventListener('click', () => {
+        if (currentStep < 10) {
+          executeStep(currentStep + 1);
+        } else {
+          executeStep(1);
+        }
+      });
+    }
+
+    // Live Animated Embers Particle System for Stunning Forest Fire Ambiance
+    (function initHeroEmbers() {
+      const canvas = document.getElementById('heroEmbersCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = canvas.offsetWidth;
+      let height = canvas.height = canvas.offsetHeight;
+
+      window.addEventListener('resize', () => {
+        if (!canvas) return;
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+      });
+
+      const particles = [];
+      const count = 48;
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 2.2 + 0.8,
+          vx: (Math.random() - 0.5) * 0.9,
+          vy: -(Math.random() * 1.5 + 0.6),
+          alpha: Math.random() * 0.8 + 0.2,
+          color: Math.random() > 0.4 ? 'rgba(249, 115, 22, ' : 'rgba(239, 68, 68, '
+        });
+      }
+
+      function renderEmbers() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.globalCompositeOperation = 'lighter';
+
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          p.x += p.vx + Math.sin(p.y * 0.02) * 0.4;
+          p.y += p.vy;
+
+          if (p.y < -10) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + p.alpha + ')';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#f97316';
+          ctx.fill();
+        }
+
+        requestAnimationFrame(renderEmbers);
+      }
+
+      renderEmbers();
+    // 3-Second Cinematic Flash Card Countdown & Fade-out Controller
+    (function initFlashCardController() {
+      const flash = document.getElementById('introFlashCard');
+      const timerText = document.getElementById('flashCardTimer');
+      const bar = document.getElementById('flashCardProgress');
+      const btnSkip = document.getElementById('btnSkipFlashCard');
+      if (!flash) return;
+
+      let timeLeft = 3000;
+      const step = 40;
+      const progressTimer = setInterval(() => {
+        timeLeft -= step;
+        const pct = Math.min(100, Math.round(((3000 - timeLeft) / 3000) * 100));
+        if (bar) bar.style.width = pct + '%';
+        if (timerText) timerText.textContent = Math.max(0, (timeLeft / 1000).toFixed(1)) + 's';
+
+        if (timeLeft <= 0) {
+          clearInterval(progressTimer);
+          dismissFlashCard();
+        }
+      }, step);
+
+      function dismissFlashCard() {
+        clearInterval(progressTimer);
+        if (flash) {
+          flash.classList.add('opacity-0', 'pointer-events-none');
+          setTimeout(() => {
+            flash.style.display = 'none';
+          }, 700);
+        }
+      }
+
+      if (btnSkip) {
+        btnSkip.addEventListener('click', dismissFlashCard);
+      }
+    })();
+  </script>
+</body>
+</html>

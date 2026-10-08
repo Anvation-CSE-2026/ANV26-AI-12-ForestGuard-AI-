@@ -7,15 +7,71 @@
     },
     {
       "source": "/demo",
-      "destination": "/demo.html"
+      "destination": "/public/demo.html"
+    },
+    {
+      "source": "/demo.html",
+      "destination": "/public/demo.html"
     },
     {
       "source": "/user",
-      "destination": "/user.html"
+      "destination": "/public/user.html"
+    },
+    {
+      "source": "/user.html",
+      "destination": "/public/user.html"
     },
     {
       "source": "/admin",
-      "destination": "/admin.html"
+      "destination": "/public/admin.html"
+    },
+    {
+      "source": "/admin.html",
+      "destination": "/public/admin.html"
+    },
+    {
+      "source": "/station",
+      "destination": "/public/station.html"
+    },
+    {
+      "source": "/station.html",
+      "destination": "/public/station.html"
+    },
+    {
+      "source": "/satellite",
+      "destination": "/public/satellite.html"
+    },
+    {
+      "source": "/satellite.html",
+      "destination": "/public/satellite.html"
+    },
+    {
+      "source": "/iot",
+      "destination": "/public/iot.html"
+    },
+    {
+      "source": "/iot.html",
+      "destination": "/public/iot.html"
+    },
+    {
+      "source": "/analytics",
+      "destination": "/public/analytics.html"
+    },
+    {
+      "source": "/analytics.html",
+      "destination": "/public/analytics.html"
+    },
+    {
+      "source": "/",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/index.html",
+      "destination": "/public/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/$1"
     }
   ]
 }
