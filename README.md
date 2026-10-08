@@ -4,9 +4,24 @@
 > **TAGLINE: "Report. Locate. Alert. Respond."**  
 > *"An AI-powered real-time forest fire emergency ecosystem connecting citizens, forest authorities, and response teams through one live geospatial command center."*
 
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Demo-success?logo=vercel&style=for-the-badge)](https://agni-rakshak.vercel.app/demo.html)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Demo-success?logo=vercel&style=for-the-badge)](https://agni-rakshak-three.vercel.app/demo.html)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Suhas--Saur%2FAgniRakshak-181717?logo=github&style=for-the-badge)](https://github.com/Suhas-Saur/AgniRakshak)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+
+---
+
+## 👥 Engineering Team & Project Credentials
+
+> **EXPLORE • INNOVATE • TRANSFORM**  
+> **Project: AI-Based Forest Fire Detection**  
+> **Team Name: VibeCoders 🚀**
+
+| Team Member | Role & Focus | LinkedIn Profile |
+| :--- | :--- | :--- |
+| **Suhas S** | Core AI Architecture, Emergency Coordination Engine & Full-Stack System Design | [**linkedin.com/in/suhas-s-081b84335 ↗**](https://www.linkedin.com/in/suhas-s-081b84335?utm_source=share_via&utm_content=profile&utm_medium=member_android) |
+| **Sanjay V** | Geospatial Intelligence, Water Body Triangulation & Response Station Optimization | [**linkedin.com/in/sanjay-v-20abb13b8 ↗**](https://www.linkedin.com/in/sanjay-v-20abb13b8?utm_source=share_via&utm_content=profile&utm_medium=member_android) |
+| **Shekhar Singh** | Dual-Spectrum YOLOv8 Detection, Drone Telemetry & Optical Vision Verification | **🛡️ Team VibeCoders Core** |
+| **Sachin Gotur** | IoT Sensor Mesh Telemetry, Environmental Threat Modeling & Incident Analytics | **🌲 Team VibeCoders Core** |
 
 ---
 
@@ -15,9 +30,9 @@
 | Environment | Interface / Portal | Direct Live Link | Key Capabilities |
 | :--- | :--- | :--- | :--- |
 | 🔀 **Vercel Cloud** | **Unified Dual Live Demo Hub** | [**Open Dual Split Demo ➔**](https://agni-rakshak-three.vercel.app/demo.html) | Side-by-side synchronized Citizen + Admin view |
-| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Command Center ➔**](https://agni-rakshak-three.vercel.app/admin.html) | Protected auth gate, 🔬 Deep Zoom, 🎯 Default Zoom, dispatch |
-| 👤 **Vercel Cloud** | **Citizen Emergency Dashboard** | [**Open Citizen Reporting Portal ➔**](https://agni-rakshak-three.vercel.app/user.html) | 6 reporting methods, YOLOv8 scoreboard, GPS, hyper-local routes |
-| 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Landing Page ➔**](https://agni-rakshak-three.vercel.app) | 3s flash intro, instant launchpad to Citizen & Admin |
+| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Command Center ➔**](https://agni-rakshak-three.vercel.app/admin.html) | Instant Login, 🔬 Deep Zoom (Zoom 19), 🎯 Default Sector Zoom, fleet dispatch |
+| 👤 **Vercel Cloud** | **Citizen Emergency Dashboard** | [**Open Citizen Reporting Portal ➔**](https://agni-rakshak-three.vercel.app/user.html) | 6 reporting methods, YOLOv8 scoreboard, GPS location search, nearest station & lake routes |
+| 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Landing Page ➔**](https://agni-rakshak-three.vercel.app) | Stunning tactical flash card, colored tree emblem, Team VibeCoders roster |
 | 🚒 **Vercel Cloud** | **Fire Station Turnout Terminal** | [**Open Station Turnout Terminal ➔**](https://agni-rakshak-three.vercel.app/station.html) | Station alert receipt, turnout acceptance & route navigation |
 | 🛰️ **Vercel Cloud** | **Satellite Thermal Radar** | [**Open Satellite Thermal Radar ➔**](https://agni-rakshak-three.vercel.app/satellite.html) | ISRO / MODIS thermal anomaly hotspots & FRP index |
 | 📡 **Vercel Cloud** | **IoT Microclimate Grid** | [**Open IoT Sensor Grid ➔**](https://agni-rakshak-three.vercel.app/iot.html) | Real-time temperature, humidity, and smoke telemetry |
@@ -25,9 +40,9 @@
 | 🐙 **GitHub** | **Source Code Repository** | [**github.com/Suhas-Saur/AgniRakshak**](https://github.com/Suhas-Saur/AgniRakshak) | Full source code, test scenarios, and GIS dataset |
 
 > 💡 **Cloud Mirrors**:
-> - Production URL: [https://agni-rakshak-three.vercel.app/demo.html](https://agni-rakshak-three.vercel.app/demo.html)
-> - Custom Alias: [https://agni-rakshak.vercel.app/demo.html](https://agni-rakshak.vercel.app/demo.html)
-> - Legacy Mirror: [https://agnirakshak.vercel.app/demo.html](https://agnirakshak.vercel.app/demo.html)
+> - Primary Active URL: [https://agni-rakshak-three.vercel.app](https://agni-rakshak-three.vercel.app)
+> - Custom Alias: [https://agni-rakshak.vercel.app](https://agni-rakshak.vercel.app)
+> - Legacy Mirror: [https://agnirakshak.vercel.app](https://agnirakshak.vercel.app)
 
 ---
 
