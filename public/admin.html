@@ -62,9 +62,12 @@
         <span>⚡</span> <span>Demo Scenarios</span>
       </button>
 
-      <!-- Citizen Report Link -->
-      <a href="/report.html" target="_blank" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-xs font-bold text-white shadow-md transition flex items-center gap-1">
-        <span>📸</span> <span class="hidden md:inline">Report a Fire</span>
+      <!-- Citizen Dashboard & Dual Demo Switcher Links -->
+      <a href="/user.html" class="px-3 py-1.5 rounded-lg bg-orange-950/80 hover:bg-orange-850 border border-orange-500/80 text-xs font-black text-orange-400 hover:text-white transition flex items-center gap-1 shadow-sm">
+        <span>👤</span> <span class="hidden sm:inline">Citizen Dashboard</span>
+      </a>
+      <a href="/demo.html" class="px-3 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-850 border border-indigo-500/80 text-xs font-black text-indigo-300 hover:text-white transition flex items-center gap-1 shadow-sm">
+        <span>🔀</span> <span class="hidden sm:inline">Dual Split Demo</span>
       </a>
     </div>
   </header>
@@ -191,8 +194,8 @@
         <!-- Header: Title, Engine Status & Timestamp -->
         <div class="flex items-center justify-between pb-1.5 border-b border-slate-800/80">
           <div class="flex items-center gap-1.5">
-            <span class="text-emerald-400 text-base">📊</span>
-            <span class="text-xs font-black text-white tracking-wide">Detection Result</span>
+            <span class="text-orange-400 text-base">🔥</span>
+            <span class="text-xs font-black text-white tracking-wide uppercase">FIRE & CRITICALITY SCOREBOARD</span>
           </div>
           <div class="flex items-center gap-2">
             <div class="flex items-center gap-1 text-[9px] font-mono font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
@@ -281,7 +284,7 @@
 
           <!-- 2. Risk Score -->
           <div class="p-2 rounded-xl bg-[#040814] border border-red-500/30">
-            <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">⚡ Risk Score</div>
+            <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">⚡ Criticality Level</div>
             <div class="flex items-baseline gap-1 mt-0.5">
               <span id="adminSbMetricRisk" class="text-sm font-black text-red-400 font-mono">96</span>
               <span class="text-[8px] font-mono text-slate-500">/ 100</span>

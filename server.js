@@ -20,7 +20,7 @@ const io = new Server(server, {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8109;
 
 // Dynamic config store (e.g. for Google Maps API Key entered in UI)
 let userConfig = {
@@ -536,14 +536,19 @@ io.on('connection', (socket) => {
   });
 });
 
+// Unified Live Demo Route (Port 8109 Hub)
+app.get(['/demo', '/live-demo'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'demo.html'));
+});
+
 // Start Server
 server.listen(PORT, () => {
   console.log(`================================================================`);
   console.log(`🌲 FORESTGUARD AI - Live AI Forest Fire Detection & Mapping System`);
   console.log(`🚀 Server listening on: http://localhost:${PORT}`);
-  console.log(`🌐 Landing Page:            http://localhost:${PORT}/index.html`);
+  console.log(`🔀 Unified Live Demo Hub:   http://localhost:${PORT}/demo.html`);
   console.log(`👤 User/Citizen Dashboard:  http://localhost:${PORT}/user.html`);
   console.log(`🚨 Admin Command Center:    http://localhost:${PORT}/admin.html`);
-  console.log(`🚒 Fire Station Dashboard:  http://localhost:${PORT}/station.html`);
+  console.log(`🌐 Landing Page:            http://localhost:${PORT}/index.html`);
   console.log(`================================================================`);
 });

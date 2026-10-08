@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORESTGUARD AI | Dual Live Demo Hub (Port 8109)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/tailwind-custom.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+    .demo-frame {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-slate-100 h-screen flex flex-col">
+
+  <!-- Top Global Demo Control Header -->
+  <header class="h-14 bg-[#070e1c] border-b border-slate-800 px-4 flex items-center justify-between shrink-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl filter drop-shadow-[0_0_8px_#f97316]">🌲🔥</span>
+        <div>
+          <div class="text-sm sm:text-base font-black tracking-wider text-white flex items-center gap-1.5">
+            <span>FORESTGUARD AI</span>
+            <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-orange-950 border border-orange-500/80 text-orange-400 uppercase">
+              PORT 8109 UNIFIED DEMO
+            </span>
+          </div>
+          <div class="text-[10px] text-slate-400 font-mono hidden sm:flex items-center gap-2">
+            <span>ISOLATED ENGINE</span>
+            <span>•</span>
+            <span class="text-emerald-400 font-bold">● SINGLE CANONICAL TEST CASE: BANDIPUR FOREST</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode Switcher Tabs (Split View, Citizen Only, Admin Only) -->
+    <div class="flex items-center bg-[#030712] p-1 rounded-xl border border-slate-800">
+      <button id="btnViewSplit" class="demo-tab-btn px-3 py-1.5 rounded-lg text-xs font-black transition flex items-center gap-1.5 bg-orange-600 text-white shadow-md">
+        <span>🔀</span> <span class="hidden sm:inline">Dual Split-View</span><span class="sm:hidden">Split</span>
+      </button>
+      <button id="btnViewUser" class="demo-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1.5">
+        <span>👤</span> <span class="hidden sm:inline">Citizen Dashboard</span><span class="sm:hidden">Citizen</span>
+      </button>
+      <button id="btnViewAdmin" class="demo-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1.5">
+        <span>🚨</span> <span class="hidden sm:inline">Admin Command</span><span class="sm:hidden">Admin</span>
+      </button>
+    </div>
+
+    <!-- Persona & External Links -->
+    <div class="flex items-center gap-2">
+      <!-- Direct Links -->
+      <a href="/user.html" target="_blank" class="hidden md:flex px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition items-center gap-1" title="Open Citizen Dashboard in new tab">
+        <span>↗ User Tab</span>
+      </a>
+      <a href="/admin.html" target="_blank" class="hidden md:flex px-2.5 py-1 rounded-lg bg-red-950/70 hover:bg-red-900 text-red-300 text-xs font-bold border border-red-800/80 transition items-center gap-1" title="Open Admin Command Center in new tab">
+        <span>↗ Admin Tab</span>
+      </a>
+      <!-- Live Status Badge -->
+      <span class="px-2 py-1 rounded-full bg-emerald-950/80 border border-emerald-600/60 text-emerald-400 font-mono text-[10px] font-bold flex items-center gap-1">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>PORT 8109 LIVE</span>
+      </span>
+    </div>
+  </header>
+
+  <!-- Interactive Workflow Quick Guide Strip -->
+  <div id="demoGuideBanner" class="bg-gradient-to-r from-red-950/90 via-orange-950/90 to-amber-950/90 border-b border-orange-500/40 px-4 py-1.5 text-xs text-slate-200 shrink-0 flex items-center justify-between">
+    <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap">
+      <span class="font-black text-amber-400 flex items-center gap-1 shrink-0">
+        <span>⚡</span> <span>LIVE DEMO WORKFLOW:</span>
+      </span>
+      <span class="text-slate-300 text-[11px]">
+        <b>1.</b> Upload image on <b>Citizen (Left)</b> → 
+        <b>2.</b> Inspect <b>Fire & Criticality Scoreboard</b> → 
+        <b>3.</b> Click <b>SEND FIRE ALERT</b> → 
+        <b>4.</b> Watch <b>Admin (Right)</b> instantly light up with 🚨 live siren, map auto-zoom, and fire dispatch telemetry!
+      </span>
+    </div>
+    <button id="btnDismissGuide" class="text-slate-400 hover:text-white font-bold ml-2 text-xs">✕</button>
+  </div>
+
+  <!-- Main Display Area: Dual Split or Single Screen -->
+  <main id="demoMainContainer" class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-1 bg-[#02050c] p-1 overflow-hidden">
+    
+    <!-- LEFT PANE: User / Citizen Emergency Reporting Dashboard -->
+    <div id="paneCitizen" class="demo-frame flex flex-col bg-[#070e1c] rounded-xl border border-slate-800 overflow-hidden relative">
+      <div class="h-8 bg-[#091122] border-b border-slate-800 px-3 flex items-center justify-between text-xs shrink-0">
+        <div class="flex items-center gap-2 font-black text-orange-400">
+          <span>👤</span> <span>CITIZEN EMERGENCY REPORTING DASHBOARD</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-mono text-slate-400 hidden sm:inline">Upload Photo • GPS • Score Board</span>
+          <a href="/user.html" target="_blank" class="text-slate-400 hover:text-white text-xs font-bold" title="Open full page">↗</a>
+        </div>
+      </div>
+      <iframe id="frameUser" src="/user.html" class="flex-1 w-full h-full border-none"></iframe>
+    </div>
+
+    <!-- RIGHT PANE: Admin Authority Command Center -->
+    <div id="paneAdmin" class="demo-frame flex flex-col bg-[#070e1c] rounded-xl border border-slate-800 overflow-hidden relative">
+      <div class="h-8 bg-[#091122] border-b border-slate-800 px-3 flex items-center justify-between text-xs shrink-0">
+        <div class="flex items-center gap-2 font-black text-red-400">
+          <span>🚨</span> <span>FOREST AUTHORITY COMMAND CENTER (LIVE RADAR)</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] font-mono text-emerald-400 hidden sm:inline">● Socket.IO Connected</span>
+          <a href="/admin.html" target="_blank" class="text-slate-400 hover:text-white text-xs font-bold" title="Open full page">↗</a>
+        </div>
+      </div>
+      <iframe id="frameAdmin" src="/admin.html" class="flex-1 w-full h-full border-none"></iframe>
+    </div>
+
+  </main>
+
+  <script>
+    const btnViewSplit = document.getElementById('btnViewSplit');
+    const btnViewUser = document.getElementById('btnViewUser');
+    const btnViewAdmin = document.getElementById('btnViewAdmin');
+    const container = document.getElementById('demoMainContainer');
+    const paneCitizen = document.getElementById('paneCitizen');
+    const paneAdmin = document.getElementById('paneAdmin');
+    const guideBanner = document.getElementById('demoGuideBanner');
+    const btnDismissGuide = document.getElementById('btnDismissGuide');
+
+    if (btnDismissGuide) {
+      btnDismissGuide.addEventListener('click', () => {
+        guideBanner.style.display = 'none';
+      });
+    }
+
+    function setActiveTab(btn) {
+      [btnViewSplit, btnViewUser, btnViewAdmin].forEach(b => {
+        b.className = 'demo-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1.5';
+      });
+      btn.className = 'demo-tab-btn px-3 py-1.5 rounded-lg text-xs font-black transition flex items-center gap-1.5 bg-orange-600 text-white shadow-md';
+    }
+
+    // Split Mode
+    btnViewSplit.addEventListener('click', () => {
+      setActiveTab(btnViewSplit);
+      container.className = 'flex-1 grid grid-cols-1 md:grid-cols-2 gap-1 bg-[#02050c] p-1 overflow-hidden';
+      paneCitizen.classList.remove('hidden');
+      paneAdmin.classList.remove('hidden');
+    });
+
+    // Citizen Only Mode
+    btnViewUser.addEventListener('click', () => {
+      setActiveTab(btnViewUser);
+      container.className = 'flex-1 flex flex-col bg-[#02050c] p-1 overflow-hidden';
+      paneCitizen.classList.remove('hidden');
+      paneAdmin.classList.add('hidden');
+    });
+
+    // Admin Only Mode
+    btnViewAdmin.addEventListener('click', () => {
+      setActiveTab(btnViewAdmin);
+      container.className = 'flex-1 flex flex-col bg-[#02050c] p-1 overflow-hidden';
+      paneCitizen.classList.add('hidden');
+      paneAdmin.classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
