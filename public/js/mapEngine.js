@@ -160,20 +160,29 @@ class ForestGuardMapEngine {
       attribution: '&copy; CartoDB & OSM'
     });
 
-    // Small Button on map to restore default zoom (Fire + Connected Stations)
+    // Small Buttons on Leaflet tool rack for Default Sector Zoom (🎯) & Deep Zoom (🔬)
     try {
-      const zoomRestoreControl = L.control({ position: 'topleft' });
-      zoomRestoreControl.onAdd = () => {
+      const zoomControlRack = L.control({ position: 'topleft' });
+      zoomControlRack.onAdd = () => {
         const div = L.DomUtil.create('div', 'leaflet-bar');
-        div.innerHTML = `<a href="javascript:void(0)" title="🎯 Restore Default Sector Zoom (Fire + Connected Stations)" style="display:flex;align-items:center;justify-content:center;font-size:15px;background:#070e1c;color:#f97316;text-decoration:none;width:30px;height:30px;cursor:pointer;" onmouseover="this.style.background='#ea580c';this.style.color='#fff'" onmouseout="this.style.background='#070e1c';this.style.color='#f97316'">🎯</a>`;
-        div.onclick = (e) => {
+        div.innerHTML = `
+          <a href="javascript:void(0)" title="🎯 Sector Default Zoom (Fire + Stations + Waterbodies)" style="display:flex;align-items:center;justify-content:center;font-size:14px;background:#070e1c;color:#f97316;text-decoration:none;width:30px;height:30px;cursor:pointer;border-bottom:1px solid #1e293b;" onmouseover="this.style.background='#ea580c';this.style.color='#fff'" onmouseout="this.style.background='#070e1c';this.style.color='#f97316'">🎯</a>
+          <a href="javascript:void(0)" title="🔬 Deep Zoom In (Tree & Building Level - Zoom 19)" style="display:flex;align-items:center;justify-content:center;font-size:14px;background:#070e1c;color:#38bdf8;text-decoration:none;width:30px;height:30px;cursor:pointer;" onmouseover="this.style.background='#0284c7';this.style.color='#fff'" onmouseout="this.style.background='#070e1c';this.style.color='#38bdf8'">🔬</a>
+        `;
+        const links = div.querySelectorAll('a');
+        links[0].onclick = (e) => {
           e.preventDefault();
           e.stopPropagation();
           this.restoreSectorDefaultZoom();
         };
+        links[1].onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.deepZoomOnIncident(19);
+        };
         return div;
       };
-      zoomRestoreControl.addTo(this.map);
+      zoomControlRack.addTo(this.map);
     } catch(e) {}
 
     // Invalidate map size after DOM layout settles to prevent tile overlap / grey corners
@@ -288,6 +297,24 @@ class ForestGuardMapEngine {
         const ll = firstFire.getLatLng();
         this.centerOn(ll.lat, ll.lng, 15);
       }
+    }
+  }
+
+  // --- 1-Click Deep Zoom directly into Ground Zero (Tree & Building Level - Zoom 19) ---
+  deepZoomOnIncident(zoomLevel = 19) {
+    if (!this.map) return;
+    let target = null;
+    if (this.currentSectorBounds && this.currentSectorBounds.length > 0) {
+      target = this.currentSectorBounds[0]; // Ground Zero fire point is always points[0]
+    } else if (this.markers.fires && this.markers.fires.length > 0) {
+      const firstFire = this.markers.fires[0];
+      if (firstFire && firstFire.getLatLng) {
+        const ll = firstFire.getLatLng();
+        target = [ll.lat, ll.lng];
+      }
+    }
+    if (target) {
+      this.centerOn(target[0], target[1], zoomLevel);
     }
   }
 

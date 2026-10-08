@@ -127,44 +127,72 @@ function initCentralMap() {
     updateLocationReadouts(e.latlng.lat, e.latlng.lng);
   });
 
-  // Add Leaflet Control Button for Default Sector Zoom
+  // Add Leaflet Control Button for Default Sector Zoom (🎯) & Deep Zoom (🔬)
   try {
-    const UserDefaultZoomControl = L.Control.extend({
+    const UserZoomControlRack = L.Control.extend({
       options: { position: 'topleft' },
       onAdd: function() {
         const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-        const button = L.DomUtil.create('a', '', container);
-        button.innerHTML = '🎯';
-        button.href = '#';
-        button.title = 'Restore Default Zoom (Fire Sector & Stations)';
-        button.setAttribute('role', 'button');
-        button.style.fontSize = '14px';
-        button.style.lineHeight = '30px';
-        button.style.textAlign = 'center';
-        button.style.display = 'block';
-        button.style.width = '30px';
-        button.style.height = '30px';
-        button.style.backgroundColor = '#070e1c';
-        button.style.color = '#f97316';
-        button.style.cursor = 'pointer';
+        const bDefault = L.DomUtil.create('a', '', container);
+        bDefault.innerHTML = '🎯';
+        bDefault.href = '#';
+        bDefault.title = 'Restore Default Zoom (Fire Sector & Stations)';
+        bDefault.setAttribute('role', 'button');
+        bDefault.style.fontSize = '14px';
+        bDefault.style.lineHeight = '30px';
+        bDefault.style.textAlign = 'center';
+        bDefault.style.display = 'block';
+        bDefault.style.width = '30px';
+        bDefault.style.height = '30px';
+        bDefault.style.backgroundColor = '#070e1c';
+        bDefault.style.color = '#f97316';
+        bDefault.style.cursor = 'pointer';
+        bDefault.style.borderBottom = '1px solid #1e293b';
 
-        L.DomEvent.disableClickPropagation(button);
-        L.DomEvent.on(button, 'click', function(e) {
+        L.DomEvent.disableClickPropagation(bDefault);
+        L.DomEvent.on(bDefault, 'click', function(e) {
           L.DomEvent.preventDefault(e);
           restoreUserDefaultZoom();
+        });
+
+        const bDeep = L.DomUtil.create('a', '', container);
+        bDeep.innerHTML = '🔬';
+        bDeep.href = '#';
+        bDeep.title = 'Deep Zoom In (Tree & Building Level - Zoom 19)';
+        bDeep.setAttribute('role', 'button');
+        bDeep.style.fontSize = '14px';
+        bDeep.style.lineHeight = '30px';
+        bDeep.style.textAlign = 'center';
+        bDeep.style.display = 'block';
+        bDeep.style.width = '30px';
+        bDeep.style.height = '30px';
+        bDeep.style.backgroundColor = '#070e1c';
+        bDeep.style.color = '#38bdf8';
+        bDeep.style.cursor = 'pointer';
+
+        L.DomEvent.disableClickPropagation(bDeep);
+        L.DomEvent.on(bDeep, 'click', function(e) {
+          L.DomEvent.preventDefault(e);
+          deepZoomUserMap(19);
         });
 
         return container;
       }
     });
-    new UserDefaultZoomControl().addTo(userMap);
+    new UserZoomControlRack().addTo(userMap);
   } catch (e) {}
 
-  // Wire Top Card Button for Default Zoom
+  // Wire Top Card Buttons for Default Zoom & Deep Zoom
   const btnUserRestore = document.getElementById('btnUserRestoreDefaultZoom');
   if (btnUserRestore) {
     btnUserRestore.addEventListener('click', () => {
       restoreUserDefaultZoom();
+    });
+  }
+  const btnUserDeep = document.getElementById('btnUserDeepZoom');
+  if (btnUserDeep) {
+    btnUserDeep.addEventListener('click', () => {
+      deepZoomUserMap(19);
     });
   }
 
@@ -196,6 +224,15 @@ function restoreUserDefaultZoom() {
     });
   } else if (currentCoords) {
     userMap.setView([currentCoords.lat, currentCoords.lng], 14, { animate: true });
+  }
+}
+
+function deepZoomUserMap(zoomLevel = 19) {
+  if (!userMap) return;
+  const lat = currentCoords ? currentCoords.lat : (marker ? marker.getLatLng().lat : null);
+  const lng = currentCoords ? currentCoords.lng : (marker ? marker.getLatLng().lng : null);
+  if (lat != null && lng != null) {
+    userMap.flyTo([lat, lng], zoomLevel, { duration: 1.2 });
   }
 }
 

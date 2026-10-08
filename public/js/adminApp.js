@@ -1376,6 +1376,23 @@ function closeAdminModal(modalEl) {
     });
   }
 
+  // Deep Zoom In Button (View each building, tree, and bush clearly at Ground Zero - Zoom 19)
+  const handleDeepZoom = () => {
+    if (window.forestMapEngine && window.forestMapEngine.deepZoomOnIncident) {
+      if (activeIncident && activeIncident.latitude !== undefined && activeIncident.longitude !== undefined) {
+        window.forestMapEngine.centerOn(activeIncident.latitude, activeIncident.longitude, 19);
+      } else {
+        window.forestMapEngine.deepZoomOnIncident(19);
+      }
+      showToast('🔬 Deep Zoom In: Ground Zero Building, Tree & Bush Level (Zoom 19)', 'cyan');
+    }
+  };
+
+  const btnDeepZoom = document.getElementById('btnAdminDeepZoom');
+  if (btnDeepZoom) btnDeepZoom.addEventListener('click', handleDeepZoom);
+  const btnDeepZoomTop = document.getElementById('btnAdminDeepZoomTop');
+  if (btnDeepZoomTop) btnDeepZoomTop.addEventListener('click', handleDeepZoom);
+
   // Layer Switchers
   document.querySelectorAll('.btn-map-toggle').forEach(btn => {
     btn.addEventListener('click', () => {

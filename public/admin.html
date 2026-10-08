@@ -138,8 +138,13 @@
         </div>
 
         <!-- Small Button to Restore Default Zoom (Fire + Connected Stations) -->
-        <button id="btnAdminRestoreDefaultZoom" type="button" class="px-2.5 py-1 rounded-lg bg-[#070e1c]/95 hover:bg-orange-600 border border-orange-500/80 text-orange-300 hover:text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md" title="Restore default zoom connecting fire area and nearby fire stations">
+        <button id="btnAdminRestoreDefaultZoom" type="button" class="px-2.5 py-1 rounded-lg bg-[#070e1c]/95 hover:bg-orange-600 border border-orange-500/80 text-orange-300 hover:text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md" title="Restore default sector zoom (Fire + Station + Waterbodies)">
           <span>🎯</span> <span class="hidden sm:inline">Default Zoom</span>
+        </button>
+
+        <!-- Deep Zoom In Button (View each building, tree, and bush deeply at Zoom 19) -->
+        <button id="btnAdminDeepZoom" type="button" class="px-2.5 py-1 rounded-lg bg-[#070e1c]/95 hover:bg-sky-600 border border-sky-400/80 text-sky-300 hover:text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md active:scale-95" title="Deep Zoom In: View each building, tree, or bush clearly at Ground Zero (Zoom 19)">
+          <span>🔬</span> <span class="hidden sm:inline">Deep Zoom (Tree/Building)</span>
         </button>
         
         <!-- Tile Layer Switchers -->
@@ -196,12 +201,13 @@
         </div>
       </div>
 
-      <!-- Floating Top-Right Search & Station Status Card (Image 4) -->
+      <!-- Floating Top-Right Controls & Station Status Card -->
       <div class="absolute top-3 right-3 z-30 flex flex-col items-end gap-2 pointer-events-auto">
-        <div class="relative w-60 sm:w-72">
-          <input id="inputAdminMapSearch" type="text" placeholder="Search (KSSEM, DSATM, Bandipur)..." class="w-full bg-[#070e1c]/95 border border-slate-700/80 rounded-xl pl-3 pr-8 py-1.5 text-xs text-white placeholder-slate-400 outline-none focus:border-orange-500 shadow-2xl backdrop-blur-md" />
-          <button id="btnAdminMapSearch" type="button" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs cursor-pointer">🔍</button>
-        </div>
+        <!-- Deep Zoom In Button (Replaces redundant search box on map) -->
+        <button id="btnAdminDeepZoomTop" type="button" class="px-3.5 py-1.5 rounded-xl bg-[#070e1c]/95 hover:bg-sky-600 border-2 border-sky-400/90 text-sky-300 hover:text-white text-xs font-black shadow-2xl transition flex items-center gap-1.5 cursor-pointer backdrop-blur-md active:scale-95 group" title="Deep Zoom In: View each building, tree, and bush clearly at Ground Zero (Zoom 19)">
+          <span class="text-sm group-hover:scale-125 transition-transform animate-pulse">🔬</span>
+          <span>Deep Zoom (Tree/Building)</span>
+        </button>
         <div id="adminMapStationStatusCard" class="p-2.5 rounded-xl bg-[#070e1c]/95 border border-slate-700/80 text-[11px] shadow-2xl backdrop-blur-md w-60 sm:w-72 space-y-1">
           <div class="font-extrabold text-white uppercase tracking-wider flex items-center justify-between">
             <span>Forest Fire Stations</span>
