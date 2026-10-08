@@ -211,6 +211,8 @@ class ForestGuardMapEngine {
       });
 
       const marker = L.marker([lat, lng], { icon }).addTo(this.map);
+      const tipTitle = incident.title || incident.forestName || 'Fire Incident';
+      marker.bindTooltip(`<b>${tipTitle}</b><br><span style="font-size:11px;color:#94a3b8;">${incident.incidentId} • ${incident.severity || 'CRITICAL'}</span>`, { direction: 'top', offset: [0, -16] });
       marker.on('click', () => {
         if (onClickCallback) onClickCallback(incident);
       });

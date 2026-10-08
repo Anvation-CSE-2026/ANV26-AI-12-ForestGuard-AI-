@@ -151,6 +151,14 @@ function updateLocationReadouts(lat, lng, customForestName = null) {
   document.getElementById('readoutForest').textContent = currentForest;
   document.getElementById('readoutDistrict').textContent = currentDistrict;
   document.getElementById('readoutState').textContent = currentState;
+
+  // Sync Alert Name hint & placeholder with active location
+  const alertHint = document.getElementById('alertNameHint');
+  if (alertHint) alertHint.textContent = `Default: ${currentForest}`;
+  const inputAlert = document.getElementById('inputAlertName');
+  if (inputAlert && !inputAlert.value.trim()) {
+    inputAlert.placeholder = `e.g. ${currentForest} Fire Alert (or leave blank to use location name)`;
+  }
 }
 
 // 3. Reporting Methods (6 Methods)
@@ -273,22 +281,52 @@ function initReportingMethods() {
   const btnSearch = document.getElementById('btnSearchLoc');
   const inputSearch = document.getElementById('inputSearchLocation');
   if (btnSearch && inputSearch) {
-    const doSearch = () => {
-      const q = inputSearch.value.trim().toLowerCase();
+    const doSearch = async () => {
+      const q = inputSearch.value.trim();
       if (!q) return;
-      if (q.includes('corbett') || q.includes('nainital')) {
-        userMap.flyTo([29.5300, 78.7747], 13);
-        userMarker.setLatLng([29.5300, 78.7747]);
-        updateLocationReadouts(29.5300, 78.7747, 'Jim Corbett National Park');
-      } else if (q.includes('kanha') || q.includes('mandla')) {
-        userMap.flyTo([22.3345, 80.6115], 13);
-        userMarker.setLatLng([22.3345, 80.6115]);
-        updateLocationReadouts(22.3345, 80.6115, 'Kanha Tiger Reserve');
-      } else {
-        userMap.flyTo([11.6643, 76.6250], 13);
-        userMarker.setLatLng([11.6643, 76.6250]);
-        updateLocationReadouts(11.6643, 76.6250, 'Bandipur Forest');
+      const ql = q.toLowerCase();
+      btnSearch.textContent = '...';
+      try {
+        if (ql.includes('dsatm') || ql.includes('dayananda sagar')) {
+          userMap.flyTo([12.8258, 77.5158], 14);
+          userMarker.setLatLng([12.8258, 77.5158]);
+          updateLocationReadouts(12.8258, 77.5158, 'DSATM Campus, Kanakapura Road, Bengaluru');
+          return;
+        }
+        if (ql.includes('corbett') || ql.includes('nainital')) {
+          userMap.flyTo([29.5300, 78.7747], 13);
+          userMarker.setLatLng([29.5300, 78.7747]);
+          updateLocationReadouts(29.5300, 78.7747, 'Jim Corbett National Park');
+          return;
+        }
+        if (ql.includes('kanha') || ql.includes('mandla')) {
+          userMap.flyTo([22.3345, 80.6115], 13);
+          userMarker.setLatLng([22.3345, 80.6115]);
+          updateLocationReadouts(22.3345, 80.6115, 'Kanha Tiger Reserve');
+          return;
+        }
+
+        // Try OpenStreetMap Nominatim Search
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`);
+        const data = await res.json();
+        if (data && data.length > 0) {
+          const lat = parseFloat(data[0].lat);
+          const lon = parseFloat(data[0].lon);
+          const parts = (data[0].display_name || '').split(',');
+          const locName = parts.slice(0, 3).join(', ').trim() || q;
+          userMap.flyTo([lat, lon], 14);
+          userMarker.setLatLng([lat, lon]);
+          updateLocationReadouts(lat, lon, locName);
+          return;
+        }
+      } catch (err) {
+        console.warn('Geocoding search warning:', err);
+      } finally {
+        btnSearch.textContent = 'Search';
       }
+
+      // Default fallback
+      updateLocationReadouts(currentCoords.lat, currentCoords.lng, q);
     };
     btnSearch.addEventListener('click', doSearch);
     inputSearch.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
@@ -674,6 +712,11 @@ function initFormAndModals() {
       e.preventDefault();
 
       // Populate Pre-Send Confirmation Modal (Section 5)
+      const enteredAlertName = document.getElementById('inputAlertName')?.value.trim();
+      const finalAlertName = enteredAlertName || currentForest || 'Bandipur Forest Fire Alert';
+      const modalAlertTitleEl = document.getElementById('modalAlertTitleText');
+      if (modalAlertTitleEl) modalAlertTitleEl.textContent = finalAlertName;
+
       document.getElementById('modalLocationText').textContent = `${currentForest} (${currentCoords.lat}, ${currentCoords.lng})`;
       document.getElementById('modalSourceText').textContent = `Method: ${currentDetectionMethod}`;
       document.getElementById('modalConfText').textContent = document.getElementById('txtAiConf')?.textContent || '94%';
@@ -744,6 +787,10 @@ function initFormAndModals() {
         if (selectedFile) formData.append('fireImage', selectedFile);
         if (selectedVideoFile) formData.append('fireVideo', selectedVideoFile);
 
+        const rawAlertName = document.getElementById('inputAlertName')?.value.trim();
+        const alertTitleToSend = rawAlertName || currentForest || 'Bandipur Forest Fire Alert';
+        formData.append('title', alertTitleToSend);
+        formData.append('alertTitle', alertTitleToSend);
         formData.append('latitude', currentCoords.lat);
         formData.append('longitude', currentCoords.lng);
         formData.append('locationName', currentForest);
@@ -809,6 +856,8 @@ function initFormAndModals() {
       // Reset observation form cleanly
       const obs = document.getElementById('descObservation');
       if (obs) obs.value = '';
+      const inAlert = document.getElementById('inputAlertName');
+      if (inAlert) inAlert.value = '';
       selectedFile = null;
       selectedVideoFile = null;
       const fileIn = document.getElementById('fireImageInput');
@@ -830,6 +879,8 @@ function handleSubmissionSuccess(incident) {
   localStorage.setItem('FG_MY_REPORTS', JSON.stringify(myReports));
 
   document.getElementById('succIncidentId').textContent = incident.incidentId;
+  const succAlertTitleEl = document.getElementById('succAlertTitle');
+  if (succAlertTitleEl) succAlertTitleEl.textContent = incident.title || incident.alertTitle || incident.forestName || 'Bandipur Forest Fire Alert';
   document.getElementById('succStatus').textContent = incident.status;
   document.getElementById('succCoords').textContent = `${incident.latitude}, ${incident.longitude} (${incident.forestName})`;
 
@@ -922,6 +973,10 @@ function renderMyReports() {
     else if (inc.status === 'FIRE CONTAINED') statusColor = 'text-emerald-300 bg-emerald-950 border-emerald-600';
     else if (inc.status === 'RESOLVED') statusColor = 'text-emerald-400 bg-emerald-950 border-emerald-500';
 
+    const displayTitle = (inc.title || inc.alertTitle || inc.forestName || 'Bandipur Forest Fire Alert').trim();
+    const displayLocation = inc.forestName || inc.locationName || '';
+    const showSubLoc = displayLocation && displayLocation !== displayTitle;
+
     return `
       <div class="p-4 rounded-2xl bg-[#091122] border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex items-start gap-3">
@@ -929,13 +984,16 @@ function renderMyReports() {
             <img src="${inc.imageUrl || '/sample_images/sample_wildfire.jpg'}" class="w-full h-full object-cover" />
           </div>
           <div>
-            <div class="flex items-center gap-2">
-              <span class="font-mono text-sm font-black text-sky-400">${inc.incidentId}</span>
-              <span class="text-[10px] font-black px-2 py-0.5 rounded border ${statusColor}">${inc.status}</span>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-mono text-sm font-black text-sky-400 whitespace-nowrap">${inc.incidentId}</span>
+              <span class="inline-flex items-center whitespace-nowrap text-[10px] font-black px-2 py-0.5 rounded border ${statusColor}">${inc.status}</span>
             </div>
-            <div class="text-sm font-bold text-white mt-0.5">${inc.forestName}</div>
-            <div class="text-xs text-slate-400 font-mono mt-0.5">
-              Coords: ${inc.latitude}, ${inc.longitude} • AI: <b class="text-orange-400">${inc.aiConfidence}%</b>
+            <div class="text-sm font-bold text-white mt-0.5">${displayTitle}</div>
+            ${showSubLoc ? `<div class="text-xs text-slate-300 flex items-center gap-1 mt-0.5"><span>📍</span><span>${displayLocation}</span></div>` : ''}
+            <div class="text-xs text-slate-400 font-mono mt-0.5 flex items-center flex-wrap gap-x-2">
+              <span class="whitespace-nowrap">Coords: ${inc.latitude}, ${inc.longitude}</span>
+              <span>•</span>
+              <span class="whitespace-nowrap">AI: <b class="text-orange-400">${inc.aiConfidence}%</b></span>
             </div>
           </div>
         </div>

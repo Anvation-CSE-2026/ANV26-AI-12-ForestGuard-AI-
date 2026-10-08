@@ -28,7 +28,10 @@ class IncidentStore {
         const raw = fs.readFileSync(this.dbFilePath, 'utf8');
         const data = JSON.parse(raw);
         if (data.incidents && Array.isArray(data.incidents)) {
-          data.incidents.forEach(inc => this.incidents.set(inc.incidentId, inc));
+          data.incidents.forEach(inc => {
+            if (!inc.title) inc.title = inc.forestName || 'Bandipur Forest Fire Alert';
+            this.incidents.set(inc.incidentId, inc);
+          });
         }
         if (data.teams && Array.isArray(data.teams)) {
           data.teams.forEach(tm => this.teams.set(tm.teamId, tm));
@@ -206,6 +209,7 @@ class IncidentStore {
 
     const initialIncident = {
       incidentId: 'FG-2026-1052',
+      title: 'Bandipur Moyar Gorge Canopy Fire',
       reporterId: 'REP-CITIZEN-884',
       source: 'Citizen Image',
       detectionMethod: 'Image',
@@ -324,6 +328,8 @@ class IncidentStore {
       videoUrl: data.videoUrl || null,
       latitude: data.latitude,
       longitude: data.longitude,
+      title: (data.title || data.alertTitle || data.forestName || forest.name || 'Wildfire Alert').trim(),
+      alertTitle: (data.title || data.alertTitle || data.forestName || forest.name || 'Wildfire Alert').trim(),
       forestName: data.forestName || forest.name,
       state: data.state || forest.state,
       district: data.district || forest.district || '',

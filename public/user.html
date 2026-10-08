@@ -430,6 +430,24 @@
 
             <form id="userReportForm" class="space-y-3.5">
               
+              <!-- Alert Name / Incident Title (Optional with Location Default) -->
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label for="inputAlertName" class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <span>🏷️ Alert Name / Incident Title</span>
+                    <span class="text-[10px] font-normal text-slate-400 lowercase">(optional - defaults to location name)</span>
+                  </label>
+                  <span class="text-[10px] font-mono text-cyan-400 font-bold" id="alertNameHint">Default: Bandipur Forest</span>
+                </div>
+                <input 
+                  type="text" 
+                  id="inputAlertName" 
+                  maxlength="80" 
+                  placeholder="e.g. North Ridge Canopy Fire (or leave blank to use location name)" 
+                  class="w-full bg-[#040814] border border-slate-700 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 rounded-xl px-3 py-2 text-xs text-white outline-none placeholder-slate-500 transition shadow-inner"
+                />
+              </div>
+
               <!-- Description -->
               <div>
                 <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Describe What You Observed</label>
@@ -566,9 +584,13 @@
       </div>
 
       <div class="p-4 rounded-xl bg-[#040814] border border-slate-800 space-y-2 text-xs font-mono">
-        <div class="flex justify-between">
-          <span class="text-slate-400 font-sans">Location:</span>
-          <span id="modalLocationText" class="font-bold text-white font-sans text-right">Bandipur Forest</span>
+        <div class="flex justify-between items-center gap-2">
+          <span class="text-slate-400 font-sans shrink-0">Alert Title:</span>
+          <span id="modalAlertTitleText" class="font-bold text-amber-400 font-sans text-right truncate">Bandipur Forest Fire Alert</span>
+        </div>
+        <div class="flex justify-between items-center gap-2">
+          <span class="text-slate-400 font-sans shrink-0">Location:</span>
+          <span id="modalLocationText" class="font-bold text-white font-sans text-right truncate">Bandipur Forest</span>
         </div>
         <div class="flex justify-between">
           <span class="text-slate-400 font-sans">Source / Method:</span>
@@ -621,17 +643,21 @@
       </div>
 
       <div class="p-4 rounded-xl bg-[#040814] border border-slate-800 text-xs font-mono text-left space-y-2">
-        <div class="flex justify-between">
-          <span class="text-slate-400 font-sans">Incident ID:</span>
-          <span id="succIncidentId" class="font-bold text-sky-400 text-sm">FG-2026-1052</span>
+        <div class="flex justify-between items-center gap-2">
+          <span class="text-slate-400 font-sans shrink-0">Incident ID:</span>
+          <span id="succIncidentId" class="font-bold text-sky-400 text-sm whitespace-nowrap">FG-2026-1052</span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400 font-sans">Status:</span>
-          <span id="succStatus" class="font-bold text-amber-400 px-2 py-0.5 rounded bg-amber-950 font-sans">ADMIN AUTHORITY NOTIFIED</span>
+        <div class="flex justify-between items-center gap-2">
+          <span class="text-slate-400 font-sans shrink-0">Alert Title:</span>
+          <span id="succAlertTitle" class="font-bold text-amber-400 font-sans text-right truncate">Bandipur Forest Fire Alert</span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400 font-sans">Location:</span>
-          <span id="succCoords" class="text-slate-200">11.6643, 76.6250</span>
+        <div class="flex justify-between items-center gap-2">
+          <span class="text-slate-400 font-sans shrink-0">Status:</span>
+          <span id="succStatus" class="font-bold text-amber-400 px-2 py-0.5 rounded bg-amber-950 font-sans whitespace-nowrap">ADMIN AUTHORITY NOTIFIED</span>
+        </div>
+        <div class="flex justify-between items-center gap-2">
+          <span class="text-slate-400 font-sans shrink-0">Location:</span>
+          <span id="succCoords" class="text-slate-200 text-right truncate">11.6643, 76.6250</span>
         </div>
       </div>
 

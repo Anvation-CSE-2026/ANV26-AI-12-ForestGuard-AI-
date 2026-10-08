@@ -255,27 +255,57 @@ function renderIncidentDetailPanel(incident) {
     : incident.source;
   document.getElementById('detailAffectedArea').textContent = `${incident.affectedAreaHectares || 2.4} hectares`;
 
-  // Severity Badge
-  const sevEl = document.getElementById('detailSeverityBadge');
-  if (isPriority) {
-    sevEl.textContent = '🚨 PRIORITY 1';
-    sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-600 border border-red-400 text-white uppercase animate-pulse shadow-md';
-  } else {
-    sevEl.textContent = incident.severity;
-    if (incident.severity === 'CRITICAL') sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300 uppercase';
-    else if (incident.severity === 'HIGH') sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-orange-950 border border-orange-600 text-orange-300 uppercase';
-    else sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-amber-950 border border-amber-600 text-amber-300 uppercase';
+  // Dynamic Alert Name & Location
+  const alertTitleEl = document.getElementById('detailAlertTitle');
+  const alertTitle = (incident.title || incident.alertTitle || incident.forestName || 'Bandipur Forest Fire Alert').trim();
+  if (alertTitleEl) alertTitleEl.textContent = alertTitle;
+
+  const locTextEl = document.getElementById('detailLocationText');
+  const forestEl = document.getElementById('detailForestName');
+  const locationName = incident.forestName || incident.locationName || 'Bandipur Forest Region, Karnataka';
+  if (locTextEl) locTextEl.textContent = locationName;
+  else if (forestEl) forestEl.textContent = locationName;
+
+  // Coordinates
+  const coordsEl = document.getElementById('detailCoords');
+  if (coordsEl && incident.latitude !== undefined && incident.longitude !== undefined) {
+    const lat = typeof incident.latitude === 'number' ? incident.latitude.toFixed(4) : incident.latitude;
+    const lng = typeof incident.longitude === 'number' ? incident.longitude.toFixed(4) : incident.longitude;
+    coordsEl.textContent = `${lat}, ${lng}`;
   }
 
-  // Status Pill
+  // Timestamp
+  const timeEl = document.getElementById('detailTime');
+  if (timeEl) {
+    const t = incident.time || incident.timestamp || (incident.createdAt ? new Date(incident.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }) : new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }));
+    timeEl.textContent = t;
+  }
+
+  // Severity Badge
+  const sevEl = document.getElementById('detailSeverityBadge');
+  const baseSevClass = 'inline-flex items-center whitespace-nowrap shrink-0 text-[10px] font-black px-2 py-0.5 rounded uppercase';
+  if (isPriority) {
+    sevEl.textContent = '🚨 PRIORITY 1';
+    sevEl.className = `${baseSevClass} bg-red-600 border border-red-400 text-white animate-pulse shadow-md`;
+  } else {
+    sevEl.textContent = incident.severity;
+    if (incident.severity === 'CRITICAL') sevEl.className = `${baseSevClass} bg-red-950 border border-red-600 text-red-300`;
+    else if (incident.severity === 'HIGH') sevEl.className = `${baseSevClass} bg-orange-950 border border-orange-600 text-orange-300`;
+    else sevEl.className = `${baseSevClass} bg-amber-950 border border-amber-600 text-amber-300`;
+  }
+
+  // Status Pill: Always guaranteed single-line, unbreakable pill
   const statEl = document.getElementById('detailStatusPill');
   statEl.textContent = incident.status;
-  if (incident.status === 'RESPONSE_DISPATCHED') {
-    statEl.className = 'text-xs font-black px-2.5 py-1 rounded-full bg-emerald-950 border border-emerald-500 text-emerald-300';
-  } else if (incident.status === 'CONTAINED' || incident.status === 'RESOLVED') {
-    statEl.className = 'text-xs font-black px-2.5 py-1 rounded-full bg-blue-950 border border-blue-500 text-blue-300';
+  const baseStatusClass = 'inline-flex items-center justify-center whitespace-nowrap shrink-0 text-xs font-black px-3 py-1.5 rounded-full shadow-sm leading-none tracking-wide uppercase';
+  if (incident.status === 'RESPONSE_DISPATCHED' || incident.status === 'TEAM DISPATCHED' || incident.status === 'TEAM EN ROUTE') {
+    statEl.className = `${baseStatusClass} bg-emerald-950 border border-emerald-500 text-emerald-300`;
+  } else if (incident.status === 'CONTAINED' || incident.status === 'RESOLVED' || incident.status === 'FIRE CONTAINED') {
+    statEl.className = `${baseStatusClass} bg-blue-950 border border-blue-500 text-blue-300`;
+  } else if (incident.status === 'VERIFIED') {
+    statEl.className = `${baseStatusClass} bg-purple-950 border border-purple-500 text-purple-300`;
   } else {
-    statEl.className = 'text-xs font-black px-2.5 py-1 rounded-full bg-amber-950/80 border border-amber-600 text-amber-300';
+    statEl.className = `${baseStatusClass} bg-amber-950/90 border border-amber-600 text-amber-300`;
   }
 
   // Image
@@ -398,24 +428,30 @@ function renderIncidentList() {
     if (inc.severity === 'HIGH') sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-orange-950 text-orange-300 border border-orange-600">HIGH</span>`;
     else if (inc.severity === 'LOW') sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-600">SAFE</span>`;
 
-    const priorityBadge = isPriority ? `<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-red-600 text-white animate-pulse shadow-sm mr-1">🚨 PRIORITY 1</span>` : '';
+    const priorityBadge = isPriority ? `<span class="inline-flex items-center text-[9px] font-black px-1.5 py-0.5 rounded bg-red-600 text-white animate-pulse shadow-sm mr-1 whitespace-nowrap">🚨 PRIORITY 1</span>` : '';
+    const displayTitle = (inc.title || inc.alertTitle || inc.forestName || 'Wildfire Alert').trim();
+    const displayLocation = inc.forestName || inc.locationName || '';
+    const showSubLocation = displayLocation && displayLocation !== displayTitle;
 
     card.innerHTML = `
-      <div class="flex items-center justify-between mb-1">
-        <div class="flex items-center gap-1">
+      <div class="flex items-center justify-between mb-1 gap-2">
+        <div class="flex items-center gap-1 min-w-0">
           ${priorityBadge}
-          <span class="font-mono text-xs font-black text-sky-400">${inc.incidentId}</span>
+          <span class="font-mono text-xs font-black text-sky-400 whitespace-nowrap">${inc.incidentId}</span>
         </div>
-        ${sevBadge}
+        <div class="shrink-0">
+          ${sevBadge}
+        </div>
       </div>
-      <div class="text-xs font-bold text-white truncate">${inc.forestName}</div>
+      <div class="text-xs font-bold text-white truncate" title="${displayTitle}">${displayTitle}</div>
+      ${showSubLocation ? `<div class="text-[10px] text-slate-400 truncate flex items-center gap-1 mt-0.5" title="${displayLocation}"><span class="text-slate-500 shrink-0">📍</span><span class="truncate">${displayLocation}</span></div>` : ''}
       <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2 font-mono">
-        <span>AI: ${inc.aiConfidence}%</span>
-        <span>Risk: ${inc.riskScore}/100</span>
-        <span class="font-bold ${isDispatched ? 'text-emerald-400' : (isPriority ? 'text-red-400 font-black' : 'text-orange-400')}">${inc.status}</span>
+        <span class="whitespace-nowrap">AI: ${inc.aiConfidence}%</span>
+        <span class="whitespace-nowrap">Risk: ${inc.riskScore}/100</span>
+        <span class="font-bold whitespace-nowrap ${isDispatched ? 'text-emerald-400' : (isPriority ? 'text-red-400 font-black' : 'text-orange-400')}">${inc.status}</span>
       </div>
       <div class="flex items-center justify-end pt-1.5 mt-1.5 border-t border-slate-800/80">
-        <button type="button" class="btn-cancel-alert px-2 py-0.5 rounded bg-red-950/70 hover:bg-red-800 border border-red-700/60 text-red-300 hover:text-white text-[10px] font-bold transition flex items-center gap-1 shadow-sm cursor-pointer" data-id="${inc.incidentId}" title="Cancel alert ${inc.incidentId}">
+        <button type="button" class="btn-cancel-alert px-2 py-0.5 rounded bg-red-950/70 hover:bg-red-800 border border-red-700/60 text-red-300 hover:text-white text-[10px] font-bold transition flex items-center gap-1 shadow-sm cursor-pointer whitespace-nowrap" data-id="${inc.incidentId}" title="Cancel alert ${inc.incidentId}">
           <span>✕</span> <span>Cancel Alert</span>
         </button>
       </div>

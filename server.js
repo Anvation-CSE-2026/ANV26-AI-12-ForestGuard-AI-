@@ -62,6 +62,7 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
     const lat = parseFloat(req.body.latitude || req.body.lat) || 11.6643;
     const lng = parseFloat(req.body.longitude || req.body.lng) || 76.6250;
     const locationName = req.body.locationName || req.body.forestName || 'Bandipur Forest';
+    const alertTitle = (req.body.alertTitle || req.body.title || req.body.alertName || '').trim() || locationName;
     const detectionMethod = req.body.detectionMethod || 'Image'; // Image, Camera, Video, Manual, GPS, Search
     const description = req.body.description || 'Forest fire alert reported by citizen.';
     const reporterName = req.body.reporterName || 'Citizen Reporter';
@@ -115,6 +116,8 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
     const newIncident = incidentStore.createIncident({
       latitude: lat,
       longitude: lng,
+      title: alertTitle,
+      alertTitle: alertTitle,
       forestName: locationName,
       detectionMethod,
       source,
@@ -218,7 +221,7 @@ app.get('/api/incidents/:id', (req, res) => {
 
 // 4. Admin Verifies Fire (Prevents Fake Alert)
 app.post('/api/incidents/:id/verify', (req, res) => {
-  const adminUser = req.body.adminUser || 'Forest Authority Admin';
+  const adminUser = (req.body && req.body.adminUser) || 'Forest Authority Admin';
   const updated = incidentStore.verifyIncident(req.params.id, adminUser);
   if (!updated) return res.status(404).json({ success: false, message: 'Incident not found' });
 
@@ -229,7 +232,7 @@ app.post('/api/incidents/:id/verify', (req, res) => {
 
 // 5. Admin Requests More Information
 app.post('/api/incidents/:id/request-info', (req, res) => {
-  const notes = req.body.notes || 'More ground information requested from nearby patrol.';
+  const notes = (req.body && req.body.notes) || 'More ground information requested from nearby patrol.';
   const updated = incidentStore.requestMoreInfo(req.params.id, notes);
   if (!updated) return res.status(404).json({ success: false, message: 'Incident not found' });
 
@@ -322,7 +325,7 @@ app.post('/api/incidents/:id/resolve', (req, res) => {
 
 // 13. Mark False Alarm / False Positive
 app.post(['/api/incidents/:id/false-alarm', '/api/incidents/:id/false-positive'], (req, res) => {
-  const reason = req.body.reason || 'Verified as non-hazardous ambient haze / sunset';
+  const reason = (req.body && req.body.reason) || 'Verified as non-hazardous ambient haze / sunset';
   const updated = incidentStore.markFalseAlarm(req.params.id, reason);
   if (!updated) return res.status(404).json({ success: false, message: 'Incident not found' });
 
@@ -333,7 +336,7 @@ app.post(['/api/incidents/:id/false-alarm', '/api/incidents/:id/false-positive']
 // 13.1 Cancel Alert One at a Time
 app.post('/api/incidents/:id/cancel', (req, res) => {
   const incidentId = req.params.id;
-  const reason = req.body.reason || 'Alert cancelled by operator';
+  const reason = (req.body && req.body.reason) || 'Alert cancelled by operator';
   const updated = incidentStore.cancelIncident(incidentId, reason);
   if (!updated) return res.status(404).json({ success: false, message: 'Incident not found' });
 
