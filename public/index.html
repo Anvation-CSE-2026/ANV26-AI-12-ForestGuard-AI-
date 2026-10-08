@@ -43,64 +43,76 @@
 
   <!-- Hero Section -->
   <main class="flex-1">
-    <section class="relative overflow-hidden pt-12 pb-20 px-4 sm:px-6 lg:px-8 border-b border-slate-800/80 bg-gradient-to-b from-[#070e1c] via-[#050a14] to-[#030712]">
-      <!-- Background Ambient Glow -->
-      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-red-600/15 via-orange-500/10 to-amber-500/10 blur-[120px] pointer-events-none"></div>
+    <section class="relative overflow-hidden pt-16 pb-24 px-4 sm:px-6 lg:px-8 border-b border-orange-950/70 bg-[#030712] min-h-[90vh] flex items-center justify-center">
+      
+      <!-- High-Resolution Cinematic Forest Fire Background Image with Slow Breathing Motion -->
+      <div class="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none transform scale-105 animate-hero-breath" style="background-image: url('/images/forestfire_hero_bg.jpg'); filter: brightness(0.9) contrast(1.15) saturate(1.2);"></div>
 
-      <div class="max-w-5xl mx-auto text-center relative z-10">
+      <!-- Multi-Layer Atmospheric Dark Gradients & Vignette for Maximum Contrast & Readability -->
+      <div class="absolute inset-0 bg-gradient-to-b from-[#070e1c]/85 via-[#030712]/60 to-[#030712] pointer-events-none"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(7,14,28,0.35)_0%,_rgba(3,7,18,0.75)_65%,_#030712_100%)] pointer-events-none"></div>
+
+      <!-- Glowing Fire Horizon & Ember Glow -->
+      <div class="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t from-[#030712] via-[#030712]/80 to-transparent pointer-events-none"></div>
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-gradient-to-r from-red-600/30 via-orange-500/25 to-amber-500/20 blur-[140px] pointer-events-none"></div>
+
+      <!-- Dynamic Floating Embers Canvas -->
+      <canvas id="heroEmbersCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+
+      <div class="max-w-5xl mx-auto text-center relative z-20">
         <!-- Live Pill -->
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-600/40 text-red-400 text-xs font-bold tracking-wider mb-6 animate-pulse">
-          <span class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444]"></span>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/80 border border-red-500/60 text-red-300 text-xs font-black tracking-wider mb-6 shadow-lg shadow-red-950/80 backdrop-blur-md">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-ping"></span>
           <span>LIVE GEOSPATIAL EMERGENCY PLATFORM • HACKATHON EDITION</span>
         </div>
 
-        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-2">
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-2 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
           FORESTGUARD AI
         </h1>
-        <div class="text-xl sm:text-3xl font-black tracking-widest bg-gradient-to-r from-red-500 via-orange-400 to-amber-300 bg-clip-text text-transparent mb-4">
+        <div class="text-xl sm:text-3xl font-black tracking-widest bg-gradient-to-r from-red-500 via-orange-400 to-amber-300 bg-clip-text text-transparent mb-4 drop-shadow-[0_2px_10px_rgba(249,115,22,0.4)]">
           REPORT. LOCATE. ALERT. RESPOND.
         </div>
-        <p class="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-medium">
+        <p class="text-base sm:text-lg text-slate-200 max-w-3xl mx-auto mb-10 leading-relaxed font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
           "An AI-powered real-time forest fire emergency platform connecting citizens, forest authorities and response teams through one live geospatial command center."
         </p>
 
         <!-- CTA Action Buttons (Section 37) -->
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <a href="/demo.html" class="btn-shimmer px-7 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 text-white font-black text-sm sm:text-base shadow-xl shadow-indigo-950/70 hover:brightness-110 active:scale-[0.99] transition flex items-center gap-2">
+          <a href="http://localhost:8109/demo.html" data-switch-to="demo" class="btn-shimmer px-7 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 text-white font-black text-sm sm:text-base shadow-2xl shadow-indigo-950/80 hover:brightness-110 active:scale-[0.99] transition flex items-center gap-2 border border-indigo-400/50 backdrop-blur-md">
             <span>🔀</span> <span>DUAL SPLIT LIVE DEMO (PORT 8109)</span>
           </a>
-          <a href="/user.html" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-black text-sm sm:text-base shadow-xl shadow-red-950/60 hover:brightness-110 active:scale-[0.99] transition flex items-center gap-2">
+          <a href="http://localhost:8109/user.html" data-switch-to="user" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-black text-sm sm:text-base shadow-2xl shadow-red-950/80 hover:brightness-110 active:scale-[0.99] transition flex items-center gap-2 border border-orange-400/60 backdrop-blur-md">
             <span>📸</span> <span>CITIZEN REPORTING</span>
           </a>
-          <a href="/admin.html" class="px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-red-500 text-white font-bold text-sm sm:text-base hover:bg-slate-800 transition flex items-center gap-2">
+          <a href="http://localhost:8109/admin.html?auth=demo" data-switch-to="admin" class="px-6 py-3.5 rounded-xl bg-[#070e1c]/90 border-2 border-red-500/70 hover:border-red-400 hover:bg-red-950/80 text-white font-black text-sm sm:text-base transition flex items-center gap-2 shadow-2xl shadow-black backdrop-blur-md">
             <span>🚨</span> <span>COMMAND CENTER</span>
           </a>
-          <button id="btnLaunchDemoHero" class="px-5 py-3.5 rounded-xl bg-orange-950/60 border border-orange-500/80 text-orange-400 hover:text-white hover:bg-orange-600 font-bold text-sm sm:text-base transition flex items-center gap-2">
+          <button id="btnLaunchDemoHero" class="px-5 py-3.5 rounded-xl bg-orange-950/80 border border-orange-500/80 text-orange-300 hover:text-white hover:bg-orange-600 font-bold text-sm sm:text-base transition flex items-center gap-2 shadow-lg backdrop-blur-md">
             <span>⚡</span> <span>SIMULATE SCENARIOS</span>
           </button>
         </div>
 
-        <!-- Telemetry HUD Badges -->
+        <!-- Telemetry HUD Badges with Glassmorphism -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mt-14">
-          <div class="p-3.5 rounded-xl bg-[#0d182e]/80 border border-slate-800 text-left">
-            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Major Forests Mapped</div>
+          <div class="p-4 rounded-2xl bg-[#070e1c]/80 backdrop-blur-md border border-orange-500/30 text-left hover:border-orange-500/70 transition shadow-2xl shadow-black/80">
+            <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Major Forests Mapped</div>
             <div class="text-2xl font-black text-white mt-1">9 Reserves</div>
-            <div class="text-[11px] text-emerald-400 mt-0.5">● Bandipur, Kanha, Corbett</div>
+            <div class="text-[11px] text-emerald-400 mt-0.5 font-semibold">● Bandipur, Kanha, Corbett</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-[#0d182e]/80 border border-slate-800 text-left">
-            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">IoT Sensor Nodes</div>
+          <div class="p-4 rounded-2xl bg-[#070e1c]/80 backdrop-blur-md border border-orange-500/30 text-left hover:border-cyan-500/70 transition shadow-2xl shadow-black/80">
+            <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">IoT Sensor Nodes</div>
             <div class="text-2xl font-black text-cyan-400 mt-1">84 Active</div>
-            <div class="text-[11px] text-cyan-500 mt-0.5">LoRaWAN Mesh Telemetry</div>
+            <div class="text-[11px] text-cyan-400 mt-0.5 font-semibold">LoRaWAN Mesh Telemetry</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-[#0d182e]/80 border border-slate-800 text-left">
-            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Water Bodies Mapped</div>
+          <div class="p-4 rounded-2xl bg-[#070e1c]/80 backdrop-blur-md border border-orange-500/30 text-left hover:border-sky-500/70 transition shadow-2xl shadow-black/80">
+            <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Water Bodies Mapped</div>
             <div class="text-2xl font-black text-sky-400 mt-1">6 Sources</div>
-            <div class="text-[11px] text-sky-500 mt-0.5">Reservoirs, Rivers, Lakes</div>
+            <div class="text-[11px] text-sky-400 mt-0.5 font-semibold">Reservoirs, Rivers, Lakes</div>
           </div>
-          <div class="p-3.5 rounded-xl bg-[#0d182e]/80 border border-slate-800 text-left">
-            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Avg Response Time</div>
+          <div class="p-4 rounded-2xl bg-[#070e1c]/80 backdrop-blur-md border border-orange-500/30 text-left hover:border-amber-500/70 transition shadow-2xl shadow-black/80">
+            <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Avg Response Time</div>
             <div class="text-2xl font-black text-amber-400 mt-1">16.4 Min</div>
-            <div class="text-[11px] text-amber-500 mt-0.5">Simulated Dispatch Fleet</div>
+            <div class="text-[11px] text-amber-400 mt-0.5 font-semibold">Simulated Dispatch Fleet</div>
           </div>
         </div>
       </div>
@@ -635,6 +647,63 @@
         }
       });
     }
+
+    // Live Animated Embers Particle System for Stunning Forest Fire Ambiance
+    (function initHeroEmbers() {
+      const canvas = document.getElementById('heroEmbersCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = canvas.offsetWidth;
+      let height = canvas.height = canvas.offsetHeight;
+
+      window.addEventListener('resize', () => {
+        if (!canvas) return;
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+      });
+
+      const particles = [];
+      const count = 48;
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 2.2 + 0.8,
+          vx: (Math.random() - 0.5) * 0.9,
+          vy: -(Math.random() * 1.5 + 0.6),
+          alpha: Math.random() * 0.8 + 0.2,
+          color: Math.random() > 0.4 ? 'rgba(249, 115, 22, ' : 'rgba(239, 68, 68, '
+        });
+      }
+
+      function renderEmbers() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.globalCompositeOperation = 'lighter';
+
+        for (let i = 0; i < count; i++) {
+          const p = particles[i];
+          p.x += p.vx + Math.sin(p.y * 0.02) * 0.4;
+          p.y += p.vy;
+
+          if (p.y < -10) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + p.alpha + ')';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#f97316';
+          ctx.fill();
+        }
+
+        requestAnimationFrame(renderEmbers);
+      }
+
+      renderEmbers();
+    })();
   </script>
   <script src="/js/dashboardSwitcher.js"></script>
 </body>
