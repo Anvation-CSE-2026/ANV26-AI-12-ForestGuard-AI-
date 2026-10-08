@@ -58,72 +58,10 @@
   <!-- Main Container -->
   <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
 
-    <!-- Top Section Banner -->
-    <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-[#0d182e] to-[#070e1c] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div>
-        <div class="text-[11px] font-black text-orange-400 uppercase tracking-widest">RAPID FOREST RESPONSE SYSTEM</div>
-        <h1 class="text-xl sm:text-2xl font-black text-white mt-0.5">REPORT A FOREST FIRE</h1>
-        <p class="text-xs text-slate-400 mt-1 italic">"See a fire? Report it immediately. Every alert is pinned directly onto the live authority radar."</p>
-      </div>
-
-      <div class="flex items-center gap-3">
-        <a href="tel:112" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black tracking-wider uppercase transition flex items-center gap-2 shadow-lg shadow-red-950">
-          <span>📞</span> <span>CALL 112 (FIRE)</span>
-        </a>
-        <button id="btnQuickReportNow" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black tracking-wider uppercase transition flex items-center gap-1.5">
-          <span>🚨</span> <span>REPORT FIRE NOW</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- TAB 1: REPORT FIRE (Default Active) -->
+    <!-- TAB 1: REPORT FIRE (Default Active - Upload Box & Map Shifted to Top) -->
     <div id="tabReport" class="tab-content space-y-6">
-      
-      <!-- Section: MULTIPLE REPORTING METHODS (6 Methods as specified in prompt) -->
-      <div class="p-4 rounded-2xl bg-[#091122] border border-slate-800">
-        <div class="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">SELECT REPORTING METHOD</div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-          
-          <button class="method-card p-3 rounded-xl border border-orange-500/80 bg-orange-950/30 text-center transition" data-method="Image">
-            <span class="text-2xl block mb-1">📸</span>
-            <span class="text-xs font-bold text-white block">Upload Image</span>
-            <span class="text-[10px] text-orange-300">JPG, PNG, WEBP</span>
-          </button>
 
-          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="Camera">
-            <span class="text-2xl block mb-1">📷</span>
-            <span class="text-xs font-bold text-white block">Capture Camera</span>
-            <span class="text-[10px] text-slate-400">Live Device Snap</span>
-          </button>
-
-          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="Video">
-            <span class="text-2xl block mb-1">🎥</span>
-            <span class="text-xs font-bold text-white block">Video Upload</span>
-            <span class="text-[10px] text-slate-400">Short Video Clip</span>
-          </button>
-
-          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="Manual">
-            <span class="text-2xl block mb-1">📍</span>
-            <span class="text-xs font-bold text-white block">Manual Map Pin</span>
-            <span class="text-[10px] text-slate-400">Tap Location</span>
-          </button>
-
-          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="GPS">
-            <span class="text-2xl block mb-1">🎯</span>
-            <span class="text-xs font-bold text-white block">Current GPS</span>
-            <span class="text-[10px] text-slate-400">Use Device Loc</span>
-          </button>
-
-          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="Search">
-            <span class="text-2xl block mb-1">🔍</span>
-            <span class="text-xs font-bold text-white block">Search Area</span>
-            <span class="text-[10px] text-slate-400">Forest / Village</span>
-          </button>
-
-        </div>
-      </div>
-
-      <!-- Main Two-Column Reporting Area -->
+      <!-- Main Two-Column Reporting Area (Shifted to Top as Requested) -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         <!-- Left Column: Input Method Panels & Media Preview -->
@@ -548,6 +486,75 @@
 
         </div>
 
+      </div>
+
+      <!-- Section: MULTIPLE REPORTING METHODS (Buttons Kept at Bottom of Webpage) -->
+      <div class="p-4 rounded-2xl bg-[#091122] border border-slate-800 shadow-xl space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="text-xs font-black text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+            <span>⚙️</span> <span>SELECT REPORTING METHOD</span>
+          </div>
+          <span class="text-[10px] text-orange-400 font-bold uppercase tracking-wider">Tap to Switch Input Mode</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          
+          <button class="method-card p-3 rounded-xl border border-orange-500/80 bg-orange-950/30 text-center transition cursor-pointer" data-method="Image">
+            <span class="text-2xl block mb-1">📸</span>
+            <span class="text-xs font-bold text-white block">Upload Image</span>
+            <span class="text-[10px] text-orange-300">JPG, PNG, WEBP</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition cursor-pointer" data-method="Camera">
+            <span class="text-2xl block mb-1">📷</span>
+            <span class="text-xs font-bold text-white block">Capture Camera</span>
+            <span class="text-[10px] text-slate-400">Live Device Snap</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition cursor-pointer" data-method="Video">
+            <span class="text-2xl block mb-1">🎥</span>
+            <span class="text-xs font-bold text-white block">Video Upload</span>
+            <span class="text-[10px] text-slate-400">Short Video Clip</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition cursor-pointer" data-method="Manual">
+            <span class="text-2xl block mb-1">📍</span>
+            <span class="text-xs font-bold text-white block">Manual Map Pin</span>
+            <span class="text-[10px] text-slate-400">Tap Location</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition cursor-pointer" data-method="GPS">
+            <span class="text-2xl block mb-1">🎯</span>
+            <span class="text-xs font-bold text-white block">Current GPS</span>
+            <span class="text-[10px] text-slate-400">Use Device Loc</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition cursor-pointer" data-method="Search">
+            <span class="text-2xl block mb-1">🔍</span>
+            <span class="text-xs font-bold text-white block">Search Area</span>
+            <span class="text-[10px] text-slate-400">Forest / Village</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Rapid Forest Response Notification Banner (Kept at Bottom of Webpage) -->
+      <div class="p-4 rounded-2xl bg-gradient-to-r from-[#0d182e] to-[#070e1c] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+        <div>
+          <div class="text-[11px] font-black text-orange-400 uppercase tracking-widest flex items-center gap-1.5">
+            <span>🚨</span> <span>RAPID FOREST RESPONSE SYSTEM</span>
+          </div>
+          <h2 class="text-lg sm:text-xl font-black text-white mt-0.5">REPORT A FOREST FIRE</h2>
+          <p class="text-xs text-slate-400 mt-1 italic">"See a fire? Report it immediately. Every alert is pinned directly onto the live authority radar."</p>
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0">
+          <a href="tel:112" class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black tracking-wider uppercase transition flex items-center gap-2 shadow-lg shadow-red-950">
+            <span>📞</span> <span>CALL 112 (FIRE)</span>
+          </a>
+          <button id="btnQuickReportNow" class="px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black tracking-wider uppercase transition flex items-center gap-1.5 shadow-lg shadow-orange-950 cursor-pointer">
+            <span>🚨</span> <span>REPORT FIRE NOW</span>
+          </button>
+        </div>
       </div>
 
     </div>

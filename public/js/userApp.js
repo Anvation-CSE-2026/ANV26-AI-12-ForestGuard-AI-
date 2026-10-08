@@ -80,6 +80,8 @@ function initTabs() {
     btnQuick.addEventListener('click', () => {
       document.querySelector('[data-tab="tabReport"]').click();
       setReportingMethod('Manual');
+      const targetEl = document.getElementById('userCentralMap') || document.getElementById('userReportForm');
+      if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
 }
@@ -642,7 +644,7 @@ function setReportingMethod(method) {
   currentDetectionMethod = method;
   document.querySelectorAll('.method-card').forEach(c => {
     const isAct = c.dataset.method === method;
-    c.className = isAct ? 'method-card p-3 rounded-xl border border-orange-500/80 bg-orange-950/30 text-center transition' : 'method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition';
+    c.className = isAct ? 'method-card p-3 rounded-xl border border-orange-500/80 bg-orange-950/30 text-center transition cursor-pointer' : 'method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition cursor-pointer';
   });
 
   const pImg = document.getElementById('panelImage');
@@ -653,9 +655,32 @@ function setReportingMethod(method) {
   if (pCam) pCam.classList.add('hidden');
   if (pVid) pVid.classList.add('hidden');
 
-  if (method === 'Camera' && pCam) pCam.classList.remove('hidden');
-  else if (method === 'Video' && pVid) pVid.classList.remove('hidden');
-  else if (pImg) pImg.classList.remove('hidden');
+  if (method === 'Camera' && pCam) {
+    pCam.classList.remove('hidden');
+    pCam.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else if (method === 'Video' && pVid) {
+    pVid.classList.remove('hidden');
+    pVid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    if (pImg) pImg.classList.remove('hidden');
+    if (method === 'Image' && pImg) {
+      pImg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (method === 'Manual') {
+      const mapCard = document.getElementById('userCentralMap');
+      if (mapCard) mapCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (method === 'GPS') {
+      const btnGps = document.getElementById('btnCurrentGps');
+      if (btnGps) btnGps.click();
+      const mapCard = document.getElementById('userCentralMap');
+      if (mapCard) mapCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (method === 'Search') {
+      const searchInput = document.getElementById('inputSearchLocation');
+      if (searchInput) {
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => searchInput.focus(), 350);
+      }
+    }
+  }
 }
 
 function handleImageFile(file) {
