@@ -265,18 +265,50 @@
 
         </div>
 
-        <!-- Two Summary Metric Cards (Risk Score & Severity) -->
-        <div class="grid grid-cols-2 gap-2 pt-0.5">
-          <div class="p-2 rounded-xl bg-[#030712] border border-slate-800">
-            <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Risk Score</div>
+        <!-- 3 Core Analyst Scores: Fire Score | Risk Score | AI Fake Score -->
+        <div class="grid grid-cols-3 gap-1.5 pt-0.5">
+          <!-- 1. Fire Score -->
+          <div class="p-2 rounded-xl bg-[#040814] border border-orange-500/30">
+            <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">🔥 Fire Score</div>
             <div class="flex items-baseline gap-1 mt-0.5">
-              <span id="adminSbMetricRisk" class="text-base font-black text-red-400 font-mono">96</span>
-              <span class="text-[10px] font-mono text-slate-500">/ 100</span>
+              <span id="adminSbMetricFireScore" class="text-sm font-black text-orange-400 font-mono">94.6%</span>
             </div>
+            <span id="adminSbMetricFireLevel" class="text-[8px] font-bold text-orange-400 block mt-0.5">CRITICAL</span>
           </div>
-          <div class="p-2 rounded-xl bg-[#030712] border border-slate-800">
-            <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Severity</div>
-            <div id="adminSbMetricSeverity" class="text-xs font-black text-red-400 uppercase tracking-wide mt-0.5">CRITICAL</div>
+
+          <!-- 2. Risk Score -->
+          <div class="p-2 rounded-xl bg-[#040814] border border-red-500/30">
+            <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">⚡ Risk Score</div>
+            <div class="flex items-baseline gap-1 mt-0.5">
+              <span id="adminSbMetricRisk" class="text-sm font-black text-red-400 font-mono">96</span>
+              <span class="text-[8px] font-mono text-slate-500">/ 100</span>
+            </div>
+            <span id="adminSbMetricSeverity" class="text-[8px] font-bold text-red-400 block mt-0.5">CRITICAL</span>
+          </div>
+
+          <!-- 3. AI Fake Score -->
+          <div class="p-2 rounded-xl bg-[#040814] border border-sky-500/30">
+            <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">🛡️ AI Fake Score</div>
+            <div class="flex items-baseline gap-1 mt-0.5">
+              <span id="adminSbMetricFakeScore" class="text-sm font-black text-emerald-400 font-mono">3.2%</span>
+            </div>
+            <span id="adminSbMetricFakeVerdict" class="text-[8px] font-bold text-emerald-400 truncate block mt-0.5">REAL PHOTO</span>
+          </div>
+        </div>
+
+        <!-- AI Fake & Authenticity Verification Strip -->
+        <div class="p-2 rounded-xl bg-[#030712] border border-slate-800 space-y-1">
+          <div class="flex items-center justify-between text-[10px]">
+            <span class="font-bold text-slate-300 flex items-center gap-1">
+              <span>🔍</span> <span>AI Authenticity / Anti-Hoax Check</span>
+            </span>
+            <span id="adminSbAuthenticityPercent" class="font-mono font-bold text-emerald-400">96.8% Authentic</span>
+          </div>
+          <div class="w-full bg-[#091122] rounded-full h-1.5 overflow-hidden border border-slate-800">
+            <div id="adminSbBarAuthenticity" class="h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-700" style="width: 96.8%"></div>
+          </div>
+          <div id="adminSbFakeStatusText" class="text-[8px] font-mono text-emerald-300/90 pt-0.5">
+            ✓ Verified Authentic Field Evidence (Not AI-Generated / Not Synthetic Hoax)
           </div>
         </div>
 

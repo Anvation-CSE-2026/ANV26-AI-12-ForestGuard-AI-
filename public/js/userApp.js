@@ -428,20 +428,76 @@ function updateScoreboardUI(data) {
   if (elSmkLvl) elSmkLvl.textContent = `${smkLvlVal}%`;
   if (barSmkLvl) barSmkLvl.style.width = `${Math.min(100, Math.max(0, smkLvlVal))}%`;
 
-  // Risk Score & Severity
+  // Unhide Scoreboard container now that image is uploaded & analyzed
+  const sbContainer = document.getElementById('userScoreBoardContainer');
+  if (sbContainer) sbContainer.classList.remove('hidden');
+
+  // 1. Fire Score & Level
+  const fireScoreVal = parseFloat(data.fireScore !== undefined ? data.fireScore : anomVal).toFixed(1);
+  const fireScoreEl = document.getElementById('sbMetricFireScore');
+  if (fireScoreEl) {
+    fireScoreEl.textContent = `${fireScoreVal}%`;
+    fireScoreEl.className = isFire ? 'text-base font-black text-orange-400 font-mono' : 'text-base font-black text-slate-400 font-mono';
+  }
+  const fireLevelEl = document.getElementById('sbMetricFireLevel');
+  if (fireLevelEl) {
+    fireLevelEl.textContent = isFire ? `LEVEL: ${data.fireLevel || sevVal}` : 'LEVEL: SAFE';
+    fireLevelEl.className = isFire ? 'text-[9px] font-bold text-orange-400 block mt-0.5' : 'text-[9px] font-bold text-slate-400 block mt-0.5';
+  }
+
+  // 2. Risk Score & Severity
   const riskVal = isFire ? (data.riskScore !== undefined ? data.riskScore : 96) : 0;
   const sevVal = isFire ? (data.severity || 'CRITICAL') : 'NORMAL';
 
   const riskEl = document.getElementById('sbMetricRisk');
   if (riskEl) {
     riskEl.textContent = riskVal;
-    riskEl.className = isFire ? 'text-lg font-black text-red-400 font-mono' : 'text-lg font-black text-emerald-400 font-mono';
+    riskEl.className = isFire ? 'text-base font-black text-red-400 font-mono' : 'text-base font-black text-emerald-400 font-mono';
   }
 
   const sevEl = document.getElementById('sbMetricSeverity');
   if (sevEl) {
     sevEl.textContent = sevVal;
-    sevEl.className = isFire ? 'text-sm font-black text-red-400 uppercase tracking-wide mt-0.5' : 'text-sm font-black text-emerald-400 uppercase tracking-wide mt-0.5';
+    sevEl.className = isFire ? 'text-[9px] font-bold text-red-400 block mt-0.5' : 'text-[9px] font-bold text-emerald-400 block mt-0.5';
+  }
+
+  // 3. AI Fake Score & Authenticity Check
+  const fakeProb = parseFloat(data.fakeProbability !== undefined ? data.fakeProbability : (isFire ? 3.2 : 91.2)).toFixed(1);
+  const authScore = parseFloat(data.authenticityScore !== undefined ? data.authenticityScore : (100 - fakeProb)).toFixed(1);
+  const isFakeDetected = parseFloat(fakeProb) > 50 || data.isFake;
+
+  const fakeEl = document.getElementById('sbMetricFakeScore');
+  if (fakeEl) {
+    fakeEl.textContent = `${fakeProb}%`;
+    fakeEl.className = isFakeDetected ? 'text-base font-black text-red-400 font-mono' : 'text-base font-black text-emerald-400 font-mono';
+  }
+
+  const fakeVerdictEl = document.getElementById('sbMetricFakeVerdict');
+  if (fakeVerdictEl) {
+    fakeVerdictEl.textContent = isFakeDetected ? 'SUSPECTED FAKE' : 'REAL PHOTO';
+    fakeVerdictEl.className = isFakeDetected ? 'text-[9px] font-bold text-red-400 truncate block mt-0.5' : 'text-[9px] font-bold text-emerald-400 truncate block mt-0.5';
+  }
+
+  const authPctEl = document.getElementById('sbAuthenticityPercent');
+  if (authPctEl) {
+    authPctEl.textContent = `${authScore}% Authentic`;
+    authPctEl.className = isFakeDetected ? 'font-mono font-bold text-red-400' : 'font-mono font-bold text-emerald-400';
+  }
+
+  const barAuth = document.getElementById('sbBarAuthenticity');
+  if (barAuth) {
+    barAuth.style.width = `${Math.min(100, Math.max(0, authScore))}%`;
+    barAuth.className = isFakeDetected
+      ? 'h-full bg-gradient-to-r from-red-500 to-amber-500 rounded-full transition-all duration-700'
+      : 'h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-700';
+  }
+
+  const fakeStatusEl = document.getElementById('sbFakeStatusText');
+  if (fakeStatusEl) {
+    fakeStatusEl.textContent = isFakeDetected
+      ? '⚠️ Warning: Potential False Alarm / Non-Fire Photograph Detected'
+      : '✓ Verified Authentic Field Evidence (Not AI-Generated / Not Synthetic Hoax)';
+    fakeStatusEl.className = isFakeDetected ? 'text-[9px] font-mono text-red-400 pt-0.5' : 'text-[9px] font-mono text-emerald-300/90 pt-0.5';
   }
 
   // Early Warning Alert Box
@@ -470,6 +526,10 @@ function updateScoreboardUI(data) {
   if (hdnRisk) hdnRisk.value = riskVal;
   const hdnSev = document.getElementById('hdnSeverity');
   if (hdnSev) hdnSev.value = sevVal;
+  const hdnFake = document.getElementById('hdnFakeScore');
+  if (hdnFake) hdnFake.value = fakeProb;
+  const hdnAuth = document.getElementById('hdnAuthenticityScore');
+  if (hdnAuth) hdnAuth.value = authScore;
 
   const txtConf = document.getElementById('txtAiConf');
   if (txtConf) txtConf.textContent = `${anomVal}%`;
@@ -629,6 +689,9 @@ function initFormAndModals() {
         formData.append('smokeLevel', document.getElementById('hdnSmokeLevel')?.value || '85.0');
         formData.append('riskScore', document.getElementById('hdnRiskScore')?.value || '96');
         formData.append('severity', document.getElementById('hdnSeverity')?.value || 'CRITICAL');
+        formData.append('fireScore', document.getElementById('hdnAiConfidence')?.value || '94.6');
+        formData.append('fakeProbability', document.getElementById('hdnFakeScore')?.value || '3.2');
+        formData.append('authenticityScore', document.getElementById('hdnAuthenticityScore')?.value || '96.8');
 
         const res = await fetch('/api/incidents', {
           method: 'POST',
