@@ -103,8 +103,8 @@
   <!-- Main 4-Quadrant Command Center Layout -->
   <div class="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-h-0 h-full bg-[#030712]">
     
-    <!-- LEFT: Incident List (Col 3) -->
-    <section class="md:col-span-3 border-r border-slate-800/80 bg-[#070e1c] flex flex-col h-full min-h-0 overflow-hidden">
+    <!-- LEFT: Incident List (Compact Col 3/2) -->
+    <section class="md:col-span-3 xl:col-span-2 border-r border-slate-800/80 bg-[#070e1c] flex flex-col h-full min-h-0 overflow-hidden">
       <div class="p-3 border-b border-slate-800 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-1.5">
           <span class="text-xs font-black uppercase tracking-wider text-slate-300">INCIDENT QUEUE</span>
@@ -124,8 +124,8 @@
       </div>
     </section>
 
-    <!-- CENTER: Large Live Google Map (Col 5) -->
-    <section class="md:col-span-5 relative bg-[#040814] flex flex-col h-full min-h-[350px] md:min-h-0 overflow-hidden">
+    <!-- CENTER: Large Live Google Map (Expanded Col 6/7) -->
+    <section class="md:col-span-6 xl:col-span-7 relative bg-[#040814] flex flex-col h-full min-h-[350px] md:min-h-0 overflow-hidden">
       <!-- Floating Map Header Overlay -->
       <div class="absolute top-3 left-3 z-30 flex flex-wrap items-center gap-2">
         <div class="px-3 py-1 rounded-lg bg-[#070e1c]/90 backdrop-blur-md border border-slate-700/80 text-xs font-bold text-white shadow-lg flex items-center gap-2">
@@ -179,8 +179,8 @@
       <div id="adminLiveMap" class="flex-1 w-full h-full min-h-[350px] md:min-h-0 relative z-0 isolate bg-[#030712] overflow-hidden" style="isolation: isolate;"></div>
     </section>
 
-    <!-- RIGHT: Selected Incident Details (Col 4) -->
-    <section class="md:col-span-4 border-l border-slate-800/80 bg-[#070e1c] flex flex-col h-full min-h-0 overflow-y-auto p-4 space-y-4">
+    <!-- RIGHT: Selected Incident Details (Slimmer Col 3) -->
+    <section class="md:col-span-3 xl:col-span-3 border-l border-slate-800/80 bg-[#070e1c] flex flex-col h-full min-h-0 overflow-y-auto p-3 space-y-3">
       
       <!-- Incident Header (Glitch-Free Non-Wrapping Structure) -->
       <div class="border-b border-slate-800 pb-3 flex items-start justify-between gap-3">

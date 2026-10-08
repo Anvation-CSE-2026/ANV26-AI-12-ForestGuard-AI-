@@ -18,11 +18,28 @@ class ForestGuardMapEngine {
     this.markers = {
       fires: [],
       stations: [],
+      teams: [],
       water: [],
       sensors: [],
       satellites: []
     };
     this.routes = [];
+    this.circles = [];
+    this.perimeterLayers = [];
+    this.spreadLayers = [];
+    this.vulnerableLayers = [];
+    this.populationExposureLayers = [];
+    this.layerVisibility = {
+      activeFires: true,
+      firePerimeter: true,
+      fireRiskZone: true,
+      spreadSimulation: true,
+      stations: true,
+      teams: true,
+      water: true,
+      vulnerableLocations: true,
+      populationExposure: true
+    };
     this.googleApiKey = '';
     this.pulseInterval = null;
   }
@@ -175,6 +192,58 @@ class ForestGuardMapEngine {
       if (zoom) this.map.setZoom(zoom);
     } else {
       this.map.flyTo([lat, lng], zoom, { duration: 1.6 });
+    }
+  }
+
+  // --- Ensure BOTH the fire area AND the nearby station (and water body) are simultaneously visible in narrow zoom ---
+  fitToIncidentAndEntities(fireCoords, stationCoords = null, waterCoords = null) {
+    if (!this.map || !fireCoords) return;
+    const fLat = fireCoords.lat !== undefined ? fireCoords.lat : fireCoords[0];
+    const fLng = fireCoords.lng !== undefined ? fireCoords.lng : fireCoords[1];
+    if (fLat === undefined || fLng === undefined) return;
+
+    const points = [[fLat, fLng]];
+
+    if (stationCoords) {
+      const sLat = stationCoords.lat !== undefined ? stationCoords.lat : stationCoords[0];
+      const sLng = stationCoords.lng !== undefined ? stationCoords.lng : stationCoords[1];
+      if (sLat !== undefined && sLng !== undefined) {
+        const dStation = Math.hypot((fLat - sLat) * 111, (fLng - sLng) * 111 * Math.cos(fLat * Math.PI / 180));
+        // Keep strictly local within 25 km so we don't zoom out across whole state
+        if (dStation <= 25) {
+          points.push([sLat, sLng]);
+        }
+      }
+    }
+
+    if (waterCoords) {
+      const wLat = waterCoords.lat !== undefined ? waterCoords.lat : waterCoords[0];
+      const wLng = waterCoords.lng !== undefined ? waterCoords.lng : waterCoords[1];
+      if (wLat !== undefined && wLng !== undefined) {
+        const dWater = Math.hypot((fLat - wLat) * 111, (fLng - wLng) * 111 * Math.cos(fLat * Math.PI / 180));
+        if (dWater <= 20) {
+          points.push([wLat, wLng]);
+        }
+      }
+    }
+
+    if (points.length === 1) {
+      this.centerOn(fLat, fLng, 16);
+      return;
+    }
+
+    if (this.mode === 'google-api') {
+      const bounds = new google.maps.LatLngBounds();
+      points.forEach(p => bounds.extend(new google.maps.LatLng(p[0], p[1])));
+      this.map.fitBounds(bounds);
+    } else {
+      // Leaflet fitBounds ensuring BOTH the forest fire ground zero AND the fire station building are simultaneously visible
+      this.map.fitBounds(points, {
+        padding: [75, 75],
+        maxZoom: 16,
+        animate: true,
+        duration: 1.4
+      });
     }
   }
 

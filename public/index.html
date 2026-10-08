@@ -13,49 +13,51 @@
 </head>
 <body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white">
 
-  <!-- 3-SECOND STUNNING CINEMATIC FOREST FIRE INTRO FLASH CARD -->
-  <div id="introFlashCard" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-700">
+  <!-- 1.5-SECOND CINEMATIC INTRO FLASH CARD (AUTO-REDIRECTS TO HOME DASHBOARD BUTTONS) -->
+  <div id="introFlashCard" onclick="dismissIntroFlashCard()" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-500 cursor-pointer">
     <!-- Cinematic High-Res Fire Background with Breathing Glow -->
     <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-90 contrast-125 saturate-150 transform scale-105 animate-pulse" style="background-image: url('/images/forestfire_hero_bg.jpg');"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/60 to-[#02050e]/80 pointer-events-none"></div>
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(239,68,68,0.25)_0%,_rgba(0,0,0,0.85)_75%)] pointer-events-none"></div>
 
     <!-- Glowing Flash Card Box -->
-    <div class="relative z-10 max-w-xl w-full mx-4 p-8 rounded-3xl bg-[#070e1c]/90 border-2 border-orange-500/70 shadow-[0_0_60px_rgba(249,115,22,0.45)] backdrop-blur-xl text-center transform transition-all duration-500 scale-100">
-      <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center text-4xl shadow-xl shadow-red-950/80 border border-orange-400/60 animate-bounce">
+    <div class="relative z-10 max-w-xl w-full mx-4 p-8 rounded-3xl bg-[#070e1c]/95 border-2 border-orange-500/70 shadow-[0_0_60px_rgba(249,115,22,0.45)] backdrop-blur-xl text-center transform transition-all duration-300">
+      <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center text-3xl shadow-xl shadow-red-950/80 border border-orange-400/60 animate-bounce">
         🔥
       </div>
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/90 border border-red-500/70 text-red-300 text-[10px] font-black tracking-widest uppercase mb-3 shadow">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/90 border border-red-500/70 text-red-300 text-[10px] font-black tracking-widest uppercase mb-2 shadow">
         <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
         <span>NATIONAL FORESTRY DEFENSE PLATFORM</span>
       </div>
       <h1 class="text-3xl sm:text-4xl font-black text-white tracking-wider mb-1 drop-shadow-[0_2px_12px_rgba(239,68,68,0.8)]">
         AGNIRAKSHAK AI
       </h1>
-      <p class="text-sm font-bold text-amber-300 tracking-wide uppercase mb-3">
+      <p class="text-xs sm:text-sm font-bold text-amber-300 tracking-wide uppercase mb-2">
         Forest Fire Early Warning & Geospatial Response System
       </p>
-      <p class="text-xs text-slate-300 leading-relaxed mb-6 max-w-md mx-auto">
-        Connecting citizens, forestry authorities, and rapid fire response strike forces through real-time dual-spectrum AI vision and satellite telemetry.
+      <p class="text-xs text-slate-300 leading-relaxed mb-4 max-w-md mx-auto">
+        Dual-spectrum AI vision and geospatial command center for instant wildfire containment.
       </p>
 
-      <!-- 3-Second Visual Progress Indicator -->
-      <div class="space-y-1.5 mb-5">
-        <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
-          <span class="text-amber-400 font-bold flex items-center gap-1"><span>⚡</span> Initializing Forestry Radar...</span>
-          <span id="flashCardTimer" class="font-bold text-white font-mono">3s</span>
-        </div>
-        <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-700">
-          <div id="flashCardProgress" class="h-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 rounded-full transition-all duration-100 ease-linear" style="width: 0%;"></div>
-        </div>
-      </div>
-
       <!-- Quick Skip Button -->
-      <button id="btnSkipFlashCard" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-orange-600 to-red-600 hover:brightness-110 text-white font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2 mx-auto cursor-pointer">
-        <span>ENTER COMMAND PORTAL</span> <span>→</span>
+      <button id="btnSkipFlashCard" onclick="dismissIntroFlashCard(); event.stopPropagation();" class="px-7 py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2 mx-auto cursor-pointer">
+        <span>ENTER HOME DASHBOARDS</span> <span>→</span>
       </button>
+      <div class="text-[10px] text-slate-400 mt-2">Tap anywhere or wait 1.5s to view Citizen & Admin options</div>
     </div>
   </div>
+  <script>
+    function dismissIntroFlashCard() {
+      const flash = document.getElementById('introFlashCard');
+      if (flash) {
+        flash.style.opacity = '0';
+        flash.style.pointerEvents = 'none';
+        setTimeout(() => { if (flash && flash.parentNode) flash.parentNode.removeChild(flash); }, 400);
+      }
+    }
+    // Auto-dismiss within 1.5 seconds so home buttons are immediately visible
+    setTimeout(dismissIntroFlashCard, 1500);
+  </script>
 
   <!-- Top Navigation -->
   <header class="border-b border-slate-800 bg-[#070e1c]/90 backdrop-blur-md sticky top-0 z-50">

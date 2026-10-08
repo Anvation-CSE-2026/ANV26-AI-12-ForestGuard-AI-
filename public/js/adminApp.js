@@ -247,14 +247,12 @@ function selectIncident(incident, shouldCenter = true) {
     transitInterval = null;
   }
 
-  // Determine initial selected station for deployment
+  // Always select the local station for the current incident
   const stations = (incident.rankedStations && incident.rankedStations.length > 0)
     ? incident.rankedStations
     : (incident.nearestStation ? [incident.nearestStation] : []);
 
-  if (!selectedDeployStation || !stations.some(s => (s.id || s.stationId) === (selectedDeployStation.id || selectedDeployStation.stationId))) {
-    selectedDeployStation = stations[0] || incident.nearestStation || incident.assignedStation || null;
-  }
+  selectedDeployStation = incident.nearestStation || (stations && stations[0]) || incident.assignedStation || null;
 
   // Highlight active card
   document.querySelectorAll('.incident-feed-card').forEach(card => {
@@ -267,14 +265,18 @@ function selectIncident(incident, shouldCenter = true) {
 
   // Safely perform map operations if map engine is ready
   if (window.forestMapEngine && window.forestMapEngine.map) {
-    const incName = ((incident.forestName || '') + ' ' + (incident.title || '') + ' ' + (incident.alertTitle || '')).toLowerCase();
-    const isCampus = incName.includes('kssem') || incName.includes('kseam') || incName.includes('ks school') || 
-                     incName.includes('dsatm') || incName.includes('college') || incName.includes('campus') || 
-                     incName.includes('institute') || incName.includes('university');
-    const targetZoom = isCampus ? 17 : (incName.includes('bandipur') ? 16 : 16);
+    const deployStation = selectedDeployStation || incident.nearestStation || incident.assignedStation;
+    const wb = incident.nearestWaterBody;
 
+    // In this default narrow zoom-in area of the admin page,
+    // BOTH the forest where the fire is AND the nearby fire station (and water body)
+    // MUST ALSO BE VISIBLE!
     if (shouldCenter && lat !== undefined && lng !== undefined) {
-      window.forestMapEngine.centerOn(lat, lng, targetZoom);
+      window.forestMapEngine.fitToIncidentAndEntities(
+        { lat, lng },
+        deployStation?.coordinates,
+        wb?.coordinates
+      );
     }
 
     // Clear previous routes & auxiliary markers
@@ -288,38 +290,50 @@ function selectIncident(incident, shouldCenter = true) {
       window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1500, 5000]);
     }
 
-    // Draw Dotted Route to Selected Response Station (Image 4)
-    const deployStation = selectedDeployStation || incident.nearestStation || incident.assignedStation;
+    // Draw Dotted Route to Selected Response Station (Orange)
+    // Points EXACTLY from the firestation building to the pinned fire area
     if (deployStation) {
       if (deployStation.coordinates) {
         window.forestMapEngine.addStationMarker(deployStation);
       }
-      if (deployStation.routeWaypoints && deployStation.routeWaypoints.length > 0) {
-        window.forestMapEngine.drawRoute(deployStation.routeWaypoints, '#f97316', true);
-      } else if (deployStation.coordinates && lat !== undefined && lng !== undefined) {
+      if (deployStation.coordinates && lat !== undefined && lng !== undefined) {
         const sLat = deployStation.coordinates.lat;
         const sLng = deployStation.coordinates.lng;
-        window.forestMapEngine.drawRoute([[sLat, sLng], [(sLat + lat) / 2 + 0.001, (sLng + lng) / 2], [lat, lng]], '#f97316', true);
+        let waypoints = deployStation.routeWaypoints;
+        if (waypoints && waypoints.length >= 2) {
+          // Guarantee exact alignment: start at station building, end at fire ground zero
+          waypoints = [ [sLat, sLng], ...waypoints.slice(1, -1), [lat, lng] ];
+        } else {
+          waypoints = [ [sLat, sLng], [(sLat + lat) / 2 + 0.001, (sLng + lng) / 2], [lat, lng] ];
+        }
+        window.forestMapEngine.drawRoute(waypoints, '#f97316', true);
       }
     }
 
-    // Draw Hose Relay Line to Nearest Water Body (BLUE dashed route)
-    const wb = incident.nearestWaterBody;
+    // Draw Hose Relay Line to Nearest Water Body (Sky-Blue)
+    // Points EXACTLY from the waterbody to the pinned fire area
     if (wb) {
       if (wb.coordinates) {
         window.forestMapEngine.addWaterMarker(wb);
       }
-      if (wb.routeWaypoints && wb.routeWaypoints.length > 0) {
-        window.forestMapEngine.drawRoute(wb.routeWaypoints, '#0284c7', true);
-      } else if (wb.coordinates && lat !== undefined && lng !== undefined) {
-        window.forestMapEngine.drawRoute([[wb.coordinates.lat, wb.coordinates.lng], [lat, lng]], '#0284c7', true);
+      if (wb.coordinates && lat !== undefined && lng !== undefined) {
+        const wLat = wb.coordinates.lat;
+        const wLng = wb.coordinates.lng;
+        let waypoints = wb.routeWaypoints;
+        if (waypoints && waypoints.length >= 2) {
+          // Guarantee exact alignment: start at water drafting terminal, end at fire ground zero
+          waypoints = [ [wLat, wLng], ...waypoints.slice(1, -1), [lat, lng] ];
+        } else {
+          waypoints = [ [wLat, wLng], [lat, lng] ];
+        }
+        window.forestMapEngine.drawRoute(waypoints, '#0284c7', true);
       }
     }
 
     // Update floating map status card
     const mapDistEl = document.getElementById('mapCardNearestDist');
     if (mapDistEl && deployStation) {
-      mapDistEl.textContent = `${deployStation.distanceKm || 14} KM`;
+      mapDistEl.textContent = `${deployStation.distanceKm || 1.4} KM`;
     }
   }
 
@@ -1062,7 +1076,6 @@ function closeAdminModal(modalEl) {
       if (match) {
         selectIncident(match, true);
       } else {
-        window.forestMapEngine.centerOn(12.8550, 77.5420, 17);
         window.forestMapEngine.clearRoutes();
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
@@ -1071,8 +1084,9 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.drawRoute([[12.8590, 77.5460], [12.8570, 77.5440], [12.8550, 77.5420]], '#f97316', true);
         window.forestMapEngine.addWaterMarker({ name: 'Gubbalala Lake & Forest Hydrant Pier (KSSEM)', coordinates: { lat: 12.8680, lng: 77.5380 }, capacity: 'Continuous 25,000 LPM' });
         window.forestMapEngine.drawRoute([[12.8680, 77.5380], [12.8550, 77.5420]], '#0284c7', true);
+        window.forestMapEngine.fitToIncidentAndEntities({ lat: 12.8550, lng: 77.5420 }, { lat: 12.8590, lng: 77.5460 }, { lat: 12.8680, lng: 77.5380 });
       }
-      showToast('📍 Pinpointed: KS School of Engineering & Management (KSSEM) - High Detail (Zoom 17)', 'emerald');
+      showToast('📍 Pinpointed: KS School of Engineering & Management (KSSEM) - High Detail', 'emerald');
     } else if (q.includes('dsatm')) {
       const match = allIncidents.find(i => {
         const text = ((i.forestName || '') + ' ' + (i.title || '') + ' ' + (i.locationName || '')).toLowerCase();
@@ -1081,7 +1095,6 @@ function closeAdminModal(modalEl) {
       if (match) {
         selectIncident(match, true);
       } else {
-        window.forestMapEngine.centerOn(12.8258, 77.5158, 17);
         window.forestMapEngine.clearRoutes();
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
@@ -1090,8 +1103,9 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.drawRoute([[12.8290, 77.5180], [12.8258, 77.5158]], '#f97316', true);
         window.forestMapEngine.addWaterMarker({ name: 'Kaggalipura Lake Emergency Reservoir (DSATM)', coordinates: { lat: 12.8120, lng: 77.5100 }, capacity: 'High Capacity Drafting Pier' });
         window.forestMapEngine.drawRoute([[12.8120, 77.5100], [12.8258, 77.5158]], '#0284c7', true);
+        window.forestMapEngine.fitToIncidentAndEntities({ lat: 12.8258, lng: 77.5158 }, { lat: 12.8290, lng: 77.5180 }, { lat: 12.8120, lng: 77.5100 });
       }
-      showToast('📍 Pinpointed: DSATM Bengaluru Campus - High Detail (Zoom 17)', 'emerald');
+      showToast('📍 Pinpointed: DSATM Bengaluru Campus - High Detail', 'emerald');
     } else if (q.includes('bandipur')) {
       const match = allIncidents.find(i => {
         const text = ((i.forestName || '') + ' ' + (i.title || '') + ' ' + (i.locationName || '')).toLowerCase();
@@ -1100,7 +1114,6 @@ function closeAdminModal(modalEl) {
       if (match) {
         selectIncident(match, true);
       } else {
-        window.forestMapEngine.centerOn(11.6643, 76.6250, 16);
         window.forestMapEngine.clearRoutes();
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
@@ -1109,8 +1122,9 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.drawRoute([[11.6680, 76.6340], [11.6643, 76.6250]], '#f97316', true);
         window.forestMapEngine.addWaterMarker({ name: 'Moyar River Deep Pool Draft Terminal', coordinates: { lat: 11.6020, lng: 76.6540 }, capacity: 'Continuous 14,000 LPM' });
         window.forestMapEngine.drawRoute([[11.6020, 76.6540], [11.6643, 76.6250]], '#0284c7', true);
+        window.forestMapEngine.fitToIncidentAndEntities({ lat: 11.6643, lng: 76.6250 }, { lat: 11.6680, lng: 76.6340 }, { lat: 11.6020, lng: 76.6540 });
       }
-      showToast('📍 Pinpointed: Bandipur Tiger Reserve Forest Sector - Detailed (Zoom 16)', 'emerald');
+      showToast('📍 Pinpointed: Bandipur Tiger Reserve Forest Sector - Detailed', 'emerald');
     } else if (q.includes('corbett')) {
       window.forestMapEngine.centerOn(29.5300, 78.7747, 15);
       showToast('📍 Pinpointed: Jim Corbett National Park', 'emerald');
