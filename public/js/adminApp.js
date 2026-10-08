@@ -14,6 +14,7 @@ let socket = null;
 let audioMuted = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
+  initAdminAuth();
   await initMap();
   await fetchDatasets();
   initSocket();
@@ -25,6 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 // 1. Initialize Map
 async function initMap() {
   await window.forestMapEngine.init('adminLiveMap', { lat: 11.6643, lng: 76.6250 }, 9);
+  setTimeout(() => {
+    if (window.forestMapEngine) window.forestMapEngine.invalidateSize();
+  }, 350);
 }
 
 // 2. Fetch Geospatial Datasets & Render Base Layers
@@ -1052,3 +1056,100 @@ function initImageInspectorModal() {
       });
   }
 }
+
+// 12. Admin Command Center Password Protection & Instant 1-Click Login Gate
+function initAdminAuth() {
+  const modal = document.getElementById('adminAuthModal');
+  const form = document.getElementById('adminAuthForm');
+  const passInput = document.getElementById('adminPassInput');
+  const errBox = document.getElementById('adminAuthError');
+  const btnInstant = document.getElementById('btnAdminInstantLogin');
+  const btnToggleEye = document.getElementById('btnTogglePassVisibility');
+  const btnLogout = document.getElementById('btnAdminLogout');
+
+  // Check URL query parameters for evaluator demo bypass (?auth=demo, ?demo=1, ?demo=true)
+  const urlParams = new URLSearchParams(window.location.search);
+  const isDemoUrl = urlParams.get('auth') === 'demo' || urlParams.get('demo') === '1' || urlParams.get('demo') === 'true';
+
+  const grantAccess = (isInstant = false) => {
+    sessionStorage.setItem('FG_ADMIN_AUTH', 'granted');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+    if (errBox) errBox.classList.add('hidden');
+    if (passInput) {
+      passInput.value = '';
+      passInput.classList.remove('border-red-500');
+    }
+
+    // Refresh map layout so tiles align cleanly
+    setTimeout(() => {
+      if (window.forestMapEngine) window.forestMapEngine.invalidateSize();
+    }, 250);
+  };
+
+  // Check if session exists or demo URL parameter passed
+  if (isDemoUrl || sessionStorage.getItem('FG_ADMIN_AUTH') === 'granted') {
+    grantAccess();
+  } else {
+    if (modal) modal.classList.remove('hidden');
+    if (passInput) setTimeout(() => passInput.focus(), 200);
+  }
+
+  // Instant 1-Click Login (Single Click for Judges & Evaluators)
+  if (btnInstant) {
+    btnInstant.addEventListener('click', () => {
+      grantAccess(true);
+    });
+  }
+
+  // Show/Hide Password Eye Toggle
+  if (btnToggleEye && passInput) {
+    btnToggleEye.addEventListener('click', () => {
+      const isPass = passInput.type === 'password';
+      passInput.type = isPass ? 'text' : 'password';
+      btnToggleEye.textContent = isPass ? '🔒' : '👁️';
+    });
+  }
+
+  // Form Submission Check
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = (passInput ? passInput.value : '').trim();
+      const validCodes = ['admin123', 'forestguard2026', 'admin', 'agni123', 'rakshak2026'];
+      if (validCodes.includes(val)) {
+        grantAccess();
+      } else {
+        if (errBox) errBox.classList.remove('hidden');
+        if (passInput) {
+          passInput.classList.add('border-red-500');
+          passInput.focus();
+        }
+      }
+    });
+  }
+
+  // Lock / Logout Button
+  if (btnLogout) {
+    btnLogout.addEventListener('click', () => {
+      sessionStorage.removeItem('FG_ADMIN_AUTH');
+      if (modal) modal.classList.remove('hidden');
+      if (passInput) {
+        passInput.value = '';
+        passInput.focus();
+      }
+    });
+  }
+}
+
+// Global window listeners for Leaflet map recalculation and iframe communication
+window.addEventListener('resize', () => {
+  if (window.forestMapEngine) window.forestMapEngine.invalidateSize();
+});
+
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'INVALIDATE_MAP') {
+    if (window.forestMapEngine) window.forestMapEngine.invalidateSize();
+  }
+});

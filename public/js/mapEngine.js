@@ -119,6 +119,11 @@ class ForestGuardMapEngine {
       subdomains: 'abcd',
       attribution: '&copy; CartoDB & OSM'
     });
+
+    // Invalidate map size after DOM layout settles to prevent tile overlap / grey corners
+    setTimeout(() => {
+      this.invalidateSize();
+    }, 250);
   }
 
   setTileLayer(type) {
@@ -501,6 +506,24 @@ class ForestGuardMapEngine {
       }
     }
     return this.teamVehicleMarker;
+  }
+
+  // --- Invalidate Map Size to prevent tile overlap, clipping, or grey tiles ---
+  invalidateSize() {
+    if (!this.map) return;
+    try {
+      if (this.mode === 'google-api') {
+        if (typeof google !== 'undefined' && google.maps && google.maps.event) {
+          google.maps.event.trigger(this.map, 'resize');
+        }
+      } else {
+        if (this.map && typeof this.map.invalidateSize === 'function') {
+          this.map.invalidateSize({ pan: false, debounceMoveEvents: true });
+        }
+      }
+    } catch (err) {
+      console.warn('[MAP ENGINE] Error in invalidateSize:', err);
+    }
   }
 }
 

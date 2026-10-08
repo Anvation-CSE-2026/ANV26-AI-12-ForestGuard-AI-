@@ -59,6 +59,9 @@
     <!-- Persona & External Links -->
     <div class="flex items-center gap-2">
       <!-- Direct Links -->
+      <a href="/index.html" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition flex items-center gap-1" title="Return to Landing Page">
+        <span>🏠 Home</span>
+      </a>
       <a href="/user.html" target="_blank" class="hidden md:flex px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition items-center gap-1" title="Open Citizen Dashboard in new tab">
         <span>↗ User Tab</span>
       </a>
@@ -117,7 +120,7 @@
           <a href="/admin.html" target="_blank" class="text-slate-400 hover:text-white text-xs font-bold" title="Open full page">↗</a>
         </div>
       </div>
-      <iframe id="frameAdmin" src="/admin.html" class="flex-1 w-full h-full border-none"></iframe>
+      <iframe id="frameAdmin" src="/admin.html?auth=demo" class="flex-1 w-full h-full border-none"></iframe>
     </div>
 
   </main>
@@ -138,6 +141,17 @@
       });
     }
 
+    function notifyMapResize() {
+      setTimeout(() => {
+        const frameUser = document.getElementById('frameUser');
+        const frameAdmin = document.getElementById('frameAdmin');
+        try {
+          frameUser?.contentWindow?.postMessage({ type: 'INVALIDATE_MAP' }, '*');
+          frameAdmin?.contentWindow?.postMessage({ type: 'INVALIDATE_MAP' }, '*');
+        } catch (e) {}
+      }, 200);
+    }
+
     function setActiveTab(btn) {
       [btnViewSplit, btnViewUser, btnViewAdmin].forEach(b => {
         b.className = 'demo-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-1.5';
@@ -151,6 +165,7 @@
       container.className = 'flex-1 grid grid-cols-1 md:grid-cols-2 gap-1 bg-[#02050c] p-1 overflow-hidden';
       paneCitizen.classList.remove('hidden');
       paneAdmin.classList.remove('hidden');
+      notifyMapResize();
     });
 
     // Citizen Only Mode
@@ -159,6 +174,7 @@
       container.className = 'flex-1 flex flex-col bg-[#02050c] p-1 overflow-hidden';
       paneCitizen.classList.remove('hidden');
       paneAdmin.classList.add('hidden');
+      notifyMapResize();
     });
 
     // Admin Only Mode
@@ -167,7 +183,10 @@
       container.className = 'flex-1 flex flex-col bg-[#02050c] p-1 overflow-hidden';
       paneCitizen.classList.add('hidden');
       paneAdmin.classList.remove('hidden');
+      notifyMapResize();
     });
+
+    window.addEventListener('resize', notifyMapResize);
   </script>
 </body>
 </html>

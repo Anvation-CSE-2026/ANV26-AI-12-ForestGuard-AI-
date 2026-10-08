@@ -32,13 +32,19 @@
       </div>
     </div>
 
-    <div class="flex items-center gap-3">
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-600 text-emerald-400 text-xs font-mono font-bold">
+    <div class="flex items-center gap-2">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-600 text-emerald-400 text-xs font-mono font-bold hidden sm:flex">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         <span>RADIO DISPATCH: CONNECTED</span>
       </div>
-      <a href="/admin.html" target="_blank" class="px-3 py-1.5 rounded-lg bg-red-950 border border-red-600 text-red-400 hover:bg-red-600 hover:text-white text-xs font-bold transition">
-        Admin Command
+      <a href="/index.html" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1">
+        <span>🏠</span> <span class="hidden md:inline">Home</span>
+      </a>
+      <a href="/demo.html" class="px-2.5 py-1.5 rounded-lg bg-indigo-950 hover:bg-indigo-900 border border-indigo-700/80 text-indigo-300 hover:text-white text-xs font-bold transition flex items-center gap-1">
+        <span>🔀</span> <span class="hidden md:inline">Dual Demo</span>
+      </a>
+      <a href="/admin.html" class="px-3 py-1.5 rounded-lg bg-red-950 border border-red-600 text-red-400 hover:bg-red-600 hover:text-white text-xs font-bold transition flex items-center gap-1">
+        <span>🚨</span> <span>Admin Command</span>
       </a>
     </div>
   </header>

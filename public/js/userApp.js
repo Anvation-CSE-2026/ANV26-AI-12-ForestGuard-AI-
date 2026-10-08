@@ -64,6 +64,13 @@ function initTabs() {
 
       if (activeId === 'tabLiveMap') {
         initFullMap();
+        setTimeout(() => {
+          if (fullMap) fullMap.invalidateSize();
+        }, 150);
+      } else if (activeId === 'tabReport') {
+        setTimeout(() => {
+          if (userMap) userMap.invalidateSize();
+        }, 150);
       }
     });
   });
@@ -114,6 +121,10 @@ function initCentralMap() {
     userMarker.setLatLng(e.latlng);
     updateLocationReadouts(e.latlng.lat, e.latlng.lng);
   });
+
+  setTimeout(() => {
+    if (userMap) userMap.invalidateSize();
+  }, 250);
 }
 
 function updateLocationReadouts(lat, lng, customForestName = null) {
@@ -991,7 +1002,11 @@ async function loadEmergencyContacts() {
 let fullMap = null;
 function initFullMap() {
   const el = document.getElementById('userFullMap');
-  if (!el || fullMap) return;
+  if (!el) return;
+  if (fullMap) {
+    setTimeout(() => fullMap.invalidateSize(), 150);
+    return;
+  }
 
   fullMap = L.map('userFullMap', {
     center: [11.6643, 76.6250],
@@ -1003,6 +1018,11 @@ function initFullMap() {
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
     attribution: 'Map & Imagery &copy; Google Maps'
   }).addTo(fullMap);
+
+  // Invalidate size once layer is added
+  setTimeout(() => {
+    if (fullMap) fullMap.invalidateSize();
+  }, 250);
 
   // Add water bodies & stations to full map
   fetch('/api/water-bodies').then(r => r.json()).then(data => {
@@ -1021,3 +1041,16 @@ function initFullMap() {
     }
   });
 }
+
+// Window resize & message listeners to keep map viewports updated without tile glitches
+window.addEventListener('resize', () => {
+  if (userMap) userMap.invalidateSize();
+  if (fullMap) fullMap.invalidateSize();
+});
+
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'INVALIDATE_MAP') {
+    if (userMap) userMap.invalidateSize();
+    if (fullMap) fullMap.invalidateSize();
+  }
+});
