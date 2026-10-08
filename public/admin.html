@@ -73,8 +73,12 @@
           <span>🏠</span> <span class="hidden md:inline">Home</span>
         </a>
 
-        <button id="btnAdminLogout" class="px-2.5 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-700/80 text-xs font-bold text-red-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Lock Command Center">
-          <span>🔒</span> <span class="hidden md:inline">Lock</span>
+        <button id="btnHeaderInstantLogin" class="hidden px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-black text-white transition flex items-center gap-1 shadow-md cursor-pointer border border-emerald-400/50" title="1-Click Instant Demo Login">
+          <span>⚡</span> <span>Instant Login</span>
+        </button>
+
+        <button id="btnAdminLogout" class="px-2.5 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-700/80 text-xs font-bold text-red-300 hover:text-white transition flex items-center gap-1 shadow-sm cursor-pointer" title="Lock Command Center & Require Authorization">
+          <span>🔒</span> <span class="hidden md:inline">Lock / Auth</span>
         </button>
       </div>
     </div>
@@ -1158,58 +1162,37 @@
       </div>
 
       <p class="text-xs text-slate-300 leading-relaxed">
-        Live Forest Fire Command Center controls provincial dispatch, emergency sirens, and multi-source AI radar. Evaluators and Officers can enter the command passcode or click the instant 1-click clearance button below.
+        Live Forest Fire Command Center controls provincial dispatch, emergency sirens, and multi-source AI radar. Enter the command passcode or click the small instant login button below.
       </p>
 
-      <!-- ⚡ INSTANT 1-CLICK DEMO LOGIN (OFFICER IN CHARGE) HIGHLIGHT BOX -->
-      <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-teal-950/70 to-emerald-950/80 border-2 border-emerald-500 shadow-xl shadow-emerald-950/50 space-y-2.5">
-        <div class="flex items-center justify-between text-xs font-black">
-          <span class="text-emerald-300 flex items-center gap-1.5">
-            <span class="text-base animate-bounce">⚡</span> <span>RECOMMENDED FOR DEMO & EVALUATION</span>
-          </span>
-          <span class="text-[10px] font-mono bg-emerald-900/90 border border-emerald-500/50 text-emerald-200 px-2 py-0.5 rounded-full">
-            1-CLICK BYPASS
-          </span>
-        </div>
-        
-        <button type="button" id="btnAdminInstantLogin" class="btn-shimmer w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:brightness-110 active:scale-[0.99] text-white font-black text-sm tracking-wider uppercase shadow-xl shadow-emerald-950 transition flex items-center justify-center gap-2 cursor-pointer border border-emerald-300/60">
-          <span>⚡</span> <span>INSTANT 1-CLICK DEMO LOGIN (OFFICER IN CHARGE)</span>
-        </button>
-        
-        <div class="flex items-center justify-center gap-2 text-[11px] text-emerald-300/90 text-center font-medium">
-          <span>● Instant Incident Commander Access</span>
-          <span>•</span>
-          <span>● No password typing needed</span>
-        </div>
-      </div>
-
-      <!-- Tactical Divider -->
-      <div class="flex items-center gap-3">
-        <div class="flex-1 h-px bg-slate-800"></div>
-        <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest">OR ENTER PASSCODE</span>
-        <div class="flex-1 h-px bg-slate-800"></div>
-      </div>
-
-      <!-- Password Input Form -->
-      <form id="adminAuthForm" class="space-y-3">
+      <!-- Password Input Form with Small Instant Login Button -->
+      <form id="adminAuthForm" class="space-y-3.5">
         <div class="space-y-1.5">
           <div class="flex items-center justify-between text-xs">
-            <label for="adminPassInput" class="font-bold text-slate-300">COMMAND PASSCODE:</label>
-            <span class="text-[11px] font-mono text-slate-400">Default: <b class="text-amber-400 select-all">admin123</b></span>
+            <label for="adminPassInput" class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Command Passcode:</label>
+            <span class="text-[11px] font-mono text-slate-400">Default: <b class="text-amber-400 select-all font-mono">admin123</b></span>
           </div>
           <div class="relative">
-            <input type="password" id="adminPassInput" placeholder="Enter clearance passcode (e.g. admin123)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono tracking-wider transition pr-10" autocomplete="current-password" />
-            <button type="button" id="btnTogglePassVisibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs px-1.5 py-1" title="Show/Hide Passcode">👁️</button>
+            <input type="password" id="adminPassInput" placeholder="Enter clearance passcode (e.g. admin123)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono tracking-wider transition pr-10" autocomplete="current-password" />
+            <button type="button" id="btnTogglePassVisibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs px-1.5 py-1 cursor-pointer" title="Show/Hide Passcode">👁️</button>
           </div>
         </div>
 
         <div id="adminAuthError" class="hidden text-xs text-red-300 bg-red-950/80 border border-red-700/80 rounded-xl p-2.5 flex items-center gap-2">
-          <span>⚠️</span> <span>Incorrect passcode. Use <b>admin123</b> or click the green <b>1-Click Demo Login</b> button above.</span>
+          <span>⚠️</span> <span>Incorrect passcode. Use <b>admin123</b> or click <b>Instant 1-Click Login</b>.</span>
         </div>
 
-        <button type="submit" id="btnAdminPassSubmit" class="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 hover:brightness-110 active:scale-[0.99] text-white font-black text-xs sm:text-sm tracking-wider uppercase shadow-lg shadow-red-950/80 transition flex items-center justify-center gap-2 cursor-pointer border border-red-500/50">
-          <span>🔓</span> <span>AUTHENTICATE COMMAND CENTER</span>
-        </button>
+        <!-- Action Buttons: Authenticate Passcode + Small Instant Login Button -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+          <button type="submit" id="btnAdminPassSubmit" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 hover:brightness-110 active:scale-[0.99] text-white font-black text-xs tracking-wider uppercase shadow-lg shadow-red-950/80 transition flex items-center justify-center gap-1.5 cursor-pointer border border-red-500/50">
+            <span>🔓</span> <span>Authenticate</span>
+          </button>
+
+          <!-- Small Instant Login Button -->
+          <button type="button" id="btnAdminInstantLogin" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 hover:brightness-110 active:scale-[0.99] text-white font-black text-xs tracking-wider uppercase shadow-lg shadow-emerald-950 transition flex items-center justify-center gap-1.5 cursor-pointer border border-emerald-400/60" title="Instant Evaluator Access (No Password Needed)">
+            <span>⚡</span> <span>Instant 1-Click Login</span>
+          </button>
+        </div>
       </form>
 
       <!-- Bottom Fast Navigation Links -->

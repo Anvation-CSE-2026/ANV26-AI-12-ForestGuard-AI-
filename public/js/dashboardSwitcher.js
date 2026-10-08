@@ -15,7 +15,7 @@
 
   function navigateTo(dest) {
     if (dest === 'admin') {
-      window.location.href = `${BASE_URL}/admin.html?auth=demo`;
+      window.location.href = `${BASE_URL}/admin.html`;
     } else if (dest === 'user') {
       window.location.href = `${BASE_URL}/user.html`;
     } else if (dest === 'demo') {

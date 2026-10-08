@@ -2,7 +2,7 @@
   "incidents": [
     {
       "incidentId": "FG-2026-1052",
-      "reporterId": "REP-ANON-114",
+      "reporterId": "REP-ANON-551",
       "source": "Citizen Report + Image",
       "detectionMethod": "Image",
       "imageUrl": "/sample_images/sample_wildfire.jpg",
@@ -253,7 +253,7 @@
         "name": "Team 04",
         "status": "AVAILABLE",
         "distanceKm": 1.1,
-        "etaMinutes": 8
+        "etaMinutes": 5
       },
       "nearestWaterBody": {
         "id": "WB-06",
@@ -317,16 +317,20 @@
               76.654
             ],
             [
-              11.61616,
-              76.6459
+              11.61328,
+              76.64749
             ],
             [
-              11.63515,
-              76.6407
+              11.62882,
+              76.64354
             ],
             [
-              11.64731,
-              76.6314
+              11.63748,
+              76.63546
+            ],
+            [
+              11.65302,
+              76.63151
             ],
             [
               11.6643,
@@ -354,16 +358,20 @@
               76.352
             ],
             [
-              11.89066,
-              76.4194
+              11.90608,
+              76.40589
             ],
             [
-              11.81815,
-              76.4897
+              11.84842,
+              76.46234
             ],
             [
-              11.73881,
-              76.5559
+              11.78388,
+              76.51466
+            ],
+            [
+              11.72622,
+              76.57111
             ],
             [
               11.6643,
@@ -372,35 +380,39 @@
           ]
         },
         {
-          "id": "WB-03",
-          "name": "Periyar Lake Aquatic Sanctuary",
-          "forestId": "FOR-KL-01",
-          "state": "Kerala",
+          "id": "WB-BLR-02",
+          "name": "Kaggalipura Lake Emergency Reservoir (DSATM)",
+          "forestId": "FOR-KA-03",
+          "state": "Karnataka",
           "coordinates": {
-            "lat": 9.532,
-            "lng": 77.17
+            "lat": 12.812,
+            "lng": 77.51
           },
-          "type": "Natural Freshwater Lake",
-          "capacity": "Unlimited Drafting Access",
-          "waterSourceType": "LAKE",
-          "distanceKm": 244.5,
-          "distanceMeters": 244500,
+          "type": "Emergency Water Reservoir",
+          "capacity": "50,000 Litres Rapid Pump Draft",
+          "waterSourceType": "RESERVOIR",
+          "distanceKm": 159.8,
+          "distanceMeters": 159800,
           "routeWaypoints": [
             [
-              9.532,
-              77.17
+              12.812,
+              77.51
             ],
             [
-              10.06366,
-              77.0329
+              12.58128,
+              77.33229
             ],
             [
-              10.60015,
-              76.8987
+              12.35482,
+              77.15714
             ],
             [
-              11.12981,
-              76.7604
+              12.12148,
+              76.97786
+            ],
+            [
+              11.89502,
+              76.80271
             ],
             [
               11.6643,
@@ -416,27 +428,27 @@
       },
       "timeline": [
         {
-          "time": "07:20:41 pm",
+          "time": "11:34:25 pm",
           "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (11.6643, 76.625)",
           "type": "REPORT"
         },
         {
-          "time": "07:20:41 pm",
+          "time": "11:34:25 pm",
           "message": "Evidence ingested (Image)",
           "type": "INGEST"
         },
         {
-          "time": "07:20:41 pm",
+          "time": "11:34:25 pm",
           "message": "AI Analysis complete: 94.2% confidence (CRITICAL)",
           "type": "AI"
         },
         {
-          "time": "07:20:41 pm",
+          "time": "11:34:25 pm",
           "message": "Risk score calculated: 95 / 100",
           "type": "RISK"
         },
         {
-          "time": "07:20:41 pm",
+          "time": "11:34:25 pm",
           "message": "Admin authority alerted in real-time via Socket.IO",
           "type": "ALERT"
         }
@@ -462,7 +474,7 @@
         "statusText": "Status: Active Wildfire (3 Objects)",
         "badgeText": "CRITICAL",
         "earlyWarningAlert": "CRITICAL - IMMEDIATE DISPATCH",
-        "timestamp": "07:20:41 pm",
+        "timestamp": "11:34:25 pm",
         "engineName": "YOLOv8 ENGINE READY"
       },
       "routeWaypoints": [
@@ -496,8 +508,8 @@
         ]
       ],
       "routeProgressIndex": 0,
-      "createdAt": "2026-10-08T13:50:41.850Z",
-      "updatedAt": "2026-10-08T13:50:41.850Z",
+      "createdAt": "2026-10-08T18:04:25.539Z",
+      "updatedAt": "2026-10-08T18:04:25.539Z",
       "firePerimeter": {
         "incidentId": "FG-2026-1052",
         "center": {
@@ -10197,5 +10209,5 @@
       "description": "Periyar Reserve Forest Emergency response cell."
     }
   ],
-  "lastSaved": "2026-10-08T17:24:07.658Z"
+  "lastSaved": "2026-10-08T18:04:25.599Z"
 }

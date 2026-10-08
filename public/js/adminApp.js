@@ -1963,22 +1963,26 @@ function initAdminAuth() {
   const passInput = document.getElementById('adminPassInput');
   const errBox = document.getElementById('adminAuthError');
   const btnInstant = document.getElementById('btnAdminInstantLogin');
+  const btnHeaderInstant = document.getElementById('btnHeaderInstantLogin');
   const btnToggleEye = document.getElementById('btnTogglePassVisibility');
   const btnLogout = document.getElementById('btnAdminLogout');
-
-  // Check URL query parameters for evaluator demo bypass (?auth=demo, ?demo=1, ?demo=true)
-  const urlParams = new URLSearchParams(window.location.search);
-  const isDemoUrl = urlParams.get('auth') === 'demo' || urlParams.get('demo') === '1' || urlParams.get('demo') === 'true';
 
   const grantAccess = (isInstant = false) => {
     sessionStorage.setItem('FG_ADMIN_AUTH', 'granted');
     if (modal) {
       closeAdminModal(modal);
     }
+    if (btnHeaderInstant) btnHeaderInstant.classList.add('hidden');
     if (errBox) errBox.classList.add('hidden');
     if (passInput) {
       passInput.value = '';
       passInput.classList.remove('border-red-500');
+    }
+
+    if (isInstant) {
+      showToast('⚡ Commander Access Granted via Instant 1-Click Login', 'emerald');
+    } else {
+      showToast('🔓 Command Clearance Verified: Level 4 Commander', 'emerald');
     }
 
     // Refresh map layout so tiles align cleanly
@@ -1987,17 +1991,37 @@ function initAdminAuth() {
     }, 250);
   };
 
-  // Check if session exists or demo URL parameter passed
-  if (isDemoUrl || sessionStorage.getItem('FG_ADMIN_AUTH') === 'granted') {
+  const lockDashboard = () => {
+    sessionStorage.removeItem('FG_ADMIN_AUTH');
+    if (btnHeaderInstant) btnHeaderInstant.classList.remove('hidden');
+    if (modal) openAdminModal(modal);
+    if (passInput) {
+      passInput.value = '';
+      setTimeout(() => passInput.focus(), 200);
+    }
+    showToast('🔒 Command Center Locked: Authorization Required', 'orange');
+  };
+
+  // Require Authorization on Admin Dashboard:
+  // Show authorization modal if not yet authenticated in this session
+  if (sessionStorage.getItem('FG_ADMIN_AUTH') === 'granted') {
     grantAccess();
   } else {
     if (modal) openAdminModal(modal);
-    if (passInput) setTimeout(() => passInput.focus(), 200);
+    if (btnHeaderInstant) btnHeaderInstant.classList.remove('hidden');
+    if (passInput) setTimeout(() => passInput.focus(), 250);
   }
 
-  // Instant 1-Click Login (Single Click for Judges & Evaluators)
+  // Small Instant Login Button inside Modal
   if (btnInstant) {
     btnInstant.addEventListener('click', () => {
+      grantAccess(true);
+    });
+  }
+
+  // Small Instant Login Button in Top Header
+  if (btnHeaderInstant) {
+    btnHeaderInstant.addEventListener('click', () => {
       grantAccess(true);
     });
   }
@@ -2018,7 +2042,7 @@ function initAdminAuth() {
       const val = (passInput ? passInput.value : '').trim();
       const validCodes = ['admin123', 'forestguard2026', 'admin', 'agni123', 'rakshak2026'];
       if (validCodes.includes(val)) {
-        grantAccess();
+        grantAccess(false);
       } else {
         if (errBox) errBox.classList.remove('hidden');
         if (passInput) {
@@ -2029,15 +2053,10 @@ function initAdminAuth() {
     });
   }
 
-  // Lock / Logout Button
+  // Lock / Logout Button in Header
   if (btnLogout) {
     btnLogout.addEventListener('click', () => {
-      sessionStorage.removeItem('FG_ADMIN_AUTH');
-      if (modal) openAdminModal(modal);
-      if (passInput) {
-        passInput.value = '';
-        passInput.focus();
-      }
+      lockDashboard();
     });
   }
 }

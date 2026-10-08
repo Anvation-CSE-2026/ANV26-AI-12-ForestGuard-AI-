@@ -16,7 +16,7 @@
 | :--- | :--- | :--- | :--- |
 | 🔀 **Vercel Cloud** | **Unified Dual Live Demo Hub** | [**Open Dual Split Demo ➔**](https://agni-rakshak.vercel.app/demo.html) | Side-by-side synchronized Citizen + Admin view |
 | 👤 **Vercel Cloud** | **Citizen Reporting Dashboard** | [**Open Citizen Portal ➔**](https://agni-rakshak.vercel.app/user.html) | 6 reporting methods, YOLOv8 scoreboard, GPS |
-| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Center ➔**](https://agni-rakshak.vercel.app/admin.html?auth=demo) | Live radar, team dispatch, water routing |
+| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Center ➔**](https://agni-rakshak.vercel.app/admin.html) | Protected authorization gate + 1-Click Instant Login |
 | 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Page ➔**](https://agni-rakshak.vercel.app) | 3s flash intro, dashboard launchpad |
 | 🚒 **Vercel Cloud** | **Fire Station Turnout Terminal** | [**Open Station Terminal ➔**](https://agni-rakshak.vercel.app/station.html) | Turnout acceptance & route navigation |
 | 🛰️ **Vercel Cloud** | **Satellite Thermal Radar** | [**Open Satellite Radar ➔**](https://agni-rakshak.vercel.app/satellite.html) | ISRO / MODIS thermal hotspots |
@@ -34,7 +34,7 @@ When running the project locally (`node server.js` or `npm start`):
 
 - 🔀 **Unified Dual Live Demo**: [http://localhost:8109/demo.html](http://localhost:8109/demo.html) *(or [http://localhost:3000/demo.html](http://localhost:3000/demo.html))*
 - 👤 **Citizen Emergency Dashboard**: [http://localhost:8109/user.html](http://localhost:8109/user.html)
-- 🚨 **Admin Command Center**: [http://localhost:8109/admin.html?auth=demo](http://localhost:8109/admin.html?auth=demo)
+- 🚨 **Admin Command Center**: [http://localhost:8109/admin.html](http://localhost:8109/admin.html) *(Passcode: `admin123` or click ⚡ Instant Login)*
 - 🏠 **Home Landing Page**: [http://localhost:8109/index.html](http://localhost:8109/index.html)
 
 ---
