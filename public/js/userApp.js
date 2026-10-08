@@ -252,30 +252,99 @@ function initReportingMethods() {
     });
   }
 
-  // Method 5: Current GPS Button
+  // Method 5: Current GPS Button with Resilient Multi-Tier Fallback (Hardware GPS -> Network/IP -> Local Default)
   const btnGps = document.getElementById('btnCurrentGps');
   if (btnGps) {
-    btnGps.addEventListener('click', () => {
-      if (!navigator.geolocation) {
-        alert('Geolocation not supported by browser.');
-        return;
-      }
-      btnGps.textContent = 'Locating GPS...';
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
-          userMap.flyTo([lat, lng], 14, { duration: 1.5 });
+    btnGps.addEventListener('click', async () => {
+      btnGps.innerHTML = '<span>🔄</span> <span>ACQUIRING LOCATION...</span>';
+      btnGps.classList.add('animate-pulse');
+
+      const applyLocation = (lat, lng, label, methodType) => {
+        if (userMap) {
+          userMap.flyTo([lat, lng], 14, { duration: 1.2 });
+        }
+        if (userMarker) {
           userMarker.setLatLng([lat, lng]);
-          updateLocationReadouts(lat, lng, 'My GPS Location');
-          btnGps.innerHTML = '<span>📍</span> <span>USE MY CURRENT LOCATION</span>';
-        },
-        err => {
-          btnGps.innerHTML = '<span>📍</span> <span>USE MY CURRENT LOCATION</span>';
-          alert('GPS location could not be acquired. You can click on the map to place the fire marker.');
-        },
-        { timeout: 8000 }
-      );
+        }
+        updateLocationReadouts(lat, lng, label);
+        if (userMap) setTimeout(() => userMap.invalidateSize(), 300);
+        btnGps.innerHTML = '<span>🎯</span> <span>USE MY CURRENT LOCATION</span>';
+        btnGps.classList.remove('animate-pulse');
+
+        // Show non-blocking toast
+        showLocationToast(
+          methodType === 'gps' 
+            ? `✓ Pinpoint GPS Location Acquired (${lat.toFixed(4)}, ${lng.toFixed(4)})` 
+            : `📍 Location Acquired via Network Geolocation (${label})`,
+          'success'
+        );
+      };
+
+      // Resilient Fallback to IP / Network Geolocation
+      const tryNetworkGeolocation = async () => {
+        try {
+          // Attempt 1: Server-side geolocate proxy
+          let res = await fetch('/api/geolocate').catch(() => null);
+          if (res && res.ok) {
+            const data = await res.json();
+            if (data && data.success && data.lat && data.lng) {
+              const locName = `${data.city || 'Bengaluru'}, ${data.region || 'Karnataka'}`;
+              applyLocation(data.lat, data.lng, locName, 'ip');
+              return true;
+            }
+          }
+
+          // Attempt 2: Direct public IP lookup
+          const ipRes = await fetch('https://ipwho.is/').catch(() => null);
+          if (ipRes && ipRes.ok) {
+            const ipData = await ipRes.json();
+            if (ipData && ipData.success && ipData.latitude && ipData.longitude) {
+              const locName = `${ipData.city || 'Bengaluru'}, ${ipData.region || 'Karnataka'}`;
+              applyLocation(ipData.latitude, ipData.longitude, locName, 'ip');
+              return true;
+            }
+          }
+        } catch (e) {
+          console.warn('[NETWORK GEOLOCATION FALLBACK ERROR]', e);
+        }
+
+        // Attempt 3: Default to Bengaluru (Kanakapura Road / DSATM / KSSEM region)
+        applyLocation(12.8258, 77.5158, 'Bengaluru (Kanakapura Road Region)', 'default');
+        return true;
+      };
+
+      // Try browser geolocation first with short timeout & relaxed accuracy
+      if (navigator.geolocation) {
+        let isHandled = false;
+        const timer = setTimeout(() => {
+          if (!isHandled) {
+            isHandled = true;
+            console.log('[GEOLOCATION] Browser GPS timed out on desktop, falling back to IP/Network...');
+            tryNetworkGeolocation();
+          }
+        }, 3800);
+
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            if (isHandled) return;
+            isHandled = true;
+            clearTimeout(timer);
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            applyLocation(lat, lng, 'My Device GPS Location', 'gps');
+          },
+          err => {
+            if (isHandled) return;
+            isHandled = true;
+            clearTimeout(timer);
+            console.warn('[GEOLOCATION NOTICE]', err.message, '-> falling back to Network/IP geolocation');
+            tryNetworkGeolocation();
+          },
+          { enableHighAccuracy: false, timeout: 3500, maximumAge: 120000 }
+        );
+      } else {
+        await tryNetworkGeolocation();
+      }
     });
   }
 
@@ -287,7 +356,53 @@ function initReportingMethods() {
 // AUTOCOMPLETE PREDICTIONS DATABASE & ENGINE
 // ==========================================
 const LOCATION_CATALOG = [
-  // Campus & Educational Institutes (Prominently includes DSATM as requested)
+  // Campus & Educational Institutes (Prominently includes KSSEM & DSATM as requested)
+  { 
+    name: 'KS School of Engineering and Management (KSSEM), Holiday Village Road, Kanakapura Road, Bengaluru', 
+    shortName: 'KS School of Engg & Mgmt (KSSEM)', 
+    category: 'College / Engineering Campus', 
+    icon: '🎓', 
+    lat: 12.8550, 
+    lng: 77.5420, 
+    state: 'Karnataka', 
+    district: 'Bengaluru Urban', 
+    tags: [
+      'ks',
+      'kssem',
+      'ks school',
+      'ks school of engineering',
+      'ks school of engineering and management',
+      'ks school of engineering and managemnet',
+      'kammavari',
+      'holiday village',
+      'mallasandra',
+      'kanakapura',
+      'engineering',
+      'management',
+      'college',
+      'bengaluru'
+    ] 
+  },
+  { 
+    name: 'KS Institute of Technology (KSIT), Kanakapura Road, Vajrahalli, Bengaluru', 
+    shortName: 'KSIT Bengaluru', 
+    category: 'College / Engineering Campus', 
+    icon: '🎓', 
+    lat: 12.8792, 
+    lng: 77.5446, 
+    state: 'Karnataka', 
+    district: 'Bengaluru Urban', 
+    tags: [
+      'ksit',
+      'ks',
+      'ks institute',
+      'ks institute of technology',
+      'vajrahalli',
+      'kanakapura',
+      'engineering',
+      'bengaluru'
+    ] 
+  },
   { name: 'DSATM Campus, Kanakapura Road, Bengaluru', shortName: 'DSATM Bengaluru', category: 'College / Engineering', icon: '🎓', lat: 12.8258, lng: 77.5158, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['dsatm', 'dayananda sagar', 'kanakapura', 'engineering', 'college'] },
   { name: 'Dayananda Sagar Institutions (DSI), Kumaraswamy Layout, Bengaluru', shortName: 'DSI Main Campus', category: 'Campus / Engineering', icon: '🎓', lat: 12.9081, lng: 77.5663, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['dsi', 'dayananda sagar', 'kumaraswamy layout'] },
   { name: 'Indian Institute of Science (IISc), Mathikere, Bengaluru', shortName: 'IISc Bengaluru', category: 'Research Institute', icon: '🎓', lat: 13.0219, lng: 77.5671, state: 'Karnataka', district: 'Bengaluru Urban', tags: ['iisc', 'science', 'mathikere'] },
@@ -425,7 +540,7 @@ function initLocationAutocomplete() {
     });
   }
 
-  // Select Prediction & Fly Map
+  // Select Prediction & Fly Map Directly
   function selectPrediction(item) {
     if (!item) return;
     inputSearch.value = item.name;
@@ -434,9 +549,12 @@ function initLocationAutocomplete() {
     const lat = parseFloat(item.lat);
     const lng = parseFloat(item.lng);
 
-    // Fly map to selected coordinates
+    // Directly fly and pinpoint on Central Map
     if (userMap) {
-      userMap.flyTo([lat, lng], 14, { duration: 1.2 });
+      userMap.flyTo([lat, lng], 15, { duration: 1.2 });
+      setTimeout(() => {
+        if (userMap) userMap.invalidateSize();
+      }, 350);
     }
     if (userMarker) {
       userMarker.setLatLng([lat, lng]);
@@ -446,6 +564,9 @@ function initLocationAutocomplete() {
     updateLocationReadouts(lat, lng, item.name);
 
     hideDropdown();
+
+    // Display non-blocking feedback toast
+    showLocationToast(`📍 Pinned location: ${item.shortName || item.name}`, 'info');
   }
 
   function hideDropdown() {
@@ -599,7 +720,9 @@ function initLocationAutocomplete() {
       const ql = q.toLowerCase();
       const directMatch = LOCATION_CATALOG.find(c => 
         c.name.toLowerCase().includes(ql) || 
-        (c.tags && c.tags.some(t => t.includes(ql)))
+        (c.tags && c.tags.some(t => t.includes(ql))) ||
+        (ql.length >= 2 && c.tags && c.tags.some(t => ql.includes(t))) ||
+        (c.shortName && c.shortName.toLowerCase().includes(ql))
       );
       if (directMatch) {
         selectPrediction(directMatch);
@@ -1509,3 +1632,35 @@ window.addEventListener('message', (e) => {
     if (fullMap) fullMap.invalidateSize();
   }
 });
+
+// Tactical Floating Toast Notification System
+function showLocationToast(message, type = 'info') {
+  let toastContainer = document.getElementById('userToastContainer');
+  if (!toastContainer) {
+    toastContainer = document.createElement('div');
+    toastContainer.id = 'userToastContainer';
+    toastContainer.className = 'fixed bottom-5 right-5 z-[9999999] flex flex-col gap-2 max-w-sm pointer-events-none';
+    document.body.appendChild(toastContainer);
+  }
+
+  const toast = document.createElement('div');
+  const borderCol = type === 'success' ? 'border-emerald-500 bg-[#061e14]/95 text-emerald-200' 
+                  : type === 'warning' ? 'border-amber-500 bg-[#231707]/95 text-amber-200'
+                  : type === 'error' ? 'border-red-500 bg-[#250d0d]/95 text-red-200'
+                  : 'border-cyan-500 bg-[#071927]/95 text-cyan-200';
+  const icon = type === 'success' ? '✓' : type === 'warning' ? '⚠️' : type === 'error' ? '✕' : '📍';
+
+  toast.className = `p-3 rounded-xl border ${borderCol} shadow-2xl backdrop-blur-md text-xs font-bold transition-all duration-300 transform translate-y-3 opacity-0 pointer-events-auto flex items-center gap-2.5`;
+  toast.innerHTML = `<span class="text-sm shrink-0">${icon}</span><span class="flex-1">${message}</span>`;
+  toastContainer.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.classList.remove('translate-y-3', 'opacity-0');
+  });
+
+  setTimeout(() => {
+    toast.classList.add('opacity-0', 'translate-y-2');
+    setTimeout(() => toast.remove(), 350);
+  }, 4000);
+}
+

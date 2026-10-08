@@ -367,6 +367,40 @@ app.post('/api/incidents/reset-single-bandipur', (req, res) => {
   res.json({ success: true, message: 'All test alerts removed. Only 1 Bandipur Forest test case preserved.', incidents });
 });
 
+// 13.4 Automatic IP Geolocation Fallback Endpoint
+app.get('/api/geolocate', async (req, res) => {
+  try {
+    const ipRes = await fetch('https://ipwho.is/');
+    if (ipRes.ok) {
+      const data = await ipRes.json();
+      if (data && data.success && data.latitude && data.longitude) {
+        return res.json({
+          success: true,
+          source: 'ip_network',
+          lat: data.latitude,
+          lng: data.longitude,
+          city: data.city || 'Bengaluru',
+          region: data.region || 'Karnataka',
+          country: data.country || 'India'
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('[GEOLOCATE SERVER WARN]', err.message);
+  }
+
+  // Graceful fallback coordinates: Bengaluru (Kanakapura Road / Campus Region)
+  res.json({
+    success: true,
+    source: 'region_default',
+    lat: 12.8258,
+    lng: 77.5158,
+    city: 'Bengaluru (Kanakapura Road Area)',
+    region: 'Karnataka',
+    country: 'India'
+  });
+});
+
 // 14. Response Teams Endpoints
 app.get('/api/teams', (req, res) => {
   res.json({ success: true, teams: incidentStore.getAllTeams() });
