@@ -47,11 +47,6 @@
         <span id="audioIcon">🔊</span> <span id="audioLabel" class="hidden sm:inline">Audio Siren Active</span>
       </button>
 
-      <!-- Google Maps API Key Config -->
-      <button id="btnOpenMapConfig" class="px-2.5 py-1.5 rounded-lg bg-sky-950/80 hover:bg-sky-900 border border-sky-600/60 text-xs font-bold text-sky-400 transition flex items-center gap-1">
-        <span>🗺️</span> <span class="hidden sm:inline">Google Maps Config</span>
-      </button>
-
       <!-- Live AI Image Inspector Modal Button -->
       <button id="btnOpenImageInspector" class="px-3 py-1.5 rounded-lg bg-emerald-950/80 hover:bg-emerald-850 border border-emerald-500/80 text-xs font-black text-emerald-300 hover:text-white transition flex items-center gap-1.5 shadow-md">
         <span>🔬</span> <span class="hidden sm:inline">AI Score Board</span> Inspector
@@ -530,36 +525,6 @@
         </button>
         <button id="btnConfirmDispatch" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs tracking-wider uppercase shadow-lg transition">
           CONFIRM DISPATCH
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Google Maps API Key Config Modal -->
-  <div id="mapConfigModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[99999] modal-emergency-layer hidden flex items-center justify-center p-4">
-    <div class="bg-[#091122] border border-sky-500/50 rounded-2xl max-w-md w-full p-6 shadow-2xl">
-      <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
-        <h3 class="text-base font-black text-white flex items-center gap-2">
-          <span>🗺️</span> <span>Google Maps API Configuration</span>
-        </h3>
-        <button id="btnCloseMapConfig" class="text-slate-400 hover:text-white font-bold">✕</button>
-      </div>
-
-      <p class="text-xs text-slate-300 mb-4 leading-relaxed">
-        The application is powered by Google Maps. Enter your Google Maps JavaScript API key below, or leave it blank to use the high-resolution Google Hybrid satellite fallback engine:
-      </p>
-
-      <div class="mb-4">
-        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Google Maps API Key</label>
-        <input type="text" id="inputGoogleApiKey" class="w-full bg-[#040814] border border-slate-700 focus:border-sky-500 rounded-xl px-3 py-2 text-xs font-mono text-white outline-none" placeholder="AIzaSy..." />
-      </div>
-
-      <div class="flex gap-2">
-        <button id="btnSaveApiKey" class="flex-1 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition">
-          Save & Reload Map
-        </button>
-        <button id="btnUseFallbackMap" class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">
-          Use Satellite Engine
         </button>
       </div>
     </div>

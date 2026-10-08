@@ -553,39 +553,6 @@ function initUIEvents() {
     });
   }
 
-  // Google Maps Config Modal
-  const btnOpenConfig = document.getElementById('btnOpenMapConfig');
-  const btnCloseConfig = document.getElementById('btnCloseMapConfig');
-  const mapModal = document.getElementById('mapConfigModal');
-  const btnSaveKey = document.getElementById('btnSaveApiKey');
-  const btnUseFallback = document.getElementById('btnUseFallbackMap');
-
-  if (btnOpenConfig) btnOpenConfig.addEventListener('click', () => mapModal.classList.remove('hidden'));
-  if (btnCloseConfig) btnCloseConfig.addEventListener('click', () => mapModal.classList.add('hidden'));
-
-  if (btnSaveKey) {
-    btnSaveKey.addEventListener('click', async () => {
-      const key = document.getElementById('inputGoogleApiKey').value.trim();
-      if (key) {
-        localStorage.setItem('FG_GOOGLE_MAPS_KEY', key);
-        await fetch('/api/config', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ googleMapsApiKey: key })
-        });
-        alert('Google Maps API key saved! Reloading map...');
-        window.location.reload();
-      }
-    });
-  }
-
-  if (btnUseFallback) {
-    btnUseFallback.addEventListener('click', () => {
-      localStorage.removeItem('FG_GOOGLE_MAPS_KEY');
-      mapModal.classList.add('hidden');
-    });
-  }
-
   // Dispatch Response Modal (Section 14)
   const btnDisp = document.getElementById('btnDispatchAction');
   const dispModal = document.getElementById('dispatchModal');
@@ -641,10 +608,8 @@ function initUIEvents() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       const dm = document.getElementById('dispatchModal');
-      const mcm = document.getElementById('mapConfigModal');
       const iim = document.getElementById('imageInspectorModal');
       if (dm && !dm.classList.contains('hidden')) dm.classList.add('hidden');
-      if (mcm && !mcm.classList.contains('hidden')) mcm.classList.add('hidden');
       if (iim && !iim.classList.contains('hidden')) iim.classList.add('hidden');
     }
   });
