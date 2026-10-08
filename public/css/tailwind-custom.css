@@ -193,3 +193,20 @@ body {
   50% { transform: translateX(100%) rotate(30deg); }
   100% { transform: translateX(100%) rotate(30deg); }
 }
+
+/* Map Container Isolation & Z-Index Boundary: Leaflet internal controls (z:1000) will never escape */
+#userCentralMap,
+#userFullMap,
+#adminLiveMap,
+.leaflet-container {
+  isolation: isolate !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Emergency Modals: Always stacked strictly on top of all Leaflet maps and layer controls */
+.modal-emergency-layer {
+  z-index: 99999 !important;
+  position: fixed !important;
+  inset: 0 !important;
+}

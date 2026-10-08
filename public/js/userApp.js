@@ -624,8 +624,11 @@ function initFormAndModals() {
   const confirmModal = document.getElementById('confirmAlertModal');
   const btnCancelSend = document.getElementById('btnCancelSend');
   const btnConfirmSend = document.getElementById('btnConfirmSend');
+  const btnCloseConfirmTop = document.getElementById('btnCloseConfirmTop');
   const successModal = document.getElementById('successAlertModal');
-  const btnGoReports = document.getElementById('btnGoMyReports');
+  const btnCloseSuccessTop = document.getElementById('btnCloseSuccessTop');
+  const btnCancelSuccessModal = document.getElementById('btnCancelSuccessModal');
+  const btnGoReports = document.getElementById('btnGoToMyReports') || document.getElementById('btnGoMyReports');
   const btnCloseSucc = document.getElementById('btnCloseSuccessModal');
 
   if (form) {
@@ -658,9 +661,41 @@ function initFormAndModals() {
     });
   }
 
+  // Cancel / Close for Confirmation Modal
   if (btnCancelSend) {
     btnCancelSend.addEventListener('click', () => confirmModal.classList.add('hidden'));
   }
+  if (btnCloseConfirmTop) {
+    btnCloseConfirmTop.addEventListener('click', () => confirmModal.classList.add('hidden'));
+  }
+
+  // Cancel / Close for Success Modal
+  if (btnCloseSuccessTop) {
+    btnCloseSuccessTop.addEventListener('click', () => successModal.classList.add('hidden'));
+  }
+  if (btnCancelSuccessModal) {
+    btnCancelSuccessModal.addEventListener('click', () => successModal.classList.add('hidden'));
+  }
+
+  // Backdrop click to cancel/dismiss modals
+  if (confirmModal) {
+    confirmModal.addEventListener('click', (e) => {
+      if (e.target === confirmModal) confirmModal.classList.add('hidden');
+    });
+  }
+  if (successModal) {
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal) successModal.classList.add('hidden');
+    });
+  }
+
+  // Escape key to dismiss modals
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (confirmModal && !confirmModal.classList.contains('hidden')) confirmModal.classList.add('hidden');
+      if (successModal && !successModal.classList.contains('hidden')) successModal.classList.add('hidden');
+    }
+  });
 
   if (btnConfirmSend) {
     btnConfirmSend.addEventListener('click', async () => {
@@ -713,14 +748,27 @@ function initFormAndModals() {
   if (btnGoReports) {
     btnGoReports.addEventListener('click', () => {
       successModal.classList.add('hidden');
-      document.querySelector('[data-tab="tabMyReports"]').click();
+      const tabBtn = document.querySelector('[data-tab="tabMyReports"]');
+      if (tabBtn) tabBtn.click();
     });
   }
 
   if (btnCloseSucc) {
     btnCloseSucc.addEventListener('click', () => {
       successModal.classList.add('hidden');
-      window.location.reload();
+      // Reset observation form cleanly
+      const obs = document.getElementById('descObservation');
+      if (obs) obs.value = '';
+      selectedFile = null;
+      selectedVideoFile = null;
+      const fileIn = document.getElementById('fireImageInput');
+      if (fileIn) fileIn.value = '';
+      const vidIn = document.getElementById('fireVideoInput');
+      if (vidIn) vidIn.value = '';
+      const pv = document.getElementById('previewContainer');
+      if (pv) pv.classList.add('hidden');
+      const ph = document.getElementById('uploadPlaceholder');
+      if (ph) ph.classList.remove('hidden');
     });
   }
 }

@@ -373,7 +373,7 @@
             </div>
 
             <!-- Map Container -->
-            <div id="userCentralMap" class="w-full h-72 rounded-xl border border-slate-700 relative bg-[#040814] overflow-hidden"></div>
+            <div id="userCentralMap" class="w-full h-72 rounded-xl border border-slate-700 relative z-0 isolate bg-[#040814] overflow-hidden" style="isolation: isolate;"></div>
 
             <!-- Location Information Readout -->
             <div class="p-3 rounded-xl bg-[#040814] border border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
@@ -490,7 +490,7 @@
           <p class="text-xs text-slate-400">View active incidents, water reservoirs, response stations, and forest reserves.</p>
         </div>
       </div>
-      <div id="userFullMap" class="w-full h-[520px] rounded-2xl border border-slate-700 overflow-hidden bg-[#040814]"></div>
+      <div id="userFullMap" class="w-full h-[520px] rounded-2xl border border-slate-700 relative z-0 isolate overflow-hidden bg-[#040814]" style="isolation: isolate;"></div>
     </div>
 
     <!-- TAB 4: EMERGENCY CONTACTS (Section 7 & 26) -->
@@ -519,8 +519,13 @@
   </main>
 
   <!-- CONFIRMATION MODAL: SEND EMERGENCY FIRE ALERT? (Section 5) -->
-  <div id="confirmAlertModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#091122] border-2 border-red-500/80 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+  <div id="confirmAlertModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-[99999] modal-emergency-layer hidden flex items-center justify-center p-4">
+    <div class="bg-[#091122] border-2 border-red-500/80 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+      <!-- Top Close / Cancel Button -->
+      <button type="button" id="btnCloseConfirmTop" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition border border-slate-700 hover:border-slate-500" title="Cancel & Close">
+        ✕
+      </button>
+
       <div class="text-center">
         <div class="w-14 h-14 rounded-full bg-red-950 text-red-400 text-2xl flex items-center justify-center mx-auto mb-2 border border-red-600 animate-pulse">
           🚨
@@ -557,10 +562,10 @@
       </div>
 
       <div class="flex gap-3">
-        <button type="button" id="btnCancelSend" class="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs">
+        <button type="button" id="btnCancelSend" class="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs uppercase transition border border-slate-700">
           CANCEL
         </button>
-        <button type="button" id="btnConfirmSend" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase shadow-lg">
+        <button type="button" id="btnConfirmSend" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase shadow-lg transition">
           SEND ALERT
         </button>
       </div>
@@ -568,8 +573,13 @@
   </div>
 
   <!-- SUCCESS MODAL: EMERGENCY ALERT SENT (Section 6) -->
-  <div id="successAlertModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#091122] border-2 border-emerald-500 rounded-2xl max-w-md w-full p-6 shadow-2xl text-center space-y-4">
+  <div id="successAlertModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[99999] modal-emergency-layer hidden flex items-center justify-center p-4">
+    <div class="bg-[#091122] border-2 border-emerald-500 rounded-2xl max-w-md w-full p-6 shadow-2xl text-center space-y-4 relative">
+      <!-- Top Close / Cancel Button -->
+      <button type="button" id="btnCloseSuccessTop" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition border border-slate-700 hover:border-slate-500 cursor-pointer" title="Cancel / Close Dialog">
+        ✕
+      </button>
+
       <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 text-3xl flex items-center justify-center mx-auto border border-emerald-500">
         ✓
       </div>
@@ -599,11 +609,15 @@
       </p>
 
       <div class="flex flex-col gap-2 pt-2">
-        <button type="button" id="btnGoToMyReports" class="w-full py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs uppercase transition">
+        <button type="button" id="btnGoToMyReports" class="w-full py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs uppercase transition shadow-md">
           View in My Reports
         </button>
-        <button type="button" id="btnCloseSuccessModal" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">
+        <button type="button" id="btnCloseSuccessModal" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition border border-slate-700">
           Submit Another Report
+        </button>
+        <!-- Explicit Cancel / Dismiss Option as Requested by User -->
+        <button type="button" id="btnCancelSuccessModal" class="w-full py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white font-bold text-xs uppercase transition border border-slate-700/80 flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+          <span>✕</span> <span>Cancel / Dismiss Dialog</span>
         </button>
       </div>
     </div>

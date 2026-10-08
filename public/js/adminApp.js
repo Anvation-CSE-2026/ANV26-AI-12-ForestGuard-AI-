@@ -551,7 +551,27 @@ function initUIEvents() {
     });
   }
 
+  const btnCloseDispatchTop = document.getElementById('btnCloseDispatchTop');
+  if (btnCloseDispatchTop) btnCloseDispatchTop.addEventListener('click', () => dispModal.classList.add('hidden'));
   if (btnCancelDisp) btnCancelDisp.addEventListener('click', () => dispModal.classList.add('hidden'));
+
+  if (dispModal) {
+    dispModal.addEventListener('click', (e) => {
+      if (e.target === dispModal) dispModal.classList.add('hidden');
+    });
+  }
+
+  // Global Escape key to dismiss modals in admin
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const dm = document.getElementById('dispatchModal');
+      const mcm = document.getElementById('mapConfigModal');
+      const iim = document.getElementById('imageInspectorModal');
+      if (dm && !dm.classList.contains('hidden')) dm.classList.add('hidden');
+      if (mcm && !mcm.classList.contains('hidden')) mcm.classList.add('hidden');
+      if (iim && !iim.classList.contains('hidden')) iim.classList.add('hidden');
+    }
+  });
 
   if (btnConfirmDisp) {
     btnConfirmDisp.addEventListener('click', async () => {
