@@ -1237,11 +1237,18 @@ function handleImageFile(file) {
           if (result.success && result.scoreboard) {
             updateScoreboardUI(result.scoreboard);
             if (badge) {
-              const isFire = result.fireDetected !== false;
-              badge.textContent = isFire ? 'FIRE DETECTED - VERIFIED' : 'SPECTRUM CLEAR - SAFE';
-              badge.className = isFire
-                ? 'text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300'
-                : 'text-[10px] font-black px-2 py-0.5 rounded bg-emerald-950 border border-emerald-600 text-emerald-300';
+              const isFake = result.isFake || result.fireDetected === false || (result.scoreboard && result.scoreboard.isFake) || result.severity === 'FAKE ALERT';
+              const isFire = result.fireDetected !== false && !isFake;
+              if (isFire) {
+                badge.textContent = 'FIRE DETECTED - VERIFIED';
+                badge.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300';
+              } else if (isFake) {
+                badge.textContent = '⚠️ FAKE ALERT SIGNAL - NO FIRE';
+                badge.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300 animate-pulse font-mono';
+              } else {
+                badge.textContent = 'SPECTRUM CLEAR - SAFE';
+                badge.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-emerald-950 border border-emerald-600 text-emerald-300';
+              }
             }
           }
         })
@@ -1258,7 +1265,8 @@ function handleImageFile(file) {
 
 // Live Score Board UI Updater (Detection Result HUD)
 function updateScoreboardUI(data) {
-  const isFire = data.fireDetected !== false && (data.anomalyConfidence > 15 || data.riskScore > 20 || data.fireDetected);
+  const isFakeDetected = data.isFake || (data.fakeProbability !== undefined && parseFloat(data.fakeProbability) > 50) || data.fireDetected === false || (data.badgeText && data.badgeText.includes('FAKE')) || data.severity === 'FAKE ALERT';
+  const isFire = !isFakeDetected && data.fireDetected !== false && (data.anomalyConfidence > 15 || data.riskScore > 20 || data.fireDetected);
 
   const timestampEl = document.getElementById('sbTimestamp');
   if (timestampEl) {
@@ -1281,6 +1289,14 @@ function updateScoreboardUI(data) {
       subtitle.textContent = `Status: Active Wildfire (${objCount} Objects)`;
       badge.textContent = data.badgeText || data.severity || 'CRITICAL';
       badge.className = 'text-[10px] font-black px-2 py-0.5 rounded-md bg-red-600 text-white border border-red-400 shadow-sm animate-pulse';
+    } else if (isFakeDetected) {
+      banner.className = 'p-3 rounded-xl border flex items-center justify-between transition-all duration-300 bg-gradient-to-r from-red-950/90 via-amber-950/70 to-red-950/90 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.35)]';
+      iconBox.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-base bg-red-900/60 border border-red-500 text-red-300 animate-pulse';
+      iconBox.textContent = '⚠️';
+      title.textContent = 'FAKE ALERT SIGNAL';
+      subtitle.textContent = 'Status: Flagged - Non-Fire Photo / Potential Hoax';
+      badge.textContent = 'FAKE ALERT';
+      badge.className = 'text-[10px] font-black px-2 py-0.5 rounded-md bg-red-600 text-white border border-red-400 shadow-sm animate-pulse font-mono';
     } else {
       banner.className = 'p-3 rounded-xl border flex items-center justify-between transition-all duration-300 bg-emerald-950/40 border-emerald-500/40';
       iconBox.className = 'w-8 h-8 rounded-lg flex items-center justify-center text-base bg-emerald-900/60 border border-emerald-500/40 text-emerald-300';
@@ -1347,32 +1363,32 @@ function updateScoreboardUI(data) {
   }
 
   // 2. Fire Score & Level
-  const fireScoreVal = parseFloat(data.fireScore !== undefined ? data.fireScore : anomVal).toFixed(1);
+  const fireScoreVal = isFakeDetected ? '0.0' : parseFloat(data.fireScore !== undefined ? data.fireScore : anomVal).toFixed(1);
   const fireScoreEl = document.getElementById('sbMetricFireScore');
   if (fireScoreEl) {
-    fireScoreEl.textContent = `${fireScoreVal}%`;
-    fireScoreEl.className = isFire ? 'text-xs font-black text-orange-400 font-mono' : 'text-xs font-black text-slate-400 font-mono';
+    fireScoreEl.textContent = isFakeDetected ? '0.0%' : `${fireScoreVal}%`;
+    fireScoreEl.className = isFire ? 'text-xs font-black text-orange-400 font-mono' : (isFakeDetected ? 'text-xs font-black text-red-400 font-mono' : 'text-xs font-black text-slate-400 font-mono');
   }
   const fireLevelEl = document.getElementById('sbMetricFireLevel');
   if (fireLevelEl) {
-    fireLevelEl.textContent = isFire ? `LEVEL: ${data.fireLevel || (riskVal >= 84 ? 'CRITICAL' : 'HIGH')}` : 'LEVEL: SAFE';
-    fireLevelEl.className = isFire ? 'text-[8px] font-bold text-orange-400 block mt-0.5' : 'text-[8px] font-bold text-slate-400 block mt-0.5';
+    fireLevelEl.textContent = isFakeDetected ? 'LEVEL: SAFE (FAKE ALERT)' : (isFire ? `LEVEL: ${data.fireLevel || (riskVal >= 84 ? 'CRITICAL' : 'HIGH')}` : 'LEVEL: SAFE');
+    fireLevelEl.className = isFire ? 'text-[8px] font-bold text-orange-400 block mt-0.5' : (isFakeDetected ? 'text-[8px] font-bold text-red-400 block mt-0.5' : 'text-[8px] font-bold text-slate-400 block mt-0.5');
   }
 
   // 2. Risk Score & Severity
   const riskVal = isFire ? (data.riskScore !== undefined ? data.riskScore : 96) : 0;
-  const sevVal = isFire ? (data.severity || 'CRITICAL') : 'NORMAL';
+  const sevVal = isFakeDetected ? 'FAKE ALERT' : (isFire ? (data.severity || 'CRITICAL') : 'NORMAL');
 
   const riskEl = document.getElementById('sbMetricRisk');
   if (riskEl) {
-    riskEl.textContent = riskVal;
-    riskEl.className = isFire ? 'text-base font-black text-red-400 font-mono' : 'text-base font-black text-emerald-400 font-mono';
+    riskEl.textContent = isFakeDetected ? '0 (FAKE)' : riskVal;
+    riskEl.className = isFire ? 'text-base font-black text-red-400 font-mono' : (isFakeDetected ? 'text-base font-black text-red-400 font-mono' : 'text-base font-black text-emerald-400 font-mono');
   }
 
   const sevEl = document.getElementById('sbMetricSeverity');
   if (sevEl) {
     sevEl.textContent = sevVal;
-    sevEl.className = isFire ? 'text-[9px] font-bold text-red-400 block mt-0.5' : 'text-[9px] font-bold text-emerald-400 block mt-0.5';
+    sevEl.className = isFire ? 'text-[9px] font-bold text-red-400 block mt-0.5' : (isFakeDetected ? 'text-[9px] font-bold text-red-400 block mt-0.5' : 'text-[9px] font-bold text-emerald-400 block mt-0.5');
   }
 
   // 3. AI Fake Score & Authenticity Check
@@ -1421,6 +1437,9 @@ function updateScoreboardUI(data) {
     if (isFire) {
       alertBox.className = 'p-2 rounded-xl border flex items-center justify-center text-center font-black text-xs tracking-wider transition-all duration-300 bg-red-950/80 border-red-600/70 text-red-300 shadow-md';
       alertText.textContent = data.earlyWarningAlert || 'CRITICAL - IMMEDIATE DISPATCH';
+    } else if (isFakeDetected) {
+      alertBox.className = 'p-2 rounded-xl border flex items-center justify-center text-center font-black text-xs tracking-wider transition-all duration-300 bg-red-950/90 border-red-600/80 text-red-300 shadow-md animate-pulse';
+      alertText.textContent = '⚠️ FAKE ALERT SIGNAL - ZERO HAZARD / NON-FIRE PHOTO';
     } else {
       alertBox.className = 'p-2 rounded-xl border flex items-center justify-center text-center font-black text-xs tracking-wider transition-all duration-300 bg-emerald-950/40 border-emerald-600/40 text-emerald-300';
       alertText.textContent = 'NORMAL - SECTOR CLEAR';
@@ -1521,13 +1540,24 @@ function analyzeImageFast(imgElement, callback) {
       callback({
         fireDetected: false,
         anomalyConfidence: 0.0,
+        fireScore: 0.0,
+        fireConfidence: 0.0,
         smokeConfidence: 0.0,
         fireCoverage: 0.0,
         smokeLevel: 0.0,
         riskScore: 0,
-        severity: 'NORMAL',
+        severity: 'FAKE ALERT',
+        fireLevel: 'SAFE (FAKE ALERT)',
         objectsCount: 0,
-        earlyWarningAlert: 'NORMAL - SECTOR CLEAR',
+        statusTitle: 'FAKE ALERT DETECTED',
+        statusText: 'Status: Non-Fire Photo Flagged as False Alarm',
+        badgeText: 'FAKE ALERT',
+        earlyWarningAlert: '⚠️ FAKE ALERT SIGNAL - ZERO HAZARD / NON-FIRE PHOTO',
+        fakeProbability: 92.4,
+        authenticityScore: 7.6,
+        fakeVerdict: 'SUSPECTED FAKE / FALSE ALARM',
+        fakeStatus: 'FLAGGED - NON-FIRE PHOTO / POTENTIAL HOAX',
+        isFake: true,
         timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
       });
     }

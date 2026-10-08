@@ -96,6 +96,8 @@ function initSocket() {
       sysEl.textContent = '● SYSTEM ONLINE';
       sysEl.className = 'text-emerald-400 font-bold';
     }
+    // Sync current alerts from existing API/database on connect & reconnect (Requirement H)
+    fetchIncidents();
   });
 
   socket.on('disconnect', () => {
@@ -106,11 +108,37 @@ function initSocket() {
     }
   });
 
-  // 🚨 NEW FIRE ALERT (Real-Time push)
+  // 🚨 NEW FIRE ALERT (Real-Time push via Socket.IO - Requirement A, B, E)
   socket.on('new_fire_alert', (incident) => {
     console.log('🚨 [SOCKET EVENT: new_fire_alert]', incident);
     handleNewFireAlert(incident);
   });
+
+  socket.on('new-fire-alert', (incident) => {
+    console.log('🚨 [SOCKET EVENT: new-fire-alert]', incident);
+    handleNewFireAlert(incident);
+  });
+
+  // Resilient background live sync fallback: if socket is disconnected (e.g. on serverless hosting like Vercel),
+  // automatically checks /api/incidents every 3.5 seconds so mobile submissions appear instantly without refresh
+  setInterval(async () => {
+    if (!socket || !socket.connected) {
+      try {
+        const res = await fetch('/api/incidents');
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.success && Array.isArray(data.incidents)) {
+            const currentIds = new Set(allIncidents.map(i => i.incidentId || i.id));
+            const newOnes = data.incidents.filter(i => !currentIds.has(i.incidentId || i.id));
+            if (newOnes.length > 0) {
+              console.log(`[LIVE SYNC FALLBACK] ${newOnes.length} new incident(s) detected`);
+              newOnes.forEach(newInc => handleNewFireAlert(newInc));
+            }
+          }
+        }
+      } catch (e) {}
+    }
+  }, 3500);
 
   // FIRE VERIFIED
   socket.on('fire_verified', (updated) => {
@@ -202,16 +230,28 @@ function initSocket() {
   });
 }
 
-// 4. Handle Incoming Live Fire Alert
+// 4. Handle Incoming Live Fire Alert (Requirement A, B, C, G)
 function handleNewFireAlert(rawIncident) {
   if (!rawIncident) return;
   const incident = rawIncident.incident || rawIncident;
   incident.incidentId = incident.incidentId || incident.id || `FG-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+  const targetId = incident.incidentId;
+
+  // Duplicate Protection (Requirement G: If admin receives same event more than once, do not duplicate alerts or markers)
+  const existingIdx = allIncidents.findIndex(i => (i.incidentId || i.id) === targetId);
+  if (existingIdx !== -1) {
+    allIncidents[existingIdx] = { ...allIncidents[existingIdx], ...incident };
+    renderIncidentList();
+    return;
+  }
+
   incident.title = (incident.title || incident.alertTitle || incident.forestName || 'Bandipur Forest Fire Alert').trim();
   incident.forestName = incident.forestName || incident.locationName || 'Bandipur Forest';
-  incident.severity = incident.severity || 'CRITICAL';
-  incident.riskScore = (incident.riskScore !== undefined && incident.riskScore !== null) ? incident.riskScore : 95;
-  incident.aiConfidence = incident.aiConfidence || incident.confidence || 94.2;
+  
+  const isFakeAlert = incident.isFake || incident.fireDetected === false || incident.severity === 'FAKE ALERT' || (incident.fakeProbability && parseFloat(incident.fakeProbability) > 50);
+  incident.severity = isFakeAlert ? 'FAKE ALERT' : (incident.severity || 'CRITICAL');
+  incident.riskScore = (incident.riskScore !== undefined && incident.riskScore !== null) ? incident.riskScore : (isFakeAlert ? 0 : 95);
+  incident.aiConfidence = incident.aiConfidence || incident.confidence || (isFakeAlert ? 0.0 : 94.2);
   incident.status = incident.status || 'UNDER REVIEW';
   incident.isPriority = true;
 
@@ -220,20 +260,24 @@ function handleNewFireAlert(rawIncident) {
   const txtLastEvent = document.getElementById('txtLastEventTime');
   if (txtLastEvent) txtLastEvent.textContent = timeStr;
 
-  // 1. Play Emergency Siren Sound
+  // 1. Audio Notification
   if (window.emergencyAudio && !audioMuted) {
     try {
-      window.emergencyAudio.playSirenAlert(4);
+      if (isFakeAlert) {
+        window.emergencyAudio.playDispatchChime();
+      } else {
+        window.emergencyAudio.playSirenAlert(4);
+      }
     } catch (e) {
-      console.warn('[AUDIO WARNING] Siren play blocked by browser policy:', e);
+      console.warn('[AUDIO WARNING] Audio play blocked by browser policy:', e);
     }
   }
 
-  // 2. Add to absolute top of Incidents List (Priority 1)
-  allIncidents = [incident, ...allIncidents.filter(i => (i.incidentId || i.id) !== incident.incidentId)];
+  // 2. Add to absolute top of Incidents List (Priority 1) without page refresh
+  allIncidents = [incident, ...allIncidents.filter(i => (i.incidentId || i.id) !== targetId)];
   renderIncidentList();
 
-  // 3. Trigger Red Flashing Banner with Priority 1 labeling
+  // 3. Trigger Banner
   showEmergencyBanner(incident);
 
   // 4. Immediately select & auto-zoom Google Map to ground zero
@@ -437,7 +481,11 @@ function renderIncidentDetailPanel(incident) {
   // Severity Badge
   const sevEl = document.getElementById('detailSeverityBadge');
   const baseSevClass = 'inline-flex items-center whitespace-nowrap shrink-0 text-[10px] font-black px-2 py-0.5 rounded uppercase';
-  if (isPriority) {
+  const isFakeAlert = incident.isFake || incident.fireDetected === false || incident.severity === 'FAKE ALERT' || (incident.fakeProbability && parseFloat(incident.fakeProbability) > 50);
+  if (isFakeAlert) {
+    sevEl.textContent = '⚠️ FAKE ALERT';
+    sevEl.className = `${baseSevClass} bg-red-950 border border-red-500 text-red-300 font-mono animate-pulse shadow-md`;
+  } else if (isPriority) {
     sevEl.textContent = '🚨 PRIORITY 1';
     sevEl.className = `${baseSevClass} bg-red-600 border border-red-400 text-white animate-pulse shadow-md`;
   } else {
@@ -485,18 +533,23 @@ function renderIncidentDetailPanel(incident) {
   }
 
   // Multi-Source Fire Verification (Section 8)
-  document.getElementById('detailRiskScore').textContent = `RISK: ${incident.riskScore || 96}/100`;
-  document.getElementById('detailCitScore').textContent = `${Math.round(incident.aiConfidence || 92)}%`;
+  document.getElementById('detailRiskScore').textContent = `RISK: ${isFakeAlert ? '0' : (incident.riskScore || 96)}/100`;
+  document.getElementById('detailCitScore').textContent = `${isFakeAlert ? '0' : Math.round(incident.aiConfidence || 92)}%`;
   document.getElementById('detailSatScore').textContent = `${incident.satelliteConfidence ? Math.round(incident.satelliteConfidence) + '%' : 'No Hotspot'}`;
   document.getElementById('detailIotScore').textContent = `${incident.sensorConfidence ? Math.round(incident.sensorConfidence) + '%' : 'Normal'}`;
   
   const multiBanner = document.getElementById('detailMultiSourceBanner');
   if (multiBanner) {
-    multiBanner.textContent = incident.multiSourceSummary || '3 SOURCES CONFIRM POTENTIAL FIRE';
-    if (incident.severity === 'CRITICAL') {
+    if (isFakeAlert) {
+      multiBanner.textContent = '⚠️ FAKE ALERT SIGNAL - NON-FIRE PHOTO / NO GROUND HAZARD';
       multiBanner.className = 'p-2 rounded-lg bg-red-950/80 border border-red-600/60 text-center text-[11px] font-black text-red-300';
     } else {
-      multiBanner.className = 'p-2 rounded-lg bg-amber-950/80 border border-amber-600/60 text-center text-[11px] font-black text-amber-300';
+      multiBanner.textContent = incident.multiSourceSummary || '3 SOURCES CONFIRM POTENTIAL FIRE';
+      if (incident.severity === 'CRITICAL') {
+        multiBanner.className = 'p-2 rounded-lg bg-red-950/80 border border-red-600/60 text-center text-[11px] font-black text-red-300';
+      } else {
+        multiBanner.className = 'p-2 rounded-lg bg-amber-950/80 border border-amber-600/60 text-center text-[11px] font-black text-amber-300';
+      }
     }
   }
 
@@ -881,18 +934,22 @@ function renderIncidentList() {
       } ${isPriority && !isDispatched ? 'border-2 border-red-500 bg-[#1c0c16] shadow-[0_0_14px_rgba(239,68,68,0.5)] animate-pulse' : (isCritical && !isDispatched ? 'border-l-4 border-l-red-500' : '')}`;
       card.dataset.id = inc.incidentId || 'FG-2026-1052';
 
-      const sev = inc.severity || (isCritical ? 'CRITICAL' : 'HIGH');
+      const isFakeAlert = inc.isFake || inc.fireDetected === false || inc.severity === 'FAKE ALERT' || (inc.fakeProbability && parseFloat(inc.fakeProbability) > 50);
+      const sev = isFakeAlert ? 'FAKE ALERT' : (inc.severity || (isCritical ? 'CRITICAL' : 'HIGH'));
       let sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-600">CRITICAL</span>`;
-      if (sev === 'HIGH') sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-orange-950 text-orange-300 border border-orange-600">HIGH</span>`;
+      if (isFakeAlert) sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-500 font-mono">⚠️ FAKE ALERT</span>`;
+      else if (sev === 'HIGH') sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-orange-950 text-orange-300 border border-orange-600">HIGH</span>`;
       else if (sev === 'LOW' || sev === 'SAFE') sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-600">SAFE</span>`;
 
-      const priorityBadge = isPriority ? `<span class="inline-flex items-center text-[9px] font-black px-1.5 py-0.5 rounded bg-red-600 text-white animate-pulse shadow-sm mr-1 whitespace-nowrap">🚨 PRIORITY 1</span>` : '';
+      const priorityBadge = isFakeAlert 
+        ? `<span class="inline-flex items-center text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-600 text-white shadow-sm mr-1 whitespace-nowrap">⚠️ FAKE SIGNAL</span>` 
+        : (isPriority ? `<span class="inline-flex items-center text-[9px] font-black px-1.5 py-0.5 rounded bg-red-600 text-white animate-pulse shadow-sm mr-1 whitespace-nowrap">🚨 PRIORITY 1</span>` : '');
       const displayTitle = (inc.title || inc.alertTitle || inc.forestName || inc.locationName || 'Wildfire Alert').trim();
       const displayLocation = inc.forestName || inc.locationName || '';
       const showSubLocation = displayLocation && displayLocation !== displayTitle;
 
-      const aiScore = (inc.aiConfidence !== undefined && inc.aiConfidence !== null) ? inc.aiConfidence : (inc.confidence || inc.fireScore || 94.2);
-      const riskScore = (inc.riskScore !== undefined && inc.riskScore !== null) ? inc.riskScore : (isCritical ? 95 : 75);
+      const aiScore = isFakeAlert ? 0.0 : ((inc.aiConfidence !== undefined && inc.aiConfidence !== null) ? inc.aiConfidence : (inc.confidence || inc.fireScore || 94.2));
+      const riskScore = isFakeAlert ? 0 : ((inc.riskScore !== undefined && inc.riskScore !== null) ? inc.riskScore : (isCritical ? 95 : 75));
       const statusText = inc.status || 'UNDER REVIEW';
 
       card.innerHTML = `
@@ -1030,10 +1087,17 @@ function showEmergencyBanner(incident) {
   const confEl = document.getElementById('bannerConfidence');
 
   if (banner) {
-    const fakeInfo = incident.fakeProbability ? ` • <span class="${parseFloat(incident.fakeProbability) > 50 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-bold'}">AI Fake Risk: ${incident.fakeProbability}%</span>` : '';
-    if (locEl) locEl.innerHTML = `<span class="bg-red-600 text-white font-black px-2 py-0.5 rounded text-[11px] mr-1.5 shadow animate-pulse">🚨 PRIORITY 1 ALERT</span> <b>${incident.forestName}</b> (${incident.latitude}, ${incident.longitude})${fakeInfo}`;
-    if (riskEl) riskEl.textContent = `${incident.riskScore}/100 (${incident.severity})`;
-    if (confEl) confEl.textContent = `${incident.fireScore || incident.aiConfidence}%`;
+    const isFake = incident.isFake || incident.fireDetected === false || incident.severity === 'FAKE ALERT' || (incident.fakeProbability && parseFloat(incident.fakeProbability) > 50);
+    if (isFake) {
+      if (locEl) locEl.innerHTML = `<span class="bg-amber-600 text-white font-black px-2 py-0.5 rounded text-[11px] mr-1.5 shadow animate-pulse font-mono">⚠️ FAKE ALERT SIGNAL</span> <b>${incident.forestName}</b> (${incident.latitude}, ${incident.longitude}) • <span class="text-amber-400 font-bold">Non-Fire Photo Flagged</span>`;
+      if (riskEl) riskEl.textContent = `0/100 (FAKE ALERT)`;
+      if (confEl) confEl.textContent = `0.0% (SAFE)`;
+    } else {
+      const fakeInfo = incident.fakeProbability ? ` • <span class="${parseFloat(incident.fakeProbability) > 50 ? 'text-amber-400 font-bold' : 'text-emerald-400 font-bold'}">AI Fake Risk: ${incident.fakeProbability}%</span>` : '';
+      if (locEl) locEl.innerHTML = `<span class="bg-red-600 text-white font-black px-2 py-0.5 rounded text-[11px] mr-1.5 shadow animate-pulse">🚨 PRIORITY 1 ALERT</span> <b>${incident.forestName}</b> (${incident.latitude}, ${incident.longitude})${fakeInfo}`;
+      if (riskEl) riskEl.textContent = `${incident.riskScore}/100 (${incident.severity})`;
+      if (confEl) confEl.textContent = `${incident.fireScore || incident.aiConfidence}%`;
+    }
     banner.classList.remove('hidden');
   }
 }
@@ -1668,7 +1732,8 @@ async function fetchIncidents() {
 // 12. Update Admin Score Board (YOLOv8 Dual-Spectrum Detection Result HUD)
 function updateAdminScoreboard(sbData) {
   if (!sbData) return;
-  const isFire = sbData.severity !== 'NORMAL' && sbData.fireDetected !== false;
+  const isFakeDetected = sbData.isFake || (sbData.fakeProbability !== undefined && parseFloat(sbData.fakeProbability) > 50) || sbData.fireDetected === false || sbData.severity === 'FAKE ALERT' || (sbData.badgeText && sbData.badgeText.includes('FAKE'));
+  const isFire = !isFakeDetected && sbData.severity !== 'NORMAL' && sbData.fireDetected !== false;
 
   const tsEl = document.getElementById('adminSbTimestamp');
   if (tsEl) {
@@ -1691,6 +1756,14 @@ function updateAdminScoreboard(sbData) {
       subtitle.textContent = `Status: Active Wildfire (${objCount} Objects)`;
       badge.textContent = sbData.badgeText || sbData.severity || 'CRITICAL';
       badge.className = 'text-[10px] font-black px-2 py-0.5 rounded-md bg-red-600 text-white border border-red-400 shadow-sm animate-pulse';
+    } else if (isFakeDetected) {
+      banner.className = 'p-2.5 rounded-xl border flex items-center justify-between transition-all duration-300 bg-gradient-to-r from-red-950/90 via-amber-950/70 to-red-950/90 border-red-500/80 shadow-[0_0_12px_rgba(239,68,68,0.35)]';
+      iconBox.className = 'w-7 h-7 rounded-lg flex items-center justify-center text-sm bg-red-900/60 border border-red-500 text-red-300 animate-pulse';
+      iconBox.textContent = '⚠️';
+      title.textContent = 'FAKE ALERT SIGNAL DETECTED';
+      subtitle.textContent = 'Status: Flagged - Non-Fire Photo / Potential Hoax';
+      badge.textContent = 'FAKE ALERT';
+      badge.className = 'text-[10px] font-black px-2 py-0.5 rounded-md bg-red-600 text-white border border-red-400 shadow-sm animate-pulse font-mono';
     } else {
       banner.className = 'p-2.5 rounded-xl border flex items-center justify-between transition-all duration-300 bg-emerald-950/40 border-emerald-500/40';
       iconBox.className = 'w-7 h-7 rounded-lg flex items-center justify-center text-sm bg-emerald-900/60 border border-emerald-500/40 text-emerald-300';
@@ -1729,32 +1802,32 @@ function updateAdminScoreboard(sbData) {
   if (barSmkLvl) barSmkLvl.style.width = `${Math.min(100, Math.max(0, smkLvl))}%`;
 
   // 1. Fire Score & Level
-  const fireScoreVal = parseFloat(sbData.fireScore !== undefined ? sbData.fireScore : anom).toFixed(1);
+  const fireScoreVal = isFakeDetected ? '0.0' : parseFloat(sbData.fireScore !== undefined ? sbData.fireScore : anom).toFixed(1);
   const fEl = document.getElementById('adminSbMetricFireScore');
   if (fEl) {
-    fEl.textContent = `${fireScoreVal}%`;
-    fEl.className = isFire ? 'text-sm font-black text-orange-400 font-mono' : 'text-sm font-black text-slate-400 font-mono';
+    fEl.textContent = isFakeDetected ? '0.0%' : `${fireScoreVal}%`;
+    fEl.className = isFire ? 'text-sm font-black text-orange-400 font-mono' : (isFakeDetected ? 'text-sm font-black text-red-400 font-mono' : 'text-sm font-black text-slate-400 font-mono');
   }
   const flEl = document.getElementById('adminSbMetricFireLevel');
   if (flEl) {
-    flEl.textContent = isFire ? (sbData.fireLevel || sevVal) : 'SAFE';
-    flEl.className = isFire ? 'text-[8px] font-bold text-orange-400 block mt-0.5' : 'text-[8px] font-bold text-slate-400 block mt-0.5';
+    flEl.textContent = isFakeDetected ? 'LEVEL: SAFE (FAKE ALERT)' : (isFire ? (sbData.fireLevel || sevVal) : 'SAFE');
+    flEl.className = isFire ? 'text-[8px] font-bold text-orange-400 block mt-0.5' : (isFakeDetected ? 'text-[8px] font-bold text-red-400 block mt-0.5' : 'text-[8px] font-bold text-slate-400 block mt-0.5');
   }
 
   // 2. Risk Score & Severity
   const riskVal = isFire ? (sbData.riskScore !== undefined ? sbData.riskScore : 96) : 0;
-  const sevVal = isFire ? (sbData.severity || 'CRITICAL') : 'NORMAL';
+  const sevVal = isFakeDetected ? 'FAKE ALERT' : (isFire ? (sbData.severity || 'CRITICAL') : 'NORMAL');
 
   const rEl = document.getElementById('adminSbMetricRisk');
   if (rEl) {
-    rEl.textContent = riskVal;
-    rEl.className = isFire ? 'text-sm font-black text-red-400 font-mono' : 'text-sm font-black text-emerald-400 font-mono';
+    rEl.textContent = isFakeDetected ? '0 (FAKE)' : riskVal;
+    rEl.className = isFire ? 'text-sm font-black text-red-400 font-mono' : (isFakeDetected ? 'text-sm font-black text-red-400 font-mono' : 'text-sm font-black text-emerald-400 font-mono');
   }
 
   const sEl = document.getElementById('adminSbMetricSeverity');
   if (sEl) {
     sEl.textContent = sevVal;
-    sEl.className = isFire ? 'text-[8px] font-bold text-red-400 block mt-0.5' : 'text-[8px] font-bold text-emerald-400 block mt-0.5';
+    sEl.className = isFire ? 'text-[8px] font-bold text-red-400 block mt-0.5' : (isFakeDetected ? 'text-[8px] font-bold text-red-400 block mt-0.5' : 'text-[8px] font-bold text-emerald-400 block mt-0.5');
   }
 
   // 3. AI Fake Score & Authenticity Check

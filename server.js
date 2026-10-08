@@ -165,8 +165,9 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
 
     console.log(`🚨 [PRIORITY 1 LIVE BROADCAST] ${newIncident.incidentId} | Status: ${newIncident.status} | Risk: ${newIncident.riskScore}/100`);
 
-    // Broadcast in Real Time via Socket.IO
+    // Broadcast in Real Time via Socket.IO (Both hyphenated and underscored names for complete cross-client compatibility)
     io.emit('new_fire_alert', newIncident);
+    io.emit('new-fire-alert', newIncident);
     io.emit('response_status_updated', newIncident);
 
     return res.status(201).json({

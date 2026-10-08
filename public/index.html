@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FORESTGUARD AI | Live AI Forest Fire Detection & Emergency Response Network</title>
+  <title>ForestGuard-AI | Live AI Forest Fire Detection & Emergency Response Network</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/css/tailwind-custom.css">
@@ -56,7 +56,7 @@
         
         <!-- Graphical Emblem Frame -->
         <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-orange-500 to-emerald-400 shadow-[0_0_40px_rgba(249,115,22,0.8)] border border-orange-300/80 group">
-          <img src="/images/agnirakshak_tree_fire_emblem.jpg" alt="Agnirakshak Tree & Fire Guardian Emblem" class="w-full h-full object-cover rounded-full shadow-inner transform transition duration-500 group-hover:scale-105" />
+          <img src="/images/agnirakshak_tree_fire_emblem.jpg" alt="ForestGuard-AI Tree & Fire Guardian Emblem" class="w-full h-full object-cover rounded-full shadow-inner transform transition duration-500 group-hover:scale-105" />
           <!-- High-Tech Rotating Cyber Ring Around Tree Graphic -->
           <div class="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/70 animate-radar-spin pointer-events-none"></div>
           <!-- Floating Emblem Pill -->
@@ -68,7 +68,7 @@
 
       <!-- Title & Typographic Hierarchy -->
       <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white mb-1 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-        <span class="bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">AGNIRAKSHAK AI</span>
+        <span class="bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">ForestGuard-AI</span>
       </h1>
       <div class="text-xs sm:text-sm font-black tracking-widest text-amber-300 uppercase mb-2">
         REPORT • LOCATE • ALERT • RESPOND
@@ -150,37 +150,37 @@
   </div>
 
   <!-- Top Navigation -->
-  <header class="border-b border-slate-800 bg-[#070e1c]/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <span class="text-3xl filter drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]">🌲🔥</span>
-        <div>
-          <span class="text-xl font-black tracking-wider bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">AGNIRAKSHAK AI</span>
-          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-[10px] font-bold tracking-widest bg-red-950/80 border border-red-700/60 text-red-400 rounded">INDIA NATIONAL GRID</span>
+  <header class="border-b border-slate-800 bg-[#070e1c]/90 backdrop-blur-md sticky top-0 z-50 w-full max-w-full overflow-hidden">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2 sm:gap-3 shrink min-w-0">
+        <span class="text-2xl sm:text-3xl filter drop-shadow-[0_0_12px_rgba(249,115,22,0.8)] shrink-0">🌲🔥</span>
+        <div class="min-w-0 truncate">
+          <span class="text-sm sm:text-xl font-black tracking-wider bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent truncate block sm:inline">ForestGuard-AI</span>
+          <span class="hidden md:inline-block ml-2 px-2 py-0.5 text-[10px] font-bold tracking-widest bg-red-950/80 border border-red-700/60 text-red-400 rounded">INDIA NATIONAL GRID</span>
         </div>
       </div>
       
-      <nav class="flex items-center gap-2 sm:gap-3">
+      <nav class="flex items-center gap-1.5 sm:gap-3 shrink-0">
         <!-- View Mode Mini Switcher: Desktop (Default) | Mobile Platform -->
-        <div id="viewModeMiniSwitcher" class="view-mode-toggle-group flex items-center bg-[#050b17] p-0.5 rounded-xl border border-slate-700/80 shadow-md" title="Toggle between Desktop Mode (Default) and Mobile Mode">
-          <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/50" title="Default Desktop Mode">
+        <div id="viewModeMiniSwitcher" class="view-mode-toggle-group flex items-center bg-[#050b17] p-0.5 rounded-xl border border-slate-700/80 shadow-md shrink-0" title="Toggle between Desktop Mode (Default) and Mobile Mode">
+          <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode px-1.5 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/50" title="Default Desktop Mode">
             <span>💻</span> <span class="hidden sm:inline">Desktop</span>
           </button>
-          <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
+          <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn px-1.5 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
             <span>📱</span> <span class="hidden sm:inline">Mobile</span>
           </button>
         </div>
 
-        <button onclick="replayIntroFlashCard()" class="px-2.5 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-950/60 border border-orange-500/50 text-orange-300 hover:text-white hover:bg-orange-600/40 transition flex items-center gap-1 cursor-pointer" title="Replay Intro Flash Card">
+        <button onclick="replayIntroFlashCard()" class="px-2 sm:px-2.5 py-1 sm:py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-950/60 border border-orange-500/50 text-orange-300 hover:text-white hover:bg-orange-600/40 transition flex items-center gap-1 cursor-pointer shrink-0" title="Replay Intro Flash Card">
           <span>⚡</span> <span class="hidden sm:inline">Intro Card</span>
         </button>
-        <a href="/index.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 transition flex items-center gap-1">
-          <span>🏠</span> <span>Home</span>
+        <a href="/index.html" class="hidden xs:flex px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 transition items-center gap-1 shrink-0">
+          <span>🏠</span> <span class="hidden md:inline">Home</span>
         </a>
-        <a href="/user.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-600/20 border border-orange-500/50 text-orange-400 hover:bg-orange-600/30 transition flex items-center gap-1">
+        <a href="/user.html" class="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-600/20 border border-orange-500/50 text-orange-400 hover:bg-orange-600/30 transition flex items-center gap-1 shrink-0">
           <span>👤</span> <span class="hidden sm:inline">Citizen Dashboard</span><span class="sm:hidden">Citizen</span>
         </a>
-        <a href="/admin.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md shadow-red-900/40 hover:brightness-110 transition flex items-center gap-1.5">
+        <a href="/admin.html" class="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md shadow-red-900/40 hover:brightness-110 transition flex items-center gap-1 shrink-0">
           <span>🚨</span> <span class="hidden sm:inline">Admin Dashboard</span><span class="sm:hidden">Admin</span>
         </a>
       </nav>
@@ -213,7 +213,7 @@
         </div>
 
         <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-2 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-          AGNIRAKSHAK AI
+          ForestGuard-AI
         </h1>
         <div class="text-xl sm:text-3xl font-black tracking-widest bg-gradient-to-r from-red-500 via-orange-400 to-amber-300 bg-clip-text text-transparent mb-4 drop-shadow-[0_2px_10px_rgba(249,115,22,0.4)]">
           REPORT. LOCATE. ALERT. RESPOND.
@@ -762,7 +762,7 @@
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2 text-slate-300 font-bold">
         <span>🌲🔥</span>
-        <span>AGNIRAKSHAK AI</span>
+        <span>ForestGuard-AI</span>
         <span class="text-slate-600">•</span>
         <span class="text-orange-400 font-mono text-[11px]">AI-Based Forest Fire Detection</span>
       </div>

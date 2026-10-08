@@ -58,19 +58,19 @@ class AIVisionService {
           const fireConfidence = pyData.confidence || (isFire ? 96.5 : 0.0);
           const scoreboard = {
             fireScore: isFire ? fireConfidence : 0.0,
-            fireLevel: isFire ? severity : 'SAFE',
+            fireLevel: isFire ? severity : 'SAFE (FAKE ALERT)',
             fireConfidence: isFire ? fireConfidence : 0.0,
             smokeConfidence,
             fireCoverage,
             smokeLevel,
             anomalyConfidence,
-            riskScore,
-            severity,
+            riskScore: isFire ? riskScore : 0,
+            severity: isFire ? severity : 'FAKE ALERT',
             objectsCount: isFire ? 3 : 0,
-            statusTitle: isFire ? 'FIRE DETECTED' : 'NO ANOMALIES DETECTED',
-            statusText: isFire ? `Status: Active Wildfire (3 Objects)` : 'Status: Forest Clear (0 Objects)',
-            badgeText: isFire ? severity : 'SAFE',
-            earlyWarningAlert: isFire ? (severity === 'CRITICAL' ? 'CRITICAL - IMMEDIATE DISPATCH' : 'HIGH RISK HAZARD DETECTED') : 'NORMAL - SECTOR CLEAR',
+            statusTitle: isFire ? 'FIRE DETECTED' : 'FAKE ALERT DETECTED',
+            statusText: isFire ? `Status: Active Wildfire (3 Objects)` : 'Status: Flagged - Non-Fire Photo / Potential Hoax',
+            badgeText: isFire ? severity : 'FAKE ALERT',
+            earlyWarningAlert: isFire ? (severity === 'CRITICAL' ? 'CRITICAL - IMMEDIATE DISPATCH' : 'HIGH RISK HAZARD DETECTED') : 'FAKE ALERT - NO FIRE HAZARD DETECTED',
             fakeProbability,
             authenticityScore,
             fakeVerdict: isFire ? 'AUTHENTIC GROUND EVIDENCE' : 'SUSPECTED FAKE / FALSE ALARM',
@@ -276,7 +276,7 @@ class AIVisionService {
       fakeVerdict = 'AUTHENTIC GROUND EVIDENCE';
       fakeStatus = 'PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)';
     } else {
-      severity = 'NORMAL';
+      severity = 'FAKE ALERT';
       fireConfidence = 0.0;
       anomalyConfidence = 0.0;
       smokeConfidence = 0.0;
@@ -284,10 +284,10 @@ class AIVisionService {
       smokeLevel = 0.0;
       riskScore = 0;
       objectsCount = 0;
-      statusTitle = 'NO ANOMALIES DETECTED';
-      statusText = 'Status: Forest Clear (0 Objects)';
-      badgeText = 'SAFE';
-      earlyWarningAlert = 'NORMAL - SECTOR CLEAR';
+      statusTitle = 'FAKE ALERT DETECTED';
+      statusText = 'Status: Flagged - Non-Fire Photo / Potential Hoax';
+      badgeText = 'FAKE ALERT';
+      earlyWarningAlert = 'FAKE ALERT - NO FIRE HAZARD DETECTED';
       
       // No wildfire signatures -> Flagged as non-fire / potential false alarm
       fakeProbability = parseFloat((Math.random() * 6.5 + 88.0).toFixed(1));
@@ -298,7 +298,7 @@ class AIVisionService {
 
     const scoreboard = {
       fireScore: isFire ? fireConfidence : 0.0,
-      fireLevel: isFire ? severity : 'SAFE',
+      fireLevel: isFire ? severity : 'SAFE (FAKE ALERT)',
       fireConfidence: isFire ? fireConfidence : 0.0,
       smokeConfidence,
       fireCoverage,
