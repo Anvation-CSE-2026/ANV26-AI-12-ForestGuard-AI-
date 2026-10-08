@@ -17,24 +17,24 @@
   <!-- ULTRA-STUNNING CINEMATIC INTRO FLASH CARD (TACTICAL HUD & DUAL-SPECTRUM GRAPHICS) -->
   <!-- ========================================================================= -->
   <div id="introFlashCard" onclick="dismissIntroFlashCard()" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-700 cursor-pointer">
-    <!-- Cinematic High-Res Fire Background with Breathing Motion & Dual Scanning Drones -->
-    <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-95 contrast-110 saturate-125 transform scale-105 animate-hero-breath" style="background-image: url('/images/intro_flash_bg.jpg');"></div>
+    <!-- Cinematic High-Res Fire Background with Roaring Flames & Dense Forest Trees -->
+    <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-100 contrast-115 saturate-135 transform scale-105 animate-hero-breath" style="background-image: url('/images/flashcard_forest_fire_bg.jpg');"></div>
     
-    <!-- Multi-layered Atmospheric Dark Gradients & Cyber Vignette -->
-    <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/50 to-[#02050e]/85 pointer-events-none"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(249,115,22,0.18)_0%,_rgba(2,5,14,0.72)_60%,_#02050e_100%)] pointer-events-none"></div>
+    <!-- Multi-layered Atmospheric Dark Gradients & Fiery Tree Vignette -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/40 to-[#02050e]/80 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(249,115,22,0.14)_0%,_rgba(2,5,14,0.65)_60%,_#02050e_100%)] pointer-events-none"></div>
 
     <!-- Ambient Dynamic Floating Embers Canvas -->
     <canvas id="flashCardEmbersCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-[1]"></canvas>
 
-    <!-- Glowing Tactical HUD Flash Card Box -->
-    <div onclick="event.stopPropagation()" class="relative z-10 max-w-2xl w-full mx-4 p-6 sm:p-8 rounded-3xl bg-[#060c1d]/90 border-2 border-orange-500/60 shadow-[0_0_80px_rgba(249,115,22,0.45)] backdrop-blur-2xl text-center transform transition-all duration-500 animate-flashcard-glow cursor-default">
+    <!-- Glowing Tactical HUD Flash Card Box with Rich Forest & Fire Theme -->
+    <div onclick="event.stopPropagation()" class="relative z-10 max-w-2xl w-full mx-4 p-6 sm:p-8 rounded-3xl border-2 border-orange-500/60 shadow-[0_0_80px_rgba(249,115,22,0.55)] backdrop-blur-2xl text-center transform transition-all duration-500 animate-flashcard-glow cursor-default" style="background-image: linear-gradient(135deg, rgba(6, 12, 29, 0.94) 0%, rgba(9, 18, 38, 0.90) 100%), url('/images/flashcard_forest_fire_bg.jpg'); background-size: cover; background-position: center;">
       
       <!-- Top Live Tactical Status Bar -->
       <div class="flex items-center justify-between pb-3 mb-4 border-b border-orange-500/25 text-[11px] font-mono">
         <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-red-950/80 border border-red-500/60 text-red-300 font-bold tracking-wider shadow">
           <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-          <span>LIVE DEFENSE GRID • ACTIVE</span>
+          <span>LIVE FOREST DEFENSE GRID • ACTIVE</span>
         </div>
         <div class="flex items-center gap-2">
           <span class="text-amber-400 font-bold flex items-center gap-1.5 text-[10px] sm:text-[11px]">
@@ -47,29 +47,19 @@
         </div>
       </div>
 
-      <!-- Central Hero Graphics / Insignia with Animated Radar Sweep -->
+      <!-- Central Hero Graphic Figure: Tree & Fire Guardian Emblem with Cyber Shield -->
       <div class="relative inline-flex items-center justify-center mb-3">
-        <!-- Outer Glowing Pulse Rings -->
-        <div class="absolute w-24 h-24 rounded-full bg-gradient-to-r from-red-600/40 via-orange-500/40 to-amber-500/30 blur-xl animate-pulse"></div>
+        <!-- Outer Fiery Pulse Aura -->
+        <div class="absolute w-32 h-32 rounded-full bg-gradient-to-r from-red-600/50 via-orange-500/50 to-emerald-500/40 blur-2xl animate-pulse"></div>
         
-        <!-- Central Graphic Badge -->
-        <div class="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-red-600 via-orange-600 to-amber-500 p-0.5 shadow-2xl shadow-red-950 border border-orange-300/70 flex items-center justify-center">
-          <div class="w-full h-full bg-[#091124] rounded-[14px] flex items-center justify-center relative overflow-hidden">
-            <!-- Animated Radar Sweep in Badge -->
-            <div class="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,rgba(249,115,22,0.45)_0deg,transparent_60deg)] animate-radar-spin"></div>
-            <!-- High-Tech Fire Shield & Drone Icon -->
-            <svg class="w-10 h-10 text-orange-400 relative z-10 filter drop-shadow-[0_0_10px_rgba(249,115,22,0.9)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2c3.5 3 6.5 6 6.5 11a6.5 6.5 0 0 1-13 0c0-5 3-8 6.5-11z" fill="url(#introFlameGrad)" stroke="none"/>
-              <path d="M12 7c1.8 1.8 3.5 3.8 3.5 6.5a3.5 3.5 0 0 1-7 0c0-2.7 1.7-4.7 3.5-6.5z" fill="#fef08a" stroke="none"/>
-              <circle cx="12" cy="13" r="8" stroke="#f97316" stroke-width="1.5" stroke-dasharray="3 3"/>
-              <defs>
-                <linearGradient id="introFlameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#ef4444"/>
-                  <stop offset="60%" stop-color="#f97316"/>
-                  <stop offset="100%" stop-color="#facc15"/>
-                </linearGradient>
-              </defs>
-            </svg>
+        <!-- Graphical Emblem Frame -->
+        <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-orange-500 to-emerald-400 shadow-[0_0_40px_rgba(249,115,22,0.8)] border border-orange-300/80 group">
+          <img src="/images/agnirakshak_tree_fire_emblem.jpg" alt="Agnirakshak Tree & Fire Guardian Emblem" class="w-full h-full object-cover rounded-full shadow-inner transform transition duration-500 group-hover:scale-105" />
+          <!-- High-Tech Rotating Cyber Ring Around Tree Graphic -->
+          <div class="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/70 animate-radar-spin pointer-events-none"></div>
+          <!-- Floating Emblem Pill -->
+          <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-[#051124]/95 border border-emerald-400/80 text-[8px] sm:text-[9px] font-black tracking-widest text-emerald-300 uppercase shadow-lg flex items-center gap-1 whitespace-nowrap">
+            <span>🌲</span> <span>FOREST & FIRE DEFENSE</span> <span>🔥</span>
           </div>
         </div>
       </div>
@@ -85,42 +75,42 @@
         India's AI-powered wildfire emergency platform connecting citizens, satellite hotspots, and response fleets through one live geospatial command grid.
       </p>
 
-      <!-- 3 Core Tactical Feature Cards with Rich Graphics -->
+      <!-- 3 Core Tactical Feature Cards with Rich Forest & Fire Graphics -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 mb-5 text-left">
-        <!-- Card 1: AI Vision -->
-        <div class="p-3 rounded-xl bg-[#0b1730]/90 border border-orange-500/30 hover:border-orange-500/70 transition group shadow-md">
+        <!-- Card 1: Dense Forest Canopy & Tree Defense -->
+        <div class="p-3 rounded-xl bg-[#09152e]/90 border border-emerald-500/35 hover:border-emerald-500/80 transition group shadow-md backdrop-blur-md">
           <div class="flex items-center gap-2 mb-1.5">
-            <span class="text-base p-1 rounded-lg bg-red-950/80 text-red-400 border border-red-500/40">👁️</span>
+            <span class="text-base p-1.5 rounded-lg bg-emerald-950/80 text-emerald-400 border border-emerald-500/50">🌲</span>
             <div>
-              <div class="text-[11px] font-black text-white group-hover:text-orange-400 transition">Dual-Spectrum AI</div>
-              <div class="text-[9px] font-mono text-emerald-400">98.8% Accuracy</div>
+              <div class="text-[11px] font-black text-white group-hover:text-emerald-300 transition">Forest Canopy Grid</div>
+              <div class="text-[9px] font-mono text-emerald-400 font-bold">9 Reserves Shielded</div>
             </div>
           </div>
-          <p class="text-[10px] text-slate-300 leading-tight">Thermal IR + optical live vision for instant flame and smoke classification.</p>
+          <p class="text-[10px] text-slate-300 leading-tight">Live tree canopy surveillance, fuel load moisture, and wildfire spread perimeter prediction.</p>
         </div>
 
-        <!-- Card 2: Geospatial Pointers -->
-        <div class="p-3 rounded-xl bg-[#0b1730]/90 border border-orange-500/30 hover:border-cyan-500/70 transition group shadow-md">
+        <!-- Card 2: Dual-Spectrum Fire AI -->
+        <div class="p-3 rounded-xl bg-[#09152e]/90 border border-orange-500/35 hover:border-orange-500/80 transition group shadow-md backdrop-blur-md">
           <div class="flex items-center gap-2 mb-1.5">
-            <span class="text-base p-1 rounded-lg bg-cyan-950/80 text-cyan-400 border border-cyan-500/40">🎯</span>
+            <span class="text-base p-1.5 rounded-lg bg-red-950/80 text-orange-400 border border-orange-500/50">🔥</span>
             <div>
-              <div class="text-[11px] font-black text-white group-hover:text-cyan-300 transition">Ground-Zero Pin</div>
-              <div class="text-[9px] font-mono text-cyan-400">Sub-Meter Precision</div>
+              <div class="text-[11px] font-black text-white group-hover:text-orange-300 transition">Dual-Spectrum Fire AI</div>
+              <div class="text-[9px] font-mono text-orange-400 font-bold">98.8% Dual Vision</div>
             </div>
           </div>
-          <p class="text-[10px] text-slate-300 leading-tight">500m, 1.5km, 5km safety perimeters with deep satellite zoom inspection.</p>
+          <p class="text-[10px] text-slate-300 leading-tight">YOLOv8 dual thermal infrared + optical drone camera detection with zero false-alarm filtering.</p>
         </div>
 
         <!-- Card 3: Real Station & Water Relay -->
-        <div class="p-3 rounded-xl bg-[#0b1730]/90 border border-orange-500/30 hover:border-sky-500/70 transition group shadow-md">
+        <div class="p-3 rounded-xl bg-[#09152e]/90 border border-cyan-500/35 hover:border-cyan-500/80 transition group shadow-md backdrop-blur-md">
           <div class="flex items-center gap-2 mb-1.5">
-            <span class="text-base p-1 rounded-lg bg-sky-950/80 text-sky-400 border border-sky-500/40">🚒</span>
+            <span class="text-base p-1.5 rounded-lg bg-cyan-950/80 text-cyan-400 border border-cyan-500/50">🚒</span>
             <div>
-              <div class="text-[11px] font-black text-white group-hover:text-sky-300 transition">Fleet Dispatch</div>
-              <div class="text-[9px] font-mono text-sky-400">Physical Building & Lake</div>
+              <div class="text-[11px] font-black text-white group-hover:text-cyan-300 transition">Fleet Turn-out Relay</div>
+              <div class="text-[9px] font-mono text-cyan-400 font-bold">Physical Stations & Lakes</div>
             </div>
           </div>
-          <p class="text-[10px] text-slate-300 leading-tight">Turnout routing strictly connecting physical fire stations and lakes.</p>
+          <p class="text-[10px] text-slate-300 leading-tight">Instant routing connecting real government station buildings to open water drafting reservoirs.</p>
         </div>
       </div>
 
