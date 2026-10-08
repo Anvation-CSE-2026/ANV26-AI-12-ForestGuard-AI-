@@ -99,7 +99,10 @@
           <span class="text-xs font-black uppercase tracking-wider text-slate-300">INCIDENT QUEUE</span>
           <span id="badgeIncidentCount" class="text-[10px] font-black px-1.5 py-0.2 rounded-full bg-red-950 text-red-400 border border-red-700/60">1 ACTIVE</span>
         </div>
-        <div class="flex items-center gap-1 text-[11px] font-mono text-slate-400">
+        <div class="flex items-center gap-2 text-[11px] font-mono text-slate-400">
+          <button id="btnRefreshAdminQueue" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition flex items-center gap-1 text-[10px] font-bold border border-slate-700 cursor-pointer" title="Refresh Incident Queue">
+            <span id="iconRefreshAdminQueue">🔄</span> <span>Refresh</span>
+          </button>
           <span>Sort: Newest</span>
         </div>
       </div>
@@ -423,15 +426,18 @@
           <span>🚒</span> <span>DISPATCH RESPONSE</span>
         </button>
 
-        <div class="grid grid-cols-3 gap-2">
-          <button id="btnVerifyAction" class="py-2 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600 text-emerald-400 font-bold text-xs transition">
+        <div class="grid grid-cols-4 gap-1.5">
+          <button id="btnVerifyAction" class="py-2 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600 text-emerald-400 font-bold text-[11px] transition">
             ✓ VERIFY
           </button>
-          <button id="btnFalsePosAction" class="py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 font-bold text-xs transition">
+          <button id="btnFalsePosAction" class="py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 font-bold text-[11px] transition">
             ✕ FALSE POS
           </button>
-          <button id="btnContainAction" class="py-2 rounded-lg bg-amber-950/80 hover:bg-amber-900 border border-amber-600 text-amber-400 font-bold text-xs transition">
-            🔒 CONTAINED
+          <button id="btnContainAction" class="py-2 rounded-lg bg-amber-950/80 hover:bg-amber-900 border border-amber-600 text-amber-400 font-bold text-[11px] transition">
+            🔒 CONTAIN
+          </button>
+          <button id="btnCancelActiveAlert" class="py-2 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 hover:text-white font-bold text-[11px] transition" title="Cancel this alert">
+            ✕ CANCEL
           </button>
         </div>
       </div>

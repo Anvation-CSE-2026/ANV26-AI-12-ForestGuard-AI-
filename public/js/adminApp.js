@@ -155,6 +155,23 @@ function initSocket() {
     if (window.emergencyAudio && !audioMuted) window.emergencyAudio.playDispatchChime();
     addTimelineItem(new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), `Satellite Anomaly: ${satAlert.hotspotId} (${satAlert.satellite}) in ${satAlert.forestName}`, 'SATELLITE');
   });
+
+  // INCIDENT DELETED / CANCELLED (Real-Time One at a Time)
+  socket.on('incident_deleted', ({ incidentId }) => {
+    removeIncidentFromState(incidentId);
+  });
+
+  socket.on('incident_cancelled', ({ incidentId }) => {
+    removeIncidentFromState(incidentId);
+  });
+
+  socket.on('queue_reset', ({ incidents }) => {
+    allIncidents = incidents || [];
+    renderIncidentList();
+    if (allIncidents.length > 0) {
+      selectIncident(allIncidents[0], true);
+    }
+  });
 }
 
 // 4. Handle Incoming Live Fire Alert
@@ -393,11 +410,66 @@ function renderIncidentList() {
         <span>Risk: ${inc.riskScore}/100</span>
         <span class="font-bold ${isDispatched ? 'text-emerald-400' : (isPriority ? 'text-red-400 font-black' : 'text-orange-400')}">${inc.status}</span>
       </div>
+      <div class="flex items-center justify-end pt-1.5 mt-1.5 border-t border-slate-800/80">
+        <button type="button" class="btn-cancel-alert px-2 py-0.5 rounded bg-red-950/70 hover:bg-red-800 border border-red-700/60 text-red-300 hover:text-white text-[10px] font-bold transition flex items-center gap-1 shadow-sm cursor-pointer" data-id="${inc.incidentId}" title="Cancel alert ${inc.incidentId}">
+          <span>✕</span> <span>Cancel Alert</span>
+        </button>
+      </div>
     `;
 
-    card.addEventListener('click', () => selectIncident(inc, true));
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.btn-cancel-alert')) return;
+      selectIncident(inc, true);
+    });
+
+    const btnCancel = card.querySelector('.btn-cancel-alert');
+    if (btnCancel) {
+      btnCancel.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cancelIncidentById(inc.incidentId);
+      });
+    }
+
     feed.appendChild(card);
   });
+}
+
+// Cancel / Dismiss an Alert One at a Time
+async function cancelIncidentById(incidentId) {
+  if (!confirm(`Are you sure you want to cancel and remove alert ${incidentId}?`)) return;
+  try {
+    const res = await fetch(`/api/incidents/${incidentId}/cancel`, { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      removeIncidentFromState(incidentId);
+    } else {
+      alert('Failed to cancel alert: ' + (data.message || 'Error'));
+    }
+  } catch (e) {
+    alert('Cancellation error: ' + e.message);
+  }
+}
+
+function removeIncidentFromState(incidentId) {
+  allIncidents = allIncidents.filter(i => i.incidentId !== incidentId);
+  renderIncidentList();
+
+  if (activeIncident && activeIncident.incidentId === incidentId) {
+    if (allIncidents.length > 0) {
+      selectIncident(allIncidents[0], true);
+    } else {
+      activeIncident = null;
+      if (window.forestMapEngine) window.forestMapEngine.clearRoutes();
+    }
+  }
+
+  // Reload map markers
+  if (window.forestMapEngine) {
+    window.forestMapEngine.clearMarkers('fires');
+    allIncidents.forEach(inc => {
+      window.forestMapEngine.addFireMarker(inc, () => selectIncident(inc, false));
+    });
+  }
 }
 
 function updateIncidentInList(updated) {
@@ -654,6 +726,28 @@ function initUIEvents() {
     });
   });
 
+  // Cancel Active Alert Action
+  const btnCancelActive = document.getElementById('btnCancelActiveAlert');
+  if (btnCancelActive) {
+    btnCancelActive.addEventListener('click', () => {
+      if (!activeIncident) return;
+      cancelIncidentById(activeIncident.incidentId);
+    });
+  }
+
+  // Refresh Admin Queue Action
+  const btnRefreshAdmin = document.getElementById('btnRefreshAdminQueue');
+  if (btnRefreshAdmin) {
+    btnRefreshAdmin.addEventListener('click', async () => {
+      const icon = document.getElementById('iconRefreshAdminQueue');
+      if (icon) icon.classList.add('animate-spin');
+      await fetchIncidents();
+      setTimeout(() => {
+        if (icon) icon.classList.remove('animate-spin');
+      }, 500);
+    });
+  }
+
   // Demo Trigger
   const btnDemo = document.getElementById('btnTriggerDemoModal');
   if (btnDemo) {
@@ -673,10 +767,19 @@ async function fetchIncidents() {
   try {
     const res = await fetch('/api/incidents');
     const data = await res.json();
-    if (data.success && data.incidents && data.incidents.length > 0) {
+    if (data.success && Array.isArray(data.incidents)) {
       allIncidents = data.incidents;
       renderIncidentList();
-      selectIncident(allIncidents[0], true);
+      if (allIncidents.length > 0) {
+        const stillPresent = activeIncident && allIncidents.find(i => i.incidentId === activeIncident.incidentId);
+        selectIncident(stillPresent || allIncidents[0], !stillPresent);
+      } else {
+        activeIncident = null;
+        if (window.forestMapEngine) {
+          window.forestMapEngine.clearMarkers('fires');
+          window.forestMapEngine.clearRoutes();
+        }
+      }
     }
   } catch (err) {
     console.warn('Initial incidents fetch error:', err);

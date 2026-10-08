@@ -631,6 +631,50 @@ class IncidentStore {
     return inc;
   }
 
+  // 11. Delete an incident one at a time
+  deleteIncident(id) {
+    const existed = this.incidents.has(id);
+    if (!existed) return false;
+    this.incidents.delete(id);
+    this.saveToDisk();
+    return true;
+  }
+
+  // 12. Cancel / Dismiss an alert
+  cancelIncident(id, reason = 'Alert cancelled / dismissed by user') {
+    const inc = this.incidents.get(id);
+    if (!inc) return null;
+
+    inc.status = 'CANCELLED';
+    inc.severity = 'LOW';
+    inc.riskScore = 5;
+    inc.updatedAt = new Date().toISOString();
+
+    const timeStr = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    inc.timeline.push({ time: timeStr, message: `Alert CANCELLED: ${reason}`, type: 'CANCEL' });
+
+    this.saveToDisk();
+    return inc;
+  }
+
+  // 13. Remove all test cases and keep strictly ONE single Bandipur Forest test case
+  resetToSingleBandipur() {
+    let singleBandipur = this.incidents.get('FG-2026-1052') || this.incidents.get('FG-2026-1048');
+    this.incidents.clear();
+
+    if (singleBandipur) {
+      singleBandipur.status = 'UNDER REVIEW';
+      singleBandipur.incidentId = 'FG-2026-1052';
+      singleBandipur.forestName = 'Bandipur Forest Region';
+      this.incidents.set('FG-2026-1052', singleBandipur);
+    } else {
+      this.seedInitialIncidents();
+    }
+
+    this.saveToDisk();
+    return Array.from(this.incidents.values());
+  }
+
   // --- TEAMS MANAGEMENT ---
   getAllTeams() {
     return Array.from(this.teams.values());

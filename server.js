@@ -330,6 +330,36 @@ app.post(['/api/incidents/:id/false-alarm', '/api/incidents/:id/false-positive']
   res.json({ success: true, message: 'Marked as false alarm.', incident: updated });
 });
 
+// 13.1 Cancel Alert One at a Time
+app.post('/api/incidents/:id/cancel', (req, res) => {
+  const incidentId = req.params.id;
+  const reason = req.body.reason || 'Alert cancelled by operator';
+  const updated = incidentStore.cancelIncident(incidentId, reason);
+  if (!updated) return res.status(404).json({ success: false, message: 'Incident not found' });
+
+  io.emit('incident_cancelled', { incidentId, incident: updated });
+  io.emit('incident_deleted', { incidentId }); // Also emit deleted so cards remove smoothly
+  io.emit('response_status_updated', updated);
+  res.json({ success: true, message: `Incident ${incidentId} cancelled successfully.`, incident: updated });
+});
+
+// 13.2 Delete Alert One at a Time
+app.delete('/api/incidents/:id', (req, res) => {
+  const incidentId = req.params.id;
+  const deleted = incidentStore.deleteIncident(incidentId);
+  if (!deleted) return res.status(404).json({ success: false, message: 'Incident not found' });
+
+  io.emit('incident_deleted', { incidentId });
+  res.json({ success: true, message: `Incident ${incidentId} deleted successfully.`, incidentId });
+});
+
+// 13.3 Reset to Only ONE Single Bandipur Forest Test Case
+app.post('/api/incidents/reset-single-bandipur', (req, res) => {
+  const incidents = incidentStore.resetToSingleBandipur();
+  io.emit('queue_reset', { incidents });
+  res.json({ success: true, message: 'All test alerts removed. Only 1 Bandipur Forest test case preserved.', incidents });
+});
+
 // 14. Response Teams Endpoints
 app.get('/api/teams', (req, res) => {
   res.json({ success: true, teams: incidentStore.getAllTeams() });

@@ -788,12 +788,66 @@ function handleSubmissionSuccess(incident) {
 }
 
 // 5. My Reports Tracker (Section 8)
+let isRefreshBound = false;
 function loadMyReports() {
   const saved = localStorage.getItem('FG_MY_REPORTS');
   if (saved) {
     try { myReports = JSON.parse(saved); } catch (e) {}
   }
+
+  // Bind Refresh Reports Button
+  if (!isRefreshBound) {
+    const btnRefresh = document.getElementById('btnRefreshMyReports');
+    if (btnRefresh) {
+      btnRefresh.addEventListener('click', async () => {
+        const icon = document.getElementById('iconRefreshReports');
+        if (icon) icon.classList.add('animate-spin');
+        try {
+          const res = await fetch('/api/incidents');
+          const data = await res.json();
+          if (data.success && Array.isArray(data.incidents)) {
+            const serverMap = new Map(data.incidents.map(i => [i.incidentId, i]));
+            if (myReports.length > 0) {
+              myReports = myReports
+                .filter(r => serverMap.has(r.incidentId))
+                .map(r => serverMap.get(r.incidentId));
+            } else {
+              myReports = data.incidents;
+            }
+            localStorage.setItem('FG_MY_REPORTS', JSON.stringify(myReports));
+            renderMyReports();
+          }
+        } catch (err) {
+          console.warn('Failed to refresh user reports:', err);
+        } finally {
+          setTimeout(() => {
+            if (icon) icon.classList.remove('animate-spin');
+          }, 500);
+        }
+      });
+      isRefreshBound = true;
+    }
+  }
+
   renderMyReports();
+}
+
+// Cancel / Dismiss User Report One at a Time
+async function cancelUserReport(incidentId) {
+  if (!confirm(`Are you sure you want to cancel and remove alert ${incidentId}?`)) return;
+  try {
+    const res = await fetch(`/api/incidents/${incidentId}/cancel`, { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      myReports = myReports.filter(i => i.incidentId !== incidentId);
+      localStorage.setItem('FG_MY_REPORTS', JSON.stringify(myReports));
+      renderMyReports();
+    } else {
+      alert('Could not cancel alert: ' + (data.message || 'Error'));
+    }
+  } catch (err) {
+    alert('Cancellation error: ' + err.message);
+  }
 }
 
 function renderMyReports() {
@@ -805,7 +859,7 @@ function renderMyReports() {
       <div class="p-8 rounded-2xl bg-[#091122] border border-slate-800 text-center text-slate-400">
         <div class="text-3xl mb-2">📋</div>
         <div class="text-sm font-bold text-white">No active reports yet</div>
-        <div class="text-xs mt-1">Submit a fire alert using the 'Report Fire' tab.</div>
+        <div class="text-xs mt-1">Submit a fire alert using the 'Report Fire' tab or click 'Refresh Reports'.</div>
       </div>
     `;
     return;
@@ -836,14 +890,27 @@ function renderMyReports() {
           </div>
         </div>
 
-        <div class="text-right text-xs font-mono space-y-1 bg-[#040814] p-3 rounded-xl border border-slate-800/80 md:min-w-[200px]">
-          <div class="text-slate-400">Assigned Team: <b class="text-purple-400">${inc.assignedTeam?.name || 'Pending Review'}</b></div>
-          <div class="text-slate-400">Response ETA: <b class="text-emerald-400">${inc.assignedTeam?.etaMinutes || 16} min</b></div>
-          <div class="text-[10px] text-slate-500">Updated: Just now</div>
+        <div class="flex flex-col sm:flex-row md:flex-col items-end gap-2 shrink-0">
+          <div class="text-right text-xs font-mono space-y-1 bg-[#040814] p-3 rounded-xl border border-slate-800/80 w-full md:min-w-[200px]">
+            <div class="text-slate-400">Assigned Team: <b class="text-purple-400">${inc.assignedTeam?.name || 'Pending Review'}</b></div>
+            <div class="text-slate-400">Response ETA: <b class="text-emerald-400">${inc.assignedTeam?.etaMinutes || 16} min</b></div>
+            <div class="text-[10px] text-slate-500">Updated: Just now</div>
+          </div>
+          <button type="button" class="btn-cancel-user-report px-3 py-1.5 rounded-lg bg-red-950/70 hover:bg-red-800 border border-red-700/60 text-red-300 hover:text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer" data-id="${inc.incidentId}">
+            <span>✕</span> <span>Cancel Alert</span>
+          </button>
         </div>
       </div>
     `;
   }).join('');
+
+  // Wire Cancel buttons
+  listEl.querySelectorAll('.btn-cancel-user-report').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      cancelUserReport(btn.dataset.id);
+    });
+  });
 }
 
 // 6. Socket.IO Real-Time Updates
@@ -870,6 +937,24 @@ function initSocket() {
       renderMyReports();
       if (window.emergencyAudio) window.emergencyAudio.playDispatchChime();
     }
+  });
+
+  socket.on('incident_deleted', ({ incidentId }) => {
+    myReports = myReports.filter(i => i.incidentId !== incidentId);
+    localStorage.setItem('FG_MY_REPORTS', JSON.stringify(myReports));
+    renderMyReports();
+  });
+
+  socket.on('incident_cancelled', ({ incidentId }) => {
+    myReports = myReports.filter(i => i.incidentId !== incidentId);
+    localStorage.setItem('FG_MY_REPORTS', JSON.stringify(myReports));
+    renderMyReports();
+  });
+
+  socket.on('queue_reset', ({ incidents }) => {
+    myReports = incidents || [];
+    localStorage.setItem('FG_MY_REPORTS', JSON.stringify(myReports));
+    renderMyReports();
   });
 }
 
