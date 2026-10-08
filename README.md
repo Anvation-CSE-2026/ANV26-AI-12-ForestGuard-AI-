@@ -12,17 +12,17 @@
 
 ## 🌐 Live Demo & Cloud Deployment Links
 
-| Environment | Interface / Portal | Direct Live Link | Features |
+| Environment | Interface / Portal | Direct Live Link | Key Capabilities |
 | :--- | :--- | :--- | :--- |
 | 🔀 **Vercel Cloud** | **Unified Dual Live Demo Hub** | [**Open Dual Split Demo ➔**](https://agni-rakshak.vercel.app/demo.html) | Side-by-side synchronized Citizen + Admin view |
-| 👤 **Vercel Cloud** | **Citizen Reporting Dashboard** | [**Open Citizen Portal ➔**](https://agni-rakshak.vercel.app/user.html) | 6 reporting methods, YOLOv8 scoreboard, GPS |
-| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Center ➔**](https://agni-rakshak.vercel.app/admin.html) | Protected authorization gate + 1-Click Instant Login |
-| 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Page ➔**](https://agni-rakshak.vercel.app) | 3s flash intro, dashboard launchpad |
-| 🚒 **Vercel Cloud** | **Fire Station Turnout Terminal** | [**Open Station Terminal ➔**](https://agni-rakshak.vercel.app/station.html) | Turnout acceptance & route navigation |
-| 🛰️ **Vercel Cloud** | **Satellite Thermal Radar** | [**Open Satellite Radar ➔**](https://agni-rakshak.vercel.app/satellite.html) | ISRO / MODIS thermal hotspots |
-| 📡 **Vercel Cloud** | **IoT Microclimate Grid** | [**Open IoT Sensor Grid ➔**](https://agni-rakshak.vercel.app/iot.html) | Temperature, humidity, wind telemetry |
-| 📊 **Vercel Cloud** | **Analytics & Risk Intelligence** | [**Open Analytics ➔**](https://agni-rakshak.vercel.app/analytics.html) | Fire spread simulation & history |
-| 🐙 **GitHub** | **Source Code Repository** | [**github.com/Suhas-Saur/AgniRakshak**](https://github.com/Suhas-Saur/AgniRakshak) | Full source code, test data, and models |
+| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Command Center ➔**](https://agni-rakshak.vercel.app/admin.html) | Protected auth gate, 🔬 Deep Zoom, 🎯 Default Zoom, dispatch |
+| 👤 **Vercel Cloud** | **Citizen Emergency Dashboard** | [**Open Citizen Reporting Portal ➔**](https://agni-rakshak.vercel.app/user.html) | 6 reporting methods, YOLOv8 scoreboard, GPS, hyper-local routes |
+| 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Landing Page ➔**](https://agni-rakshak.vercel.app) | 3s flash intro, instant launchpad to Citizen & Admin |
+| 🚒 **Vercel Cloud** | **Fire Station Turnout Terminal** | [**Open Station Turnout Terminal ➔**](https://agni-rakshak.vercel.app/station.html) | Station alert receipt, turnout acceptance & route navigation |
+| 🛰️ **Vercel Cloud** | **Satellite Thermal Radar** | [**Open Satellite Thermal Radar ➔**](https://agni-rakshak.vercel.app/satellite.html) | ISRO / MODIS thermal anomaly hotspots & FRP index |
+| 📡 **Vercel Cloud** | **IoT Microclimate Grid** | [**Open IoT Sensor Grid ➔**](https://agni-rakshak.vercel.app/iot.html) | Real-time temperature, humidity, and smoke telemetry |
+| 📊 **Vercel Cloud** | **Analytics & Risk Intelligence** | [**Open Analytics & Simulation ➔**](https://agni-rakshak.vercel.app/analytics.html) | Historical fire trends, spread simulation & threat models |
+| 🐙 **GitHub** | **Source Code Repository** | [**github.com/Suhas-Saur/AgniRakshak**](https://github.com/Suhas-Saur/AgniRakshak) | Full source code, test scenarios, and GIS dataset |
 
 > 💡 **Mirror Cloud URL**: [https://agnirakshak.vercel.app/demo.html](https://agnirakshak.vercel.app/demo.html)
 
@@ -33,47 +33,49 @@
 When running the project locally (`node server.js` or `npm start`):
 
 - 🔀 **Unified Dual Live Demo**: [http://localhost:8109/demo.html](http://localhost:8109/demo.html) *(or [http://localhost:3000/demo.html](http://localhost:3000/demo.html))*
-- 👤 **Citizen Emergency Dashboard**: [http://localhost:8109/user.html](http://localhost:8109/user.html)
 - 🚨 **Admin Command Center**: [http://localhost:8109/admin.html](http://localhost:8109/admin.html) *(Passcode: `admin123` or click ⚡ Instant Login)*
+- 👤 **Citizen Emergency Dashboard**: [http://localhost:8109/user.html](http://localhost:8109/user.html)
 - 🏠 **Home Landing Page**: [http://localhost:8109/index.html](http://localhost:8109/index.html)
 
 ---
 
-## 📑 Core Concept & Architecture
+## 🌟 Key Features & Innovations
 
-Forest fires in India threaten vital biodiversity reserves such as **Bandipur**, **Nagarhole**, **Kanha**, and **Jim Corbett**, as well as urban forest interface corridors along **Kanakapura Road (KSSEM, DSATM, Bannerghatta)**. Traditional alerts are often fragmented, slow, or plagued by false alarms (such as sunset twilight, ambient haze, or agricultural burning).
+1. **🔬 Deep Zoom In (Tree & Building Level - Zoom 19)**:
+   - High-resolution Google Hybrid satellite imagery allows inspecting Ground Zero at maximum resolution (`zoom: 19`).
+   - View individual building footprints (e.g. KSSEM college blocks, DSATM campus, temple structures), pathways, tree canopies, and bushes clearly.
 
-**FORESTGUARD AI** establishes a closed-loop emergency ecosystem centered on a **LIVE GEOSPATIAL MAP ENGINE**:
+2. **🎯 Sector Default Zoom (Zoom 15)**:
+   - Coordinated 1-click camera reset framing the fire ground zero, nearest responding fire station (< 2 km), and nearest emergency waterbody together in one operational sector view.
 
-1. **User / Citizen Emergency Dashboard** (`/user.html`):
-   - **6 Reporting Methods**: Image upload, camera snapshot, video upload, manual map pin, GPS geolocation, and location autocomplete search.
-   - **YOLOv8 AI Scoreboard**: Displays **Fire Coverage %** (primary criticality driver), Criticality Level, AI Authenticity Score (Anti-Hoax), Fire Confidence, Smoke Level, and Anomaly Detection.
-   - **Hyper-Local Entity Mapping**: Instantly connects Ground Zero to the nearest local fire station (within 0.4–1.5 km) and emergency water draft reservoirs (within 1.5–2.5 km) via neat dotted routes.
-   - **Default Zoom Restore (`🎯`)**: 1-click restore to sector view showing fire, station, and water bodies together.
+3. **🗺️ Crisp, Natural Satellite View (Non-Orangy)**:
+   - Shading is retained **strictly in the first radius** (500m Hot Zone / Confirmed Fire Area) with subtle translucent fire tint.
+   - Outer warning circles (1.5 km and 5.0 km) and population exposure perimeters have all heavy orange fills removed, retaining clean dotted perimeter rings so satellite terrain and roads remain crystal-clear.
 
-2. **Admin Command Operations Center** (`/admin.html`):
-   - **Real-Time Streaming**: Live incident reception without page refresh via Socket.IO.
-   - **Geospatial Radar**: High-resolution Google Hybrid satellite tiles, 500m/1.5km/5km impact rings, fire perimeters, and spread simulation.
-   - **Hyper-Local Response Dispatch**: Ranked fire response units strictly in the same state/district, direct route plotting from the fire station building to the fire pin, and water draft pipeline relays.
-   - **Anti-Overlap Tactical Layout**: Expanded 60% central map display with responsive sidebar management.
+4. **🔐 Admin Passcode Gate & Instant Login**:
+   - Administrative commands and response dispatch are guarded with an authentication gate.
+   - Includes a **⚡ Instant Login** one-click bypass for rapid, frictionless hackathon jury presentations.
 
-3. **Unified Live Demo Hub** (`/demo.html`):
-   - **Synchronized Split Screen**: Citizen dashboard on the left, Admin command radar on the right.
-   - Entering or searching any location on the Citizen panel immediately transmits telemetry to the Admin map in real time.
+5. **🚒 Hyper-Local Response Dispatch & Dotted Routes**:
+   - Automatically identifies and ranks response stations and water reservoirs within the same district/state (< 2 km).
+   - Draws neat dotted orange trajectory lines from the station building directly to the fire pin, and dotted cyan lines from the drafting water body.
+
+6. **🤖 Dual-Engine AI Vision (YOLOv8 + Native Computer Vision)**:
+   - Evaluates **Fire Coverage %**, Criticality Level, AI Authenticity Score (Anti-Hoax verification), Smoke Level, and Temperature Anomaly.
+   - Handles sunset twilight and ambient haze without false-positive triggers.
 
 ---
 
-## 🗺️ Live Map Color Specifications
+## 🗺️ Live Map Color & Overlay Specifications
 
-As defined in the project architecture:
-- 🔴 **RED**: Critical active fire (Animated pulsing radar shockwaves)
-- 🟥 **RED OUTLINE**: Fire perimeter & 500m Hot Zone
-- 🟠 **ORANGE**: High-risk fire buffer & Dotted response route from fire station
-- 🟡 **YELLOW**: 5km Response sector & fire spread projection
-- 🟣 **PURPLE**: Fire response station building pin
-- 🔵 **BLUE / SKY-BLUE**: Water drafting terminal / emergency lake & hose relay route
-- 🟢 **GREEN**: Safe / resolved incident
-- 🔷 **CYAN**: IoT microclimate sensor node
+- 🔴 **RED**: Critical active fire (Pulsing radar shockwaves + subtle 500m core fire tint)
+- 🟥 **RED OUTLINE**: Confirmed fire perimeter boundary (dash 4,4)
+- 🟠 **ORANGE**: 1.5km Buffer perimeter (crisp dotted ring) & Dotted dispatch route from fire station
+- 🟡 **YELLOW**: 5.0km Regional response sector (crisp dotted ring) & fire spread projection
+- 🟣 **PURPLE / BADGE**: Emergency Forestry Response Station (`Team Ready 🛡️`)
+- 🔵 **BLUE / SKY-BLUE**: Water drafting terminal / emergency lake & hose relay route (`💧`)
+- 🟢 **GREEN**: Resolved / safe sector
+- 🔷 **CYAN**: IoT microclimate sensor node (`📡`)
 
 ---
 
@@ -84,22 +86,22 @@ As defined in the project architecture:
 2. **Step 1: Test Location Autocomplete**:
    In the Citizen search box (Left pane), type **"DSATM Campus"** or **"KSSEM"** or **"Bandipur"**.
    - Ground zero is pinned.
-   - Dotted orange line connects the local fire station (0.4–1.1 km away).
+   - Dotted orange line connects the local fire station (within 0.4–1.1 km).
    - Dotted blue line connects the emergency water draft terminal.
-   - Admin map (Right pane) syncs automatically!
+   - Admin map (Right pane) synchronizes in real time!
 3. **Step 2: Upload Fire Evidence**:
    Upload a fire photograph or choose a test scenario.
-   - Watch the **Fire & Criticality Scoreboard** calculate Fire Coverage, Severity, and Authenticity.
+   - Watch the **Fire & Criticality Scoreboard** calculate Fire Coverage %, Severity, and Authenticity.
 4. **Step 3: Click SEND FIRE ALERT**:
    - Audio siren triggers on the Admin dashboard.
-   - Incident card appears in the Admin queue.
+   - Incident appears in the Admin queue.
    - Admin map focuses on the ground zero sector.
-5. **Step 4: Dispatch Response Team**:
-   - Admin selects the recommended local unit and clicks **DEPLOY UNIT**.
-   - Live vehicle tracking animates along the dotted route to the fire ground zero!
-6. **Step 5: Test Default Zoom Button**:
-   - Zoom deep into a building footprint (zoom 18–20).
-   - Click the **🎯 Default Zoom** button to instantly restore the sector view containing the fire, station, and waterbody.
+5. **Step 4: Test 🔬 Deep Zoom & 🎯 Default Zoom**:
+   - Click **🔬 Deep Zoom (Tree/Building)** to zoom deeply into Ground Zero at `zoom: 19` to view individual buildings and tree canopies.
+   - Click **🎯 Default Zoom** to restore the operational sector view with the fire station and waterbody.
+6. **Step 5: Dispatch Response Team**:
+   - Admin unlocks via **⚡ Instant Login** (or passcode `admin123`), selects the recommended local unit and clicks **DEPLOY UNIT**.
+   - Live emergency vehicle tracking animates along the dotted route to Ground Zero!
 
 ---
 
