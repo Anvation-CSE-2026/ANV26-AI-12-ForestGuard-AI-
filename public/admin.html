@@ -62,19 +62,30 @@
         <span>⚡</span> <span>Demo Scenarios</span>
       </button>
 
-      <!-- Landing Page & Citizen Dashboard & Dual Demo Switcher Links -->
-      <a href="/index.html" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Return to Landing Page">
-        <span>🏠</span> <span class="hidden md:inline">Home</span>
-      </a>
-      <a href="/user.html" class="px-3 py-1.5 rounded-lg bg-orange-950/80 hover:bg-orange-850 border border-orange-500/80 text-xs font-black text-orange-400 hover:text-white transition flex items-center gap-1 shadow-sm">
-        <span>👤</span> <span class="hidden sm:inline">Citizen Dashboard</span>
-      </a>
-      <a href="/demo.html" class="px-3 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-850 border border-indigo-500/80 text-xs font-black text-indigo-300 hover:text-white transition flex items-center gap-1 shadow-sm">
-        <span>🔀</span> <span class="hidden sm:inline">Dual Split Demo</span>
-      </a>
-      <button id="btnAdminLogout" class="px-2.5 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-700/80 text-xs font-bold text-red-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Lock Command Center (Requires Passcode or 1-Click Login)">
-        <span>🔒</span> <span class="hidden md:inline">Lock / Logout</span>
-      </button>
+      <!-- Prominent Switcher to Citizen Dashboard (Port 8109) -->
+      <div class="flex items-center gap-2">
+        <!-- Dashboard Toggle Segmented Control -->
+        <div class="flex items-center bg-[#050b17] p-1 rounded-xl border-2 border-red-500/70 shadow-lg">
+          <a href="http://localhost:8109/user.html" data-switch-to="user" class="px-3 py-1 rounded-lg text-orange-300 hover:text-white hover:bg-orange-600 border border-transparent hover:border-orange-500 text-xs font-black transition flex items-center gap-1.5 group" title="Switch immediately to Citizen Emergency Dashboard on Port 8109">
+            <span class="group-hover:animate-pulse">👤</span> <span>Switch to Citizen Dashboard ➔</span>
+          </a>
+          <span class="px-2.5 py-1 rounded-lg bg-red-600 text-white text-xs font-black flex items-center gap-1 shadow-sm">
+            <span>🚨</span> <span class="hidden sm:inline">Admin Mode</span>
+          </span>
+        </div>
+
+        <a href="http://localhost:8109/demo.html" data-switch-to="demo" class="px-2.5 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-850 border border-indigo-500/80 text-xs font-black text-indigo-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Unified Dual Live Demo on Port 8109">
+          <span>🔀</span> <span class="hidden sm:inline">Split Demo</span>
+        </a>
+
+        <a href="http://localhost:8109/index.html" data-switch-to="home" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Return to Landing Page">
+          <span>🏠</span> <span class="hidden md:inline">Home</span>
+        </a>
+
+        <button id="btnAdminLogout" class="px-2.5 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-700/80 text-xs font-bold text-red-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Lock Command Center (Requires Passcode or 1-Click Login)">
+          <span>🔒</span> <span class="hidden md:inline">Lock</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -774,5 +785,6 @@
   <script src="/js/audioAlert.js"></script>
   <script src="/js/mapEngine.js"></script>
   <script src="/js/adminApp.js"></script>
+  <script src="/js/dashboardSwitcher.js"></script>
 </body>
 </html>

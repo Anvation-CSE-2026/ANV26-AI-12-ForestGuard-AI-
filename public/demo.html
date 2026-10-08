@@ -58,15 +58,15 @@
 
     <!-- Persona & External Links -->
     <div class="flex items-center gap-2">
-      <!-- Direct Links -->
-      <a href="/index.html" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition flex items-center gap-1" title="Return to Landing Page">
+      <!-- Direct Switch Links -->
+      <a href="http://localhost:8109/index.html" data-switch-to="home" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition flex items-center gap-1" title="Return to Landing Page">
         <span>🏠 Home</span>
       </a>
-      <a href="/user.html" target="_blank" class="hidden md:flex px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition items-center gap-1" title="Open Citizen Dashboard in new tab">
-        <span>↗ User Tab</span>
+      <a href="http://localhost:8109/user.html" data-switch-to="user" class="px-3 py-1 rounded-lg bg-orange-950/80 hover:bg-orange-800 text-orange-300 hover:text-white text-xs font-black border border-orange-600/80 transition flex items-center gap-1 shadow-sm" title="Open Full Standalone Citizen Dashboard on Port 8109">
+        <span>👤 Full Citizen Dashboard ➔</span>
       </a>
-      <a href="/admin.html" target="_blank" class="hidden md:flex px-2.5 py-1 rounded-lg bg-red-950/70 hover:bg-red-900 text-red-300 text-xs font-bold border border-red-800/80 transition items-center gap-1" title="Open Admin Command Center in new tab">
-        <span>↗ Admin Tab</span>
+      <a href="http://localhost:8109/admin.html?auth=demo" data-switch-to="admin" class="px-3 py-1 rounded-lg bg-red-950/80 hover:bg-red-800 text-red-300 hover:text-white text-xs font-black border border-red-600/80 transition flex items-center gap-1 shadow-sm" title="Open Full Standalone Admin Command Center on Port 8109">
+        <span>🚨 Full Admin Command ➔</span>
       </a>
       <!-- Live Status Badge -->
       <span class="px-2 py-1 rounded-full bg-emerald-950/80 border border-emerald-600/60 text-emerald-400 font-mono text-[10px] font-bold flex items-center gap-1">
@@ -188,5 +188,6 @@
 
     window.addEventListener('resize', notifyMapResize);
   </script>
+  <script src="/js/dashboardSwitcher.js"></script>
 </body>
 </html>
