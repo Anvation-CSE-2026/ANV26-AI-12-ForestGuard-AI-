@@ -746,10 +746,22 @@ function initFormAndModals() {
         formData.append('fakeProbability', document.getElementById('hdnFakeScore')?.value || '3.2');
         formData.append('authenticityScore', document.getElementById('hdnAuthenticityScore')?.value || '96.8');
 
-        const res = await fetch('/api/incidents', {
-          method: 'POST',
-          body: formData
-        });
+        let res;
+        try {
+          res = await fetch('/api/incidents', {
+            method: 'POST',
+            body: formData
+          });
+        } catch (fetchErr) {
+          // If primary relative fetch fails, fallback to alternate port (8109 / 3000)
+          const currentPort = window.location.port;
+          const targetPort = currentPort === '8109' ? '3000' : '8109';
+          console.warn(`Primary fetch failed (${fetchErr.message}). Retrying on http://localhost:${targetPort}...`);
+          res = await fetch(`http://localhost:${targetPort}/api/incidents`, {
+            method: 'POST',
+            body: formData
+          });
+        }
 
         const data = await res.json();
         if (data.success && data.incident) {
@@ -758,7 +770,7 @@ function initFormAndModals() {
           alert('Submission error: ' + (data.message || 'Unknown error'));
         }
       } catch (err) {
-        alert('Transmission error: ' + err.message);
+        alert('Transmission notice: Unable to contact server. Please verify http://localhost:8109 is online.');
       }
     });
   }

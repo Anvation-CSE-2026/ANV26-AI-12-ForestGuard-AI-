@@ -240,10 +240,19 @@ function initForm() {
 
       if (statusText) statusText.textContent = 'Executing ForestGuard AI Vision Segmentation...';
 
-      const res = await fetch('/api/incidents', {
-        method: 'POST',
-        body: formData
-      });
+      let res;
+      try {
+        res = await fetch('/api/incidents', {
+          method: 'POST',
+          body: formData
+        });
+      } catch (fetchErr) {
+        const targetPort = window.location.port === '8109' ? '3000' : '8109';
+        res = await fetch(`http://localhost:${targetPort}/api/incidents`, {
+          method: 'POST',
+          body: formData
+        });
+      }
 
       const data = await res.json();
 

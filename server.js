@@ -552,3 +552,24 @@ server.listen(PORT, () => {
   console.log(`🌐 Landing Page:            http://localhost:${PORT}/index.html`);
   console.log(`================================================================`);
 });
+
+// Dual-Port Bridge: Listen on port 8109 AND port 3000 simultaneously so users on either port work seamlessly!
+if (PORT !== 3000) {
+  const serverFallback = http.createServer(app);
+  serverFallback.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log('ℹ️ Port 3000 is occupied by an external project. ForestGuard running isolated on port ' + PORT);
+    } else {
+      console.warn('[PORT 3000 Notice]:', err.message);
+    }
+  });
+
+  try {
+    io.attach(serverFallback);
+    serverFallback.listen(3000, () => {
+      console.log(`🌐 Compatibility Bridge: Also listening on http://localhost:3000`);
+    });
+  } catch (e) {
+    console.warn('Bridge attach error:', e.message);
+  }
+}
