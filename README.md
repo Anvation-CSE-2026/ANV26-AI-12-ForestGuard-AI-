@@ -82,6 +82,12 @@ When running the project locally (`node server.js` or `npm start`):
    - Evaluates **Fire Coverage %**, Criticality Level, AI Authenticity Score (Anti-Hoax verification), Smoke Level, and Temperature Anomaly.
    - Handles sunset twilight and ambient haze without false-positive triggers.
 
+7. **📱 Dedicated Mobile Platform Mode & Default Desktop Mode Switcher**:
+   - Header mini button control `[ 💻 Desktop ]` (Default) and `[ 📱 Mobile ]` provides seamless 1-click toggling between form factors.
+   - **Desktop Mode Default**: Preserves full 3-column workstation layout, expanded map, side-by-side incident feed, Deep Zoom, FFDI, spread simulator, and dispatch controls without compromise.
+   - **Dedicated Mobile Mode**: Transforms UI entirely into a thumb-friendly smartphone application with fixed bottom navigation (`🗺️ Live Map`, `🚨 Incidents`, `⚡ Dispatch`, `📊 AI HUD` on Admin; and `📝 Report Fire`, `🗺️ Live Map`, `📋 My Reports`, `📞 Emergency` on Citizen).
+   - Dynamic Leaflet `invalidateSize()` ensures full-screen edge-to-edge map rendering with zero tile distortion across viewports.
+
 ---
 
 ## 🗺️ Live Map Color & Overlay Specifications

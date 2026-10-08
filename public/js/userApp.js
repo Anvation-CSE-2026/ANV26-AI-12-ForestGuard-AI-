@@ -48,37 +48,71 @@ function getHaversineDist(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-// 1. Tab Navigation
+// 1. Tab Navigation (Synchronized for Desktop & Mobile Mode)
+function switchUserTab(activeId) {
+  // Desktop header tabs styling
+  document.querySelectorAll('.nav-tab').forEach(b => {
+    if (b.dataset.tab === activeId) {
+      b.className = 'nav-tab px-3 py-1.5 rounded-lg text-white bg-slate-800';
+    } else {
+      b.className = 'nav-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white';
+    }
+  });
+
+  // Mobile bottom navigation tabs styling
+  document.querySelectorAll('.user-mob-tab-btn').forEach(b => {
+    if (b.dataset.tab === activeId) {
+      b.className = 'user-mob-tab-btn active-tab flex-1 py-1.5 flex flex-col items-center justify-center text-orange-400 font-bold transition active:scale-95 cursor-pointer';
+    } else {
+      b.className = 'user-mob-tab-btn flex-1 py-1.5 flex flex-col items-center justify-center text-slate-400 hover:text-white font-bold transition active:scale-95 cursor-pointer';
+    }
+  });
+
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+  const activeTab = document.getElementById(activeId);
+  if (activeTab) {
+    activeTab.classList.remove('hidden');
+    activeTab.classList.add('mobile-tab-fade');
+  }
+
+  if (activeId === 'tabLiveMap') {
+    initFullMap();
+    setTimeout(() => {
+      if (typeof fullMap !== 'undefined' && fullMap) fullMap.invalidateSize();
+    }, 150);
+  } else if (activeId === 'tabReport') {
+    setTimeout(() => {
+      if (userMap) userMap.invalidateSize();
+    }, 150);
+  }
+}
+
 function initTabs() {
   document.querySelectorAll('.nav-tab').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.nav-tab').forEach(b => {
-        b.className = 'nav-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white';
-      });
-      btn.className = 'nav-tab px-3 py-1.5 rounded-lg text-white bg-slate-800';
-
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-      const activeId = btn.dataset.tab;
-      const activeTab = document.getElementById(activeId);
-      if (activeTab) activeTab.classList.remove('hidden');
-
-      if (activeId === 'tabLiveMap') {
-        initFullMap();
-        setTimeout(() => {
-          if (fullMap) fullMap.invalidateSize();
-        }, 150);
-      } else if (activeId === 'tabReport') {
-        setTimeout(() => {
-          if (userMap) userMap.invalidateSize();
-        }, 150);
-      }
+      if (btn.dataset.tab) switchUserTab(btn.dataset.tab);
     });
+  });
+
+  document.querySelectorAll('.user-mob-tab-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (btn.dataset.tab) switchUserTab(btn.dataset.tab);
+    });
+  });
+
+  // Listen to view mode changes to recalculate Leaflet map sizes
+  window.addEventListener('agnirakshak:viewmodechanged', () => {
+    setTimeout(() => {
+      if (userMap) userMap.invalidateSize();
+      if (typeof fullMap !== 'undefined' && fullMap) fullMap.invalidateSize();
+    }, 150);
   });
 
   const btnQuick = document.getElementById('btnQuickReportNow');
   if (btnQuick) {
     btnQuick.addEventListener('click', () => {
-      document.querySelector('[data-tab="tabReport"]').click();
+      switchUserTab('tabReport');
       setReportingMethod('Manual');
       const targetEl = document.getElementById('userCentralMap') || document.getElementById('userReportForm');
       if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });

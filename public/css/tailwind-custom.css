@@ -258,3 +258,191 @@ body.modal-open .leaflet-container {
   animation: flashCardGlow 4s ease-in-out infinite;
 }
 
+/* ========================================================================= */
+/* DEDICATED MOBILE MODE & VIEW MODE SWITCHER SYSTEM                         */
+/* Desktop Mode remains DEFAULT, Mobile Mode shifts UI entirely for phones   */
+/* ========================================================================= */
+
+/* View Mode Mini Button Group */
+.view-mode-toggle-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background-color: #040814;
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  border-radius: 8px;
+  padding: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.view-mode-toggle-btn {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 1. ADMIN COMMAND CENTER - MOBILE MODE (.view-mode-mobile)                 */
+/* ------------------------------------------------------------------------- */
+.view-mode-mobile body,
+body.view-mode-mobile {
+  overflow: hidden !important;
+}
+
+.view-mode-mobile #adminMobileBottomNav,
+body.view-mode-mobile #adminMobileBottomNav {
+  display: flex !important;
+}
+
+.view-mode-mobile #adminFooterTimeline,
+body.view-mode-mobile #adminFooterTimeline {
+  display: none !important;
+}
+
+/* In Mobile Mode, transform the 3-column grid into a single focused panel */
+.view-mode-mobile #adminMainGrid,
+body.view-mode-mobile #adminMainGrid {
+  display: flex !important;
+  flex-direction: column !important;
+  height: calc(100vh - 58px - 56px) !important; /* Viewport minus header and bottom nav */
+  max-height: calc(100vh - 58px - 56px) !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+/* Hide panels by default in mobile mode */
+.view-mode-mobile .admin-mob-panel,
+body.view-mode-mobile .admin-mob-panel {
+  display: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  flex: 1 1 0% !important;
+  overflow-y: auto !important;
+}
+
+/* Show only the active panel in mobile mode */
+.view-mode-mobile .admin-mob-panel.active-mobile-panel,
+body.view-mode-mobile .admin-mob-panel.active-mobile-panel {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* When Map Panel is active in mobile mode */
+.view-mode-mobile #adminColMap.active-mobile-panel,
+body.view-mode-mobile #adminColMap.active-mobile-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.view-mode-mobile #adminLiveMap,
+body.view-mode-mobile #adminLiveMap {
+  flex: 1 1 0% !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+/* Mobile bottom nav active indicator */
+.admin-mob-tab-btn.active-tab {
+  color: #f97316 !important;
+  background: rgba(249, 115, 22, 0.12);
+  border-radius: 10px;
+}
+
+.admin-mob-tab-btn.active-tab span:first-child {
+  transform: scale(1.15);
+  transition: transform 0.2s ease;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 2. ADMIN COMMAND CENTER - DESKTOP MODE (.view-mode-desktop / DEFAULT)     */
+/* Keeps the desktop mode small click options default and does not lose it   */
+/* ------------------------------------------------------------------------- */
+.view-mode-desktop #adminMobileBottomNav,
+body.view-mode-desktop #adminMobileBottomNav,
+#adminMobileBottomNav:not(.force-show) {
+  display: none !important;
+}
+
+.view-mode-desktop #adminMainGrid,
+body.view-mode-desktop #adminMainGrid {
+  display: grid !important;
+  height: 100% !important;
+}
+
+.view-mode-desktop .admin-mob-panel,
+body.view-mode-desktop .admin-mob-panel {
+  display: flex !important;
+}
+
+.view-mode-desktop #adminFooterTimeline,
+body.view-mode-desktop #adminFooterTimeline {
+  display: flex !important;
+}
+
+/* ------------------------------------------------------------------------- */
+/* 3. CITIZEN DASHBOARD - MOBILE MODE (.view-mode-mobile)                    */
+/* ------------------------------------------------------------------------- */
+.view-mode-mobile #userMobileBottomNav,
+body.view-mode-mobile #userMobileBottomNav {
+  display: flex !important;
+}
+
+.view-mode-mobile main.user-main-container,
+body.view-mode-mobile main.user-main-container {
+  padding-bottom: 5.5rem !important; /* Space for bottom nav */
+}
+
+.view-mode-desktop #userMobileBottomNav,
+body.view-mode-desktop #userMobileBottomNav,
+#userMobileBottomNav:not(.force-show) {
+  display: none !important;
+}
+
+.user-mob-tab-btn.active-tab {
+  color: #f97316 !important;
+  background: rgba(249, 115, 22, 0.12);
+  border-radius: 10px;
+}
+
+/* Smooth mobile tab transitions */
+.mobile-tab-fade {
+  animation: mobTabFade 0.25s ease-out;
+}
+
+@keyframes mobTabFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile sub-groups for Col 3 in Admin Command Center */
+.view-mode-mobile.mob-active-dispatch .admin-group-ai {
+  display: none !important;
+}
+.view-mode-mobile.mob-active-dispatch .admin-group-dispatch {
+  display: block !important;
+}
+
+.view-mode-mobile.mob-active-ai .admin-group-dispatch {
+  display: none !important;
+}
+.view-mode-mobile.mob-active-ai .admin-group-ai {
+  display: block !important;
+}
+
+/* In Desktop Mode (Default): ALWAYS display both groups simultaneously! */
+.view-mode-desktop .admin-group-ai,
+.view-mode-desktop .admin-group-dispatch,
+body:not(.view-mode-mobile) .admin-group-ai,
+body:not(.view-mode-mobile) .admin-group-dispatch {
+  display: block !important;
+}
+
+
+

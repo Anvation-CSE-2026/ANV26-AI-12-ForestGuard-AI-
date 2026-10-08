@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <!-- AgniRakshak View Mode Switcher (Desktop Default | Dedicated Mobile Platform) -->
+  <script src="/js/viewModeSwitcher.js"></script>
 </head>
 <body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans">
 
@@ -34,6 +36,16 @@
 
       <!-- Prominent Switcher to Admin Dashboard (Port 8109) -->
       <div class="flex items-center gap-2">
+        <!-- View Mode Mini Switcher: Desktop (Default) | Mobile Platform -->
+        <div id="viewModeMiniSwitcher" class="view-mode-toggle-group flex items-center bg-[#050b17] p-0.5 rounded-xl border-2 border-orange-500/60 shadow-lg" title="Toggle between Desktop Mode (Default) and Mobile Mode">
+          <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer bg-orange-600 text-white shadow-sm ring-1 ring-orange-400/50" title="Default Desktop Mode">
+            <span>💻</span> <span class="hidden sm:inline">Desktop</span>
+          </button>
+          <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
+            <span>📱</span> <span class="hidden sm:inline">Mobile</span>
+          </button>
+        </div>
+
         <!-- Dashboard Toggle Segmented Control -->
         <div class="flex items-center bg-[#050b17] p-1 rounded-xl border-2 border-orange-500/70 shadow-lg">
           <span class="px-2.5 py-1 rounded-lg bg-orange-600 text-white text-xs font-black flex items-center gap-1 shadow-sm">
@@ -52,7 +64,7 @@
   </header>
 
   <!-- Main Container -->
-  <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6 user-main-container">
 
     <!-- TAB 1: REPORT FIRE (Default Active - Upload Box & Map Shifted to Top) -->
     <div id="tabReport" class="tab-content space-y-6">
@@ -780,6 +792,26 @@
   <footer class="border-t border-slate-800 bg-[#02050c] py-4 px-4 text-center text-xs text-slate-500">
     FORESTGUARD AI &copy; 2026. User Emergency Dashboard. Emergency dispatches simulated for evaluation.
   </footer>
+
+  <!-- Fixed Mobile Bottom Navigation Bar (Visible in Mobile Mode) -->
+  <nav id="userMobileBottomNav" class="fixed bottom-0 inset-x-0 h-14 bg-[#070e1c]/95 backdrop-blur-xl border-t border-slate-800 z-50 flex items-center justify-around px-2 shadow-2xl">
+    <button type="button" class="user-mob-tab-btn active-tab flex-1 py-1.5 flex flex-col items-center justify-center text-orange-400 font-bold transition active:scale-95 cursor-pointer" data-tab="tabReport">
+      <span class="text-base leading-none">📝</span>
+      <span class="text-[10px] mt-0.5 tracking-tight">Report Fire</span>
+    </button>
+    <button type="button" class="user-mob-tab-btn flex-1 py-1.5 flex flex-col items-center justify-center text-slate-400 hover:text-white font-bold transition active:scale-95 cursor-pointer" data-tab="tabLiveMap">
+      <span class="text-base leading-none">🗺️</span>
+      <span class="text-[10px] mt-0.5 tracking-tight">Live Map</span>
+    </button>
+    <button type="button" class="user-mob-tab-btn flex-1 py-1.5 flex flex-col items-center justify-center text-slate-400 hover:text-white font-bold transition active:scale-95 cursor-pointer" data-tab="tabMyReports">
+      <span class="text-base leading-none">📋</span>
+      <span class="text-[10px] mt-0.5 tracking-tight">My Reports</span>
+    </button>
+    <button type="button" class="user-mob-tab-btn flex-1 py-1.5 flex flex-col items-center justify-center text-slate-400 hover:text-white font-bold transition active:scale-95 cursor-pointer" data-tab="tabContacts">
+      <span class="text-base leading-none">📞</span>
+      <span class="text-[10px] mt-0.5 tracking-tight">Emergency</span>
+    </button>
+  </nav>
 
   <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

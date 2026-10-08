@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <!-- AgniRakshak View Mode Switcher (Desktop Default | Dedicated Mobile Platform) -->
+  <script src="/js/viewModeSwitcher.js"></script>
 </head>
 <body class="bg-[#030712] text-slate-100 h-screen flex flex-col font-sans overflow-hidden">
 
@@ -59,6 +61,16 @@
 
       <!-- Prominent Switcher to Citizen Dashboard (Port 8109) -->
       <div class="flex items-center gap-2">
+        <!-- View Mode Mini Switcher: Desktop (Default) | Mobile Platform -->
+        <div id="viewModeMiniSwitcher" class="view-mode-toggle-group flex items-center bg-[#050b17] p-0.5 rounded-xl border-2 border-sky-500/60 shadow-lg" title="Toggle between Desktop Mode (Default) and Mobile Mode">
+          <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/50" title="Default Desktop Mode (Full 3-column workstation)">
+            <span>💻</span> <span class="hidden sm:inline">Desktop</span>
+          </button>
+          <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
+            <span>📱</span> <span class="hidden sm:inline">Mobile</span>
+          </button>
+        </div>
+
         <!-- Dashboard Toggle Segmented Control -->
         <div class="flex items-center bg-[#050b17] p-1 rounded-xl border-2 border-red-500/70 shadow-lg">
           <a href="/user.html" data-switch-to="user" class="px-3 py-1 rounded-lg text-orange-300 hover:text-white hover:bg-orange-600 border border-transparent hover:border-orange-500 text-xs font-black transition flex items-center gap-1.5 group" title="Switch to Citizen Emergency Dashboard">
@@ -105,10 +117,10 @@
   </div>
 
   <!-- Main 4-Quadrant Command Center Layout -->
-  <div class="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-h-0 h-full bg-[#030712]">
+  <div id="adminMainGrid" class="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-h-0 h-full bg-[#030712]">
     
     <!-- LEFT: Incident List (Compact Col 3/2) -->
-    <section class="md:col-span-3 xl:col-span-2 border-r border-slate-800/80 bg-[#070e1c] flex flex-col h-full min-h-0 overflow-hidden">
+    <section id="adminColIncidents" class="admin-mob-panel md:col-span-3 xl:col-span-2 border-r border-slate-800/80 bg-[#070e1c] flex flex-col h-full min-h-0 overflow-hidden">
       <div class="p-3 border-b border-slate-800 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-1.5">
           <span class="text-xs font-black uppercase tracking-wider text-slate-300">INCIDENT QUEUE</span>
@@ -128,9 +140,8 @@
       </div>
     </section>
 
-    <!-- CENTER: Large Live Google Map (Expanded Col 6/7) -->
     <!-- CENTER: Large Live Google Map (Expanded Col 6/7 - Maximized Unobstructed View) -->
-    <section class="md:col-span-6 xl:col-span-7 relative bg-[#040814] flex flex-col h-full min-h-[350px] md:min-h-0 overflow-hidden">
+    <section id="adminColMap" class="admin-mob-panel active-mobile-panel md:col-span-6 xl:col-span-7 relative bg-[#040814] flex flex-col h-full min-h-[350px] md:min-h-0 overflow-hidden">
       
       <!-- Sleek Floating Map Controls (Top-Right: ONLY Zoom Controls, Zero Unnecessary Boxes!) -->
       <div class="absolute top-3 right-3 z-30 flex items-center gap-2 pointer-events-auto">
@@ -240,7 +251,7 @@
     </section>
 
     <!-- RIGHT: Selected Incident Details (Slimmer Col 3) -->
-    <section class="md:col-span-3 xl:col-span-3 border-l border-slate-800/80 bg-[#070e1c] flex flex-col h-full min-h-0 overflow-y-auto p-3 space-y-3">
+    <section id="adminColDetails" class="admin-mob-panel md:col-span-3 xl:col-span-3 border-l border-slate-800/80 bg-[#070e1c] flex flex-col h-full min-h-0 overflow-y-auto p-3 space-y-3">
       
       <!-- Incident Header (Glitch-Free Non-Wrapping Structure) -->
       <div class="border-b border-slate-800 pb-3 flex items-start justify-between gap-3">
@@ -276,7 +287,7 @@
       </div>
 
       <!-- Uploaded Image with AI Hotspot Overlays -->
-      <div class="space-y-1">
+      <div class="admin-group-ai space-y-1">
         <div class="flex items-center justify-between text-xs font-bold text-slate-400">
           <span>UPLOADED INCIDENT PHOTOGRAPH</span>
           <span id="detailDetectionSource" class="text-orange-400 font-mono text-[11px]">Citizen Photo + AI</span>
@@ -291,7 +302,7 @@
       </div>
 
       <!-- SCORE BOARD: Detection Result & Risk Alert (YOLOv8 Engine) -->
-      <div id="adminScoreBoardContainer" class="p-3.5 rounded-xl bg-[#070e1c] border border-slate-800 shadow-xl space-y-2.5 font-sans">
+      <div id="adminScoreBoardContainer" class="admin-group-ai p-3.5 rounded-xl bg-[#070e1c] border border-slate-800 shadow-xl space-y-2.5 font-sans">
         
         <!-- Header: Title, Engine Status & Timestamp -->
         <div class="flex items-center justify-between pb-1.5 border-b border-slate-800/80">
@@ -433,7 +444,7 @@
       </div>
 
       <!-- AI Fire Image Analysis & Explainable AI -->
-      <div class="p-3 rounded-xl bg-[#091122] border border-slate-800 space-y-2">
+      <div class="admin-group-ai p-3 rounded-xl bg-[#091122] border border-slate-800 space-y-2">
         <div class="flex items-center justify-between">
           <span class="text-xs font-black text-white flex items-center gap-1.5">
             <span>🧠</span> <span>EXPLAINABLE AI REASONING</span>
@@ -455,7 +466,7 @@
       </div>
 
       <!-- MULTI-SOURCE FIRE VERIFICATION (Section 8) -->
-      <div class="p-3.5 rounded-xl bg-gradient-to-br from-[#0c162b] to-[#080f1d] border border-orange-500/30 space-y-2.5">
+      <div class="admin-group-ai p-3.5 rounded-xl bg-gradient-to-br from-[#0c162b] to-[#080f1d] border border-orange-500/30 space-y-2.5">
         <div class="flex items-center justify-between">
           <span class="text-xs font-black text-white flex items-center gap-1.5">
             <span>⚡</span> <span>MULTI-SOURCE VERIFICATION</span>
@@ -484,7 +495,7 @@
       </div>
 
       <!-- RESOURCE DETECTION: Station & Water (Section 13) -->
-      <div class="space-y-2">
+      <div class="admin-group-dispatch space-y-2">
         <div class="text-[11px] font-black text-slate-400 uppercase tracking-wider">GEOSPATIAL RESOURCE DETECTION</div>
         
         <!-- Nearest Response Station -->
@@ -528,7 +539,7 @@
       <!-- ======================================================== -->
       <!-- FEATURE 1: FIRE PERIMETER VISUALIZATION -->
       <!-- ======================================================== -->
-      <div id="cardFirePerimeter" class="p-3.5 rounded-xl bg-[#091122] border border-red-500/40 shadow-xl space-y-2">
+      <div id="cardFirePerimeter" class="admin-group-ai p-3.5 rounded-xl bg-[#091122] border border-red-500/40 shadow-xl space-y-2">
         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
           <div class="flex items-center gap-1.5">
             <span class="text-red-500 text-sm">🟥</span>
@@ -584,7 +595,7 @@
       <!-- ======================================================== -->
       <!-- FEATURE 3: FOREST FIRE DANGER INDEX (FFDI) -->
       <!-- ======================================================== -->
-      <div id="cardFireDangerIndex" class="p-3.5 rounded-xl bg-[#091122] border border-orange-500/40 shadow-xl space-y-2.5">
+      <div id="cardFireDangerIndex" class="admin-group-ai p-3.5 rounded-xl bg-[#091122] border border-orange-500/40 shadow-xl space-y-2.5">
         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
           <div class="flex items-center gap-1.5">
             <span class="text-orange-400 text-sm">🔥</span>
@@ -683,7 +694,7 @@
       <!-- ======================================================== -->
       <!-- FEATURE 2: FIRE SPREAD PREDICTION / SIMULATION -->
       <!-- ======================================================== -->
-      <div id="cardFireSpreadSim" class="p-3.5 rounded-xl bg-[#091122] border border-amber-500/40 shadow-xl space-y-2.5">
+      <div id="cardFireSpreadSim" class="admin-group-ai p-3.5 rounded-xl bg-[#091122] border border-amber-500/40 shadow-xl space-y-2.5">
         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
           <div class="flex items-center gap-1.5">
             <span class="text-amber-400 text-sm">↗️</span>
@@ -768,7 +779,7 @@
       <!-- ======================================================== -->
       <!-- FEATURE 4: NEARBY POPULATION AND VULNERABLE LOCATIONS -->
       <!-- ======================================================== -->
-      <div id="cardNearbyPopulation" class="p-3.5 rounded-xl bg-[#091122] border border-rose-500/40 shadow-xl space-y-2.5">
+      <div id="cardNearbyPopulation" class="admin-group-ai p-3.5 rounded-xl bg-[#091122] border border-rose-500/40 shadow-xl space-y-2.5">
         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
           <div class="flex items-center gap-1.5">
             <span class="text-rose-400 text-sm">👥</span>
@@ -836,7 +847,7 @@
       <!-- ======================================================== -->
       <!-- FEATURE 5: AUTOMATIC NEAREST RESPONSE-TEAM RECOMMENDATION -->
       <!-- ======================================================== -->
-      <div id="cardTeamRecommendation" class="p-3.5 rounded-xl bg-gradient-to-br from-[#0c162b] to-[#070e1c] border-2 border-emerald-500/80 shadow-2xl space-y-3">
+      <div id="cardTeamRecommendation" class="admin-group-dispatch p-3.5 rounded-xl bg-gradient-to-br from-[#0c162b] to-[#070e1c] border-2 border-emerald-500/80 shadow-2xl space-y-3">
         <div class="flex items-center justify-between border-b border-slate-800 pb-2">
           <div class="flex items-center gap-1.5">
             <span class="text-emerald-400 text-base animate-pulse">🚒</span>
@@ -915,7 +926,7 @@
       </div>
 
       <!-- Command Operations Action Buttons (Matching Image 4) -->
-      <div class="pt-2 space-y-2">
+      <div class="admin-group-dispatch pt-2 space-y-2">
         <button id="btnDispatchAction" class="btn-shimmer w-full py-3 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white font-black text-xs sm:text-sm tracking-wider uppercase shadow-lg shadow-red-950/60 hover:brightness-110 active:scale-[0.99] transition flex items-center justify-center gap-2 cursor-pointer">
           <span>🚒</span> <span>SEND ALERT TO NEAREST STATION</span>
         </button>
@@ -937,7 +948,7 @@
   </div>
 
   <!-- BOTTOM: Real-Time Incident Timeline (Section 15) -->
-  <footer class="h-24 border-t border-slate-800 bg-[#060c18] px-4 py-2 shrink-0 flex flex-col justify-between z-30">
+  <footer id="adminFooterTimeline" class="h-24 border-t border-slate-800 bg-[#060c18] px-4 py-2 shrink-0 flex flex-col justify-between z-30">
     <div class="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-1">
       <span class="flex items-center gap-1.5 text-orange-400 uppercase tracking-wider">
         <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
@@ -1213,6 +1224,26 @@
 
     </div>
   </div>
+
+  <!-- Fixed Mobile Bottom Navigation Bar (Visible in Mobile Mode) -->
+  <nav id="adminMobileBottomNav" class="fixed bottom-0 inset-x-0 h-14 bg-[#070e1c]/95 backdrop-blur-xl border-t border-slate-800 z-50 flex items-center justify-around px-2 shadow-2xl">
+    <button type="button" class="admin-mob-tab-btn active-tab flex-1 py-1.5 flex flex-col items-center justify-center text-orange-400 font-bold transition active:scale-95 cursor-pointer" data-mob-panel="map">
+      <span class="text-base leading-none">🗺️</span>
+      <span class="text-[10px] mt-0.5 tracking-tight">Live Map</span>
+    </button>
+    <button type="button" class="admin-mob-tab-btn flex-1 py-1.5 flex flex-col items-center justify-center text-slate-400 hover:text-white font-bold transition active:scale-95 cursor-pointer" data-mob-panel="incidents">
+      <span class="text-base leading-none">🚨</span>
+      <span class="text-[10px] mt-0.5 tracking-tight">Incidents (<span id="mobIncidentBadge">0</span>)</span>
+    </button>
+    <button type="button" class="admin-mob-tab-btn flex-1 py-1.5 flex flex-col items-center justify-center text-slate-400 hover:text-white font-bold transition active:scale-95 cursor-pointer" data-mob-panel="dispatch">
+      <span class="text-base leading-none">⚡</span>
+      <span class="text-[10px] mt-0.5 tracking-tight">Dispatch</span>
+    </button>
+    <button type="button" class="admin-mob-tab-btn flex-1 py-1.5 flex flex-col items-center justify-center text-slate-400 hover:text-white font-bold transition active:scale-95 cursor-pointer" data-mob-panel="ai">
+      <span class="text-base leading-none">📊</span>
+      <span class="text-[10px] mt-0.5 tracking-tight">AI HUD</span>
+    </button>
+  </nav>
 
   <!-- Scripts -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

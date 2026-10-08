@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try { initSocket(); } catch(e) { console.error('initSocket error', e); }
   try { initUIEvents(); } catch(e) { console.error('initUIEvents error', e); }
   try { initImageInspectorModal(); } catch(e) { console.error('initImageInspectorModal error', e); }
+  try { initAdminMobileTabs(); } catch(e) { console.error('initAdminMobileTabs error', e); }
 });
 
 // 1. Initialize Map
@@ -802,6 +803,10 @@ function renderIncidentList() {
   if (mapAlertsCount) {
     mapAlertsCount.textContent = allIncidents.length;
   }
+  const mobBadge = document.getElementById('mobIncidentBadge');
+  if (mobBadge) {
+    mobBadge.textContent = allIncidents.length;
+  }
 
   feed.innerHTML = '';
 
@@ -871,6 +876,10 @@ function renderIncidentList() {
       card.addEventListener('click', (e) => {
         if (e.target.closest('.btn-cancel-alert')) return;
         selectIncident(inc, true);
+        if (document.documentElement.classList.contains('view-mode-mobile') || document.body.classList.contains('view-mode-mobile')) {
+          switchAdminMobilePanel('map');
+          showToast(`🎯 Viewing ${inc.incidentId} on Live Map`, 'orange');
+        }
       });
 
       const btnCancel = card.querySelector('.btn-cancel-alert');
@@ -2153,3 +2162,85 @@ window.addEventListener('message', (e) => {
     }
   }
 });
+
+// =========================================================================
+// 14. DEDICATED MOBILE MODE & SMARTPHONE PANEL SWITCHING
+// =========================================================================
+function switchAdminMobilePanel(panelName) {
+  const colMap = document.getElementById('adminColMap');
+  const colInc = document.getElementById('adminColIncidents');
+  const colDet = document.getElementById('adminColDetails');
+  
+  if (!colMap || !colInc || !colDet) return;
+
+  // Remove active from all panels
+  [colMap, colInc, colDet].forEach(p => p.classList.remove('active-mobile-panel'));
+  document.body.classList.remove('mob-active-dispatch', 'mob-active-ai');
+
+  if (panelName === 'map') {
+    colMap.classList.add('active-mobile-panel');
+    setTimeout(() => {
+      if (window.forestMapEngine && window.forestMapEngine.invalidateSize) {
+        window.forestMapEngine.invalidateSize();
+      }
+    }, 120);
+  } else if (panelName === 'incidents') {
+    colInc.classList.add('active-mobile-panel');
+  } else if (panelName === 'dispatch') {
+    colDet.classList.add('active-mobile-panel');
+    document.body.classList.add('mob-active-dispatch');
+    colDet.scrollTop = 0;
+  } else if (panelName === 'ai') {
+    colDet.classList.add('active-mobile-panel');
+    document.body.classList.add('mob-active-ai');
+    colDet.scrollTop = 0;
+  }
+
+  // Update bottom nav buttons active styling
+  document.querySelectorAll('.admin-mob-tab-btn').forEach(btn => {
+    if (btn.dataset.mobPanel === panelName) {
+      btn.className = 'admin-mob-tab-btn active-tab flex-1 py-1.5 flex flex-col items-center justify-center text-orange-400 font-bold transition active:scale-95 cursor-pointer';
+    } else {
+      btn.className = 'admin-mob-tab-btn flex-1 py-1.5 flex flex-col items-center justify-center text-slate-400 hover:text-white font-bold transition active:scale-95 cursor-pointer';
+    }
+  });
+}
+
+function initAdminMobileTabs() {
+  document.querySelectorAll('.admin-mob-tab-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const panel = btn.dataset.mobPanel;
+      if (panel) switchAdminMobilePanel(panel);
+    });
+  });
+
+  // Handle global view mode changes (Desktop vs Mobile)
+  window.addEventListener('agnirakshak:viewmodechanged', (e) => {
+    const mode = e.detail?.mode || (document.body.classList.contains('view-mode-mobile') ? 'mobile' : 'desktop');
+    if (mode === 'mobile') {
+      switchAdminMobilePanel('map');
+    } else {
+      // Desktop Mode: Restore full multi-column grid
+      const colMap = document.getElementById('adminColMap');
+      const colInc = document.getElementById('adminColIncidents');
+      const colDet = document.getElementById('adminColDetails');
+      [colMap, colInc, colDet].forEach(p => {
+        if (p) p.classList.remove('active-mobile-panel');
+      });
+      document.body.classList.remove('mob-active-dispatch', 'mob-active-ai');
+      setTimeout(() => {
+        if (window.forestMapEngine && window.forestMapEngine.invalidateSize) {
+          window.forestMapEngine.invalidateSize();
+        }
+      }, 150);
+    }
+  });
+
+  // If page loads in mobile mode, activate map panel by default
+  const isMobile = document.documentElement.classList.contains('view-mode-mobile') || document.body.classList.contains('view-mode-mobile');
+  if (isMobile) {
+    switchAdminMobilePanel('map');
+  }
+}
+
