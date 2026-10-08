@@ -1,0 +1,369 @@
+{
+  "incidents": [
+    {
+      "incidentId": "FG-2026-1048",
+      "source": "Citizen Photo + AI",
+      "imageUrl": "/sample_images/sample_wildfire.jpg",
+      "latitude": 11.6643,
+      "longitude": 76.625,
+      "forestName": "Bandipur Forest Region",
+      "state": "Karnataka",
+      "district": "Chamarajanagar",
+      "aiConfidence": 94.6,
+      "severity": "CRITICAL",
+      "riskScore": 96,
+      "satelliteConfidence": 89.2,
+      "sensorConfidence": 94,
+      "status": "NEW",
+      "aiExplanation": "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire with rapid crown propagation risk.",
+      "affectedAreaHectares": 2.4,
+      "detectedFeatures": [
+        "Flames",
+        "Smoke",
+        "Heat-like region",
+        "Vegetation"
+      ],
+      "featureBreakdown": [
+        {
+          "name": "Flames",
+          "detected": true,
+          "confidence": 95
+        },
+        {
+          "name": "Smoke",
+          "detected": true,
+          "confidence": 92
+        },
+        {
+          "name": "Heat-like region",
+          "detected": true,
+          "confidence": 96
+        },
+        {
+          "name": "Vegetation",
+          "detected": true,
+          "confidence": 88
+        },
+        {
+          "name": "Haze",
+          "detected": false,
+          "confidence": 15
+        },
+        {
+          "name": "Cloud",
+          "detected": false,
+          "confidence": 8
+        }
+      ],
+      "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
+      "nearestStation": {
+        "id": "STA-KA-01",
+        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.668,
+          "lng": 76.634
+        },
+        "phone": "+91-8229-236021",
+        "etaMinutesBase": 18,
+        "unitType": "Forest Fire Squad Alpha",
+        "crewCount": 16,
+        "waterTenders": 3,
+        "aerialDrones": 2,
+        "status": "AVAILABLE",
+        "distanceKm": 1.1,
+        "distanceMeters": 1100,
+        "etaMinutes": 8,
+        "routeWaypoints": [
+          [
+            11.668,
+            76.634
+          ],
+          [
+            11.66638,
+            76.6319
+          ],
+          [
+            11.6685,
+            76.63204
+          ],
+          [
+            11.66415,
+            76.6283
+          ],
+          [
+            11.66727,
+            76.62904
+          ],
+          [
+            11.66392,
+            76.6259
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "nearestWaterBody": {
+        "id": "WB-06",
+        "name": "Moyar River Deep Pool Draft Terminal",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.602,
+          "lng": 76.654
+        },
+        "type": "River Gorge Pool",
+        "capacity": "Continuous 14,000 LPM",
+        "waterSourceType": "RIVER",
+        "distanceKm": 7.6,
+        "distanceMeters": 7600,
+        "routeWaypoints": [
+          [
+            11.602,
+            76.654
+          ],
+          [
+            11.61616,
+            76.6459
+          ],
+          [
+            11.63515,
+            76.6407
+          ],
+          [
+            11.64731,
+            76.6314
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "reporter": {
+        "name": "K. Ramesh (Forest Eco-Guide)",
+        "phone": "+91-94481-22904",
+        "notes": "Dense smoke visible rising above Bandipur Range III teak canopies."
+      },
+      "assignedTeam": null,
+      "timeline": [
+        {
+          "time": "10:48:21 AM",
+          "message": "New citizen report received from Bandipur Forest Region",
+          "type": "REPORT"
+        },
+        {
+          "time": "10:48:22 AM",
+          "message": "Photographic evidence ingested into AI Pipeline",
+          "type": "INGEST"
+        },
+        {
+          "time": "10:48:24 AM",
+          "message": "AI vision analysis completed: 94.6% confidence",
+          "type": "AI"
+        },
+        {
+          "time": "10:48:25 AM",
+          "message": "Satellite SNPP-VIIRS cross-referenced: Hotspot confirmed (89.2%)",
+          "type": "SATELLITE"
+        },
+        {
+          "time": "10:48:26 AM",
+          "message": "IoT Sensor FS-KA-042 threshold confirmed: Temp 48.2°C, Smoke 78%",
+          "type": "IOT"
+        },
+        {
+          "time": "10:48:27 AM",
+          "message": "Multi-source risk computed: 96/100 (CRITICAL). Admin alert dispatched.",
+          "type": "ALERT"
+        },
+        {
+          "time": "10:48:30 AM",
+          "message": "Nearest response team identified: Bandipur Forest Unit (8.7 km, ETA 18 min)",
+          "type": "ROUTING"
+        }
+      ],
+      "createdAt": "2026-10-08T05:53:09.726Z",
+      "updatedAt": "2026-10-08T05:59:09.736Z"
+    },
+    {
+      "incidentId": "FG-2026-1689",
+      "source": "Citizen + Satellite + IoT (Multi-Source)",
+      "imageUrl": "/sample_images/sample_wildfire.jpg",
+      "latitude": 11.6643,
+      "longitude": 76.625,
+      "forestName": "Bandipur Forest Region, Karnataka",
+      "state": "Karnataka",
+      "district": "Chamarajanagar",
+      "aiConfidence": 94.6,
+      "severity": "CRITICAL",
+      "riskScore": 95,
+      "satelliteConfidence": 89.2,
+      "sensorConfidence": 78.5,
+      "status": "RESPONSE_DISPATCHED",
+      "aiExplanation": "Multi-source consensus confirmed: Citizen photograph (94.6%), SNPP-VIIRS satellite hotspot (89.2%), and IoT node FS-KA-042 (Temp 48.2°C, Smoke 78%).",
+      "affectedAreaHectares": 2.8,
+      "detectedFeatures": [
+        "Flames",
+        "Smoke"
+      ],
+      "featureBreakdown": [],
+      "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
+      "sourceBreakdown": [
+        {
+          "source": "CITIZEN PHOTO + AI",
+          "confidence": 95,
+          "status": "CONFIRMED"
+        },
+        {
+          "source": "SATELLITE (SNPP-VIIRS (375m))",
+          "confidence": 89,
+          "status": "HOTSPOT DETECTED"
+        },
+        {
+          "source": "IOT SENSOR (FS-KA-042)",
+          "confidence": 86,
+          "status": "THRESHOLD EXCEEDED",
+          "details": "Temp: 48.2°C | Humidity: 21% | Smoke: 78.5%"
+        }
+      ],
+      "nearestStation": {
+        "id": "STA-KA-01",
+        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.668,
+          "lng": 76.634
+        },
+        "phone": "+91-8229-236021",
+        "etaMinutesBase": 18,
+        "unitType": "Forest Fire Squad Alpha",
+        "crewCount": 16,
+        "waterTenders": 3,
+        "aerialDrones": 2,
+        "status": "AVAILABLE",
+        "distanceKm": 1.1,
+        "distanceMeters": 1100,
+        "etaMinutes": 8,
+        "routeWaypoints": [
+          [
+            11.668,
+            76.634
+          ],
+          [
+            11.66638,
+            76.6319
+          ],
+          [
+            11.6685,
+            76.63204
+          ],
+          [
+            11.66415,
+            76.6283
+          ],
+          [
+            11.66727,
+            76.62904
+          ],
+          [
+            11.66392,
+            76.6259
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "nearestWaterBody": {
+        "id": "WB-06",
+        "name": "Moyar River Deep Pool Draft Terminal",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.602,
+          "lng": 76.654
+        },
+        "type": "River Gorge Pool",
+        "capacity": "Continuous 14,000 LPM",
+        "waterSourceType": "RIVER",
+        "distanceKm": 7.6,
+        "distanceMeters": 7600,
+        "routeWaypoints": [
+          [
+            11.602,
+            76.654
+          ],
+          [
+            11.61616,
+            76.6459
+          ],
+          [
+            11.63515,
+            76.6407
+          ],
+          [
+            11.64731,
+            76.6314
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "reporter": {
+        "name": "Arun V. (Eco-Patrol)",
+        "phone": "+91-98450-11223",
+        "notes": "Active spreading canopy blaze near Moyar gorge."
+      },
+      "assignedTeam": {
+        "teamId": "STA-KA-01",
+        "name": "Bandipur Forest Rapid Response Unit",
+        "dispatchedAt": "2026-10-08T06:01:29.707Z",
+        "etaMinutes": 14,
+        "notes": "Forest Strike Fleet dispatched with water tenders and drones."
+      },
+      "timeline": [
+        {
+          "time": "11:31:02 am",
+          "message": "New report submitted at Bandipur Tiger Reserve & National Park (11.6643, 76.625)",
+          "type": "REPORT"
+        },
+        {
+          "time": "11:31:02 am",
+          "message": "AI Image Analysis: 94.6% confidence",
+          "type": "AI"
+        },
+        {
+          "time": "11:31:02 am",
+          "message": "Multi-source risk: 95/100 (CRITICAL)",
+          "type": "RISK"
+        },
+        {
+          "time": "11:31:02 am",
+          "message": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
+          "type": "MULTI_SOURCE"
+        },
+        {
+          "time": "11:31:02 am",
+          "message": "Nearest response station: Bandipur Forest Rapid Response Unit (HQ) (1.1 km)",
+          "type": "STATION"
+        },
+        {
+          "time": "11:31:29 am",
+          "message": "Response dispatched: Bandipur Forest Rapid Response Unit (ETA: 14 mins)",
+          "type": "DISPATCH"
+        }
+      ],
+      "createdAt": "2026-10-08T06:01:02.679Z",
+      "updatedAt": "2026-10-08T06:01:29.707Z"
+    }
+  ],
+  "lastSaved": "2026-10-08T06:01:29.708Z"
+}

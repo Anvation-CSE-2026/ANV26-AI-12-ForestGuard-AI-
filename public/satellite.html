@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Satellite Fire Detection | FORESTGUARD AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/tailwind-custom.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-[#070e1c] px-4 py-3 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-3">
+      <a href="/index.html" class="text-2xl">🌲🔥</a>
+      <div>
+        <div class="text-base font-black text-white">FORESTGUARD AI • SATELLITE RADAR</div>
+        <div class="text-[11px] text-amber-400 font-mono font-bold">
+          SATELLITE DATA • DEMO / API READY (MODIS & SNPP-VIIRS)
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="/admin.html" class="px-3 py-1.5 rounded-lg bg-red-950 border border-red-600 text-red-400 text-xs font-bold hover:bg-red-600 hover:text-white transition">
+        🚨 Live Command Center
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-8 space-y-6">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
+      <div>
+        <h1 class="text-2xl font-black text-white flex items-center gap-2">
+          <span>🛰️</span> <span>SATELLITE THERMAL FIRE DETECTION</span>
+        </h1>
+        <p class="text-xs text-slate-400 mt-1">
+          Orbital infrared thermal anomalies from NASA FIRMS & ISRO NRSC feeds crossed with Forest Survey of India (FSI) zones.
+        </p>
+      </div>
+
+      <button id="btnTriggerSatelliteAlert" class="btn-shimmer px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs tracking-wider uppercase shadow-lg transition flex items-center gap-2">
+        <span>🛰️</span> <span>Trigger Simulated Satellite Anomaly</span>
+      </button>
+    </div>
+
+    <!-- Satellite Integration Banner (Section 9) -->
+    <div class="p-4 rounded-xl bg-[#091122] border border-amber-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <div class="text-xs font-black text-amber-400 tracking-wider uppercase">SUPPORTED SATELLITE DATASETS</div>
+        <div class="text-sm font-bold text-white mt-0.5">NASA MODIS Terra/Aqua (1km) • NOAA SNPP-VIIRS (375m) • Forest Survey of India (FSI)</div>
+      </div>
+      <div class="px-3 py-1 rounded bg-amber-950/80 border border-amber-600 text-amber-300 font-mono text-xs font-bold">
+        STATUS: DEMO / API READY
+      </div>
+    </div>
+
+    <!-- Hotspots Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="hotspotsContainer">
+      <!-- Loaded dynamically -->
+    </div>
+
+  </main>
+
+  <footer class="border-t border-slate-800 bg-[#02050c] py-6 px-4 text-center text-xs text-slate-500">
+    FORESTGUARD AI &copy; 2026. Satellite Data Integration Module.
+  </footer>
+
+  <script>
+    async function loadHotspots() {
+      const res = await fetch('/api/satellite-hotspots');
+      const data = await res.json();
+      const container = document.getElementById('hotspotsContainer');
+
+      if (data.success && data.hotspots) {
+        container.innerHTML = data.hotspots.map(h => `
+          <div class="p-4 rounded-xl bg-[#091122] border border-slate-800 hover:border-amber-500/60 transition space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs font-black text-sky-400">${h.id}</span>
+              <span class="text-[10px] font-black px-2 py-0.5 rounded bg-amber-950 border border-amber-600 text-amber-300">${h.status}</span>
+            </div>
+            <div class="text-sm font-bold text-white">${h.forestName}</div>
+            <div class="text-xs font-mono text-slate-400">
+              Sensor: <span class="text-amber-400 font-bold">${h.satellite}</span><br>
+              Radiative Power: <span class="text-orange-400 font-bold">${h.frpMegawatts} MW</span><br>
+              Confidence: <span class="text-emerald-400 font-bold">${h.confidence}%</span><br>
+              Coords: ${h.coordinates.lat}, ${h.coordinates.lng}
+            </div>
+            <div class="pt-2 border-t border-slate-800 text-[10px] text-slate-500 truncate">
+              Source: ${h.source}
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    document.getElementById('btnTriggerSatelliteAlert').addEventListener('click', async () => {
+      const res = await fetch('/api/satellite/trigger', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        alert('🛰️ Simulated satellite hotspot generated and emitted to Admin Command Center!');
+        window.location.href = '/admin.html';
+      }
+    });
+
+    loadHotspots();
+  </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IoT Fire Sensor Grid | FORESTGUARD AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/tailwind-custom.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-[#070e1c] px-4 py-3 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-3">
+      <a href="/index.html" class="text-2xl">🌲🔥</a>
+      <div>
+        <div class="text-base font-black text-white">FORESTGUARD AI • IOT SENSOR GRID</div>
+        <div class="text-[11px] text-cyan-400 font-mono font-bold">
+          84 ACTIVE NODES • LoRaWAN 865 MHz MESH NETWORK
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="/admin.html" class="px-3 py-1.5 rounded-lg bg-red-950 border border-red-600 text-red-400 text-xs font-bold hover:bg-red-600 hover:text-white transition">
+        🚨 Live Command Center
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-8 space-y-6">
+    
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
+      <div>
+        <h1 class="text-2xl font-black text-white flex items-center gap-2">
+          <span>📡</span> <span>MICROCLIMATE IOT SENSOR NETWORK</span>
+        </h1>
+        <p class="text-xs text-slate-400 mt-1">
+          Ground-truth telemetry measuring canopy ambient heat, relative humidity drops, and optical smoke scattering.
+        </p>
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/50 text-cyan-300 text-xs font-mono font-bold">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+        <span>MESH PROTOCOL: ONLINE</span>
+      </div>
+    </div>
+
+    <!-- Sensor Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="sensorsGrid">
+      <!-- Populated via API -->
+    </div>
+
+  </main>
+
+  <footer class="border-t border-slate-800 bg-[#02050c] py-6 px-4 text-center text-xs text-slate-500">
+    FORESTGUARD AI &copy; 2026. IoT Environmental Telemetry Grid.
+  </footer>
+
+  <script>
+    async function loadSensors() {
+      const res = await fetch('/api/sensors');
+      const data = await res.json();
+      const grid = document.getElementById('sensorsGrid');
+
+      if (data.success && data.sensors) {
+        grid.innerHTML = data.sensors.map(s => {
+          const isCritical = s.status === 'CRITICAL';
+          const isMod = s.status === 'MODERATE';
+          const statusBg = isCritical ? 'bg-red-950 text-red-300 border-red-600 animate-pulse' : (isMod ? 'bg-amber-950 text-amber-300 border-amber-600' : 'bg-emerald-950 text-emerald-300 border-emerald-600');
+
+          return `
+            <div class="p-5 rounded-2xl bg-[#091122] border ${isCritical ? 'border-red-500/60' : 'border-slate-800'} shadow-xl space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-xs font-mono font-black text-cyan-400">${s.id}</span>
+                  <div class="text-sm font-bold text-white">${s.forestName}</div>
+                </div>
+                <span class="text-[10px] font-black px-2 py-0.5 rounded border ${statusBg}">
+                  ${s.status}
+                </span>
+              </div>
+
+              <!-- Telemetry Readings -->
+              <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="p-2 rounded-lg bg-[#040814] border border-slate-800">
+                  <span class="text-[10px] text-slate-400 block">TEMP</span>
+                  <span class="text-base font-black ${s.temperature > 44 ? 'text-red-400' : 'text-slate-100'} font-mono">${s.temperature}°C</span>
+                </div>
+                <div class="p-2 rounded-lg bg-[#040814] border border-slate-800">
+                  <span class="text-[10px] text-slate-400 block">HUMIDITY</span>
+                  <span class="text-base font-black ${s.humidity < 25 ? 'text-amber-400' : 'text-slate-100'} font-mono">${s.humidity}%</span>
+                </div>
+                <div class="p-2 rounded-lg bg-[#040814] border border-slate-800">
+                  <span class="text-[10px] text-slate-400 block">SMOKE</span>
+                  <span class="text-base font-black ${s.smokeIndex > 60 ? 'text-red-400' : 'text-slate-100'} font-mono">${s.smokeIndex}%</span>
+                </div>
+              </div>
+
+              <div class="text-[11px] font-mono text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
+                <span>🔋 Battery: <b class="text-emerald-400">${s.battery}%</b></span>
+                <span>📶 ${s.network}</span>
+              </div>
+
+              <!-- Trigger Spike Simulation Button -->
+              <button class="w-full py-2 rounded-xl bg-orange-950/60 hover:bg-orange-800 border border-orange-500/60 text-orange-300 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5" onclick="triggerSpike('${s.id}')">
+                <span>⚡</span> <span>Simulate Fire Threshold Spike</span>
+              </button>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    async function triggerSpike(sensorId) {
+      try {
+        const res = await fetch(`/api/sensors/${sensorId}/trigger`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ temperature: 49.2, smokeIndex: 86.0, humidity: 16.5 })
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert(`🚨 Sensor ${sensorId} threshold crossed! Real-time alert dispatched to Admin Command Center.`);
+          window.location.href = '/admin.html';
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    loadSensors();
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "forestguard-ai",
+  "version": "1.0.0",
+  "description": "FORESTGUARD AI - Live AI Forest Fire Detection, Mapping & Emergency Alert System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "ai": "python ai_service.py",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "forest-fire",
+    "ai",
+    "google-maps",
+    "socket-io",
+    "disaster-management",
+    "india"
+  ],
+  "author": "ForestGuard AI Team",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jpeg-js": "^0.4.4",
+    "multer": "^2.4.0",
+    "pngjs": "^7.0.0",
+    "socket.io": "^4.8.4",
+    "uuid": "^14.0.2"
+  }
+}

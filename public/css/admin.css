@@ -1,0 +1,787 @@
+/* AgniRakshak Mission Control & Incident Response Styles */
+
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #06090e;
+}
+
+/* Tactical Top Navigation Bar */
+.admin-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1.5rem;
+  background: rgba(10, 15, 26, 0.95);
+  border-bottom: 1px solid rgba(255, 69, 0, 0.3);
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.command-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.command-logo {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 10px #ff3838);
+}
+
+.command-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.command-tag {
+  background: rgba(255, 42, 42, 0.2);
+  border: 1px solid var(--fire-red);
+  color: #ff5252;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-left: 0.5rem;
+}
+
+/* Telemetry Pills */
+.telemetry-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.telemetry-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+}
+
+.telemetry-label {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+
+.telemetry-val {
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-mono);
+}
+
+.status-dot-green {
+  width: 8px;
+  height: 8px;
+  background: #00e676;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00e676;
+}
+
+.btn-ctrl {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+
+.btn-ctrl:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+}
+
+.btn-ctrl-active {
+  background: rgba(255, 69, 0, 0.3);
+  border-color: var(--fire-orange);
+  color: #ff9f43;
+}
+
+/* 🚨 LIVE ALERT EMERGENCY BANNER */
+.live-emergency-banner {
+  display: none;
+  background: linear-gradient(90deg, #b91c1c, #ea580c, #b91c1c);
+  background-size: 200% 200%;
+  animation: alertShift 2s ease infinite;
+  color: #fff;
+  padding: 0.65rem 1.5rem;
+  box-shadow: 0 4px 25px rgba(234, 88, 12, 0.7);
+  z-index: 999;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@keyframes alertShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.live-emergency-banner.active {
+  display: flex;
+  animation: alertShift 2s ease infinite, alertPulse 1.2s infinite;
+}
+
+@keyframes alertPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.92; }
+}
+
+.alert-headline {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.alert-siren-icon {
+  font-size: 1.4rem;
+  animation: sirenRock 0.6s infinite alternate;
+}
+
+@keyframes sirenRock {
+  from { transform: rotate(-15deg) scale(1.1); }
+  to { transform: rotate(15deg) scale(1.1); }
+}
+
+.alert-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.btn-banner-action {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-banner-action:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Main Dashboard Workspace */
+.admin-workspace {
+  display: grid;
+  grid-template-columns: 360px 1fr 400px;
+  height: calc(100vh - 58px);
+  overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+  .admin-workspace {
+    grid-template-columns: 320px 1fr;
+  }
+  .telemetry-column {
+    display: none;
+  }
+}
+
+/* Left Column: Incident Feed & Queue */
+.feed-column {
+  background: rgba(10, 15, 26, 0.85);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.feed-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feed-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feed-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.incident-card-item {
+  background: rgba(16, 24, 39, 0.8);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.incident-card-item:hover, .incident-card-item.selected {
+  border-color: var(--fire-orange);
+  background: rgba(26, 38, 62, 0.9);
+  box-shadow: 0 4px 15px rgba(255, 106, 0, 0.15);
+}
+
+.incident-card-item.critical-alert {
+  border-left: 4px solid var(--fire-red);
+}
+
+.incident-card-item.high-alert {
+  border-left: 4px solid var(--fire-orange);
+}
+
+.incident-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.incident-item-id {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.incident-severity-pill {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.incident-severity-pill.critical {
+  background: rgba(255, 42, 42, 0.25);
+  color: #ff4d4d;
+  border: 1px solid rgba(255, 42, 42, 0.5);
+}
+
+.incident-severity-pill.high {
+  background: rgba(255, 106, 0, 0.25);
+  color: #ff9f43;
+  border: 1px solid rgba(255, 106, 0, 0.5);
+}
+
+.incident-severity-pill.contained {
+  background: rgba(0, 230, 118, 0.2);
+  color: #00e676;
+  border: 1px solid rgba(0, 230, 118, 0.4);
+}
+
+.incident-item-loc {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
+}
+
+.incident-item-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Center Column: Tactical Map */
+.map-column {
+  position: relative;
+  background: #090d16;
+  height: 100%;
+  width: 100%;
+}
+
+#adminMap {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Map Overlay Floating HUD */
+.map-hud-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 400;
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: auto;
+}
+
+.map-hud-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-hud-stat-lbl {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.map-hud-stat-val {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-mono);
+}
+
+/* Map Layer Switcher Floating */
+.map-layer-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 400;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-map-tile {
+  background: rgba(10, 15, 26, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
+  color: #cbd5e1;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-map-tile:hover, .btn-map-tile.active {
+  background: rgba(255, 106, 0, 0.25);
+  border-color: var(--fire-orange);
+  color: #fff;
+}
+
+/* Right Column: AI Analysis, Proximity & Dispatch Console */
+.telemetry-column {
+  background: rgba(10, 15, 26, 0.92);
+  border-left: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1.25rem;
+  gap: 1.25rem;
+}
+
+.telemetry-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.5rem;
+}
+
+/* AI Vision Card */
+.ai-vision-card {
+  background: rgba(16, 24, 39, 0.85);
+  border: 1px solid rgba(255, 106, 0, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* AI Bounding Box Overlays */
+.ai-bbox {
+  position: absolute;
+  border: 2px solid #ff2a2a;
+  background: rgba(255, 42, 42, 0.15);
+  box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.ai-bbox.smoke-type {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.ai-bbox-label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  background: #ff2a2a;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.ai-bbox.smoke-type .ai-bbox-label {
+  background: #0284c7;
+}
+
+.ai-hotspot-pin {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #ffff00;
+  border: 2px solid #ff0000;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: hotspotPulse 1s infinite alternate;
+}
+
+@keyframes hotspotPulse {
+  from { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+  to { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+}
+
+/* AI Metrics HUD */
+.ai-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+.ai-metric-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 0.6rem;
+}
+
+.ai-metric-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.ai-metric-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 0.2rem;
+  font-family: var(--font-mono);
+}
+
+.confidence-high {
+  color: #ff4d4d;
+}
+
+.temp-indicator {
+  color: #ff9f43;
+}
+
+/* Nearest Fire Station & Water Body Cards */
+.geo-intel-card {
+  background: rgba(16, 24, 39, 0.85);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1rem;
+  position: relative;
+}
+
+.geo-intel-card.station-focus {
+  border-left: 4px solid #38bdf8;
+}
+
+.geo-intel-card.water-focus {
+  border-left: 4px solid #00e5ff;
+}
+
+.geo-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.geo-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.geo-distance-badge {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.geo-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+.geo-row-val {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+/* Dispatch Response Console */
+.dispatch-console {
+  background: rgba(16, 24, 39, 0.9);
+  border: 1px solid rgba(255, 69, 0, 0.4);
+  border-radius: 12px;
+  padding: 1.1rem;
+}
+
+.units-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin: 0.85rem 0;
+}
+
+.unit-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.45rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.unit-chip.selected {
+  background: rgba(255, 106, 0, 0.2);
+  border-color: var(--fire-orange);
+  color: #ff9f43;
+  font-weight: 700;
+}
+
+.btn-dispatch-now {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #ff2a2a, #ff6a00);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 20px rgba(255, 42, 42, 0.4);
+  transition: all 0.2s ease;
+}
+
+.btn-dispatch-now:hover {
+  box-shadow: 0 6px 28px rgba(255, 42, 42, 0.7);
+  transform: translateY(-1px);
+}
+
+.status-advance-bar {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.btn-status-step {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 0.4rem 0.2rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.btn-status-step:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* Custom Animated Map Markers */
+
+/* 🔴 FIRE MARKER */
+.fire-custom-marker {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fire-marker-flame {
+  font-size: 28px;
+  filter: drop-shadow(0 0 10px #ff2a2a);
+  animation: flameBounce 1.2s infinite alternate;
+  z-index: 10;
+}
+
+@keyframes flameBounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-4px) scale(1.15); }
+}
+
+.fire-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  border: 3px solid #ff2a2a;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulseFireRing 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.fire-pulse-ring:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.fire-pulse-ring:nth-child(3) {
+  animation-delay: 1.2s;
+}
+
+@keyframes pulseFireRing {
+  0% {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+    border-color: #ff3333;
+  }
+  100% {
+    width: 110px;
+    height: 110px;
+    opacity: 0;
+    border-color: #ff9900;
+  }
+}
+
+/* Fire Station Marker */
+.station-custom-marker {
+  position: relative;
+  background: #1e3a8a;
+  border: 2px solid #38bdf8;
+  color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.7);
+  font-size: 1.2rem;
+}
+
+/* Water Hydrant / Body Marker */
+.water-custom-marker {
+  position: relative;
+  background: #0e7490;
+  border: 2px solid #06b6d4;
+  color: #fff;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
+  font-size: 1.15rem;
+}
+
+/* Moving Emergency Truck Marker */
+.moving-truck-marker {
+  font-size: 24px;
+  filter: drop-shadow(0 0 8px #ff6a00);
+  transition: all 0.5s linear;
+}
+
+/* Leaflet Custom Popups */
+.leaflet-popup-content-wrapper {
+  background: rgba(15, 23, 42, 0.95) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 106, 0, 0.4) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(15, 23, 42, 0.95) !important;
+}

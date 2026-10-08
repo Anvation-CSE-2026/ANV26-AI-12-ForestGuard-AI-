@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FORESTGUARD AI | Live Forest Fire Command Center</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/tailwind-custom.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-slate-100 h-screen flex flex-col font-sans overflow-hidden">
+
+  <!-- Top Command Center Navigation Bar -->
+  <header class="border-b border-slate-800 bg-[#070e1c] px-4 py-2 flex items-center justify-between shrink-0 z-50">
+    <div class="flex items-center gap-3">
+      <span class="text-2xl filter drop-shadow-[0_0_10px_#ef4444]">🌲🔥</span>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-base sm:text-lg font-black tracking-wider text-white">FORESTGUARD AI</span>
+          <span class="text-[10px] font-black px-1.5 py-0.5 rounded bg-red-950 border border-red-600/60 text-red-400">
+            LIVE FOREST FIRE COMMAND CENTER
+          </span>
+        </div>
+        <div class="text-[11px] text-slate-400 font-mono flex items-center gap-2">
+          <span>INDIA NATIONAL FORESTRY RADAR</span>
+          <span>•</span>
+          <span class="text-emerald-400 font-bold flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="txtSystemOnline">● SYSTEM ONLINE</span>
+          </span>
+          <span>•</span>
+          <span class="text-sky-400">LIVE DATA</span>
+          <span>•</span>
+          <span>Last Event: <span id="txtLastEventTime" class="text-amber-400">10:48:21 AM</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Action Toolbar -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Mute/Unmute Audio -->
+      <button id="btnToggleSirenAudio" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+        <span id="audioIcon">🔊</span> <span id="audioLabel" class="hidden sm:inline">Audio Siren Active</span>
+      </button>
+
+      <!-- Google Maps API Key Config -->
+      <button id="btnOpenMapConfig" class="px-2.5 py-1.5 rounded-lg bg-sky-950/80 hover:bg-sky-900 border border-sky-600/60 text-xs font-bold text-sky-400 transition flex items-center gap-1">
+        <span>🗺️</span> <span class="hidden sm:inline">Google Maps Config</span>
+      </button>
+
+      <!-- Launch Demo Trigger -->
+      <button id="btnTriggerDemoModal" class="px-3 py-1.5 rounded-lg bg-orange-950/80 hover:bg-orange-800 border border-orange-500/80 text-xs font-black text-orange-400 hover:text-white transition flex items-center gap-1">
+        <span>⚡</span> <span>Demo Scenarios</span>
+      </button>
+
+      <!-- Citizen Report Link -->
+      <a href="/report.html" target="_blank" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-xs font-bold text-white shadow-md transition flex items-center gap-1">
+        <span>📸</span> <span class="hidden md:inline">Report a Fire</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- 🚨 LIVE EMERGENCY ALERT BANNER (Flashing Red/Orange) -->
+  <div id="liveEmergencyBanner" class="alert-siren-bar hidden px-4 py-2 text-white shrink-0 shadow-lg flex items-center justify-between z-40 transition-all">
+    <div class="flex items-center gap-3">
+      <span class="text-xl animate-bounce">🚨</span>
+      <div class="text-xs sm:text-sm font-black tracking-wide">
+        <span class="bg-black/40 px-2 py-0.5 rounded text-amber-300 mr-2">NEW FIRE ALERT</span>
+        <span id="bannerLocationText">Bandipur Forest Region, Karnataka</span>
+        <span class="hidden md:inline text-amber-200 ml-2">| Risk: <span id="bannerRiskScore">96/100 (CRITICAL)</span> | AI Confidence: <span id="bannerConfidence">94.6%</span></span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="btnBannerViewOnMap" class="px-2.5 py-1 rounded bg-black/60 hover:bg-black text-[11px] font-bold text-white transition">
+        VIEW ON MAP
+      </button>
+      <button id="btnBannerDismiss" class="text-white hover:text-amber-200 text-sm font-bold px-2">
+        ✕
+      </button>
+    </div>
+  </div>
+
+  <!-- Main 4-Quadrant Command Center Layout -->
+  <div class="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden bg-[#030712]">
+    
+    <!-- LEFT: Incident List (Col 3) -->
+    <section class="md:col-span-3 border-r border-slate-800/80 bg-[#070e1c] flex flex-col overflow-hidden">
+      <div class="p-3 border-b border-slate-800 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs font-black uppercase tracking-wider text-slate-300">INCIDENT QUEUE</span>
+          <span id="badgeIncidentCount" class="text-[10px] font-black px-1.5 py-0.2 rounded-full bg-red-950 text-red-400 border border-red-700/60">1 ACTIVE</span>
+        </div>
+        <div class="flex items-center gap-1 text-[11px] font-mono text-slate-400">
+          <span>Sort: Newest</span>
+        </div>
+      </div>
+
+      <!-- Incident Cards Feed (Scrollable) -->
+      <div id="incidentListFeed" class="flex-1 overflow-y-auto p-2.5 space-y-2">
+        <!-- Dynamically populated incident cards -->
+      </div>
+    </section>
+
+    <!-- CENTER: Large Live Google Map (Col 5.5) -->
+    <section class="md:col-span-5 relative bg-[#040814] flex flex-col overflow-hidden">
+      <!-- Floating Map Header Overlay -->
+      <div class="absolute top-3 left-3 z-30 flex flex-wrap items-center gap-2">
+        <div class="px-3 py-1 rounded-lg bg-[#070e1c]/90 backdrop-blur-md border border-slate-700/80 text-xs font-bold text-white shadow-lg flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          <span>LIVE GEOSPATIAL MAP (INDIA)</span>
+        </div>
+        
+        <!-- Layer Toggles -->
+        <div class="hidden sm:flex items-center bg-[#070e1c]/90 backdrop-blur-md border border-slate-700/80 rounded-lg p-0.5 text-[11px] font-bold">
+          <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="satellite">🛰️ Satellite</button>
+          <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="terrain">⛰️ Terrain</button>
+          <button class="btn-map-toggle px-2 py-0.5 rounded text-orange-400 font-black" data-layer="hybrid">🗺️ Hybrid</button>
+        </div>
+      </div>
+
+      <!-- Legend Overlay (Bottom Left) -->
+      <div class="absolute bottom-3 left-3 z-30 p-2 rounded-lg bg-[#070e1c]/95 backdrop-blur-md border border-slate-800 text-[10px] space-y-1 shadow-xl pointer-events-auto">
+        <div class="font-bold text-slate-400 uppercase tracking-wider mb-1">MARKER LEGEND</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444]"></span> <span class="text-red-400 font-bold">RED:</span> Critical Active Fire (PULSING)</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span> <span class="text-orange-400 font-bold">ORANGE:</span> High-Risk Fire</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> <span class="text-amber-400 font-bold">YELLOW:</span> Verification Required</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> <span class="text-emerald-400 font-bold">GREEN:</span> Safe / Resolved</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> <span class="text-sky-400 font-bold">BLUE:</span> Water Body / Drafting</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> <span class="text-purple-400 font-bold">PURPLE:</span> Forest Response Station</div>
+        <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> <span class="text-cyan-400 font-bold">CYAN:</span> IoT Microclimate Sensor</div>
+      </div>
+
+      <!-- Live Map DOM Container -->
+      <div id="adminLiveMap" class="w-full h-full z-10 bg-[#030712]"></div>
+    </section>
+
+    <!-- RIGHT: Selected Incident Details (Col 3.5) -->
+    <section class="md:col-span-4 border-l border-slate-800/80 bg-[#070e1c] flex flex-col overflow-y-auto p-4 space-y-4">
+      
+      <!-- Incident Header -->
+      <div class="border-b border-slate-800 pb-3 flex items-start justify-between">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="detailIncidentId" class="text-lg font-mono font-black text-sky-400">FG-2026-1048</span>
+            <span id="detailSeverityBadge" class="text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300 uppercase">CRITICAL</span>
+          </div>
+          <div id="detailForestName" class="text-sm font-bold text-white mt-1">Bandipur Forest Region, Karnataka</div>
+          <div class="text-[11px] font-mono text-slate-400 flex items-center gap-2 mt-0.5">
+            <span>📍 Coords: <span id="detailCoords" class="text-cyan-400">11.6643, 76.6250</span></span>
+            <span>•</span>
+            <span>⏱️ <span id="detailTime">10:48:21 AM</span></span>
+          </div>
+        </div>
+        <div class="text-right">
+          <span id="detailStatusPill" class="text-xs font-black px-2.5 py-1 rounded-full bg-amber-950/80 border border-amber-600 text-amber-300">
+            REQUIRES RESPONSE
+          </span>
+        </div>
+      </div>
+
+      <!-- Uploaded Image with AI Hotspot Overlays -->
+      <div class="space-y-1">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-400">
+          <span>UPLOADED INCIDENT PHOTOGRAPH</span>
+          <span id="detailDetectionSource" class="text-orange-400 font-mono text-[11px]">Citizen Photo + AI</span>
+        </div>
+        <div class="relative rounded-xl overflow-hidden border border-slate-700 bg-black h-44 group">
+          <img id="detailImage" src="/sample_images/sample_wildfire.jpg" alt="Fire Incident Evidence" class="w-full h-full object-cover" />
+          <div id="detailHotspotOverlay" class="absolute inset-0 pointer-events-none"></div>
+          <div class="absolute bottom-2 left-2 bg-black/80 px-2 py-1 rounded text-[10px] font-mono text-slate-300 border border-slate-700">
+            Affected Area Est: <span id="detailAffectedArea" class="text-amber-400 font-bold">2.4 hectares</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Fire Image Analysis & Explainable AI -->
+      <div class="p-3.5 rounded-xl bg-[#091122] border border-slate-800 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-black text-white flex items-center gap-1.5">
+            <span>🧠</span> <span>AI FIRE IMAGE ANALYSIS</span>
+          </span>
+          <span class="text-xs font-black text-orange-400" id="detailConfidenceScore">Confidence: 94.6%</span>
+        </div>
+
+        <div class="text-xs text-slate-300 italic leading-relaxed border-l-2 border-orange-500 pl-2.5" id="detailAiExplanation">
+          "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire."
+        </div>
+
+        <!-- Detected Feature Chips -->
+        <div class="flex flex-wrap gap-1.5 pt-1" id="detailFeatureChips">
+          <span class="px-2 py-0.5 rounded bg-red-950 border border-red-700/60 text-red-300 text-[10px] font-bold">✓ Flames (95%)</span>
+          <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-600 text-slate-300 text-[10px] font-bold">✓ Smoke (92%)</span>
+          <span class="px-2 py-0.5 rounded bg-orange-950 border border-orange-700/60 text-orange-300 text-[10px] font-bold">✓ Heat Region</span>
+          <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-700/60 text-emerald-300 text-[10px] font-bold">✓ Vegetation</span>
+        </div>
+      </div>
+
+      <!-- MULTI-SOURCE FIRE VERIFICATION (Section 8) -->
+      <div class="p-3.5 rounded-xl bg-gradient-to-br from-[#0c162b] to-[#080f1d] border border-orange-500/30 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-black text-white flex items-center gap-1.5">
+            <span>⚡</span> <span>MULTI-SOURCE VERIFICATION</span>
+          </span>
+          <span class="text-xs font-black text-red-400 font-mono" id="detailRiskScore">RISK: 96/100</span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-1.5 text-center text-xs">
+          <div class="p-2 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[10px] text-slate-400 block">CITIZEN</span>
+            <span id="detailCitScore" class="font-black text-orange-400">92%</span>
+          </div>
+          <div class="p-2 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[10px] text-slate-400 block">SATELLITE</span>
+            <span id="detailSatScore" class="font-black text-amber-400">89%</span>
+          </div>
+          <div class="p-2 rounded-lg bg-[#040814] border border-slate-800">
+            <span class="text-[10px] text-slate-400 block">IOT SENSOR</span>
+            <span id="detailIotScore" class="font-black text-cyan-400">94%</span>
+          </div>
+        </div>
+
+        <div id="detailMultiSourceBanner" class="p-2 rounded-lg bg-red-950/70 border border-red-600/60 text-center text-[11px] font-black text-red-300">
+          3 SOURCES CONFIRM POTENTIAL FIRE
+        </div>
+      </div>
+
+      <!-- RESOURCE DETECTION: Station & Water (Section 13) -->
+      <div class="space-y-2">
+        <div class="text-[11px] font-black text-slate-400 uppercase tracking-wider">GEOSPATIAL RESOURCE DETECTION</div>
+        
+        <!-- Nearest Response Station -->
+        <div class="p-3 rounded-xl bg-[#091122] border border-purple-500/40 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-purple-400 font-bold uppercase tracking-wider">NEAREST RESPONSE STATION</div>
+            <div id="detailStationName" class="text-xs font-black text-white mt-0.5">Bandipur Forest Response Unit</div>
+            <div class="text-[11px] text-slate-400">Status: <span class="text-emerald-400 font-bold">AVAILABLE</span> • Phone: <span id="detailStationPhone" class="text-slate-300">+91-8229-236021</span></div>
+          </div>
+          <div class="text-right">
+            <div id="detailStationDist" class="text-sm font-mono font-black text-purple-300">8.7 km</div>
+            <div id="detailStationEta" class="text-[10px] text-slate-400">ETA: 18 min</div>
+          </div>
+        </div>
+
+        <!-- Nearest Water Body -->
+        <div class="p-3 rounded-xl bg-[#091122] border border-sky-500/40 flex items-center justify-between">
+          <div>
+            <div class="text-[10px] text-sky-400 font-bold uppercase tracking-wider">NEAREST WATER SOURCE</div>
+            <div id="detailWaterName" class="text-xs font-black text-white mt-0.5">Kabini Reservoir</div>
+            <div id="detailWaterCapacity" class="text-[11px] text-slate-400">High Volume Aerial Drafting Access</div>
+          </div>
+          <div class="text-right">
+            <div id="detailWaterDist" class="text-sm font-mono font-black text-sky-300">14.2 km</div>
+            <div class="text-[10px] text-sky-400">Draft Viable</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Command Operations Action Buttons (Section 6, 14) -->
+      <div class="pt-2 space-y-2">
+        <button id="btnDispatchAction" class="btn-shimmer w-full py-3 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white font-black text-sm tracking-wider uppercase shadow-lg shadow-red-950/60 hover:brightness-110 active:scale-[0.99] transition flex items-center justify-center gap-2">
+          <span>🚒</span> <span>DISPATCH RESPONSE</span>
+        </button>
+
+        <div class="grid grid-cols-3 gap-2">
+          <button id="btnVerifyAction" class="py-2 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600 text-emerald-400 font-bold text-xs transition">
+            ✓ VERIFY
+          </button>
+          <button id="btnFalsePosAction" class="py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 font-bold text-xs transition">
+            ✕ FALSE POS
+          </button>
+          <button id="btnContainAction" class="py-2 rounded-lg bg-amber-950/80 hover:bg-amber-900 border border-amber-600 text-amber-400 font-bold text-xs transition">
+            🔒 CONTAINED
+          </button>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- BOTTOM: Real-Time Incident Timeline (Section 15) -->
+  <footer class="h-24 border-t border-slate-800 bg-[#060c18] px-4 py-2 shrink-0 flex flex-col justify-between z-30">
+    <div class="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-1">
+      <span class="flex items-center gap-1.5 text-orange-400 uppercase tracking-wider">
+        <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+        <span>REAL-TIME INCIDENT EVENT TIMELINE</span>
+      </span>
+      <span class="text-slate-500 text-[10px] font-mono">SIMULATED EMERGENCY OPERATIONS • NO REAL AGENCIES CONTACTED</span>
+    </div>
+    
+    <!-- Horizontal Event Stream -->
+    <div id="timelineContainer" class="flex items-center gap-3 overflow-x-auto pb-1 text-xs font-mono">
+      <!-- Populated live via Socket.IO events -->
+    </div>
+  </footer>
+
+  <!-- Dispatch Confirmation Modal (Section 14) -->
+  <div id="dispatchModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#091122] border-2 border-red-500/60 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="text-center mb-4">
+        <div class="w-12 h-12 rounded-full bg-red-950 text-red-400 text-2xl flex items-center justify-center mx-auto mb-2 border border-red-600">🚒</div>
+        <h3 class="text-lg font-black text-white">DISPATCH RESPONSE TEAM?</h3>
+        <p class="text-xs text-slate-400 mt-1">Confirm emergency fire response unit turnout</p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-[#040814] border border-slate-800 space-y-2 text-xs mb-4">
+        <div class="flex justify-between">
+          <span class="text-slate-400">Incident ID:</span>
+          <span id="modalIncidentId" class="font-mono font-bold text-sky-400">FG-2026-1048</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Target Location:</span>
+          <span id="modalLocation" class="font-bold text-white">Bandipur Forest Region</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Assigned Team:</span>
+          <span id="modalTeamName" class="font-bold text-purple-400">Forest Response Team 04</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Transit Distance:</span>
+          <span id="modalDistance" class="font-mono font-bold text-white">8.7 km</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">Estimated Turnout ETA:</span>
+          <span id="modalEta" class="font-mono font-bold text-emerald-400">18 Minutes</span>
+        </div>
+      </div>
+
+      <div class="p-2.5 rounded-lg bg-amber-950/40 border border-amber-600/40 text-[10px] text-amber-300 text-center mb-4 font-mono">
+        ⚠️ SIMULATED RESPONSE: No real emergency agency contacted. Hackathon prototype operational mode.
+      </div>
+
+      <div class="flex gap-3">
+        <button id="btnCancelDispatch" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">
+          CANCEL
+        </button>
+        <button id="btnConfirmDispatch" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs tracking-wider uppercase shadow-lg transition">
+          CONFIRM DISPATCH
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Maps API Key Config Modal -->
+  <div id="mapConfigModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#091122] border border-sky-500/50 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
+        <h3 class="text-base font-black text-white flex items-center gap-2">
+          <span>🗺️</span> <span>Google Maps API Configuration</span>
+        </h3>
+        <button id="btnCloseMapConfig" class="text-slate-400 hover:text-white font-bold">✕</button>
+      </div>
+
+      <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+        The application is powered by Google Maps. Enter your Google Maps JavaScript API key below, or leave it blank to use the high-resolution Google Hybrid satellite fallback engine:
+      </p>
+
+      <div class="mb-4">
+        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Google Maps API Key</label>
+        <input type="text" id="inputGoogleApiKey" class="w-full bg-[#040814] border border-slate-700 focus:border-sky-500 rounded-xl px-3 py-2 text-xs font-mono text-white outline-none" placeholder="AIzaSy..." />
+      </div>
+
+      <div class="flex gap-2">
+        <button id="btnSaveApiKey" class="flex-1 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition">
+          Save & Reload Map
+        </button>
+        <button id="btnUseFallbackMap" class="py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">
+          Use Satellite Engine
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/audioAlert.js"></script>
+  <script src="/js/mapEngine.js"></script>
+  <script src="/js/adminApp.js"></script>
+</body>
+</html>

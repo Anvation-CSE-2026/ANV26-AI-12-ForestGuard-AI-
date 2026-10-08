@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Analytics | FORESTGUARD AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/tailwind-custom.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-[#070e1c] px-4 py-3 flex items-center justify-between shrink-0">
+    <div class="flex items-center gap-3">
+      <a href="/index.html" class="text-2xl">🌲🔥</a>
+      <div>
+        <div class="text-base font-black text-white">FORESTGUARD AI • COMMAND ANALYTICS</div>
+        <div class="text-[11px] text-slate-400 font-mono">
+          NATIONAL FOREST TELEMETRY & INCIDENT TRENDS
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="/admin.html" class="px-3 py-1.5 rounded-lg bg-red-950 border border-red-600 text-red-400 text-xs font-bold hover:bg-red-600 hover:text-white transition">
+        🚨 Live Command Center
+      </a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-8 space-y-6">
+    
+    <div class="border-b border-slate-800 pb-4">
+      <h1 class="text-2xl font-black text-white flex items-center gap-2">
+        <span>📊</span> <span>NATIONAL FOREST FIRE ANALYTICS</span>
+      </h1>
+      <p class="text-xs text-slate-400 mt-1">
+        Consolidated multi-source statistics across citizen reports, satellite detections, and IoT sensors.
+      </p>
+    </div>
+
+    <!-- Top Key Metrics Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="p-4 rounded-xl bg-[#091122] border border-slate-800">
+        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Fires Today</div>
+        <div id="statFiresToday" class="text-2xl font-black text-white mt-1">1</div>
+        <div class="text-[10px] text-slate-400 mt-0.5">Recorded Reports</div>
+      </div>
+      <div class="p-4 rounded-xl bg-[#091122] border border-red-900/50">
+        <div class="text-[11px] font-bold text-red-400 uppercase tracking-wider">Critical Fires</div>
+        <div id="statCritical" class="text-2xl font-black text-red-400 mt-1">1</div>
+        <div class="text-[10px] text-red-300 mt-0.5">Risk &gt;= 75 Threshold</div>
+      </div>
+      <div class="p-4 rounded-xl bg-[#091122] border border-emerald-900/50">
+        <div class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider">Resolved Fires</div>
+        <div id="statResolved" class="text-2xl font-black text-emerald-400 mt-1">0</div>
+        <div class="text-[10px] text-emerald-300 mt-0.5">Extinguished / Contained</div>
+      </div>
+      <div class="p-4 rounded-xl bg-[#091122] border border-sky-900/50">
+        <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider">Avg Response ETA</div>
+        <div id="statEta" class="text-2xl font-black text-sky-400 mt-1">16.4 Min</div>
+        <div class="text-[10px] text-sky-300 mt-0.5">Forest Strike Teams</div>
+      </div>
+    </div>
+
+    <!-- Detailed Analytical Breakdowns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- State Distribution -->
+      <div class="p-6 rounded-2xl bg-[#091122] border border-slate-800 space-y-4">
+        <h3 class="text-sm font-black text-white uppercase tracking-wider flex items-center justify-between">
+          <span>FIRES BY STATE</span>
+          <span class="text-xs text-orange-400 font-mono">India Regions</span>
+        </h3>
+        
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>Karnataka (Bandipur / Nagarhole)</span>
+              <span class="font-mono text-orange-400">72%</span>
+            </div>
+            <div class="w-full bg-[#040814] h-2.5 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-red-500 to-orange-500 h-full rounded-full" style="width: 72%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>Madhya Pradesh (Kanha Reserve)</span>
+              <span class="font-mono text-amber-400">18%</span>
+            </div>
+            <div class="w-full bg-[#040814] h-2.5 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-orange-500 to-amber-500 h-full rounded-full" style="width: 18%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>Uttarakhand (Jim Corbett Foothills)</span>
+              <span class="font-mono text-sky-400">10%</span>
+            </div>
+            <div class="w-full bg-[#040814] h-2.5 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-sky-500 to-cyan-500 h-full rounded-full" style="width: 10%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detection Sources & AI Accuracy -->
+      <div class="p-6 rounded-2xl bg-[#091122] border border-slate-800 space-y-4">
+        <h3 class="text-sm font-black text-white uppercase tracking-wider flex items-center justify-between">
+          <span>DETECTION SOURCE DISTRIBUTION</span>
+          <span class="text-xs text-cyan-400 font-mono">Multi-Source</span>
+        </h3>
+
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>Citizen Photo + Computer Vision</span>
+              <span class="font-mono text-orange-400">45%</span>
+            </div>
+            <div class="w-full bg-[#040814] h-2.5 rounded-full overflow-hidden">
+              <div class="bg-orange-500 h-full rounded-full" style="width: 45%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>Orbital Satellites (MODIS / VIIRS)</span>
+              <span class="font-mono text-amber-400">32%</span>
+            </div>
+            <div class="w-full bg-[#040814] h-2.5 rounded-full overflow-hidden">
+              <div class="bg-amber-500 h-full rounded-full" style="width: 32%"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1">
+              <span>IoT Microclimate Sensors</span>
+              <span class="font-mono text-cyan-400">23%</span>
+            </div>
+            <div class="w-full bg-[#040814] h-2.5 rounded-full overflow-hidden">
+              <div class="bg-cyan-400 h-full rounded-full" style="width: 23%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="border-t border-slate-800 bg-[#02050c] py-6 px-4 text-center text-xs text-slate-500">
+    FORESTGUARD AI &copy; 2026. Analytics & Intelligence Engine.
+  </footer>
+
+  <script>
+    async function loadStats() {
+      const res = await fetch('/api/stats');
+      const data = await res.json();
+      if (data.success && data.stats) {
+        document.getElementById('statFiresToday').textContent = data.stats.firesToday;
+        document.getElementById('statCritical').textContent = data.stats.criticalFires;
+        document.getElementById('statResolved').textContent = data.stats.resolvedFires;
+        document.getElementById('statEta').textContent = `${data.stats.avgResponseTimeMin} Min`;
+      }
+    }
+    loadStats();
+  </script>
+</body>
+</html>
