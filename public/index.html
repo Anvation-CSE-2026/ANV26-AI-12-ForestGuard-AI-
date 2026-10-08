@@ -13,29 +13,70 @@
 </head>
 <body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white">
 
+  <!-- 3-SECOND STUNNING CINEMATIC FOREST FIRE INTRO FLASH CARD -->
+  <div id="introFlashCard" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-700">
+    <!-- Cinematic High-Res Fire Background with Breathing Glow -->
+    <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-90 contrast-125 saturate-150 transform scale-105 animate-pulse" style="background-image: url('/images/forestfire_hero_bg.jpg');"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/60 to-[#02050e]/80 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(239,68,68,0.25)_0%,_rgba(0,0,0,0.85)_75%)] pointer-events-none"></div>
+
+    <!-- Glowing Flash Card Box -->
+    <div class="relative z-10 max-w-xl w-full mx-4 p-8 rounded-3xl bg-[#070e1c]/90 border-2 border-orange-500/70 shadow-[0_0_60px_rgba(249,115,22,0.45)] backdrop-blur-xl text-center transform transition-all duration-500 scale-100">
+      <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center text-4xl shadow-xl shadow-red-950/80 border border-orange-400/60 animate-bounce">
+        🔥
+      </div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/90 border border-red-500/70 text-red-300 text-[10px] font-black tracking-widest uppercase mb-3 shadow">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+        <span>NATIONAL FORESTRY DEFENSE PLATFORM</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-wider mb-1 drop-shadow-[0_2px_12px_rgba(239,68,68,0.8)]">
+        AGNIRAKSHAK AI
+      </h1>
+      <p class="text-sm font-bold text-amber-300 tracking-wide uppercase mb-3">
+        Forest Fire Early Warning & Geospatial Response System
+      </p>
+      <p class="text-xs text-slate-300 leading-relaxed mb-6 max-w-md mx-auto">
+        Connecting citizens, forestry authorities, and rapid fire response strike forces through real-time dual-spectrum AI vision and satellite telemetry.
+      </p>
+
+      <!-- 3-Second Visual Progress Indicator -->
+      <div class="space-y-1.5 mb-5">
+        <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+          <span class="text-amber-400 font-bold flex items-center gap-1"><span>⚡</span> Initializing Forestry Radar...</span>
+          <span id="flashCardTimer" class="font-bold text-white font-mono">3s</span>
+        </div>
+        <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-700">
+          <div id="flashCardProgress" class="h-full bg-gradient-to-r from-red-600 via-orange-500 to-amber-400 rounded-full transition-all duration-100 ease-linear" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Quick Skip Button -->
+      <button id="btnSkipFlashCard" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-orange-600 to-red-600 hover:brightness-110 text-white font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2 mx-auto cursor-pointer">
+        <span>ENTER COMMAND PORTAL</span> <span>→</span>
+      </button>
+    </div>
+  </div>
+
   <!-- Top Navigation -->
   <header class="border-b border-slate-800 bg-[#070e1c]/90 backdrop-blur-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <span class="text-3xl filter drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]">🌲🔥</span>
         <div>
-          <span class="text-xl font-black tracking-wider bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">FORESTGUARD AI</span>
+          <span class="text-xl font-black tracking-wider bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">AGNIRAKSHAK AI</span>
           <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-[10px] font-bold tracking-widest bg-red-950/80 border border-red-700/60 text-red-400 rounded">INDIA NATIONAL GRID</span>
         </div>
       </div>
       
       <nav class="flex items-center gap-2 sm:gap-3">
-        <a href="http://localhost:8109/demo.html" data-switch-to="demo" class="btn-shimmer px-3 py-1.5 text-xs sm:text-sm font-black rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-950/50 hover:brightness-110 transition flex items-center gap-1.5">
-          <span>🔀</span> <span>Dual Live Demo</span>
+        <a href="/index.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 transition flex items-center gap-1">
+          <span>🏠</span> <span>Home</span>
         </a>
-        <a href="http://localhost:8109/user.html" data-switch-to="user" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-600/20 border border-orange-500/50 text-orange-400 hover:bg-orange-600/30 transition flex items-center gap-1">
+        <a href="/user.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-600/20 border border-orange-500/50 text-orange-400 hover:bg-orange-600/30 transition flex items-center gap-1">
           <span>👤</span> <span class="hidden sm:inline">Citizen Dashboard</span><span class="sm:hidden">Citizen</span>
         </a>
-        <a href="http://localhost:8109/admin.html?auth=demo" data-switch-to="admin" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md shadow-red-900/40 hover:brightness-110 transition flex items-center gap-1.5">
-          <span>🚨</span> <span class="hidden sm:inline">Command Center</span><span class="sm:hidden">Admin</span>
-        </a>
-        <a href="/station.html" class="hidden md:flex px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-purple-950/60 border border-purple-600/50 text-purple-300 hover:bg-purple-900/60 transition items-center gap-1">
-          <span>🚒</span> <span>Station</span>
+        <a href="/admin.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md shadow-red-900/40 hover:brightness-110 transition flex items-center gap-1.5">
+          <span>🚨</span> <span class="hidden sm:inline">Admin Dashboard</span><span class="sm:hidden">Admin</span>
         </a>
       </nav>
     </div>
@@ -63,11 +104,11 @@
         <!-- Live Pill -->
         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-950/80 border border-red-500/60 text-red-300 text-xs font-black tracking-wider mb-6 shadow-lg shadow-red-950/80 backdrop-blur-md">
           <span class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_#ef4444] animate-ping"></span>
-          <span>LIVE GEOSPATIAL EMERGENCY PLATFORM • HACKATHON EDITION</span>
+          <span>LIVE GEOSPATIAL EMERGENCY PLATFORM • PRESENTATION READY</span>
         </div>
 
         <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-2 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-          FORESTGUARD AI
+          AGNIRAKSHAK AI
         </h1>
         <div class="text-xl sm:text-3xl font-black tracking-widest bg-gradient-to-r from-red-500 via-orange-400 to-amber-300 bg-clip-text text-transparent mb-4 drop-shadow-[0_2px_10px_rgba(249,115,22,0.4)]">
           REPORT. LOCATE. ALERT. RESPOND.
@@ -76,16 +117,13 @@
           "An AI-powered real-time forest fire emergency platform connecting citizens, forest authorities and response teams through one live geospatial command center."
         </p>
 
-        <!-- CTA Action Buttons (Section 37) -->
+        <!-- CTA Action Buttons -->
         <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <a href="http://localhost:8109/demo.html" data-switch-to="demo" class="btn-shimmer px-7 py-3.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-sky-600 text-white font-black text-sm sm:text-base shadow-2xl shadow-indigo-950/80 hover:brightness-110 active:scale-[0.99] transition flex items-center gap-2 border border-indigo-400/50 backdrop-blur-md">
-            <span>🔀</span> <span>DUAL SPLIT LIVE DEMO (PORT 8109)</span>
+          <a href="/user.html" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-black text-sm sm:text-base shadow-2xl shadow-red-950/80 hover:brightness-110 active:scale-[0.99] transition flex items-center gap-2 border border-orange-400/60 backdrop-blur-md">
+            <span>📸</span> <span>CITIZEN DASHBOARD (REPORT FIRE)</span>
           </a>
-          <a href="http://localhost:8109/user.html" data-switch-to="user" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-black text-sm sm:text-base shadow-2xl shadow-red-950/80 hover:brightness-110 active:scale-[0.99] transition flex items-center gap-2 border border-orange-400/60 backdrop-blur-md">
-            <span>📸</span> <span>CITIZEN REPORTING</span>
-          </a>
-          <a href="http://localhost:8109/admin.html?auth=demo" data-switch-to="admin" class="px-6 py-3.5 rounded-xl bg-[#070e1c]/90 border-2 border-red-500/70 hover:border-red-400 hover:bg-red-950/80 text-white font-black text-sm sm:text-base transition flex items-center gap-2 shadow-2xl shadow-black backdrop-blur-md">
-            <span>🚨</span> <span>COMMAND CENTER</span>
+          <a href="/admin.html" class="px-7 py-3.5 rounded-xl bg-[#070e1c]/90 border-2 border-red-500/70 hover:border-red-400 hover:bg-red-950/80 text-white font-black text-sm sm:text-base transition flex items-center gap-2 shadow-2xl shadow-black backdrop-blur-md">
+            <span>🚨</span> <span>ADMIN COMMAND CENTER</span>
           </a>
           <button id="btnLaunchDemoHero" class="px-5 py-3.5 rounded-xl bg-orange-950/80 border border-orange-500/80 text-orange-300 hover:text-white hover:bg-orange-600 font-bold text-sm sm:text-base transition flex items-center gap-2 shadow-lg backdrop-blur-md">
             <span>⚡</span> <span>SIMULATE SCENARIOS</span>
@@ -703,8 +741,42 @@
       }
 
       renderEmbers();
+    // 3-Second Cinematic Flash Card Countdown & Fade-out Controller
+    (function initFlashCardController() {
+      const flash = document.getElementById('introFlashCard');
+      const timerText = document.getElementById('flashCardTimer');
+      const bar = document.getElementById('flashCardProgress');
+      const btnSkip = document.getElementById('btnSkipFlashCard');
+      if (!flash) return;
+
+      let timeLeft = 3000;
+      const step = 40;
+      const progressTimer = setInterval(() => {
+        timeLeft -= step;
+        const pct = Math.min(100, Math.round(((3000 - timeLeft) / 3000) * 100));
+        if (bar) bar.style.width = pct + '%';
+        if (timerText) timerText.textContent = Math.max(0, (timeLeft / 1000).toFixed(1)) + 's';
+
+        if (timeLeft <= 0) {
+          clearInterval(progressTimer);
+          dismissFlashCard();
+        }
+      }, step);
+
+      function dismissFlashCard() {
+        clearInterval(progressTimer);
+        if (flash) {
+          flash.classList.add('opacity-0', 'pointer-events-none');
+          setTimeout(() => {
+            flash.style.display = 'none';
+          }, 700);
+        }
+      }
+
+      if (btnSkip) {
+        btnSkip.addEventListener('click', dismissFlashCard);
+      }
     })();
   </script>
-  <script src="/js/dashboardSwitcher.js"></script>
 </body>
 </html>

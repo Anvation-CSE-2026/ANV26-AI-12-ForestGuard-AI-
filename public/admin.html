@@ -61,7 +61,7 @@
       <div class="flex items-center gap-2">
         <!-- Dashboard Toggle Segmented Control -->
         <div class="flex items-center bg-[#050b17] p-1 rounded-xl border-2 border-red-500/70 shadow-lg">
-          <a href="http://localhost:8109/user.html" data-switch-to="user" class="px-3 py-1 rounded-lg text-orange-300 hover:text-white hover:bg-orange-600 border border-transparent hover:border-orange-500 text-xs font-black transition flex items-center gap-1.5 group" title="Switch immediately to Citizen Emergency Dashboard on Port 8109">
+          <a href="/user.html" data-switch-to="user" class="px-3 py-1 rounded-lg text-orange-300 hover:text-white hover:bg-orange-600 border border-transparent hover:border-orange-500 text-xs font-black transition flex items-center gap-1.5 group" title="Switch to Citizen Emergency Dashboard">
             <span class="group-hover:animate-pulse">👤</span> <span>Switch to Citizen Dashboard ➔</span>
           </a>
           <span class="px-2.5 py-1 rounded-lg bg-red-600 text-white text-xs font-black flex items-center gap-1 shadow-sm">
@@ -69,15 +69,11 @@
           </span>
         </div>
 
-        <a href="http://localhost:8109/demo.html" data-switch-to="demo" class="px-2.5 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-850 border border-indigo-500/80 text-xs font-black text-indigo-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Unified Dual Live Demo on Port 8109">
-          <span>🔀</span> <span class="hidden sm:inline">Split Demo</span>
-        </a>
-
-        <a href="http://localhost:8109/index.html" data-switch-to="home" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Return to Landing Page">
+        <a href="/index.html" data-switch-to="home" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Return to Landing Page">
           <span>🏠</span> <span class="hidden md:inline">Home</span>
         </a>
 
-        <button id="btnAdminLogout" class="px-2.5 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-700/80 text-xs font-bold text-red-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Lock Command Center (Requires Passcode or 1-Click Login)">
+        <button id="btnAdminLogout" class="px-2.5 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-700/80 text-xs font-bold text-red-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Lock Command Center">
           <span>🔒</span> <span class="hidden md:inline">Lock</span>
         </button>
       </div>
@@ -142,6 +138,28 @@
           <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="satellite">🛰️ Satellite</button>
           <button class="btn-map-toggle px-2 py-0.5 rounded text-slate-300 hover:text-white" data-layer="terrain">⛰️ Terrain</button>
           <button class="btn-map-toggle px-2 py-0.5 rounded text-orange-400 font-black" data-layer="hybrid">🗺️ Hybrid</button>
+        </div>
+      </div>
+
+      <!-- Floating Top-Right Search & Station Status Card (Image 4) -->
+      <div class="absolute top-3 right-3 z-30 flex flex-col items-end gap-2 pointer-events-auto">
+        <div class="relative w-60 sm:w-72">
+          <input id="inputAdminMapSearch" type="text" placeholder="Search (KSSEM, DSATM, Bandipur)..." class="w-full bg-[#070e1c]/95 border border-slate-700/80 rounded-xl pl-3 pr-8 py-1.5 text-xs text-white placeholder-slate-400 outline-none focus:border-orange-500 shadow-2xl backdrop-blur-md" />
+          <button id="btnAdminMapSearch" type="button" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs cursor-pointer">🔍</button>
+        </div>
+        <div id="adminMapStationStatusCard" class="p-2.5 rounded-xl bg-[#070e1c]/95 border border-slate-700/80 text-[11px] shadow-2xl backdrop-blur-md w-60 sm:w-72 space-y-1">
+          <div class="font-extrabold text-white uppercase tracking-wider flex items-center justify-between">
+            <span>Forest Fire Stations</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          </div>
+          <div class="flex items-center justify-between text-slate-300 font-mono text-[10px]">
+            <span>ACTIVE ALERTS:</span>
+            <span id="mapCardAlertsCount" class="font-black text-red-400">3</span>
+          </div>
+          <div class="flex items-center justify-between text-slate-300 font-mono text-[10px]">
+            <span>NEAREST TEAM DISTANCE:</span>
+            <span id="mapCardNearestDist" class="font-black text-amber-400">14 KM</span>
+          </div>
         </div>
       </div>
 
@@ -447,23 +465,20 @@
         </div>
       </div>
 
-      <!-- Command Operations Action Buttons (Section 6, 14) -->
+      <!-- Command Operations Action Buttons (Matching Image 4) -->
       <div class="pt-2 space-y-2">
-        <button id="btnDispatchAction" class="btn-shimmer w-full py-3 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white font-black text-sm tracking-wider uppercase shadow-lg shadow-red-950/60 hover:brightness-110 active:scale-[0.99] transition flex items-center justify-center gap-2">
-          <span>🚒</span> <span>DISPATCH RESPONSE</span>
+        <button id="btnDispatchAction" class="btn-shimmer w-full py-3 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white font-black text-xs sm:text-sm tracking-wider uppercase shadow-lg shadow-red-950/60 hover:brightness-110 active:scale-[0.99] transition flex items-center justify-center gap-2 cursor-pointer">
+          <span>🚒</span> <span>SEND ALERT TO NEAREST STATION</span>
         </button>
 
         <div class="grid grid-cols-4 gap-1.5">
-          <button id="btnVerifyAction" class="py-2 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600 text-emerald-400 font-bold text-[11px] transition">
+          <button id="btnFalsePosAction" class="py-2.5 rounded-lg bg-[#191108] hover:bg-orange-950/80 border border-orange-500/80 text-orange-300 hover:text-white font-extrabold text-[11px] transition col-span-2 flex items-center justify-center gap-1 shadow-sm cursor-pointer" title="Decline or mark as fake alert">
+            <span>✕</span> <span>DECLINE / FAKE ALERT</span>
+          </button>
+          <button id="btnVerifyAction" class="py-2.5 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600 text-emerald-400 font-bold text-[11px] transition cursor-pointer">
             ✓ VERIFY
           </button>
-          <button id="btnFalsePosAction" class="py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 font-bold text-[11px] transition">
-            ✕ FALSE POS
-          </button>
-          <button id="btnContainAction" class="py-2 rounded-lg bg-amber-950/80 hover:bg-amber-900 border border-amber-600 text-amber-400 font-bold text-[11px] transition">
-            🔒 CONTAIN
-          </button>
-          <button id="btnCancelActiveAlert" class="py-2 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 hover:text-white font-bold text-[11px] transition" title="Cancel this alert">
+          <button id="btnCancelActiveAlert" class="py-2.5 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-600 text-red-300 hover:text-white font-bold text-[11px] transition cursor-pointer" title="Cancel this alert">
             ✕ CANCEL
           </button>
         </div>

@@ -115,6 +115,7 @@ class ForestGuardMapEngine {
       this.map = L.map(elementId, {
         center: [coords.lat, coords.lng],
         zoom: zoom,
+        maxZoom: 21,
         zoomControl: true
       });
     } catch (err) {
@@ -123,19 +124,21 @@ class ForestGuardMapEngine {
       this.map = L.map(elementId, {
         center: [coords.lat, coords.lng],
         zoom: zoom,
+        maxZoom: 21,
         zoomControl: true
       });
     }
 
-    // High-resolution Google Hybrid Satellite & Roads Tiles
+    // High-resolution Google Hybrid Satellite & Roads Tiles with building-level zoom (maxZoom 21)
     this.googleHybridLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-      maxZoom: 20,
+      maxZoom: 21,
+      maxNativeZoom: 20,
       subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
       attribution: 'Map & Imagery &copy; Google Maps'
     }).addTo(this.map);
 
     this.darkTacticalLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 19,
+      maxZoom: 20,
       subdomains: 'abcd',
       attribution: '&copy; CartoDB & OSM'
     });
@@ -266,14 +269,16 @@ class ForestGuardMapEngine {
       this.markers.stations.push(marker);
       return marker;
     } else {
+      const rawName = station.name || 'Bandipur Station';
+      const shortName = rawName.split('(')[0].replace(/Rapid Response Unit|Fire Response Unit|Forest Response Unit/gi, 'Station').trim();
       const icon = L.divIcon({
-        className: 'custom-map-marker marker-purple',
-        html: `<div class="station-badge-marker" style="background:#9333ea; border:2px solid #fff; box-shadow:0 0 14px #9333ea;">🚒</div>`,
-        iconSize: [36, 36],
-        iconAnchor: [18, 18]
+        className: 'custom-map-marker marker-station-badge',
+        html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">${shortName} - Team Ready</span><span style="font-size:14px; filter:drop-shadow(0 0 4px #3b82f6);">🛡️</span></div>`,
+        iconSize: [0, 0],
+        iconAnchor: [0, 0]
       });
       const marker = L.marker([lat, lng], { icon }).addTo(this.map);
-      marker.bindPopup(`<b>${station.name}</b><br><span style="color:#a855f7;">Forest Response Unit (PURPLE)</span>`);
+      marker.bindPopup(`<b>${station.name}</b><br><span style="color:#60a5fa;">Emergency Forestry Station - Team Ready (🛡️)</span><br>ETA: <b>${station.etaMinutes || 14} min</b>`);
       marker.on('click', () => onClickCallback && onClickCallback(station));
       this.markers.stations.push(marker);
       return marker;
@@ -396,7 +401,8 @@ class ForestGuardMapEngine {
   }
 
   // --- Draw Routes (Station to Fire & Water to Fire) ---
-  drawRoute(waypoints, color = '#ff6a00', isDashed = false) {
+  // In Image 4, the connection from station to fire ground zero is a dotted line!
+  drawRoute(waypoints, color = '#f97316', isDashed = true) {
     if (!this.map || !waypoints || waypoints.length === 0) return null;
     if (this.mode === 'google-api') {
       const gWaypoints = waypoints.map(w => ({ lat: w[0], lng: w[1] }));
@@ -404,7 +410,7 @@ class ForestGuardMapEngine {
         path: gWaypoints,
         geodesic: true,
         strokeColor: color,
-        strokeOpacity: 0.9,
+        strokeOpacity: 0.95,
         strokeWeight: 4,
         map: this.map
       });
@@ -414,8 +420,8 @@ class ForestGuardMapEngine {
       const polyline = L.polyline(waypoints, {
         color: color,
         weight: 4,
-        opacity: 0.9,
-        dashArray: isDashed ? '6, 6' : undefined
+        opacity: 0.95,
+        dashArray: isDashed !== false ? '8, 8' : undefined
       }).addTo(this.map);
       this.routes.push(polyline);
       return polyline;
@@ -470,16 +476,16 @@ class ForestGuardMapEngine {
       this.markers[category] = [];
     }
   }
-  // --- Draw Radius Circles (500m, 1km, 5km) (Section 11) ---
-  drawRadiusCircles(lat, lng, radii = [500, 1000, 5000]) {
+  // --- Draw Radius Circles (500m, 1.5km, 5km) Matching Image 4 ---
+  drawRadiusCircles(lat, lng, radii = [500, 1500, 5000]) {
     this.clearCircles();
     this.circles = [];
     if (!this.map) return;
 
     const colors = [
-      { color: '#ef4444', fill: 'rgba(239, 68, 68, 0.15)', name: '500m Hot Zone' },
-      { color: '#f97316', fill: 'rgba(249, 115, 22, 0.08)', name: '1km Buffer Perimeter' },
-      { color: '#eab308', fill: 'rgba(234, 179, 8, 0.04)', name: '5km Response Sector' }
+      { color: '#ef4444', fill: 'rgba(239, 68, 68, 0.16)', name: '500m Hot Zone' },
+      { color: '#f97316', fill: 'rgba(249, 115, 22, 0.09)', name: '1.5km Buffer Perimeter' },
+      { color: '#eab308', fill: 'rgba(234, 179, 8, 0.05)', name: '5km Response Sector' }
     ];
 
     radii.forEach((radiusMeters, idx) => {
@@ -487,8 +493,8 @@ class ForestGuardMapEngine {
       if (this.mode === 'google-api') {
         const circle = new google.maps.Circle({
           strokeColor: col.color,
-          strokeOpacity: 0.8,
-          strokeWeight: 1.5,
+          strokeOpacity: 0.85,
+          strokeWeight: 1.8,
           fillColor: col.color,
           fillOpacity: 0.1,
           map: this.map,
@@ -500,10 +506,10 @@ class ForestGuardMapEngine {
         const circle = L.circle([lat, lng], {
           radius: radiusMeters,
           color: col.color,
-          weight: 1.5,
+          weight: 1.8,
           fillColor: col.color,
-          fillOpacity: 0.08,
-          dashArray: '5, 5'
+          fillOpacity: 0.09,
+          dashArray: '6, 6'
         }).addTo(this.map);
         circle.bindTooltip(col.name, { permanent: false, direction: 'top' });
         this.circles.push(circle);

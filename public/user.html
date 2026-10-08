@@ -39,16 +39,12 @@
           <span class="px-2.5 py-1 rounded-lg bg-orange-600 text-white text-xs font-black flex items-center gap-1 shadow-sm">
             <span>👤</span> <span class="hidden sm:inline">Citizen Mode</span>
           </span>
-          <a href="http://localhost:8109/admin.html?auth=demo" data-switch-to="admin" class="px-3 py-1 rounded-lg text-red-300 hover:text-white hover:bg-red-600 border border-transparent hover:border-red-500 text-xs font-black transition flex items-center gap-1.5 group" title="Switch immediately to Admin Authority Command Center on Port 8109">
+          <a href="/admin.html?auth=demo" data-switch-to="admin" class="px-3 py-1 rounded-lg text-red-300 hover:text-white hover:bg-red-600 border border-transparent hover:border-red-500 text-xs font-black transition flex items-center gap-1.5 group" title="Switch to Admin Authority Command Center">
             <span class="group-hover:animate-pulse">🚨</span> <span>Switch to Admin Dashboard ➔</span>
           </a>
         </div>
 
-        <a href="http://localhost:8109/demo.html" data-switch-to="demo" class="px-2.5 py-1.5 rounded-lg bg-indigo-950/80 border border-indigo-600/60 text-indigo-300 hover:bg-indigo-600 hover:text-white text-xs font-black transition flex items-center gap-1.5 shadow-sm" title="Unified Dual Live Demo on Port 8109">
-          <span>🔀</span> <span class="hidden md:inline">Split Demo</span>
-        </a>
-
-        <a href="http://localhost:8109/index.html" data-switch-to="home" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1 shadow-sm" title="Return to Landing Page">
+        <a href="/index.html" data-switch-to="home" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1 shadow-sm" title="Return to Landing Page">
           <span>🏠</span> <span class="hidden md:inline">Home</span>
         </a>
       </div>
@@ -603,15 +599,34 @@
       </div>
     </div>
 
-    <!-- TAB 3: LIVE MAP (Interactive Forest & Hydrant Viewer) -->
+    <!-- TAB 3: LIVE MAP (Interactive Forest & Hydrant Viewer - Image 4 Style) -->
     <div id="tabLiveMap" class="tab-content hidden space-y-4">
-      <div class="border-b border-slate-800 pb-3 flex items-center justify-between">
+      <div class="border-b border-slate-800 pb-3 flex items-center justify-between flex-wrap gap-2">
         <div>
           <h2 class="text-xl font-black text-white">LIVE GEOSPATIAL MAP (INDIA FORESTS)</h2>
-          <p class="text-xs text-slate-400">View active incidents, water reservoirs, response stations, and forest reserves.</p>
+          <p class="text-xs text-slate-400">High-resolution building-level satellite inspection with emergency response station grid.</p>
         </div>
       </div>
-      <div id="userFullMap" class="w-full h-[520px] rounded-2xl border border-slate-700 relative z-0 isolate overflow-hidden bg-[#040814]" style="isolation: isolate;"></div>
+      <div class="relative w-full rounded-2xl overflow-hidden border border-slate-700 bg-[#040814]">
+        <!-- Floating Top-Right Station Status Card (Image 4) -->
+        <div class="absolute top-3 right-3 z-30 pointer-events-auto">
+          <div class="p-2.5 rounded-xl bg-[#070e1c]/95 border border-slate-700/80 text-[11px] shadow-2xl backdrop-blur-md w-56 sm:w-64 space-y-1">
+            <div class="font-extrabold text-white uppercase tracking-wider flex items-center justify-between">
+              <span>Forest Fire Stations</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            </div>
+            <div class="flex items-center justify-between text-slate-300 font-mono text-[10px]">
+              <span>ACTIVE ALERTS:</span>
+              <span class="font-black text-red-400">3</span>
+            </div>
+            <div class="flex items-center justify-between text-slate-300 font-mono text-[10px]">
+              <span>NEAREST TEAM DISTANCE:</span>
+              <span class="font-black text-amber-400">14 KM</span>
+            </div>
+          </div>
+        </div>
+        <div id="userFullMap" class="w-full h-[540px] relative z-0 isolate overflow-hidden bg-[#040814]" style="isolation: isolate;"></div>
+      </div>
     </div>
 
     <!-- TAB 4: EMERGENCY CONTACTS (Section 7 & 26) -->

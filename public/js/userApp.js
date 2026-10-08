@@ -94,11 +94,14 @@ function initCentralMap() {
   userMap = L.map('userCentralMap', {
     center: [currentCoords.lat, currentCoords.lng],
     zoom: 12,
+    maxZoom: 21,
     zoomControl: true
   });
 
+  // High-resolution Google Hybrid Satellite & Roads Tiles with building-level zoom (maxZoom 21)
   L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
+    maxZoom: 21,
+    maxNativeZoom: 20,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
     attribution: 'Map & Imagery &copy; Google Maps'
   }).addTo(userMap);
@@ -1601,11 +1604,15 @@ function initFullMap() {
 
   fullMap = L.map('userFullMap', {
     center: [11.6643, 76.6250],
-    zoom: 9
+    zoom: 12,
+    maxZoom: 21,
+    zoomControl: true
   });
 
+  // High-resolution Google Hybrid Satellite & Roads Tiles with building-level zoom (maxZoom 21)
   L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-    maxZoom: 20,
+    maxZoom: 21,
+    maxNativeZoom: 20,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
     attribution: 'Map & Imagery &copy; Google Maps'
   }).addTo(fullMap);
@@ -1615,11 +1622,83 @@ function initFullMap() {
     if (fullMap) fullMap.invalidateSize();
   }, 250);
 
-  // Add water bodies & stations to full map
+  // Plot Restored Bandipur Test Case (Matching Image 4)
+  const bandipurLat = 11.6643;
+  const bandipurLng = 76.6250;
+
+  // 1. Fire Flame Marker with pulsing shockwave
+  const fireHtml = `<div class="fire-pulse-container"><div class="fire-shockwave"></div><div class="fire-core-dot" style="background:#ff2a2a;">🔥</div></div>`;
+  const fireIcon = L.divIcon({
+    className: 'custom-map-marker fire-marker-red',
+    html: fireHtml,
+    iconSize: [44, 44],
+    iconAnchor: [22, 22]
+  });
+  L.marker([bandipurLat, bandipurLng], { icon: fireIcon }).addTo(fullMap)
+    .bindTooltip(`<b>Reported Fire at Bandipur National Park (Sector 4B)</b><br><span style="color:#ef4444;font-size:11px;">CRITICAL • ACTIVE FIRE</span>`, { direction: 'top', offset: [0, -16] });
+
+  // 2. Concentric Danger Rings (500m, 1.5km, 5km)
+  [
+    { r: 500, col: '#ef4444', label: '500m Hot Zone' },
+    { r: 1500, col: '#f97316', label: '1.5km Buffer Perimeter' },
+    { r: 5000, col: '#eab308', label: '5km Response Sector' }
+  ].forEach(c => {
+    L.circle([bandipurLat, bandipurLng], {
+      radius: c.r,
+      color: c.col,
+      weight: 1.8,
+      fillColor: c.col,
+      fillOpacity: 0.08,
+      dashArray: '6, 6'
+    }).addTo(fullMap).bindTooltip(c.label, { direction: 'top' });
+  });
+
+  // 3. Response Station Graphical Badge: Bandipur Station - Team Ready (🛡️)
+  const stnLat = 11.6680;
+  const stnLng = 76.6340;
+  const stnIcon = L.divIcon({
+    className: 'custom-map-marker marker-station-badge',
+    html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">Bandipur Station - Team Ready</span><span style="font-size:14px; filter:drop-shadow(0 0 4px #3b82f6);">🛡️</span></div>`,
+    iconSize: [0, 0],
+    iconAnchor: [0, 0]
+  });
+  L.marker([stnLat, stnLng], { icon: stnIcon }).addTo(fullMap)
+    .bindPopup(`<b>Bandipur Station - Team Ready</b><br><span style="color:#60a5fa;">Forest Response Unit (HQ)</span><br>ETA: <b>14 min</b> • Dist: <b>8.7 km</b>`);
+
+  // 4. Dotted Route Line connecting Station to Fire (dashArray '8, 8')
+  const routeWaypoints = [
+    [11.6680, 76.6340],
+    [11.66638, 76.6319],
+    [11.6685, 76.63204],
+    [11.66415, 76.6283],
+    [11.66727, 76.62904],
+    [11.66392, 76.6259],
+    [11.6643, 76.6250]
+  ];
+  L.polyline(routeWaypoints, {
+    color: '#f97316',
+    weight: 4,
+    opacity: 0.95,
+    dashArray: '8, 8'
+  }).addTo(fullMap);
+
+  // 5. Water drafting line to Kabini Reservoir
+  const waterCoords = [11.9050, 76.3500];
+  L.marker(waterCoords).addTo(fullMap).bindPopup(`💧 <b>Kabini Reservoir</b><br>High-volume water drafting source`);
+  L.polyline([[bandipurLat, bandipurLng], [11.8000, 76.4500], waterCoords], {
+    color: '#0284c7',
+    weight: 3,
+    opacity: 0.85,
+    dashArray: '5, 5'
+  }).addTo(fullMap);
+
+  // Add other water bodies & stations to full map
   fetch('/api/water-bodies').then(r => r.json()).then(data => {
     if (data.success) {
       data.waterBodies.forEach(wb => {
-        L.marker([wb.coordinates.lat, wb.coordinates.lng]).addTo(fullMap).bindPopup(`💧 <b>${wb.name}</b>`);
+        if (wb.coordinates && (wb.coordinates.lat !== waterCoords[0])) {
+          L.marker([wb.coordinates.lat, wb.coordinates.lng]).addTo(fullMap).bindPopup(`💧 <b>${wb.name}</b>`);
+        }
       });
     }
   });
@@ -1627,7 +1706,9 @@ function initFullMap() {
   fetch('/api/response-stations').then(r => r.json()).then(data => {
     if (data.success) {
       data.responseStations.forEach(st => {
-        L.marker([st.coordinates.lat, st.coordinates.lng]).addTo(fullMap).bindPopup(`🚒 <b>${st.name}</b>`);
+        if (st.coordinates && (st.coordinates.lat !== stnLat)) {
+          L.marker([st.coordinates.lat, st.coordinates.lng]).addTo(fullMap).bindPopup(`🚒 <b>${st.name}</b>`);
+        }
       });
     }
   });
