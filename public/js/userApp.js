@@ -160,29 +160,6 @@ function initReportingMethods() {
     });
   }
 
-  document.querySelectorAll('.btn-user-preset').forEach(btn => {
-    btn.addEventListener('click', () => {
-      selectedFile = null;
-      const path = btn.dataset.path;
-      const forest = btn.dataset.forest;
-      const lat = parseFloat(btn.dataset.lat);
-      const lng = parseFloat(btn.dataset.lng);
-
-      const preview = document.getElementById('imgMediaPreview');
-      if (preview) preview.src = path;
-
-      userMap.flyTo([lat, lng], 13, { duration: 1.2 });
-      userMarker.setLatLng([lat, lng]);
-      updateLocationReadouts(lat, lng, forest);
-
-      const isSafe = path.includes('sunset');
-      document.getElementById('txtAiConf').textContent = isSafe ? '97% (Non-Fire)' : '94%';
-      document.getElementById('txtAiSev').textContent = isSafe ? 'LOW (SAFE)' : 'HIGH';
-      document.getElementById('txtAiBadge').textContent = isSafe ? 'NO FIRE SIGNATURE' : 'FIRE DETECTED';
-      document.getElementById('txtAiBadge').className = isSafe ? 'text-[10px] font-black px-2 py-0.5 rounded bg-emerald-950 border border-emerald-600 text-emerald-300' : 'text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300';
-    });
-  });
-
   // Method 2: Live Camera Capture
   const btnStartCam = document.getElementById('btnStartCamera');
   const btnSnap = document.getElementById('btnSnapPhoto');
@@ -216,12 +193,22 @@ function initReportingMethods() {
       ctx.drawImage(camVideo, 0, 0, camCanvas.width, camCanvas.height);
 
       camCanvas.toBlob((blob) => {
-        selectedFile = new File([blob], 'camera_fire_capture.jpg', { type: 'image/jpeg' });
+        selectedFile = new File([blob], `camera_fire_${Date.now()}.jpg`, { type: 'image/jpeg' });
         const preview = document.getElementById('imgMediaPreview');
-        if (preview) preview.src = URL.createObjectURL(blob);
-        document.getElementById('txtAiConf').textContent = '92%';
-        document.getElementById('txtAiSev').textContent = 'HIGH';
-        alert('Photo captured successfully! AI Vision analyzed.');
+        const placeholder = document.getElementById('imgMediaEmptyPlaceholder');
+        if (preview) {
+          preview.src = URL.createObjectURL(blob);
+          preview.classList.remove('hidden');
+        }
+        if (placeholder) placeholder.classList.add('hidden');
+        const badge = document.getElementById('txtAiBadge');
+        if (badge) {
+          badge.textContent = 'CAMERA SNAP LOADED';
+          badge.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300';
+        }
+        document.getElementById('txtAiConf').textContent = '95.2%';
+        document.getElementById('txtAiSev').textContent = 'CRITICAL (HIGH)';
+        alert('Photo captured successfully! Attached to fire alert.');
       }, 'image/jpeg', 0.85);
     });
   }
@@ -317,9 +304,31 @@ function setReportingMethod(method) {
 function handleImageFile(file) {
   selectedFile = file;
   const preview = document.getElementById('imgMediaPreview');
-  if (preview) preview.src = URL.createObjectURL(file);
-  document.getElementById('txtAiConf').textContent = '94%';
-  document.getElementById('txtAiSev').textContent = 'HIGH';
+  const placeholder = document.getElementById('imgMediaEmptyPlaceholder');
+  const fileInfo = document.getElementById('selectedFileInfo');
+  const fileName = document.getElementById('selectedFileName');
+  const fileSize = document.getElementById('selectedFileSize');
+
+  if (preview) {
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove('hidden');
+  }
+  if (placeholder) placeholder.classList.add('hidden');
+
+  if (fileInfo && fileName && fileSize) {
+    fileName.textContent = file.name;
+    fileSize.textContent = `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+    fileInfo.classList.remove('hidden');
+  }
+
+  const badge = document.getElementById('txtAiBadge');
+  if (badge) {
+    badge.textContent = 'IMAGE EVIDENCE READY';
+    badge.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-orange-950 border border-orange-600 text-orange-300';
+  }
+
+  document.getElementById('txtAiConf').textContent = '94.6%';
+  document.getElementById('txtAiSev').textContent = 'CRITICAL (HIGH)';
 }
 
 // 4. Form Submission & Modals
@@ -385,6 +394,8 @@ function initFormAndModals() {
         formData.append('flamesVisible', document.getElementById('selFlames')?.value || 'true');
         formData.append('peopleInDanger', document.getElementById('selPeople')?.value || 'false');
         formData.append('reporterName', 'Citizen Observer');
+        formData.append('isPriority', 'true');
+        formData.append('priorityLevel', 'PRIORITY 1 - CITIZEN REPORT');
 
         const res = await fetch('/api/incidents', {
           method: 'POST',

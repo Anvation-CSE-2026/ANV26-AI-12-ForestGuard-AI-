@@ -132,6 +132,8 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
       affectedAreaHectares: aiResult.affectedAreaEstimateHectares || 2.4,
       detectedFeatures: aiResult.detectedFeatures,
       featureBreakdown: aiResult.featureBreakdown,
+      isPriority: true,
+      priorityLevel: 'PRIORITY 1 - CITIZEN REPORT',
       reporter: {
         name: reporterName,
         phone: reporterPhone,
@@ -139,7 +141,7 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
       }
     });
 
-    console.log(`[ALERT EMITTED] ${newIncident.incidentId} | Status: ${newIncident.status} | Risk: ${newIncident.riskScore}/100`);
+    console.log(`🚨 [PRIORITY 1 LIVE BROADCAST] ${newIncident.incidentId} | Status: ${newIncident.status} | Risk: ${newIncident.riskScore}/100`);
 
     // Broadcast in Real Time via Socket.IO
     io.emit('new_fire_alert', newIncident);

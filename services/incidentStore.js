@@ -356,6 +356,8 @@ class IncidentStore {
         { time: timestampStr, message: `Risk score calculated: ${riskResult.combinedRiskScore} / 100`, type: 'RISK' },
         { time: timestampStr, message: 'Admin authority alerted in real-time via Socket.IO', type: 'ALERT' }
       ],
+      isPriority: data.isPriority !== undefined ? data.isPriority : true,
+      priorityLevel: data.priorityLevel || 'PRIORITY 1 - CITIZEN REPORT',
       routeWaypoints: station.routeWaypoints || [],
       routeProgressIndex: 0,
       createdAt: new Date().toISOString(),
@@ -372,9 +374,12 @@ class IncidentStore {
   }
 
   getAllIncidents() {
-    return Array.from(this.incidents.values()).sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+    return Array.from(this.incidents.values()).sort((a, b) => {
+      const pA = a.isPriority ? 1 : 0;
+      const pB = b.isPriority ? 1 : 0;
+      if (pB !== pA) return pB - pA;
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
   }
 
   // --- WORKFLOW TRANSITIONS (Prevent Fake Alerts & Full Response Control) ---

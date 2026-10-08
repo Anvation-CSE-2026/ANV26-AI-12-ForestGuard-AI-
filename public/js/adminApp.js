@@ -163,19 +163,22 @@ function handleNewFireAlert(incident) {
   const txtLastEvent = document.getElementById('txtLastEventTime');
   if (txtLastEvent) txtLastEvent.textContent = timeStr;
 
+  // Mark as top priority
+  incident.isPriority = true;
+
   // 1. Play Emergency Siren Sound
   if (window.emergencyAudio && !audioMuted) {
-    window.emergencyAudio.playSirenAlert(3.5);
+    window.emergencyAudio.playSirenAlert(4);
   }
 
-  // 2. Add to top of Incidents List
+  // 2. Add to absolute top of Incidents List (Priority 1)
   allIncidents = [incident, ...allIncidents.filter(i => i.incidentId !== incident.incidentId)];
   renderIncidentList();
 
-  // 3. Trigger Red Flashing Banner (Section 3)
+  // 3. Trigger Red Flashing Banner with Priority 1 labeling
   showEmergencyBanner(incident);
 
-  // 4. Select Incident & Center Map (Section 1)
+  // 4. Immediately select & auto-zoom Google Map to ground zero
   selectIncident(incident, true);
 }
 
@@ -224,17 +227,23 @@ function selectIncident(incident, shouldCenter = true) {
 // 6. Render Incident Detail Panel (Section 6, 8, 13)
 function renderIncidentDetailPanel(incident) {
   document.getElementById('detailIncidentId').textContent = incident.incidentId;
-  document.getElementById('detailForestName').textContent = incident.forestName;
-  document.getElementById('detailCoords').textContent = `${incident.latitude}, ${incident.longitude}`;
-  document.getElementById('detailDetectionSource').textContent = incident.source;
+  const isPriority = incident.isPriority || incident.priorityLevel;
+  document.getElementById('detailDetectionSource').innerHTML = isPriority
+    ? `<span class="text-red-400 font-black">🚨 CITIZEN LIVE REPORT (PRIORITY 1)</span>`
+    : incident.source;
   document.getElementById('detailAffectedArea').textContent = `${incident.affectedAreaHectares || 2.4} hectares`;
 
   // Severity Badge
   const sevEl = document.getElementById('detailSeverityBadge');
-  sevEl.textContent = incident.severity;
-  if (incident.severity === 'CRITICAL') sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300 uppercase';
-  else if (incident.severity === 'HIGH') sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-orange-950 border border-orange-600 text-orange-300 uppercase';
-  else sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-amber-950 border border-amber-600 text-amber-300 uppercase';
+  if (isPriority) {
+    sevEl.textContent = '🚨 PRIORITY 1';
+    sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-600 border border-red-400 text-white uppercase animate-pulse shadow-md';
+  } else {
+    sevEl.textContent = incident.severity;
+    if (incident.severity === 'CRITICAL') sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300 uppercase';
+    else if (incident.severity === 'HIGH') sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-orange-950 border border-orange-600 text-orange-300 uppercase';
+    else sevEl.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-amber-950 border border-amber-600 text-amber-300 uppercase';
+  }
 
   // Status Pill
   const statEl = document.getElementById('detailStatusPill');
@@ -352,27 +361,33 @@ function renderIncidentList() {
     const isSelected = activeIncident && activeIncident.incidentId === inc.incidentId;
     const isCritical = inc.severity === 'CRITICAL';
     const isDispatched = inc.status === 'RESPONSE_DISPATCHED';
+    const isPriority = inc.isPriority || inc.priorityLevel;
 
     const card = document.createElement('div');
     card.className = `incident-feed-card p-3 rounded-xl border cursor-pointer transition-all ${
-      isSelected ? 'border-orange-500 bg-[#13223f] shadow-lg' : 'border-slate-800 bg-[#091122] hover:border-slate-700'
-    } ${isCritical && !isDispatched ? 'border-l-4 border-l-red-500' : ''}`;
+      isSelected ? 'border-orange-500 bg-[#13223f] shadow-lg ring-1 ring-orange-500' : 'border-slate-800 bg-[#091122] hover:border-slate-700'
+    } ${isPriority && !isDispatched ? 'border-2 border-red-500 bg-[#1c0c16] shadow-[0_0_14px_rgba(239,68,68,0.5)] animate-pulse' : (isCritical && !isDispatched ? 'border-l-4 border-l-red-500' : '')}`;
     card.dataset.id = inc.incidentId;
 
     let sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-600">CRITICAL</span>`;
     if (inc.severity === 'HIGH') sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-orange-950 text-orange-300 border border-orange-600">HIGH</span>`;
     else if (inc.severity === 'LOW') sevBadge = `<span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-600">SAFE</span>`;
 
+    const priorityBadge = isPriority ? `<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-red-600 text-white animate-pulse shadow-sm mr-1">🚨 PRIORITY 1</span>` : '';
+
     card.innerHTML = `
       <div class="flex items-center justify-between mb-1">
-        <span class="font-mono text-xs font-black text-sky-400">${inc.incidentId}</span>
+        <div class="flex items-center gap-1">
+          ${priorityBadge}
+          <span class="font-mono text-xs font-black text-sky-400">${inc.incidentId}</span>
+        </div>
         ${sevBadge}
       </div>
       <div class="text-xs font-bold text-white truncate">${inc.forestName}</div>
       <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2 font-mono">
         <span>AI: ${inc.aiConfidence}%</span>
         <span>Risk: ${inc.riskScore}/100</span>
-        <span class="font-bold ${isDispatched ? 'text-emerald-400' : 'text-orange-400'}">${inc.status}</span>
+        <span class="font-bold ${isDispatched ? 'text-emerald-400' : (isPriority ? 'text-red-400 font-black' : 'text-orange-400')}">${inc.status}</span>
       </div>
     `;
 
@@ -418,7 +433,7 @@ function showEmergencyBanner(incident) {
   const confEl = document.getElementById('bannerConfidence');
 
   if (banner) {
-    if (locEl) locEl.textContent = `${incident.forestName} (${incident.latitude}, ${incident.longitude})`;
+    if (locEl) locEl.innerHTML = `<span class="bg-red-600 text-white font-black px-2 py-0.5 rounded text-[11px] mr-1.5 shadow animate-pulse">🚨 PRIORITY 1 ALERT</span> <b>${incident.forestName}</b> (${incident.latitude}, ${incident.longitude})`;
     if (riskEl) riskEl.textContent = `${incident.riskScore}/100 (${incident.severity})`;
     if (confEl) confEl.textContent = `${incident.aiConfidence}%`;
     banner.classList.remove('hidden');

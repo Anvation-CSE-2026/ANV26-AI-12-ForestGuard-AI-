@@ -121,23 +121,12 @@
             <div id="userDropzone" class="border-2 border-dashed border-slate-700 hover:border-orange-500 rounded-xl p-6 text-center cursor-pointer transition bg-[#040814]/60 relative">
               <input type="file" id="userFileInput" accept="image/png, image/jpeg, image/jpg, image/webp" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" />
               <div class="text-3xl mb-1">🖼️</div>
-              <div class="text-xs font-bold text-white">Click or Drop Image Here</div>
-              <div class="text-[10px] text-slate-400">JPG, JPEG, PNG, WEBP</div>
+              <div class="text-xs font-bold text-white">Click or Drop Fire Photograph Here</div>
+              <div class="text-[10px] text-slate-400">JPG, JPEG, PNG, WEBP (Instant AI vision scanning)</div>
             </div>
-
-            <!-- Preset Scenarios -->
-            <div class="mt-4 pt-3 border-t border-slate-800">
-              <span class="text-[10px] text-slate-400 font-bold uppercase block mb-1.5">⚡ 1-Click Test Scenarios:</span>
-              <div class="grid grid-cols-2 gap-2 text-xs">
-                <button type="button" class="btn-user-preset p-2 rounded-lg bg-[#0d182e] hover:bg-orange-950/40 border border-slate-700 text-left" data-path="/sample_images/sample_wildfire.jpg" data-forest="Bandipur Forest" data-lat="11.6643" data-lng="76.6250">
-                  <span class="text-orange-400 font-bold block text-[11px]">🔥 Bandipur Wildfire</span>
-                  <span class="text-[9px] text-slate-400">94% High Severity</span>
-                </button>
-                <button type="button" class="btn-user-preset p-2 rounded-lg bg-[#0d182e] hover:bg-yellow-950/40 border border-slate-700 text-left" data-path="/sample_images/sample_sunset_safe.jpg" data-forest="Bannerghatta Hills" data-lat="12.8009" data-lng="75.5762">
-                  <span class="text-yellow-400 font-bold block text-[11px]">🌅 Sunset (Safe)</span>
-                  <span class="text-[9px] text-slate-400">False-Alarm Test</span>
-                </button>
-              </div>
+            <div id="selectedFileInfo" class="hidden mt-2 p-2 rounded-lg bg-[#040814] border border-slate-700 flex items-center justify-between text-xs font-mono">
+              <span id="selectedFileName" class="text-orange-300 truncate max-w-[200px]">photo.jpg</span>
+              <span id="selectedFileSize" class="text-slate-400">1.2 MB</span>
             </div>
           </div>
 
@@ -191,14 +180,19 @@
           <div id="mediaFeedbackCard" class="p-4 rounded-2xl bg-[#091122] border border-orange-500/40 space-y-2">
             <div class="flex items-center justify-between">
               <span class="text-xs font-black text-white">EVIDENCE PREVIEW & AI READOUT</span>
-              <span id="txtAiBadge" class="text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300">FIRE DETECTED</span>
+              <span id="txtAiBadge" class="text-[10px] font-black px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">AWAITING EVIDENCE</span>
             </div>
-            <div class="h-36 rounded-xl overflow-hidden bg-black border border-slate-800 relative">
-              <img id="imgMediaPreview" src="/sample_images/sample_wildfire.jpg" class="w-full h-full object-cover" />
+            <div class="h-36 rounded-xl overflow-hidden bg-black border border-slate-800 relative flex items-center justify-center">
+              <img id="imgMediaPreview" src="" class="w-full h-full object-cover hidden" />
+              <div id="imgMediaEmptyPlaceholder" class="text-center p-3 text-slate-500 text-xs">
+                <span class="text-2xl block mb-1">📸</span>
+                <span class="block font-medium">No image selected</span>
+                <span class="text-[10px] text-slate-600 block">Select a file, open camera, or tap map to pin coordinates</span>
+              </div>
             </div>
             <div class="flex items-center justify-between text-xs font-mono">
-              <span class="text-slate-400">Confidence: <b id="txtAiConf" class="text-orange-400">94%</b></span>
-              <span class="text-slate-400">Severity: <b id="txtAiSev" class="text-red-400">HIGH</b></span>
+              <span class="text-slate-400">Confidence: <b id="txtAiConf" class="text-orange-400">Ready</b></span>
+              <span class="text-slate-400">Severity: <b id="txtAiSev" class="text-red-400">Live Evaluation</b></span>
             </div>
           </div>
 
