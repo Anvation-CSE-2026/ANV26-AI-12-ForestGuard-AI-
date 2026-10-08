@@ -16,21 +16,35 @@ let socket = null;
 let audioMuted = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  initAdminAuth();
-  await initMap();
-  await fetchDatasets();
-  initSocket();
-  initUIEvents();
-  initImageInspectorModal();
-  fetchIncidents();
+  try { initAdminAuth(); } catch(e) { console.error('initAdminAuth error', e); }
+  try { await fetchIncidents(); } catch(e) { console.error('fetchIncidents error', e); }
+  try { await initMap(); } catch(e) { console.error('initMap error', e); }
+  try { await fetchDatasets(); } catch(e) { console.error('fetchDatasets error', e); }
+  try { initSocket(); } catch(e) { console.error('initSocket error', e); }
+  try { initUIEvents(); } catch(e) { console.error('initUIEvents error', e); }
+  try { initImageInspectorModal(); } catch(e) { console.error('initImageInspectorModal error', e); }
 });
 
 // 1. Initialize Map
 async function initMap() {
-  await window.forestMapEngine.init('adminLiveMap', { lat: 11.6643, lng: 76.6250 }, 9);
-  setTimeout(() => {
-    if (window.forestMapEngine) window.forestMapEngine.invalidateSize();
-  }, 350);
+  try {
+    await window.forestMapEngine.init('adminLiveMap', { lat: 11.6643, lng: 76.6250 }, 9);
+    setTimeout(() => {
+      if (window.forestMapEngine) window.forestMapEngine.invalidateSize();
+    }, 350);
+
+    // Pin all incidents on newly initialized map
+    if (allIncidents && allIncidents.length > 0) {
+      allIncidents.forEach(inc => {
+        window.forestMapEngine.addFireMarker(inc, () => selectIncident(inc, false));
+      });
+      if (activeIncident) {
+        selectIncident(activeIncident, true);
+      }
+    }
+  } catch (err) {
+    console.warn('[ADMIN MAP INIT WARN]', err);
+  }
 }
 
 // 2. Fetch Geospatial Datasets & Render Base Layers
@@ -197,7 +211,11 @@ function handleNewFireAlert(incident) {
 
   // 1. Play Emergency Siren Sound
   if (window.emergencyAudio && !audioMuted) {
-    window.emergencyAudio.playSirenAlert(4);
+    try {
+      window.emergencyAudio.playSirenAlert(4);
+    } catch (e) {
+      console.warn('[AUDIO WARNING] Siren play blocked by browser policy:', e);
+    }
   }
 
   // 2. Add to absolute top of Incidents List (Priority 1)
@@ -239,27 +257,31 @@ function selectIncident(incident, shouldCenter = true) {
   const lat = incident.latitude;
   const lng = incident.longitude;
 
-  // Automatically center the admin map on newly reported incident (Section 1)
-  if (shouldCenter) {
-    window.forestMapEngine.centerOn(lat, lng, 14);
-  }
+  // Safely perform map operations if map engine is ready
+  if (window.forestMapEngine && window.forestMapEngine.map) {
+    if (shouldCenter && lat !== undefined && lng !== undefined) {
+      window.forestMapEngine.centerOn(lat, lng, 14);
+    }
 
-  // Clear previous routes & add marker
-  window.forestMapEngine.clearRoutes();
-  window.forestMapEngine.addFireMarker(incident, () => selectIncident(incident, false));
+    // Clear previous routes & add marker
+    window.forestMapEngine.clearRoutes();
+    window.forestMapEngine.addFireMarker(incident, () => selectIncident(incident, false));
 
-  // Draw 500m, 1km, 5km affected radius circles (Section 11)
-  window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1000, 5000]);
+    // Draw 500m, 1km, 5km affected radius circles (Section 11)
+    if (lat !== undefined && lng !== undefined) {
+      window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1000, 5000]);
+    }
 
-  // Draw Route to Selected Response Station (PURPLE route)
-  const deployStation = selectedDeployStation || incident.nearestStation;
-  if (deployStation && deployStation.routeWaypoints) {
-    window.forestMapEngine.drawRoute(deployStation.routeWaypoints, '#9333ea', false);
-  }
+    // Draw Route to Selected Response Station (PURPLE route)
+    const deployStation = selectedDeployStation || incident.nearestStation;
+    if (deployStation && deployStation.routeWaypoints) {
+      window.forestMapEngine.drawRoute(deployStation.routeWaypoints, '#9333ea', false);
+    }
 
-  // Draw Hose Relay Line to Nearest Water Body (BLUE dashed route)
-  if (incident.nearestWaterBody && incident.nearestWaterBody.routeWaypoints) {
-    window.forestMapEngine.drawRoute(incident.nearestWaterBody.routeWaypoints, '#0284c7', true);
+    // Draw Hose Relay Line to Nearest Water Body (BLUE dashed route)
+    if (incident.nearestWaterBody && incident.nearestWaterBody.routeWaypoints) {
+      window.forestMapEngine.drawRoute(incident.nearestWaterBody.routeWaypoints, '#0284c7', true);
+    }
   }
 
   // Render Incident Details in Right Panel
@@ -509,9 +531,23 @@ function renderIncidentList() {
   if (!feed) return;
 
   const countBadge = document.getElementById('badgeIncidentCount');
-  if (countBadge) countBadge.textContent = `${allIncidents.length} REPORTED`;
+  if (countBadge) {
+    const activeCount = allIncidents.filter(i => i.status !== 'RESOLVED' && i.status !== 'FIRE CONTAINED' && i.status !== 'FALSE ALARM').length;
+    countBadge.textContent = `${activeCount} ACTIVE (${allIncidents.length} TOTAL)`;
+  }
 
   feed.innerHTML = '';
+
+  if (allIncidents.length === 0) {
+    feed.innerHTML = `
+      <div class="p-6 text-center text-slate-400">
+        <div class="text-2xl mb-2">🛡️</div>
+        <div class="text-xs font-bold text-slate-300">No Incidents in Queue</div>
+        <div class="text-[10px] text-slate-500 mt-1">All forest sectors normal. New citizen reports and satellite hotspots will stream here live.</div>
+      </div>
+    `;
+    return;
+  }
 
   allIncidents.forEach(inc => {
     const isSelected = activeIncident && activeIncident.incidentId === inc.incidentId;

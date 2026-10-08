@@ -417,12 +417,14 @@ class IncidentStore {
   }
 
   getAllIncidents() {
-    return Array.from(this.incidents.values()).sort((a, b) => {
-      const pA = a.isPriority ? 1 : 0;
-      const pB = b.isPriority ? 1 : 0;
-      if (pB !== pA) return pB - pA;
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    });
+    return Array.from(this.incidents.values())
+      .filter(i => i.status !== 'CANCELLED')
+      .sort((a, b) => {
+        const pA = a.isPriority ? 1 : 0;
+        const pB = b.isPriority ? 1 : 0;
+        if (pB !== pA) return pB - pA;
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
   }
 
   // --- WORKFLOW TRANSITIONS (Prevent Fake Alerts & Full Response Control) ---

@@ -101,11 +101,31 @@ class ForestGuardMapEngine {
     const el = document.getElementById(elementId);
     if (!el) return;
 
-    this.map = L.map(elementId, {
-      center: [coords.lat, coords.lng],
-      zoom: zoom,
-      zoomControl: true
-    });
+    if (this.map) {
+      try {
+        this.map.remove();
+      } catch (e) {}
+      this.map = null;
+    }
+    if (el._leaflet_id) {
+      el._leaflet_id = null;
+    }
+
+    try {
+      this.map = L.map(elementId, {
+        center: [coords.lat, coords.lng],
+        zoom: zoom,
+        zoomControl: true
+      });
+    } catch (err) {
+      console.warn('[MAP ENGINE] Retrying Leaflet container reset:', err);
+      el._leaflet_id = null;
+      this.map = L.map(elementId, {
+        center: [coords.lat, coords.lng],
+        zoom: zoom,
+        zoomControl: true
+      });
+    }
 
     // High-resolution Google Hybrid Satellite & Roads Tiles
     this.googleHybridLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
@@ -157,6 +177,7 @@ class ForestGuardMapEngine {
 
   // --- Add Fire Incident Marker (RED Pulsing / ORANGE / YELLOW / GREEN) ---
   addFireMarker(incident, onClickCallback) {
+    if (!this.map) return null;
     const lat = incident.latitude || incident.coordinates?.lat;
     const lng = incident.longitude || incident.coordinates?.lng;
     const severity = incident.severity || 'CRITICAL';
@@ -223,6 +244,7 @@ class ForestGuardMapEngine {
 
   // --- Add Response Station Marker (PURPLE) ---
   addStationMarker(station, onClickCallback) {
+    if (!this.map) return null;
     const lat = station.coordinates.lat;
     const lng = station.coordinates.lng;
 
@@ -260,6 +282,7 @@ class ForestGuardMapEngine {
 
   // --- Add Water Body Marker (BLUE) ---
   addWaterMarker(water, onClickCallback) {
+    if (!this.map) return null;
     const lat = water.coordinates.lat;
     const lng = water.coordinates.lng;
 
@@ -297,6 +320,7 @@ class ForestGuardMapEngine {
 
   // --- Add IoT Sensor Marker (CYAN) ---
   addSensorMarker(sensor, onClickCallback) {
+    if (!this.map) return null;
     const lat = sensor.coordinates.lat;
     const lng = sensor.coordinates.lng;
     const isCritical = sensor.status === 'CRITICAL';
@@ -335,6 +359,7 @@ class ForestGuardMapEngine {
 
   // --- Add Satellite Hotspot Marker ---
   addSatelliteMarker(hotspot, onClickCallback) {
+    if (!this.map) return null;
     const lat = hotspot.coordinates.lat;
     const lng = hotspot.coordinates.lng;
 
@@ -372,6 +397,7 @@ class ForestGuardMapEngine {
 
   // --- Draw Routes (Station to Fire & Water to Fire) ---
   drawRoute(waypoints, color = '#ff6a00', isDashed = false) {
+    if (!this.map || !waypoints || waypoints.length === 0) return null;
     if (this.mode === 'google-api') {
       const gWaypoints = waypoints.map(w => ({ lat: w[0], lng: w[1] }));
       const polyline = new google.maps.Polyline({
@@ -397,10 +423,17 @@ class ForestGuardMapEngine {
   }
 
   clearRoutes() {
+    if (!this.map) {
+      this.routes = [];
+      this.clearVehicleMarker();
+      return;
+    }
     if (this.mode === 'google-api') {
       this.routes.forEach(r => r.setMap(null));
     } else {
-      this.routes.forEach(r => this.map.removeLayer(r));
+      this.routes.forEach(r => {
+        try { this.map.removeLayer(r); } catch(e) {}
+      });
     }
     this.routes = [];
     this.clearVehicleMarker();
@@ -410,17 +443,20 @@ class ForestGuardMapEngine {
     if (this.teamVehicleMarker) {
       try {
         if (this.mode === 'google-api') this.teamVehicleMarker.setMap(null);
-        else this.map.removeLayer(this.teamVehicleMarker);
+        else if (this.map) this.map.removeLayer(this.teamVehicleMarker);
       } catch (e) {}
       this.teamVehicleMarker = null;
     }
   }
 
   clearMarkers(category = 'all') {
+    if (!this.map) return;
     const clearList = (list) => {
       list.forEach(m => {
-        if (this.mode === 'google-api') m.setMap(null);
-        else this.map.removeLayer(m);
+        try {
+          if (this.mode === 'google-api') m.setMap(null);
+          else this.map.removeLayer(m);
+        } catch(e) {}
       });
     };
 
@@ -438,6 +474,7 @@ class ForestGuardMapEngine {
   drawRadiusCircles(lat, lng, radii = [500, 1000, 5000]) {
     this.clearCircles();
     this.circles = [];
+    if (!this.map) return;
 
     const colors = [
       { color: '#ef4444', fill: 'rgba(239, 68, 68, 0.15)', name: '500m Hot Zone' },
@@ -477,8 +514,10 @@ class ForestGuardMapEngine {
   clearCircles() {
     if (this.circles) {
       this.circles.forEach(c => {
-        if (this.mode === 'google-api') c.setMap(null);
-        else this.map.removeLayer(c);
+        try {
+          if (this.mode === 'google-api') c.setMap(null);
+          else if (this.map) this.map.removeLayer(c);
+        } catch(e) {}
       });
     }
     this.circles = [];
@@ -486,6 +525,7 @@ class ForestGuardMapEngine {
 
   // --- Live Response Team Vehicle Marker (Section 17) ---
   updateTeamVehicleMarker(lat, lng, label = 'Team 04') {
+    if (!this.map) return null;
     if (this.teamVehicleMarker) {
       if (this.mode === 'google-api') {
         this.teamVehicleMarker.setPosition({ lat, lng });

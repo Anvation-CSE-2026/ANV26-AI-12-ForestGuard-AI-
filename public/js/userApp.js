@@ -945,17 +945,30 @@ function updateScoreboardUI(data) {
   const sbContainer = document.getElementById('userScoreBoardContainer');
   if (sbContainer) sbContainer.classList.remove('hidden');
 
-  // 1. Fire Score & Level
+  // 1. Fire Coverage (Amount of Fire Seen in Image - PRIMARY CRITICALITY FACTOR)
+  const covEl = document.getElementById('sbMetricCoverage');
+  if (covEl) {
+    covEl.textContent = `${covVal}%`;
+    covEl.className = isFire ? 'text-base font-black text-amber-400 font-mono' : 'text-base font-black text-slate-400 font-mono';
+  }
+  const covLvlEl = document.getElementById('sbMetricCoverageLevel');
+  if (covLvlEl) {
+    const spreadLabel = !isFire ? 'LEVEL: CLEAR' : (parseFloat(covVal) > 30 ? 'HIGH SPREAD (CRITICAL)' : (parseFloat(covVal) > 15 ? 'MODERATE SPREAD' : 'EARLY STAGE'));
+    covLvlEl.textContent = spreadLabel;
+    covLvlEl.className = isFire ? 'text-[9px] font-bold text-amber-300 block mt-0.5 truncate' : 'text-[9px] font-bold text-slate-400 block mt-0.5 truncate';
+  }
+
+  // 2. Fire Score & Level
   const fireScoreVal = parseFloat(data.fireScore !== undefined ? data.fireScore : anomVal).toFixed(1);
   const fireScoreEl = document.getElementById('sbMetricFireScore');
   if (fireScoreEl) {
     fireScoreEl.textContent = `${fireScoreVal}%`;
-    fireScoreEl.className = isFire ? 'text-base font-black text-orange-400 font-mono' : 'text-base font-black text-slate-400 font-mono';
+    fireScoreEl.className = isFire ? 'text-xs font-black text-orange-400 font-mono' : 'text-xs font-black text-slate-400 font-mono';
   }
   const fireLevelEl = document.getElementById('sbMetricFireLevel');
   if (fireLevelEl) {
-    fireLevelEl.textContent = isFire ? `LEVEL: ${data.fireLevel || sevVal}` : 'LEVEL: SAFE';
-    fireLevelEl.className = isFire ? 'text-[9px] font-bold text-orange-400 block mt-0.5' : 'text-[9px] font-bold text-slate-400 block mt-0.5';
+    fireLevelEl.textContent = isFire ? `LEVEL: ${data.fireLevel || (riskVal >= 84 ? 'CRITICAL' : 'HIGH')}` : 'LEVEL: SAFE';
+    fireLevelEl.className = isFire ? 'text-[8px] font-bold text-orange-400 block mt-0.5' : 'text-[8px] font-bold text-slate-400 block mt-0.5';
   }
 
   // 2. Risk Score & Severity

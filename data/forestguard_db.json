@@ -1047,1011 +1047,6 @@
       "title": "Bandipur Forest"
     },
     {
-      "incidentId": "FG-2026-5244",
-      "reporterId": "REP-ANON-583",
-      "source": "Manual Alert",
-      "detectionMethod": "Manual",
-      "imageUrl": "/sample_images/sample_wildfire.jpg",
-      "videoUrl": null,
-      "latitude": 11.67,
-      "longitude": 76.63,
-      "title": "North Ridge Crown Fire",
-      "alertTitle": "North Ridge Crown Fire",
-      "forestName": "Bandipur Moyar Valley",
-      "state": "Karnataka",
-      "district": "Chamarajanagar",
-      "description": "Test fire alert with custom name",
-      "estimatedSize": "Medium",
-      "smokeVisible": false,
-      "flamesVisible": false,
-      "peopleInDanger": false,
-      "aiConfidence": 88,
-      "severity": "LOW",
-      "riskScore": 5,
-      "satelliteConfidence": 89.2,
-      "sensorConfidence": 78.5,
-      "status": "CANCELLED",
-      "aiExplanation": "Manual ground verification pin placed by citizen on live map.",
-      "affectedAreaHectares": 2.4,
-      "affectedRadiiMeters": [
-        500,
-        1000,
-        5000
-      ],
-      "detectedFeatures": [
-        "Visual Smoke Reported"
-      ],
-      "featureBreakdown": [],
-      "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
-      "nearestStation": {
-        "id": "STA-KA-01",
-        "name": "Bandipur Forest Rapid Response Unit (HQ)",
-        "forestId": "FOR-KA-01",
-        "state": "Karnataka",
-        "coordinates": {
-          "lat": 11.668,
-          "lng": 76.634
-        },
-        "phone": "+91-8229-236021",
-        "etaMinutesBase": 18,
-        "unitType": "Forest Fire Squad Alpha",
-        "crewCount": 16,
-        "waterTenders": 3,
-        "aerialDrones": 2,
-        "status": "AVAILABLE",
-        "distanceKm": 0.5,
-        "distanceMeters": 500,
-        "etaMinutes": 8,
-        "routeWaypoints": [
-          [
-            11.668,
-            76.634
-          ],
-          [
-            11.66733,
-            76.63273
-          ],
-          [
-            11.6704,
-            76.63371
-          ],
-          [
-            11.667,
-            76.6308
-          ],
-          [
-            11.67107,
-            76.63237
-          ],
-          [
-            11.66867,
-            76.63007
-          ],
-          [
-            11.67,
-            76.63
-          ]
-        ]
-      },
-      "assignedStation": {
-        "stationId": "STA-KA-01",
-        "name": "Bandipur Forest Rapid Response Unit (HQ)",
-        "distanceKm": 0.5,
-        "etaMinutes": 8,
-        "phone": "+91-8229-236021",
-        "availability": "AVAILABLE"
-      },
-      "rankedStations": [
-        {
-          "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
-          },
-          "phone": "+91-8229-236021",
-          "etaMinutesBase": 18,
-          "unitType": "Forest Fire Squad Alpha",
-          "crewCount": 16,
-          "waterTenders": 3,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 0.5,
-          "distanceMeters": 500,
-          "etaMinutes": 8,
-          "routeWaypoints": [
-            [
-              11.668,
-              76.634
-            ],
-            [
-              11.66733,
-              76.63273
-            ],
-            [
-              11.6704,
-              76.63371
-            ],
-            [
-              11.667,
-              76.6308
-            ],
-            [
-              11.67107,
-              76.63237
-            ],
-            [
-              11.66867,
-              76.63007
-            ],
-            [
-              11.67,
-              76.63
-            ]
-          ]
-        },
-        {
-          "id": "STA-KA-02",
-          "name": "Gundlupet Municipal Fire Brigade Station",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.805,
-            "lng": 76.689
-          },
-          "phone": "+91-8229-222101",
-          "etaMinutesBase": 28,
-          "unitType": "Municipal Heavy Tender Fleet",
-          "crewCount": 22,
-          "waterTenders": 5,
-          "aerialDrones": 1,
-          "status": "AVAILABLE",
-          "distanceKm": 16.3,
-          "distanceMeters": 16300,
-          "etaMinutes": 32,
-          "routeWaypoints": [
-            [
-              11.805,
-              76.689
-            ],
-            [
-              11.7815,
-              76.67857
-            ],
-            [
-              11.76173,
-              76.67037
-            ],
-            [
-              11.7355,
-              76.6583
-            ],
-            [
-              11.71673,
-              76.65071
-            ],
-            [
-              11.6915,
-              76.63923
-            ],
-            [
-              11.67,
-              76.63
-            ]
-          ]
-        },
-        {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
-          "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
-          },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
-          "crewCount": 14,
-          "waterTenders": 2,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 1259.9,
-          "distanceMeters": 1259900,
-          "etaMinutes": 2164,
-          "routeWaypoints": [
-            [
-              22.351,
-              80.592
-            ],
-            [
-              20.56983,
-              79.93107
-            ],
-            [
-              18.7924,
-              79.27237
-            ],
-            [
-              17.0085,
-              78.6098
-            ],
-            [
-              15.23207,
-              77.95171
-            ],
-            [
-              13.44917,
-              77.28973
-            ],
-            [
-              11.67,
-              76.63
-            ]
-          ]
-        }
-      ],
-      "assignedTeam": {
-        "teamId": "TEAM-04",
-        "name": "Team 04",
-        "status": "AVAILABLE",
-        "distanceKm": 0.5,
-        "etaMinutes": 8
-      },
-      "nearestWaterBody": {
-        "id": "WB-06",
-        "name": "Moyar River Deep Pool Draft Terminal",
-        "forestId": "FOR-KA-01",
-        "state": "Karnataka",
-        "coordinates": {
-          "lat": 11.602,
-          "lng": 76.654
-        },
-        "type": "River Gorge Pool",
-        "capacity": "Continuous 14,000 LPM",
-        "waterSourceType": "RIVER",
-        "distanceKm": 8,
-        "distanceMeters": 8000,
-        "routeWaypoints": [
-          [
-            11.602,
-            76.654
-          ],
-          [
-            11.61759,
-            76.64715
-          ],
-          [
-            11.638,
-            76.6432
-          ],
-          [
-            11.65159,
-            76.63515
-          ],
-          [
-            11.67,
-            76.63
-          ]
-        ]
-      },
-      "rankedWaterBodies": [
-        {
-          "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
-          },
-          "type": "River Gorge Pool",
-          "capacity": "Continuous 14,000 LPM",
-          "waterSourceType": "RIVER",
-          "distanceKm": 8,
-          "distanceMeters": 8000,
-          "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
-            [
-              11.61759,
-              76.64715
-            ],
-            [
-              11.638,
-              76.6432
-            ],
-            [
-              11.65159,
-              76.63515
-            ],
-            [
-              11.67,
-              76.63
-            ]
-          ]
-        },
-        {
-          "id": "WB-01",
-          "name": "Kabini Reservoir & Backwaters",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.968,
-            "lng": 76.352
-          },
-          "type": "Dam / Large Reservoir",
-          "capacity": "19.52 TMC (High Volume Aerial Drafting Access)",
-          "waterSourceType": "RESERVOIR",
-          "distanceKm": 44.9,
-          "distanceMeters": 44900,
-          "routeWaypoints": [
-            [
-              11.968,
-              76.352
-            ],
-            [
-              11.89209,
-              76.42065
-            ],
-            [
-              11.821,
-              76.4922
-            ],
-            [
-              11.74309,
-              76.55965
-            ],
-            [
-              11.67,
-              76.63
-            ]
-          ]
-        },
-        {
-          "id": "WB-03",
-          "name": "Periyar Lake Aquatic Sanctuary",
-          "forestId": "FOR-KL-01",
-          "state": "Kerala",
-          "coordinates": {
-            "lat": 9.532,
-            "lng": 77.17
-          },
-          "type": "Natural Freshwater Lake",
-          "capacity": "Unlimited Drafting Access",
-          "waterSourceType": "LAKE",
-          "distanceKm": 245,
-          "distanceMeters": 245000,
-          "routeWaypoints": [
-            [
-              9.532,
-              77.17
-            ],
-            [
-              10.06509,
-              77.03415
-            ],
-            [
-              10.603,
-              76.9012
-            ],
-            [
-              11.13409,
-              76.76415
-            ],
-            [
-              11.67,
-              76.63
-            ]
-          ]
-        }
-      ],
-      "reporter": {
-        "name": "Citizen Reporter",
-        "phone": "Undisclosed",
-        "notes": "Test fire alert with custom name"
-      },
-      "timeline": [
-        {
-          "time": "04:38:16 pm",
-          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (11.67, 76.63)",
-          "type": "REPORT"
-        },
-        {
-          "time": "04:38:16 pm",
-          "message": "Evidence ingested (Manual)",
-          "type": "INGEST"
-        },
-        {
-          "time": "04:38:16 pm",
-          "message": "AI Analysis complete: 88% confidence (CRITICAL)",
-          "type": "AI"
-        },
-        {
-          "time": "04:38:16 pm",
-          "message": "Risk score calculated: 93 / 100",
-          "type": "RISK"
-        },
-        {
-          "time": "04:38:16 pm",
-          "message": "Admin authority alerted in real-time via Socket.IO",
-          "type": "ALERT"
-        },
-        {
-          "time": "04:38:27 pm",
-          "message": "Alert CANCELLED: Alert cancelled by operator",
-          "type": "CANCEL"
-        }
-      ],
-      "isPriority": true,
-      "priorityLevel": "PRIORITY 1 - CITIZEN REPORT",
-      "scoreboard": {
-        "fireScore": 88,
-        "fireLevel": "HIGH",
-        "anomalyConfidence": 88,
-        "smokeConfidence": 92,
-        "fireCoverage": 38.5,
-        "smokeLevel": 85,
-        "riskScore": 93,
-        "severity": "HIGH",
-        "fakeProbability": 3.2,
-        "authenticityScore": 96.8,
-        "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-        "fakeStatus": "PASSED - REAL FIELD EVIDENCE (NOT FAKE / NOT AI-GEN)",
-        "isFake": false,
-        "objectsCount": 3,
-        "statusTitle": "FIRE DETECTED",
-        "statusText": "Status: Active Wildfire (3 Objects)",
-        "badgeText": "HIGH",
-        "earlyWarningAlert": "CRITICAL - IMMEDIATE DISPATCH",
-        "timestamp": "04:38:16 pm",
-        "engineName": "YOLOv8 ENGINE READY"
-      },
-      "routeWaypoints": [
-        [
-          11.668,
-          76.634
-        ],
-        [
-          11.66733,
-          76.63273
-        ],
-        [
-          11.6704,
-          76.63371
-        ],
-        [
-          11.667,
-          76.6308
-        ],
-        [
-          11.67107,
-          76.63237
-        ],
-        [
-          11.66867,
-          76.63007
-        ],
-        [
-          11.67,
-          76.63
-        ]
-      ],
-      "routeProgressIndex": 0,
-      "createdAt": "2026-10-08T11:08:17.008Z",
-      "updatedAt": "2026-10-08T11:08:27.218Z"
-    },
-    {
-      "incidentId": "FG-2026-5437",
-      "reporterId": "REP-ANON-928",
-      "source": "Citizen Search",
-      "detectionMethod": "Search",
-      "imageUrl": "/sample_images/sample_wildfire.jpg",
-      "videoUrl": null,
-      "latitude": 12.8258,
-      "longitude": 77.5158,
-      "title": "DSATM Campus, Bengaluru",
-      "alertTitle": "DSATM Campus, Bengaluru",
-      "forestName": "DSATM Campus, Bengaluru",
-      "state": "Karnataka",
-      "district": "Chamarajanagar",
-      "description": "Test fire alert with default location name",
-      "estimatedSize": "Medium",
-      "smokeVisible": false,
-      "flamesVisible": false,
-      "peopleInDanger": false,
-      "aiConfidence": 98.8,
-      "severity": "LOW",
-      "riskScore": 5,
-      "satelliteConfidence": 0,
-      "sensorConfidence": 0,
-      "status": "CANCELLED",
-      "aiExplanation": "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire.",
-      "affectedAreaHectares": 3.6,
-      "affectedRadiiMeters": [
-        500,
-        1000,
-        5000
-      ],
-      "detectedFeatures": [
-        "Flames",
-        "Smoke",
-        "Heat-like region",
-        "Vegetation"
-      ],
-      "featureBreakdown": [],
-      "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
-      "nearestStation": {
-        "id": "STA-LOC-96",
-        "name": "Forest Range Fire Strike Squad #7",
-        "coordinates": {
-          "lat": 12.8808,
-          "lng": 77.5708
-        },
-        "phone": "+91-1800-425-FIRE",
-        "etaMinutesBase": 15,
-        "unitType": "Forest Fire Rapid Response Unit",
-        "crewCount": 14,
-        "waterTenders": 2,
-        "aerialDrones": 1,
-        "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "distanceMeters": 8500,
-        "etaMinutes": 19,
-        "routeWaypoints": [
-          [
-            12.8808,
-            77.5708
-          ],
-          [
-            12.87063,
-            77.56103
-          ],
-          [
-            12.8642,
-            77.55351
-          ],
-          [
-            12.8513,
-            77.5421
-          ],
-          [
-            12.84587,
-            77.53517
-          ],
-          [
-            12.83397,
-            77.52437
-          ],
-          [
-            12.8258,
-            77.5158
-          ]
-        ]
-      },
-      "assignedStation": {
-        "stationId": "STA-LOC-96",
-        "name": "Forest Range Fire Strike Squad #7",
-        "distanceKm": 8.5,
-        "etaMinutes": 19,
-        "phone": "+91-1800-425-FIRE",
-        "availability": "AVAILABLE"
-      },
-      "rankedStations": [
-        {
-          "id": "STA-KA-02",
-          "name": "Gundlupet Municipal Fire Brigade Station",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.805,
-            "lng": 76.689
-          },
-          "phone": "+91-8229-222101",
-          "etaMinutesBase": 28,
-          "unitType": "Municipal Heavy Tender Fleet",
-          "crewCount": 22,
-          "waterTenders": 5,
-          "aerialDrones": 1,
-          "status": "AVAILABLE",
-          "distanceKm": 144.7,
-          "distanceMeters": 144700,
-          "etaMinutes": 252,
-          "routeWaypoints": [
-            [
-              11.805,
-              76.689
-            ],
-            [
-              11.97413,
-              76.8262
-            ],
-            [
-              12.147,
-              76.96564
-            ],
-            [
-              12.3134,
-              77.1012
-            ],
-            [
-              12.48727,
-              77.24124
-            ],
-            [
-              12.65467,
-              77.3774
-            ],
-            [
-              12.8258,
-              77.5158
-            ]
-          ]
-        },
-        {
-          "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
-          },
-          "phone": "+91-8229-236021",
-          "etaMinutesBase": 18,
-          "unitType": "Forest Fire Squad Alpha",
-          "crewCount": 16,
-          "waterTenders": 3,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 160.5,
-          "distanceMeters": 160500,
-          "etaMinutes": 279,
-          "routeWaypoints": [
-            [
-              11.668,
-              76.634
-            ],
-            [
-              11.85997,
-              76.78037
-            ],
-            [
-              12.05567,
-              76.92897
-            ],
-            [
-              12.2449,
-              77.0737
-            ],
-            [
-              12.4416,
-              77.22291
-            ],
-            [
-              12.63183,
-              77.36823
-            ],
-            [
-              12.8258,
-              77.5158
-            ]
-          ]
-        },
-        {
-          "id": "STA-MP-01",
-          "name": "Kanha Khatia Fire Response Post",
-          "forestId": "FOR-MP-01",
-          "state": "Madhya Pradesh",
-          "coordinates": {
-            "lat": 22.351,
-            "lng": 80.592
-          },
-          "phone": "+91-7632-256312",
-          "etaMinutesBase": 20,
-          "unitType": "Central Reserve Fire Patrol",
-          "crewCount": 14,
-          "waterTenders": 2,
-          "aerialDrones": 2,
-          "status": "AVAILABLE",
-          "distanceKm": 1108.1,
-          "distanceMeters": 1108100,
-          "etaMinutes": 1904,
-          "routeWaypoints": [
-            [
-              22.351,
-              80.592
-            ],
-            [
-              20.76247,
-              80.0787
-            ],
-            [
-              19.17767,
-              79.56764
-            ],
-            [
-              17.5864,
-              79.0527
-            ],
-            [
-              16.0026,
-              78.54224
-            ],
-            [
-              14.41233,
-              78.0279
-            ],
-            [
-              12.8258,
-              77.5158
-            ]
-          ]
-        }
-      ],
-      "assignedTeam": {
-        "teamId": "TEAM-04",
-        "name": "Team 04",
-        "status": "AVAILABLE",
-        "distanceKm": 8.5,
-        "etaMinutes": 19
-      },
-      "nearestWaterBody": {
-        "id": "WB-LOC-307",
-        "name": "Forest Department Rainwater Reservoir Tank #42",
-        "coordinates": {
-          "lat": 12.8038,
-          "lng": 77.4938
-        },
-        "type": "Underground Forest Water Sump",
-        "capacity": "45,000 Litres (Continuous High Pressure Pump)",
-        "waterSourceType": "RESERVOIR",
-        "distanceKm": 3.4,
-        "distanceMeters": 3400,
-        "routeWaypoints": [
-          [
-            12.8038,
-            77.4938
-          ],
-          [
-            12.80789,
-            77.49845
-          ],
-          [
-            12.8168,
-            77.506
-          ],
-          [
-            12.81889,
-            77.50945
-          ],
-          [
-            12.8258,
-            77.5158
-          ]
-        ]
-      },
-      "rankedWaterBodies": [
-        {
-          "id": "WB-01",
-          "name": "Kabini Reservoir & Backwaters",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.968,
-            "lng": 76.352
-          },
-          "type": "Dam / Large Reservoir",
-          "capacity": "19.52 TMC (High Volume Aerial Drafting Access)",
-          "waterSourceType": "RESERVOIR",
-          "distanceKm": 158.3,
-          "distanceMeters": 158300,
-          "routeWaypoints": [
-            [
-              11.968,
-              76.352
-            ],
-            [
-              12.18104,
-              76.6421
-            ],
-            [
-              12.3989,
-              76.9351
-            ],
-            [
-              12.60994,
-              77.224
-            ],
-            [
-              12.8258,
-              77.5158
-            ]
-          ]
-        },
-        {
-          "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
-          "forestId": "FOR-KA-01",
-          "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
-          },
-          "type": "River Gorge Pool",
-          "capacity": "Continuous 14,000 LPM",
-          "waterSourceType": "RIVER",
-          "distanceKm": 165.2,
-          "distanceMeters": 165200,
-          "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
-            [
-              11.90654,
-              76.8686
-            ],
-            [
-              12.2159,
-              77.0861
-            ],
-            [
-              12.51844,
-              77.2995
-            ],
-            [
-              12.8258,
-              77.5158
-            ]
-          ]
-        },
-        {
-          "id": "WB-03",
-          "name": "Periyar Lake Aquatic Sanctuary",
-          "forestId": "FOR-KL-01",
-          "state": "Kerala",
-          "coordinates": {
-            "lat": 9.532,
-            "lng": 77.17
-          },
-          "type": "Natural Freshwater Lake",
-          "capacity": "Unlimited Drafting Access",
-          "waterSourceType": "LAKE",
-          "distanceKm": 368.2,
-          "distanceMeters": 368200,
-          "routeWaypoints": [
-            [
-              9.532,
-              77.17
-            ],
-            [
-              10.35404,
-              77.2556
-            ],
-            [
-              11.1809,
-              77.3441
-            ],
-            [
-              12.00094,
-              77.4285
-            ],
-            [
-              12.8258,
-              77.5158
-            ]
-          ]
-        }
-      ],
-      "reporter": {
-        "name": "Citizen Reporter",
-        "phone": "Undisclosed",
-        "notes": "Test fire alert with default location name"
-      },
-      "timeline": [
-        {
-          "time": "04:38:17 pm",
-          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (12.8258, 77.5158)",
-          "type": "REPORT"
-        },
-        {
-          "time": "04:38:17 pm",
-          "message": "Evidence ingested (Search)",
-          "type": "INGEST"
-        },
-        {
-          "time": "04:38:17 pm",
-          "message": "AI Analysis complete: 98.8% confidence (HIGH)",
-          "type": "AI"
-        },
-        {
-          "time": "04:38:17 pm",
-          "message": "Risk score calculated: 75 / 100",
-          "type": "RISK"
-        },
-        {
-          "time": "04:38:17 pm",
-          "message": "Admin authority alerted in real-time via Socket.IO",
-          "type": "ALERT"
-        },
-        {
-          "time": "04:38:41 pm",
-          "message": "Alert CANCELLED: Alert cancelled by operator",
-          "type": "CANCEL"
-        }
-      ],
-      "isPriority": true,
-      "priorityLevel": "PRIORITY 1 - CITIZEN REPORT",
-      "scoreboard": {
-        "fireScore": 98.8,
-        "fireLevel": "CRITICAL",
-        "fireConfidence": 98.8,
-        "smokeConfidence": 98.5,
-        "fireCoverage": 69.1,
-        "smokeLevel": 88,
-        "anomalyConfidence": 97.3,
-        "riskScore": 99,
-        "severity": "CRITICAL",
-        "objectsCount": 6,
-        "statusTitle": "FIRE DETECTED",
-        "statusText": "Status: Active Wildfire (6 Objects)",
-        "badgeText": "CRITICAL",
-        "earlyWarningAlert": "CRITICAL - IMMEDIATE DISPATCH",
-        "fakeProbability": 3.2,
-        "authenticityScore": 96.8,
-        "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-        "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
-        "isFake": false,
-        "aiFakeScore": {
-          "fakeProbability": 3.2,
-          "authenticityScore": 96.8,
-          "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
-          "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
-          "isFake": false
-        },
-        "timestamp": "04:38:17 PM",
-        "engineName": "YOLOv8 ENGINE READY"
-      },
-      "routeWaypoints": [
-        [
-          12.8808,
-          77.5708
-        ],
-        [
-          12.87063,
-          77.56103
-        ],
-        [
-          12.8642,
-          77.55351
-        ],
-        [
-          12.8513,
-          77.5421
-        ],
-        [
-          12.84587,
-          77.53517
-        ],
-        [
-          12.83397,
-          77.52437
-        ],
-        [
-          12.8258,
-          77.5158
-        ]
-      ],
-      "routeProgressIndex": 0,
-      "createdAt": "2026-10-08T11:08:17.502Z",
-      "updatedAt": "2026-10-08T11:08:41.043Z"
-    },
-    {
       "incidentId": "FG-2026-3474",
       "reporterId": "REP-ANON-660",
       "source": "Citizen Image",
@@ -3052,6 +2047,507 @@
       "routeProgressIndex": 0,
       "createdAt": "2026-10-08T12:37:02.474Z",
       "updatedAt": "2026-10-08T12:37:02.474Z"
+    },
+    {
+      "incidentId": "FG-2026-9151",
+      "reporterId": "REP-ANON-327",
+      "source": "Citizen Image",
+      "detectionMethod": "Image",
+      "imageUrl": "/sample_images/sample_wildfire.jpg",
+      "videoUrl": null,
+      "latitude": 12.8258,
+      "longitude": 77.5158,
+      "title": "DSATM Kanakapura Sector 4 Fire Alert",
+      "alertTitle": "DSATM Kanakapura Sector 4 Fire Alert",
+      "forestName": "DSATM Campus, Kanakapura Road, Bengaluru",
+      "state": "Karnataka",
+      "district": "Chamarajanagar",
+      "description": "Forest fire alert reported by citizen.",
+      "estimatedSize": "Medium",
+      "smokeVisible": false,
+      "flamesVisible": false,
+      "peopleInDanger": false,
+      "aiConfidence": 98.8,
+      "severity": "HIGH",
+      "riskScore": 75,
+      "satelliteConfidence": 0,
+      "sensorConfidence": 0,
+      "status": "UNDER REVIEW",
+      "aiExplanation": "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire.",
+      "affectedAreaHectares": 3.6,
+      "affectedRadiiMeters": [
+        500,
+        1000,
+        5000
+      ],
+      "detectedFeatures": [
+        "Flames",
+        "Smoke",
+        "Heat-like region",
+        "Vegetation"
+      ],
+      "featureBreakdown": [],
+      "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
+      "nearestStation": {
+        "id": "STA-LOC-12",
+        "name": "Forest Range Fire Strike Squad #7",
+        "coordinates": {
+          "lat": 12.7708,
+          "lng": 77.4608
+        },
+        "phone": "+91-1800-425-FIRE",
+        "etaMinutesBase": 15,
+        "unitType": "Forest Fire Rapid Response Unit",
+        "crewCount": 14,
+        "waterTenders": 2,
+        "aerialDrones": 1,
+        "status": "AVAILABLE",
+        "distanceKm": 8.5,
+        "distanceMeters": 8500,
+        "etaMinutes": 19,
+        "routeWaypoints": [
+          [
+            12.7708,
+            77.4608
+          ],
+          [
+            12.77897,
+            77.46937
+          ],
+          [
+            12.79087,
+            77.48017
+          ],
+          [
+            12.7963,
+            77.4871
+          ],
+          [
+            12.8092,
+            77.49851
+          ],
+          [
+            12.81563,
+            77.50603
+          ],
+          [
+            12.8258,
+            77.5158
+          ]
+        ]
+      },
+      "assignedStation": {
+        "stationId": "STA-LOC-12",
+        "name": "Forest Range Fire Strike Squad #7",
+        "distanceKm": 8.5,
+        "etaMinutes": 19,
+        "phone": "+91-1800-425-FIRE",
+        "availability": "AVAILABLE"
+      },
+      "rankedStations": [
+        {
+          "id": "STA-KA-02",
+          "name": "Gundlupet Municipal Fire Brigade Station",
+          "forestId": "FOR-KA-01",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 11.805,
+            "lng": 76.689
+          },
+          "phone": "+91-8229-222101",
+          "etaMinutesBase": 28,
+          "unitType": "Municipal Heavy Tender Fleet",
+          "crewCount": 22,
+          "waterTenders": 5,
+          "aerialDrones": 1,
+          "status": "AVAILABLE",
+          "distanceKm": 144.7,
+          "distanceMeters": 144700,
+          "etaMinutes": 252,
+          "routeWaypoints": [
+            [
+              11.805,
+              76.689
+            ],
+            [
+              11.97413,
+              76.8262
+            ],
+            [
+              12.147,
+              76.96564
+            ],
+            [
+              12.3134,
+              77.1012
+            ],
+            [
+              12.48727,
+              77.24124
+            ],
+            [
+              12.65467,
+              77.3774
+            ],
+            [
+              12.8258,
+              77.5158
+            ]
+          ]
+        },
+        {
+          "id": "STA-KA-01",
+          "name": "Bandipur Forest Rapid Response Unit (HQ)",
+          "forestId": "FOR-KA-01",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 11.668,
+            "lng": 76.634
+          },
+          "phone": "+91-8229-236021",
+          "etaMinutesBase": 18,
+          "unitType": "Forest Fire Squad Alpha",
+          "crewCount": 16,
+          "waterTenders": 3,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 160.5,
+          "distanceMeters": 160500,
+          "etaMinutes": 279,
+          "routeWaypoints": [
+            [
+              11.668,
+              76.634
+            ],
+            [
+              11.85997,
+              76.78037
+            ],
+            [
+              12.05567,
+              76.92897
+            ],
+            [
+              12.2449,
+              77.0737
+            ],
+            [
+              12.4416,
+              77.22291
+            ],
+            [
+              12.63183,
+              77.36823
+            ],
+            [
+              12.8258,
+              77.5158
+            ]
+          ]
+        },
+        {
+          "id": "STA-MP-01",
+          "name": "Kanha Khatia Fire Response Post",
+          "forestId": "FOR-MP-01",
+          "state": "Madhya Pradesh",
+          "coordinates": {
+            "lat": 22.351,
+            "lng": 80.592
+          },
+          "phone": "+91-7632-256312",
+          "etaMinutesBase": 20,
+          "unitType": "Central Reserve Fire Patrol",
+          "crewCount": 14,
+          "waterTenders": 2,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 1108.1,
+          "distanceMeters": 1108100,
+          "etaMinutes": 1904,
+          "routeWaypoints": [
+            [
+              22.351,
+              80.592
+            ],
+            [
+              20.76247,
+              80.0787
+            ],
+            [
+              19.17767,
+              79.56764
+            ],
+            [
+              17.5864,
+              79.0527
+            ],
+            [
+              16.0026,
+              78.54224
+            ],
+            [
+              14.41233,
+              78.0279
+            ],
+            [
+              12.8258,
+              77.5158
+            ]
+          ]
+        }
+      ],
+      "assignedTeam": {
+        "teamId": "TEAM-04",
+        "name": "Team 04",
+        "status": "AVAILABLE",
+        "distanceKm": 8.5,
+        "etaMinutes": 19
+      },
+      "nearestWaterBody": {
+        "id": "WB-LOC-593",
+        "name": "Forest Department Rainwater Reservoir Tank #66",
+        "coordinates": {
+          "lat": 12.8038,
+          "lng": 77.4938
+        },
+        "type": "Underground Forest Water Sump",
+        "capacity": "45,000 Litres (Continuous High Pressure Pump)",
+        "waterSourceType": "RESERVOIR",
+        "distanceKm": 3.4,
+        "distanceMeters": 3400,
+        "routeWaypoints": [
+          [
+            12.8038,
+            77.4938
+          ],
+          [
+            12.80789,
+            77.49845
+          ],
+          [
+            12.8168,
+            77.506
+          ],
+          [
+            12.81889,
+            77.50945
+          ],
+          [
+            12.8258,
+            77.5158
+          ]
+        ]
+      },
+      "rankedWaterBodies": [
+        {
+          "id": "WB-01",
+          "name": "Kabini Reservoir & Backwaters",
+          "forestId": "FOR-KA-01",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 11.968,
+            "lng": 76.352
+          },
+          "type": "Dam / Large Reservoir",
+          "capacity": "19.52 TMC (High Volume Aerial Drafting Access)",
+          "waterSourceType": "RESERVOIR",
+          "distanceKm": 158.3,
+          "distanceMeters": 158300,
+          "routeWaypoints": [
+            [
+              11.968,
+              76.352
+            ],
+            [
+              12.18104,
+              76.6421
+            ],
+            [
+              12.3989,
+              76.9351
+            ],
+            [
+              12.60994,
+              77.224
+            ],
+            [
+              12.8258,
+              77.5158
+            ]
+          ]
+        },
+        {
+          "id": "WB-06",
+          "name": "Moyar River Deep Pool Draft Terminal",
+          "forestId": "FOR-KA-01",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 11.602,
+            "lng": 76.654
+          },
+          "type": "River Gorge Pool",
+          "capacity": "Continuous 14,000 LPM",
+          "waterSourceType": "RIVER",
+          "distanceKm": 165.2,
+          "distanceMeters": 165200,
+          "routeWaypoints": [
+            [
+              11.602,
+              76.654
+            ],
+            [
+              11.90654,
+              76.8686
+            ],
+            [
+              12.2159,
+              77.0861
+            ],
+            [
+              12.51844,
+              77.2995
+            ],
+            [
+              12.8258,
+              77.5158
+            ]
+          ]
+        },
+        {
+          "id": "WB-03",
+          "name": "Periyar Lake Aquatic Sanctuary",
+          "forestId": "FOR-KL-01",
+          "state": "Kerala",
+          "coordinates": {
+            "lat": 9.532,
+            "lng": 77.17
+          },
+          "type": "Natural Freshwater Lake",
+          "capacity": "Unlimited Drafting Access",
+          "waterSourceType": "LAKE",
+          "distanceKm": 368.2,
+          "distanceMeters": 368200,
+          "routeWaypoints": [
+            [
+              9.532,
+              77.17
+            ],
+            [
+              10.35404,
+              77.2556
+            ],
+            [
+              11.1809,
+              77.3441
+            ],
+            [
+              12.00094,
+              77.4285
+            ],
+            [
+              12.8258,
+              77.5158
+            ]
+          ]
+        }
+      ],
+      "reporter": {
+        "name": "Citizen Reporter",
+        "phone": "Undisclosed",
+        "notes": "Forest fire alert reported by citizen."
+      },
+      "timeline": [
+        {
+          "time": "07:04:13 pm",
+          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (12.8258, 77.5158)",
+          "type": "REPORT"
+        },
+        {
+          "time": "07:04:13 pm",
+          "message": "Evidence ingested (Image)",
+          "type": "INGEST"
+        },
+        {
+          "time": "07:04:13 pm",
+          "message": "AI Analysis complete: 98.8% confidence (HIGH)",
+          "type": "AI"
+        },
+        {
+          "time": "07:04:13 pm",
+          "message": "Risk score calculated: 75 / 100",
+          "type": "RISK"
+        },
+        {
+          "time": "07:04:13 pm",
+          "message": "Admin authority alerted in real-time via Socket.IO",
+          "type": "ALERT"
+        }
+      ],
+      "isPriority": true,
+      "priorityLevel": "PRIORITY 1 - CITIZEN REPORT",
+      "scoreboard": {
+        "fireScore": 98.8,
+        "fireLevel": "CRITICAL",
+        "fireConfidence": 98.8,
+        "smokeConfidence": 98.5,
+        "fireCoverage": 69.1,
+        "smokeLevel": 88,
+        "anomalyConfidence": 97.3,
+        "riskScore": 99,
+        "severity": "CRITICAL",
+        "objectsCount": 6,
+        "statusTitle": "FIRE DETECTED",
+        "statusText": "Status: Active Wildfire (6 Objects)",
+        "badgeText": "CRITICAL",
+        "earlyWarningAlert": "CRITICAL - IMMEDIATE DISPATCH",
+        "fakeProbability": 4.2,
+        "authenticityScore": 95.8,
+        "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
+        "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
+        "isFake": false,
+        "aiFakeScore": {
+          "fakeProbability": 4.2,
+          "authenticityScore": 95.8,
+          "fakeVerdict": "AUTHENTIC GROUND EVIDENCE",
+          "fakeStatus": "PASSED - VERIFIED REAL FIELD PHOTO (NOT FAKE / NOT AI-GEN)",
+          "isFake": false
+        },
+        "timestamp": "07:04:12 PM",
+        "engineName": "YOLOv8 ENGINE READY"
+      },
+      "routeWaypoints": [
+        [
+          12.7708,
+          77.4608
+        ],
+        [
+          12.77897,
+          77.46937
+        ],
+        [
+          12.79087,
+          77.48017
+        ],
+        [
+          12.7963,
+          77.4871
+        ],
+        [
+          12.8092,
+          77.49851
+        ],
+        [
+          12.81563,
+          77.50603
+        ],
+        [
+          12.8258,
+          77.5158
+        ]
+      ],
+      "routeProgressIndex": 0,
+      "createdAt": "2026-10-08T13:34:13.030Z",
+      "updatedAt": "2026-10-08T13:34:13.030Z"
     }
   ],
   "teams": [
@@ -3206,5 +2702,5 @@
       "description": "Periyar Reserve Forest Emergency response cell."
     }
   ],
-  "lastSaved": "2026-10-08T12:37:02.475Z"
+  "lastSaved": "2026-10-08T13:34:13.031Z"
 }

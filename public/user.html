@@ -230,20 +230,27 @@
                 </div>
               </div>
 
-              <!-- 3 Core Analyst Scores: Fire Score | Criticality Level | AI Fake Score -->
+              <!-- 3 Core Analyst Scores: Fire Coverage (FIRST) | Criticality Level (SECOND) | AI Authenticity / Anti-Hoax (THIRD) -->
               <div class="grid grid-cols-3 gap-2">
-                <!-- 1. Fire Score -->
-                <div class="p-2.5 rounded-xl bg-[#040814] border border-orange-500/30">
-                  <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">🔥 Fire Score</div>
-                  <div class="flex items-baseline gap-1 mt-0.5">
-                    <span id="sbMetricFireScore" class="text-base font-black text-orange-400 font-mono">0.0%</span>
+                <!-- 1. Fire Coverage / Amount of Fire Seen (SHOWN FIRST - DIRECT CRITICALITY DRIVER) -->
+                <div class="p-2.5 rounded-xl bg-[#040814] border-2 border-amber-500/60 shadow-[0_0_14px_rgba(245,158,11,0.25)] relative overflow-hidden">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[9px] font-black text-amber-300 uppercase tracking-wider">🌲 Fire Coverage</span>
+                    <span class="text-[8px] font-black px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-600/70 uppercase">PRIMARY</span>
                   </div>
-                  <span id="sbMetricFireLevel" class="text-[9px] font-bold text-slate-400 block mt-0.5">LEVEL: SAFE</span>
+                  <div class="flex items-baseline gap-1 mt-0.5">
+                    <span id="sbMetricCoverage" class="text-base font-black text-amber-400 font-mono">0.0%</span>
+                    <span class="text-[9px] font-mono text-slate-500">seen</span>
+                  </div>
+                  <span id="sbMetricCoverageLevel" class="text-[9px] font-bold text-amber-300 block mt-0.5 truncate" title="Amount of Fire Seen in Image Directly Determines Criticality">CRITICALITY DRIVER</span>
                 </div>
 
-                <!-- 2. Criticality Level -->
-                <div class="p-2.5 rounded-xl bg-[#040814] border border-red-500/30">
-                  <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">⚡ Criticality Level</div>
+                <!-- 2. Criticality Level (DIRECTLY DRIVEN BY AMOUNT OF FIRE) -->
+                <div class="p-2.5 rounded-xl bg-[#040814] border border-red-500/40">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">⚡ Criticality Level</span>
+                    <span class="text-[8px] font-mono text-red-400 font-bold">SEVERITY</span>
+                  </div>
                   <div class="flex items-baseline gap-1 mt-0.5">
                     <span id="sbMetricRisk" class="text-base font-black text-emerald-400 font-mono">0</span>
                     <span class="text-[9px] font-mono text-slate-500">/ 100</span>
@@ -251,11 +258,15 @@
                   <span id="sbMetricSeverity" class="text-[9px] font-bold text-emerald-400 block mt-0.5">NORMAL</span>
                 </div>
 
-                <!-- 3. AI Fake Score -->
+                <!-- 3. Fire Score & AI Authenticity -->
                 <div class="p-2.5 rounded-xl bg-[#040814] border border-sky-500/30">
-                  <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">🛡️ AI Fake Score</div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">🔥 Fire Confidence</span>
+                    <span id="sbMetricFireScore" class="text-xs font-black text-orange-400 font-mono">0.0%</span>
+                  </div>
                   <div class="flex items-baseline gap-1 mt-0.5">
                     <span id="sbMetricFakeScore" class="text-base font-black text-emerald-400 font-mono">3.2%</span>
+                    <span class="text-[9px] font-mono text-slate-500">fake</span>
                   </div>
                   <span id="sbMetricFakeVerdict" class="text-[9px] font-bold text-emerald-400 truncate block mt-0.5">REAL PHOTO</span>
                 </div>
@@ -277,10 +288,31 @@
                 </div>
               </div>
 
-              <!-- 5 Telemetry Progress Bars / Gauges (Fire & Smoke ABOVE Anomaly) -->
-              <div class="space-y-1.5 pt-0.5">
+              <!-- 5 Telemetry Progress Bars / Gauges (Fire Coverage SHOWN FIRST) -->
+              <div class="space-y-2 pt-0.5">
                 
-                <!-- 1. Fire Confidence (TOP) -->
+                <!-- 1. Fire Coverage / Amount of Fire Seen (SHOWN FIRST - Primary Criticality Metric) -->
+                <div class="p-2.5 rounded-xl bg-amber-950/30 border border-amber-600/50 shadow-sm">
+                  <div class="flex justify-between items-center text-[10px] mb-1">
+                    <span class="font-black text-amber-300 flex items-center gap-1.5">
+                      <span class="text-sm">🌲</span> 
+                      <span>FIRE COVERAGE / AMOUNT OF FIRE SEEN</span>
+                    </span>
+                    <div class="flex items-center gap-1.5 font-mono">
+                      <span class="text-[8px] font-black px-1.5 py-0.2 rounded bg-amber-900/80 text-amber-200 border border-amber-500/60 uppercase">PRIMARY METRIC</span>
+                      <span id="sbValCoverage" class="text-xs font-black text-amber-300">0.0%</span>
+                    </div>
+                  </div>
+                  <div class="w-full bg-[#030712] rounded-full h-2 overflow-hidden border border-amber-900/60">
+                    <div id="sbBarCoverage" class="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-600 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                  </div>
+                  <div class="flex justify-between text-[8px] text-slate-400 mt-1 font-mono">
+                    <span>Flame spread detected in uploaded frame</span>
+                    <span class="text-amber-400 font-bold">⚡ Criticality depends directly on this value</span>
+                  </div>
+                </div>
+
+                <!-- 2. Fire Confidence (SECOND) -->
                 <div>
                   <div class="flex justify-between items-center text-[10px] mb-0.5">
                     <span class="font-bold text-red-300 flex items-center gap-1"><span>🔥</span> Fire Confidence</span>
@@ -291,7 +323,7 @@
                   </div>
                 </div>
 
-                <!-- 2. Smoke Confidence (SECOND) -->
+                <!-- 3. Smoke Confidence (THIRD) -->
                 <div>
                   <div class="flex justify-between items-center text-[10px] mb-0.5">
                     <span class="font-bold text-orange-300 flex items-center gap-1"><span>💨</span> Smoke Confidence</span>
@@ -299,17 +331,6 @@
                   </div>
                   <div class="w-full bg-[#030712] rounded-full h-1.5 overflow-hidden border border-slate-800">
                     <div id="sbBarSmoke" class="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
-                  </div>
-                </div>
-
-                <!-- 3. Fire Coverage (THIRD) -->
-                <div>
-                  <div class="flex justify-between items-center text-[10px] mb-0.5">
-                    <span class="font-bold text-amber-300 flex items-center gap-1"><span>🌲</span> Fire Coverage</span>
-                    <span id="sbValCoverage" class="font-mono font-bold text-amber-400">0.0%</span>
-                  </div>
-                  <div class="w-full bg-[#030712] rounded-full h-1.5 overflow-hidden border border-slate-800">
-                    <div id="sbBarCoverage" class="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
                   </div>
                 </div>
 
