@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const riskEngine = require('./riskEngine');
 const geoSpatialService = require('./geoSpatialService');
+const fireIntelligenceService = require('./fireIntelligenceService');
 
 class IncidentStore {
   constructor() {
@@ -20,6 +21,26 @@ class IncidentStore {
     if (this.incidents.size === 0) {
       this.seedInitialIncidents();
     }
+  }
+
+  enrichWithIntelligence(inc) {
+    if (!inc) return inc;
+    if (!inc.firePerimeter) {
+      inc.firePerimeter = fireIntelligenceService.calculateFirePerimeter(inc);
+    }
+    if (!inc.fireDangerIndex) {
+      inc.fireDangerIndex = fireIntelligenceService.calculateFireDangerIndex(inc);
+    }
+    if (!inc.vulnerableLocations) {
+      inc.vulnerableLocations = fireIntelligenceService.calculateNearbyVulnerableLocations(inc);
+    }
+    if (!inc.spreadSimulation) {
+      inc.spreadSimulation = fireIntelligenceService.simulateFireSpread(inc, 60);
+    }
+    if (!inc.teamRecommendations) {
+      inc.teamRecommendations = fireIntelligenceService.recommendResponseTeams(inc, this.getAllTeams(), geoSpatialService.getAllResponseStations());
+    }
+    return inc;
   }
 
   loadFromDisk() {
@@ -294,6 +315,9 @@ class IncidentStore {
       updatedAt: new Date().toISOString()
     };
 
+    // Enrich with Fire Intelligence
+    this.enrichWithIntelligence(initialIncident);
+
     this.incidents.set(initialIncident.incidentId, initialIncident);
     this.saveToDisk();
   }
@@ -407,18 +431,23 @@ class IncidentStore {
       updatedAt: new Date().toISOString()
     };
 
+    // Enrich with Fire Intelligence
+    this.enrichWithIntelligence(newIncident);
+
     this.incidents.set(incidentId, newIncident);
     this.saveToDisk();
     return newIncident;
   }
 
   getIncidentById(id) {
-    return this.incidents.get(id);
+    const inc = this.incidents.get(id);
+    return this.enrichWithIntelligence(inc);
   }
 
   getAllIncidents() {
     return Array.from(this.incidents.values())
       .filter(i => i.status !== 'CANCELLED')
+      .map(i => this.enrichWithIntelligence(i))
       .sort((a, b) => {
         const pA = a.isPriority ? 1 : 0;
         const pB = b.isPriority ? 1 : 0;
@@ -442,8 +471,18 @@ class IncidentStore {
     const timeStr = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     inc.timeline.push({ time: timeStr, message: `Fire verified by ${adminUser}`, type: 'VERIFY' });
 
+    // Feature 5: When incident becomes VERIFIED, automatically search & recommend response teams
+    inc.teamRecommendations = fireIntelligenceService.recommendResponseTeams(inc, this.getAllTeams(), geoSpatialService.getAllResponseStations());
+    if (inc.teamRecommendations && inc.teamRecommendations.recommendedTeam) {
+      inc.timeline.push({
+        time: timeStr,
+        message: `System recommended nearest response team: ${inc.teamRecommendations.recommendedTeam.name} (${inc.teamRecommendations.recommendedTeam.distanceKm} km, ETA: ${inc.teamRecommendations.recommendedTeam.etaMinutes} min)`,
+        type: 'RECOMMEND'
+      });
+    }
+
     this.saveToDisk();
-    return inc;
+    return this.enrichWithIntelligence(inc);
   }
 
   // 2. Request More Information

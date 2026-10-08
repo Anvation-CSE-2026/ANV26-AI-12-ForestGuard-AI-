@@ -636,6 +636,343 @@ class ForestGuardMapEngine {
     return this.teamVehicleMarker;
   }
 
+  // =========================================================================
+  // FEATURE 1: FIRE PERIMETER VISUALIZATION
+  // =========================================================================
+  drawFirePerimeter(perimeterData) {
+    this.clearFirePerimeter();
+    if (!this.map || !perimeterData || !perimeterData.zones) return;
+    if (this.layerVisibility.firePerimeter === false) return;
+
+    try {
+      const zones = [
+        { key: 'potentialExpansion', data: perimeterData.zones.potentialExpansion, label: 'Potential Expansion Zone (Yellow)' },
+        { key: 'highRisk', data: perimeterData.zones.highRisk, label: 'High-Risk Surrounding Zone (Orange)' },
+        { key: 'confirmed', data: perimeterData.zones.confirmed, label: 'Current Fire / Confirmed Affected Area (Red)' }
+      ];
+
+      zones.forEach(z => {
+        if (!z.data) return;
+        const color = z.data.color || '#ef4444';
+        const fillOpacity = z.data.fillOpacity || 0.2;
+        const tooltipText = `<b>ESTIMATED FIRE PERIMETER</b><br><span style="color:${color};font-weight:bold;">${z.label}</span><br>Estimated Area: <b>${z.data.estimatedHectares || perimeterData.estimatedAreaHectares} ha</b><br><span style="font-size:10px;color:#94a3b8;">Prototype estimate based on coordinates & severity</span>`;
+
+        if (this.mode === 'google-api') {
+          if (z.data.polygonCoords && z.data.polygonCoords.length > 0) {
+            const polygon = new google.maps.Polygon({
+              paths: z.data.polygonCoords,
+              strokeColor: color,
+              strokeOpacity: 0.9,
+              strokeWeight: z.data.strokeWeight || 2,
+              fillColor: color,
+              fillOpacity: fillOpacity,
+              map: this.map,
+              zIndex: z.key === 'confirmed' ? 10 : z.key === 'highRisk' ? 9 : 8
+            });
+            const info = new google.maps.InfoWindow({ content: tooltipText });
+            polygon.addListener('click', (e) => {
+              info.setPosition(e.latLng);
+              info.open(this.map);
+            });
+            this.perimeterLayers.push(polygon);
+          } else if (perimeterData.center && z.data.radiusMeters) {
+            const circle = new google.maps.Circle({
+              center: perimeterData.center,
+              radius: z.data.radiusMeters,
+              strokeColor: color,
+              strokeOpacity: 0.9,
+              strokeWeight: z.data.strokeWeight || 2,
+              fillColor: color,
+              fillOpacity: fillOpacity,
+              map: this.map,
+              zIndex: z.key === 'confirmed' ? 10 : z.key === 'highRisk' ? 9 : 8
+            });
+            this.perimeterLayers.push(circle);
+          }
+        } else {
+          // Leaflet Hybrid Engine
+          if (z.data.polygonCoords && z.data.polygonCoords.length > 0) {
+            const latLngs = z.data.polygonCoords.map(c => [c.lat, c.lng]);
+            const poly = L.polygon(latLngs, {
+              color: color,
+              fillColor: color,
+              fillOpacity: fillOpacity,
+              weight: z.data.strokeWeight || 2,
+              dashArray: z.key !== 'confirmed' ? '4, 4' : undefined
+            }).addTo(this.map);
+            poly.bindTooltip(tooltipText, { permanent: false, direction: 'top' });
+            this.perimeterLayers.push(poly);
+          } else if (perimeterData.center && z.data.radiusMeters) {
+            const circle = L.circle([perimeterData.center.lat, perimeterData.center.lng], {
+              radius: z.data.radiusMeters,
+              color: color,
+              fillColor: color,
+              fillOpacity: fillOpacity,
+              weight: z.data.strokeWeight || 2
+            }).addTo(this.map);
+            circle.bindTooltip(tooltipText, { permanent: false, direction: 'top' });
+            this.perimeterLayers.push(circle);
+          }
+        }
+      });
+    } catch (err) {
+      console.warn('Map service temporarily unavailable (Perimeter):', err.message);
+    }
+  }
+
+  clearFirePerimeter() {
+    if (this.perimeterLayers) {
+      this.perimeterLayers.forEach(l => {
+        try {
+          if (this.mode === 'google-api') l.setMap(null);
+          else if (this.map) this.map.removeLayer(l);
+        } catch(e) {}
+      });
+    }
+    this.perimeterLayers = [];
+  }
+
+  // =========================================================================
+  // FEATURE 2: FIRE SPREAD PREDICTION / SIMULATION
+  // =========================================================================
+  drawSpreadSimulation(simulationData, activeMinutes = 60) {
+    this.clearSpreadSimulation();
+    if (!this.map || !simulationData) return;
+    if (this.layerVisibility.spreadSimulation === false) return;
+
+    try {
+      const geoms = simulationData.spreadGeometries;
+      if (!geoms) return;
+
+      const steps = [
+        { key: 'current', geom: geoms.current, min: 0, label: 'CURRENT FIRE (Red)', color: '#ef4444' },
+        { key: 'min30', geom: geoms.min30, min: 30, label: '30 MIN SPREAD (Orange)', color: '#f97316' },
+        { key: 'min60', geom: geoms.min60, min: 60, label: '60 MIN SPREAD (Orange/Yellow)', color: '#f59e0b' },
+        { key: 'min90', geom: geoms.min90, min: 90, label: '90 MIN SPREAD (Yellow)', color: '#eab308' }
+      ];
+
+      // Draw projected spread zones up to activeMinutes
+      steps.filter(s => s.min <= activeMinutes).forEach(s => {
+        if (!s.geom || !s.geom.polygon) return;
+        const tipText = `<b>SIMULATION - NOT AN OPERATIONAL FIRE-PREDICTION MODEL</b><br><span style="color:${s.color};font-weight:bold;">${s.label}</span><br>Projected Direction: <b>${simulationData.estimates?.projectedDirection || 'North-East'} ↗</b><br>Wind Speed: <b>${simulationData.weather?.windSpeedKmH || 18} km/h</b><br>Area: <b>${simulationData.rawEstimates?.[s.key]?.areaHectares || '--'} ha</b>`;
+
+        if (this.mode === 'google-api') {
+          const poly = new google.maps.Polygon({
+            paths: s.geom.polygon,
+            strokeColor: s.color,
+            strokeOpacity: 0.9,
+            strokeWeight: 2,
+            fillColor: s.color,
+            fillOpacity: s.min === 0 ? 0.35 : 0.18,
+            map: this.map,
+            zIndex: 15 - Math.round(s.min / 10)
+          });
+          const info = new google.maps.InfoWindow({ content: tipText });
+          poly.addListener('click', (e) => {
+            info.setPosition(e.latLng);
+            info.open(this.map);
+          });
+          this.spreadLayers.push(poly);
+        } else {
+          const latLngs = s.geom.polygon.map(c => [c.lat, c.lng]);
+          const poly = L.polygon(latLngs, {
+            color: s.color,
+            fillColor: s.color,
+            fillOpacity: s.min === 0 ? 0.35 : 0.18,
+            weight: 2,
+            dashArray: s.min > 0 ? '5, 5' : undefined
+          }).addTo(this.map);
+          poly.bindTooltip(tipText, { permanent: false, direction: 'top' });
+          this.spreadLayers.push(poly);
+        }
+      });
+
+      // Draw projected spread trajectory arrow
+      if (simulationData.arrowWaypoints && simulationData.arrowWaypoints.length > 0) {
+        if (this.mode === 'google-api') {
+          const gPoints = simulationData.arrowWaypoints.map(w => ({ lat: w[0], lng: w[1] }));
+          const arrowLine = new google.maps.Polyline({
+            path: gPoints,
+            strokeColor: '#f59e0b',
+            strokeOpacity: 0.9,
+            strokeWeight: 3.5,
+            icons: [{
+              icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 4, fillColor: '#f59e0b', fillOpacity: 1, strokeWeight: 1 },
+              offset: '100%'
+            }],
+            map: this.map
+          });
+          this.spreadLayers.push(arrowLine);
+        } else {
+          const arrowLine = L.polyline(simulationData.arrowWaypoints, {
+            color: '#f59e0b',
+            weight: 3.5,
+            dashArray: '4, 6',
+            opacity: 0.95
+          }).addTo(this.map);
+          arrowLine.bindTooltip('Projected Fire Spread Direction (North-East ↗)', { direction: 'top' });
+          this.spreadLayers.push(arrowLine);
+
+          // Arrowhead end badge
+          const lastPoint = simulationData.arrowWaypoints[simulationData.arrowWaypoints.length - 1];
+          const arrowBadge = L.divIcon({
+            className: 'custom-spread-arrow',
+            html: `<div style="background:#f59e0b; color:#000; font-weight:900; font-size:12px; border-radius:50%; width:24px; height:24px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px #f59e0b; border:2px solid #fff;">↗</div>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          });
+          const arrowMarker = L.marker(lastPoint, { icon: arrowBadge }).addTo(this.map);
+          this.spreadLayers.push(arrowMarker);
+        }
+      }
+    } catch (err) {
+      console.warn('Map service temporarily unavailable (Spread):', err.message);
+    }
+  }
+
+  clearSpreadSimulation() {
+    if (this.spreadLayers) {
+      this.spreadLayers.forEach(l => {
+        try {
+          if (this.mode === 'google-api') l.setMap(null);
+          else if (this.map) this.map.removeLayer(l);
+        } catch(e) {}
+      });
+    }
+    this.spreadLayers = [];
+  }
+
+  // =========================================================================
+  // FEATURE 4: NEARBY POPULATION & VULNERABLE LOCATIONS
+  // =========================================================================
+  drawVulnerableLocations(vulnerableData) {
+    this.clearVulnerableLocations();
+    if (!this.map || !vulnerableData) return;
+    if (this.layerVisibility.vulnerableLocations === false) return;
+
+    try {
+      const list = vulnerableData.vulnerableLocations || [];
+      list.forEach(item => {
+        if (!item.coordinates) return;
+        const lat = item.coordinates.lat;
+        const lng = item.coordinates.lng;
+        const popupContent = `<b>${item.name}</b><br><span style="color:${item.color};font-weight:bold;">${item.category}</span><br>Distance: <b>${item.distanceKm} km</b>${item.population ? `<br>Population Est: <b>${item.population.toLocaleString('en-IN')}</b>` : ''}<br><span style="font-size:9px;color:#94a3b8;">Population data: DEMO / API READY</span>`;
+
+        if (this.mode === 'google-api') {
+          const marker = new google.maps.Marker({
+            position: { lat, lng },
+            map: this.map,
+            title: `${item.name} (${item.distanceKm} km)`,
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 8,
+              fillColor: item.color,
+              fillOpacity: 1,
+              strokeColor: '#ffffff',
+              strokeWeight: 2
+            }
+          });
+          const info = new google.maps.InfoWindow({ content: popupContent });
+          marker.addListener('click', () => info.open(this.map, marker));
+          this.vulnerableLayers.push(marker);
+        } else {
+          const icon = L.divIcon({
+            className: 'custom-vuln-marker',
+            html: `<div style="background:${item.color}; border:2px solid #fff; border-radius:8px; padding:2px 6px; box-shadow:0 0 10px ${item.color}; color:#fff; font-size:10px; font-weight:800; display:inline-flex; align-items:center; gap:3px; white-space:nowrap; transform:translate(-50%, -50%);"><span>${item.icon || '📍'}</span><span>${item.name.split(',')[0]}</span></div>`,
+            iconSize: [0, 0],
+            iconAnchor: [0, 0]
+          });
+          const marker = L.marker([lat, lng], { icon }).addTo(this.map);
+          marker.bindPopup(popupContent);
+          this.vulnerableLayers.push(marker);
+        }
+      });
+    } catch (err) {
+      console.warn('Map service temporarily unavailable (Vulnerable):', err.message);
+    }
+  }
+
+  clearVulnerableLocations() {
+    if (this.vulnerableLayers) {
+      this.vulnerableLayers.forEach(l => {
+        try {
+          if (this.mode === 'google-api') l.setMap(null);
+          else if (this.map) this.map.removeLayer(l);
+        } catch(e) {}
+      });
+    }
+    this.vulnerableLayers = [];
+  }
+
+  drawPopulationExposureCircles(lat, lng, radii = [1000, 5000, 10000]) {
+    this.clearPopulationExposureCircles();
+    if (!this.map || !lat || !lng) return;
+    if (this.layerVisibility.populationExposure === false) return;
+
+    try {
+      const specs = [
+        { radius: radii[0] || 1000, color: '#ef4444', label: '1 km Immediate Impact Zone', fillOpacity: 0.12 },
+        { radius: radii[1] || 5000, color: '#f97316', label: '5 km Population Buffer Zone', fillOpacity: 0.08 },
+        { radius: radii[2] || 10000, color: '#eab308', label: '10 km Regional Monitoring Zone', fillOpacity: 0.04 }
+      ];
+
+      specs.forEach(s => {
+        if (this.mode === 'google-api') {
+          const circle = new google.maps.Circle({
+            center: { lat, lng },
+            radius: s.radius,
+            strokeColor: s.color,
+            strokeOpacity: 0.75,
+            strokeWeight: 1.5,
+            fillColor: s.color,
+            fillOpacity: s.fillOpacity,
+            map: this.map
+          });
+          this.populationExposureLayers.push(circle);
+        } else {
+          const circle = L.circle([lat, lng], {
+            radius: s.radius,
+            color: s.color,
+            weight: 1.5,
+            fillColor: s.color,
+            fillOpacity: s.fillOpacity,
+            dashArray: '6, 8'
+          }).addTo(this.map);
+          circle.bindTooltip(`<b>POPULATION EXPOSURE</b><br>${s.label}`, { direction: 'top' });
+          this.populationExposureLayers.push(circle);
+        }
+      });
+    } catch (err) {
+      console.warn('Map service temporarily unavailable (Exposure):', err.message);
+    }
+  }
+
+  clearPopulationExposureCircles() {
+    if (this.populationExposureLayers) {
+      this.populationExposureLayers.forEach(l => {
+        try {
+          if (this.mode === 'google-api') l.setMap(null);
+          else if (this.map) this.map.removeLayer(l);
+        } catch(e) {}
+      });
+    }
+    this.populationExposureLayers = [];
+  }
+
+  // Layer Visibility Control Method
+  setLayerVisibility(layerKey, isVisible) {
+    this.layerVisibility[layerKey] = isVisible;
+    if (layerKey === 'firePerimeter') {
+      if (!isVisible) this.clearFirePerimeter();
+    } else if (layerKey === 'spreadSimulation') {
+      if (!isVisible) this.clearSpreadSimulation();
+    } else if (layerKey === 'vulnerableLocations') {
+      if (!isVisible) this.clearVulnerableLocations();
+    } else if (layerKey === 'populationExposure') {
+      if (!isVisible) this.clearPopulationExposureCircles();
+    }
+  }
+
   // --- Invalidate Map Size to prevent tile overlap, clipping, or grey tiles ---
   invalidateSize() {
     if (!this.map) return;

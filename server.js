@@ -10,6 +10,7 @@ const aiVisionService = require('./services/aiVisionService');
 const geoSpatialService = require('./services/geoSpatialService');
 const incidentStore = require('./services/incidentStore');
 const riskEngine = require('./services/riskEngine');
+const fireIntelligenceService = require('./services/fireIntelligenceService');
 
 const app = express();
 const server = http.createServer(app);
@@ -217,6 +218,43 @@ app.get('/api/incidents/:id', (req, res) => {
   const inc = incidentStore.getIncidentById(req.params.id);
   if (!inc) return res.status(404).json({ success: false, message: 'Incident not found' });
   res.json({ success: true, incident: inc });
+});
+
+// 3.1 Fetch fire intelligence bundle (Perimeter, Spread, Danger Index, Vulnerabilities, Team Recommendations)
+app.get('/api/incidents/:id/intelligence', (req, res) => {
+  const inc = incidentStore.getIncidentById(req.params.id);
+  if (!inc) return res.status(404).json({ success: false, message: 'Incident not found' });
+  const perimeter = fireIntelligenceService.calculateFirePerimeter(inc);
+  const dangerIndex = fireIntelligenceService.calculateFireDangerIndex(inc);
+  const vulnerable = fireIntelligenceService.calculateNearbyVulnerableLocations(inc);
+  const teams = fireIntelligenceService.recommendResponseTeams(inc, incidentStore.getAllTeams(), geoSpatialService.getAllResponseStations());
+  res.json({
+    success: true,
+    incidentId: inc.incidentId,
+    firePerimeter: perimeter,
+    fireDangerIndex: dangerIndex,
+    vulnerableLocations: vulnerable,
+    teamRecommendations: teams
+  });
+});
+
+// 3.2 Fire Spread Simulation Endpoint (Calculated on-demand per performance rules)
+app.post('/api/incidents/:id/simulate-spread', (req, res) => {
+  const inc = incidentStore.getIncidentById(req.params.id);
+  if (!inc) return res.status(404).json({ success: false, message: 'Incident not found' });
+  const minutes = parseInt(req.body.minutes) || 60;
+  const simulation = fireIntelligenceService.simulateFireSpread(inc, minutes);
+  inc.spreadSimulation = simulation;
+  io.emit('fire_spread_simulated', { incidentId: inc.incidentId, simulation });
+  res.json({ success: true, simulation });
+});
+
+// 3.3 Fetch Ranked Response Team Recommendations
+app.get('/api/incidents/:id/team-recommendations', (req, res) => {
+  const inc = incidentStore.getIncidentById(req.params.id);
+  if (!inc) return res.status(404).json({ success: false, message: 'Incident not found' });
+  const recs = fireIntelligenceService.recommendResponseTeams(inc, incidentStore.getAllTeams(), geoSpatialService.getAllResponseStations());
+  res.json({ success: true, recommendations: recs });
 });
 
 // 4. Admin Verifies Fire (Prevents Fake Alert)

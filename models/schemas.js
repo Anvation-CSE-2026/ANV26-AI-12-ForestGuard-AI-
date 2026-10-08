@@ -56,6 +56,14 @@ const IncidentSchema = {
     message: String,
     type: String
   }],
+  firePerimeter: { type: Object, required: false },
+  estimatedArea: { type: Number, required: false },
+  fireDangerScore: { type: Number, required: false },
+  fireDangerFactors: { type: Object, required: false },
+  spreadSimulation: { type: Object, required: false },
+  populationExposure: { type: Object, required: false },
+  nearbyLocations: [{ type: Object }],
+  recommendedTeam: { type: Object, required: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 };
