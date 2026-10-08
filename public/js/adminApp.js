@@ -1833,30 +1833,30 @@ function updateAdminScoreboard(sbData) {
   // 3. AI Fake Score & Authenticity Check
   const fakeProb = parseFloat(sbData.fakeProbability !== undefined ? sbData.fakeProbability : (isFire ? 3.2 : 91.2)).toFixed(1);
   const authScore = parseFloat(sbData.authenticityScore !== undefined ? sbData.authenticityScore : (100 - fakeProb)).toFixed(1);
-  const isFakeDetected = parseFloat(fakeProb) > 50 || sbData.isFake;
+  const isFakeConfirmed = isFakeDetected || parseFloat(fakeProb) > 50 || Boolean(sbData.isFake);
 
   const fakeEl = document.getElementById('adminSbMetricFakeScore');
   if (fakeEl) {
     fakeEl.textContent = `${fakeProb}%`;
-    fakeEl.className = isFakeDetected ? 'text-sm font-black text-red-400 font-mono' : 'text-sm font-black text-emerald-400 font-mono';
+    fakeEl.className = isFakeConfirmed ? 'text-sm font-black text-red-400 font-mono' : 'text-sm font-black text-emerald-400 font-mono';
   }
 
   const fakeVerdictEl = document.getElementById('adminSbMetricFakeVerdict');
   if (fakeVerdictEl) {
-    fakeVerdictEl.textContent = isFakeDetected ? 'SUSPECTED FAKE' : 'REAL PHOTO';
-    fakeVerdictEl.className = isFakeDetected ? 'text-[8px] font-bold text-red-400 truncate block mt-0.5' : 'text-[8px] font-bold text-emerald-400 truncate block mt-0.5';
+    fakeVerdictEl.textContent = isFakeConfirmed ? 'SUSPECTED FAKE' : 'REAL PHOTO';
+    fakeVerdictEl.className = isFakeConfirmed ? 'text-[8px] font-bold text-red-400 truncate block mt-0.5' : 'text-[8px] font-bold text-emerald-400 truncate block mt-0.5';
   }
 
   const authPctEl = document.getElementById('adminSbAuthenticityPercent');
   if (authPctEl) {
     authPctEl.textContent = `${authScore}% Authentic`;
-    authPctEl.className = isFakeDetected ? 'font-mono font-bold text-red-400' : 'font-mono font-bold text-emerald-400';
+    authPctEl.className = isFakeConfirmed ? 'font-mono font-bold text-red-400' : 'font-mono font-bold text-emerald-400';
   }
 
   const barAuth = document.getElementById('adminSbBarAuthenticity');
   if (barAuth) {
     barAuth.style.width = `${Math.min(100, Math.max(0, authScore))}%`;
-    barAuth.className = isFakeDetected
+    barAuth.className = isFakeConfirmed
       ? 'h-full bg-gradient-to-r from-red-500 to-amber-500 rounded-full transition-all duration-700'
       : 'h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-700';
   }

@@ -158,12 +158,24 @@ function initCentralMap() {
   });
 
   // High-resolution Google Hybrid Satellite & Roads Tiles with building-level zoom (maxZoom 21)
-  L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+  const googleHybridLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
     maxZoom: 21,
     maxNativeZoom: 20,
     subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
     attribution: 'Map & Imagery &copy; Google Maps'
   }).addTo(userMap);
+
+  let tileFailures = 0;
+  googleHybridLayer.on('tileerror', () => {
+    tileFailures++;
+    if (tileFailures === 4) {
+      console.warn('[USER MAP] Google tiles unavailable, mounting OSM tile fallback');
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(userMap);
+    }
+  });
 
   const pinIcon = L.divIcon({
     className: 'custom-user-pin',
@@ -255,12 +267,14 @@ function initCentralMap() {
     });
   }
 
-  setTimeout(() => {
-    if (userMap) {
-      userMap.invalidateSize();
-      renderUserMapOverlays(currentCoords.lat, currentCoords.lng);
-    }
-  }, 350);
+  [50, 200, 500, 1000].forEach(delay => {
+    setTimeout(() => {
+      if (userMap) {
+        userMap.invalidateSize();
+        if (delay >= 200) renderUserMapOverlays(currentCoords.lat, currentCoords.lng);
+      }
+    }, delay);
+  });
 }
 
 // Auxiliary overlays on userMap (Alert Radius + Nearest Station + Nearest Waterbody + Dotted Lines)
@@ -1394,30 +1408,30 @@ function updateScoreboardUI(data) {
   // 3. AI Fake Score & Authenticity Check
   const fakeProb = parseFloat(data.fakeProbability !== undefined ? data.fakeProbability : (isFire ? 3.2 : 91.2)).toFixed(1);
   const authScore = parseFloat(data.authenticityScore !== undefined ? data.authenticityScore : (100 - fakeProb)).toFixed(1);
-  const isFakeDetected = parseFloat(fakeProb) > 50 || data.isFake;
+  const isFakeConfirmed = isFakeDetected || parseFloat(fakeProb) > 50 || Boolean(data.isFake);
 
   const fakeEl = document.getElementById('sbMetricFakeScore');
   if (fakeEl) {
     fakeEl.textContent = `${fakeProb}%`;
-    fakeEl.className = isFakeDetected ? 'text-base font-black text-red-400 font-mono' : 'text-base font-black text-emerald-400 font-mono';
+    fakeEl.className = isFakeConfirmed ? 'text-base font-black text-red-400 font-mono' : 'text-base font-black text-emerald-400 font-mono';
   }
 
   const fakeVerdictEl = document.getElementById('sbMetricFakeVerdict');
   if (fakeVerdictEl) {
-    fakeVerdictEl.textContent = isFakeDetected ? 'SUSPECTED FAKE' : 'REAL PHOTO';
-    fakeVerdictEl.className = isFakeDetected ? 'text-[9px] font-bold text-red-400 truncate block mt-0.5' : 'text-[9px] font-bold text-emerald-400 truncate block mt-0.5';
+    fakeVerdictEl.textContent = isFakeConfirmed ? 'SUSPECTED FAKE' : 'REAL PHOTO';
+    fakeVerdictEl.className = isFakeConfirmed ? 'text-[9px] font-bold text-red-400 truncate block mt-0.5' : 'text-[9px] font-bold text-emerald-400 truncate block mt-0.5';
   }
 
   const authPctEl = document.getElementById('sbAuthenticityPercent');
   if (authPctEl) {
     authPctEl.textContent = `${authScore}% Authentic`;
-    authPctEl.className = isFakeDetected ? 'font-mono font-bold text-red-400' : 'font-mono font-bold text-emerald-400';
+    authPctEl.className = isFakeConfirmed ? 'font-mono font-bold text-red-400' : 'font-mono font-bold text-emerald-400';
   }
 
   const barAuth = document.getElementById('sbBarAuthenticity');
   if (barAuth) {
     barAuth.style.width = `${Math.min(100, Math.max(0, authScore))}%`;
-    barAuth.className = isFakeDetected
+    barAuth.className = isFakeConfirmed
       ? 'h-full bg-gradient-to-r from-red-500 to-amber-500 rounded-full transition-all duration-700'
       : 'h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-700';
   }
