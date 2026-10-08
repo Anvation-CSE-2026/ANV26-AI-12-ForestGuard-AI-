@@ -40,12 +40,12 @@
       "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.668,
-          "lng": 76.634
+          "lat": 11.6675,
+          "lng": 76.6322
         },
         "phone": "+91-8229-236021",
         "etaMinutesBase": 18,
@@ -58,10 +58,7 @@
         "distanceMeters": 1100,
         "etaMinutes": 5,
         "routeWaypoints": [
-          [
-            11.668,
-            76.634
-          ],
+          [11.6675, 76.6322],
           [
             11.66638,
             76.6319
@@ -90,7 +87,7 @@
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
         "distanceKm": 1.1,
         "etaMinutes": 5,
         "phone": "+91-8229-236021",
@@ -99,12 +96,12 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
+          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "phone": "+91-8229-236021",
           "etaMinutesBase": 18,
@@ -117,10 +114,7 @@
           "distanceMeters": 1100,
           "etaMinutes": 5,
           "routeWaypoints": [
-            [
-              11.668,
-              76.634
-            ],
+            [11.6675, 76.6322],
             [
               11.66638,
               76.6319
@@ -257,12 +251,12 @@
       },
       "nearestWaterBody": {
         "id": "WB-06",
-        "name": "Moyar River Deep Pool Draft Terminal",
+        "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.602,
-          "lng": 76.654
+          "lat": 11.6672,
+          "lng": 76.6215
         },
         "type": "River Gorge Pool",
         "capacity": "Continuous 14,000 LPM",
@@ -270,10 +264,7 @@
         "distanceKm": 7.6,
         "distanceMeters": 7600,
         "routeWaypoints": [
-          [
-            11.602,
-            76.654
-          ],
+          [11.6672, 76.6215],
           [
             11.61328,
             76.64749
@@ -299,12 +290,12 @@
       "rankedWaterBodies": [
         {
           "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
+          "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
+            "lat": 11.6672,
+          "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -312,10 +303,7 @@
           "distanceKm": 7.6,
           "distanceMeters": 7600,
           "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
+            [11.6672, 76.6215],
             [
               11.61328,
               76.64749
@@ -478,10 +466,7 @@
         "engineName": "YOLOv8 ENGINE READY"
       },
       "routeWaypoints": [
-        [
-          11.668,
-          76.634
-        ],
+        [11.6675, 76.6322],
         [
           11.66638,
           76.6319
@@ -1201,8 +1186,8 @@
             "Protective Gear (Wildland PPE)"
           ],
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -1230,8 +1215,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -1312,8 +1297,8 @@
               "Protective Gear (Wildland PPE)"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -1340,8 +1325,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -1417,8 +1402,8 @@
               "Logistics Bowser"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -1474,12 +1459,12 @@
       "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.668,
-          "lng": 76.634
+          "lat": 11.6675,
+          "lng": 76.6322
         },
         "phone": "+91-8229-236021",
         "etaMinutesBase": 18,
@@ -1492,10 +1477,7 @@
         "distanceMeters": 1100,
         "etaMinutes": 5,
         "routeWaypoints": [
-          [
-            11.668,
-            76.634
-          ],
+          [11.6675, 76.6322],
           [
             11.66638,
             76.6319
@@ -1524,7 +1506,7 @@
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
         "distanceKm": 1.1,
         "etaMinutes": 5,
         "phone": "+91-8229-236021",
@@ -1533,12 +1515,12 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
+          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "phone": "+91-8229-236021",
           "etaMinutesBase": 18,
@@ -1551,10 +1533,7 @@
           "distanceMeters": 1100,
           "etaMinutes": 5,
           "routeWaypoints": [
-            [
-              11.668,
-              76.634
-            ],
+            [11.6675, 76.6322],
             [
               11.66638,
               76.6319
@@ -1691,12 +1670,12 @@
       },
       "nearestWaterBody": {
         "id": "WB-06",
-        "name": "Moyar River Deep Pool Draft Terminal",
+        "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.602,
-          "lng": 76.654
+          "lat": 11.6672,
+          "lng": 76.6215
         },
         "type": "River Gorge Pool",
         "capacity": "Continuous 14,000 LPM",
@@ -1704,10 +1683,7 @@
         "distanceKm": 7.6,
         "distanceMeters": 7600,
         "routeWaypoints": [
-          [
-            11.602,
-            76.654
-          ],
+          [11.6672, 76.6215],
           [
             11.61328,
             76.64749
@@ -1733,12 +1709,12 @@
       "rankedWaterBodies": [
         {
           "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
+          "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
+            "lat": 11.6672,
+          "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -1746,10 +1722,7 @@
           "distanceKm": 7.6,
           "distanceMeters": 7600,
           "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
+            [11.6672, 76.6215],
             [
               11.61616,
               76.6459
@@ -1907,10 +1880,7 @@
         "engineName": "YOLOv8 ENGINE READY"
       },
       "routeWaypoints": [
-        [
-          11.668,
-          76.634
-        ],
+        [11.6675, 76.6322],
         [
           11.66638,
           76.6319
@@ -2631,8 +2601,8 @@
             "Protective Gear (Wildland PPE)"
           ],
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -2660,8 +2630,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -2742,8 +2712,8 @@
               "Protective Gear (Wildland PPE)"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -2770,8 +2740,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -2847,8 +2817,8 @@
               "Logistics Bowser"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -3015,12 +2985,12 @@
         },
         {
           "id": "STA-BLR-01",
-          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+          "name": "Anjanapura Fire & Emergency Station (Karnataka Fire Services)",
           "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 12.859,
-            "lng": 77.546
+            "lat": 12.8575,
+          "lng": 77.5623
           },
           "phone": "+91-80-22971550",
           "etaMinutesBase": 5,
@@ -3033,10 +3003,7 @@
           "distanceMeters": 4900,
           "etaMinutes": 11,
           "routeWaypoints": [
-            [
-              12.859,
-              77.546
-            ],
+            [12.8575, 77.5623],
             [
               12.85247,
               77.54037
@@ -3202,12 +3169,12 @@
         },
         {
           "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
+          "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
+            "lat": 11.6672,
+          "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -3215,10 +3182,7 @@
           "distanceKm": 165.2,
           "distanceMeters": 165200,
           "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
+            [11.6672, 76.6215],
             [
               11.90654,
               76.8686
@@ -4063,8 +4027,8 @@
             "Protective Gear (Wildland PPE)"
           ],
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -4092,8 +4056,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -4174,8 +4138,8 @@
               "Protective Gear (Wildland PPE)"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -4202,8 +4166,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -4279,8 +4243,8 @@
               "Logistics Bowser"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -4447,12 +4411,12 @@
         },
         {
           "id": "STA-BLR-01",
-          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+          "name": "Anjanapura Fire & Emergency Station (Karnataka Fire Services)",
           "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 12.859,
-            "lng": 77.546
+            "lat": 12.8575,
+          "lng": 77.5623
           },
           "phone": "+91-80-22971550",
           "etaMinutesBase": 5,
@@ -4465,10 +4429,7 @@
           "distanceMeters": 4900,
           "etaMinutes": 11,
           "routeWaypoints": [
-            [
-              12.859,
-              77.546
-            ],
+            [12.8575, 77.5623],
             [
               12.85247,
               77.54037
@@ -4634,12 +4595,12 @@
         },
         {
           "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
+          "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
+            "lat": 11.6672,
+          "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -4647,10 +4608,7 @@
           "distanceKm": 165.2,
           "distanceMeters": 165200,
           "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
+            [11.6672, 76.6215],
             [
               11.90654,
               76.8686
@@ -5495,8 +5453,8 @@
             "Protective Gear (Wildland PPE)"
           ],
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -5524,8 +5482,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -5606,8 +5564,8 @@
               "Protective Gear (Wildland PPE)"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -5634,8 +5592,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -5711,8 +5669,8 @@
               "Logistics Bowser"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -5770,12 +5728,12 @@
       "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.668,
-          "lng": 76.634
+          "lat": 11.6675,
+          "lng": 76.6322
         },
         "phone": "+91-8229-236021",
         "etaMinutesBase": 18,
@@ -5788,10 +5746,7 @@
         "distanceMeters": 1400,
         "etaMinutes": 5,
         "routeWaypoints": [
-          [
-            11.668,
-            76.634
-          ],
+          [11.6675, 76.6322],
           [
             11.66625,
             76.63133
@@ -5820,7 +5775,7 @@
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
         "distanceKm": 1.4,
         "etaMinutes": 5,
         "phone": "+91-8229-236021",
@@ -5829,12 +5784,12 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Forest Rapid Response Unit (HQ)",
+          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "phone": "+91-8229-236021",
           "etaMinutesBase": 18,
@@ -5847,10 +5802,7 @@
           "distanceMeters": 1400,
           "etaMinutes": 5,
           "routeWaypoints": [
-            [
-              11.668,
-              76.634
-            ],
+            [11.6675, 76.6322],
             [
               11.66625,
               76.63133
@@ -5987,12 +5939,12 @@
       },
       "nearestWaterBody": {
         "id": "WB-06",
-        "name": "Moyar River Deep Pool Draft Terminal",
+        "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.602,
-          "lng": 76.654
+          "lat": 11.6672,
+          "lng": 76.6215
         },
         "type": "River Gorge Pool",
         "capacity": "Continuous 14,000 LPM",
@@ -6000,10 +5952,7 @@
         "distanceKm": 7.7,
         "distanceMeters": 7700,
         "routeWaypoints": [
-          [
-            11.602,
-            76.654
-          ],
+          [11.6672, 76.6215],
           [
             11.61312,
             76.64681
@@ -6029,12 +5978,12 @@
       "rankedWaterBodies": [
         {
           "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
+          "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
+            "lat": 11.6672,
+          "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -6042,10 +5991,7 @@
           "distanceKm": 7.7,
           "distanceMeters": 7700,
           "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
+            [11.6672, 76.6215],
             [
               11.61596,
               76.64505
@@ -6204,10 +6150,7 @@
         "engineName": "YOLOv8 ENGINE READY"
       },
       "routeWaypoints": [
-        [
-          11.668,
-          76.634
-        ],
+        [11.6675, 76.6322],
         [
           11.66625,
           76.63133
@@ -6927,8 +6870,8 @@
             "Protective Gear (Wildland PPE)"
           ],
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -6956,8 +6899,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -7038,8 +6981,8 @@
               "Protective Gear (Wildland PPE)"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -7066,8 +7009,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -7143,8 +7086,8 @@
               "Logistics Bowser"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -7169,11 +7112,11 @@
       "videoUrl": null,
       "latitude": 12.8542,
       "longitude": 77.5413,
-      "title": "kseam fire",
-      "alertTitle": "kseam fire",
-      "forestName": "Bandipur Forest",
+      "title": "KSSEM Campus Fire",
+      "alertTitle": "KSSEM Campus Fire",
+      "forestName": "KSSEM Campus Reserve, Bengaluru",
       "state": "Karnataka",
-      "district": "Chamarajanagar",
+      "district": "Bengaluru Urban",
       "description": "Forest fire alert reported by citizen.",
       "estimatedSize": "Large",
       "smokeVisible": true,
@@ -7202,12 +7145,12 @@
       "multiSourceSummary": "SINGLE SOURCE - MANUAL VERIFICATION REQUIRED",
       "nearestStation": {
         "id": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "name": "Anjanapura Fire & Emergency Station (Karnataka Fire Services)",
         "forestId": "FOR-KA-03",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 12.859,
-          "lng": 77.546
+          "lat": 12.8575,
+          "lng": 77.5623
         },
         "phone": "+91-80-22971550",
         "etaMinutesBase": 5,
@@ -7220,10 +7163,7 @@
         "distanceMeters": 700,
         "etaMinutes": 5,
         "routeWaypoints": [
-          [
-            12.859,
-            77.546
-          ],
+          [12.8575, 77.5623],
           [
             12.8572,
             77.54462
@@ -7252,7 +7192,7 @@
       },
       "assignedStation": {
         "stationId": "STA-BLR-01",
-        "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+        "name": "Anjanapura Fire & Emergency Station (Karnataka Fire Services)",
         "distanceKm": 0.7,
         "etaMinutes": 5,
         "phone": "+91-80-22971550",
@@ -7261,12 +7201,12 @@
       "rankedStations": [
         {
           "id": "STA-BLR-01",
-          "name": "Kanakapura Road Fire & Emergency Station (KSSEM)",
+          "name": "Anjanapura Fire & Emergency Station (Karnataka Fire Services)",
           "forestId": "FOR-KA-03",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 12.859,
-            "lng": 77.546
+            "lat": 12.8575,
+          "lng": 77.5623
           },
           "phone": "+91-80-22971550",
           "etaMinutesBase": 5,
@@ -7279,10 +7219,7 @@
           "distanceMeters": 700,
           "etaMinutes": 5,
           "routeWaypoints": [
-            [
-              12.859,
-              77.546
-            ],
+            [12.8575, 77.5623],
             [
               12.8572,
               77.54462
@@ -7419,12 +7356,12 @@
       },
       "nearestWaterBody": {
         "id": "WB-BLR-01",
-        "name": "Gubbalala Lake & Forest Hydrant Pier (KSSEM)",
+        "name": "Vajarahalli Lake & Emergency Drafting Reservoir (KSSEM)",
         "forestId": "FOR-KA-03",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 12.868,
-          "lng": 77.538
+          "lat": 12.871,
+          "lng": 77.5435
         },
         "type": "Freshwater Lake & Fire Hydrant Terminal",
         "capacity": "Continuous 25,000 Litres Aerial Drafting",
@@ -7432,10 +7369,7 @@
         "distanceKm": 1.6,
         "distanceMeters": 1600,
         "routeWaypoints": [
-          [
-            12.868,
-            77.538
-          ],
+          [12.871, 77.5435],
           [
             12.86406,
             77.53795
@@ -7498,12 +7432,12 @@
         },
         {
           "id": "WB-06",
-          "name": "Moyar River Deep Pool Draft Terminal",
+          "name": "Tavarekatte Lake Reservoir (Bandipur Forest Water Source)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
-            "lat": 11.602,
-            "lng": 76.654
+            "lat": 11.6672,
+          "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -7511,10 +7445,7 @@
           "distanceKm": 169.4,
           "distanceMeters": 169400,
           "routeWaypoints": [
-            [
-              11.602,
-              76.654
-            ],
+            [11.6672, 76.6215],
             [
               11.91364,
               76.87498
@@ -8359,8 +8290,8 @@
             "Protective Gear (Wildland PPE)"
           ],
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -8388,8 +8319,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -8470,8 +8401,8 @@
               "Protective Gear (Wildland PPE)"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -8498,8 +8429,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -8575,8 +8506,8 @@
               "Logistics Bowser"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -9812,8 +9743,8 @@
             "Protective Gear (Wildland PPE)"
           ],
           "coordinates": {
-            "lat": 11.668,
-            "lng": 76.634
+            "lat": 11.6675,
+          "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -9841,8 +9772,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -9923,8 +9854,8 @@
               "Protective Gear (Wildland PPE)"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -9951,8 +9882,8 @@
               "Drone Patrol Unit"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -10028,8 +9959,8 @@
               "Logistics Bowser"
             ],
             "coordinates": {
-              "lat": 11.668,
-              "lng": 76.634
+              "lat": 11.6675,
+          "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -10056,8 +9987,8 @@
       "members": 6,
       "vehicle": "Heavy Water Tender & Drone Patrol",
       "coordinates": {
-        "lat": 11.668,
-        "lng": 76.634
+        "lat": 11.6675,
+          "lng": 76.6322
       },
       "currentIncident": null,
       "etaMinutes": 14
@@ -10116,15 +10047,15 @@
       "members": 5,
       "vehicle": "Logistics Bowser",
       "coordinates": {
-        "lat": 11.668,
-        "lng": 76.634
+        "lat": 11.6675,
+          "lng": 76.6322
       },
       "currentIncident": null,
       "etaMinutes": 45
     },
     {
       "teamId": "STA-KA-01",
-      "name": "Bandipur Forest Rapid Response Unit (HQ)",
+      "name": "Bandipur Range Forest Office & Fire Command (HQ)",
       "status": "AVAILABLE",
       "members": 6,
       "currentIncident": "FG-2026-1052"

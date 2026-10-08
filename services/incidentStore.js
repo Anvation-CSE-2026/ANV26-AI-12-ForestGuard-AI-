@@ -88,11 +88,11 @@ class IncidentStore {
         teamId: 'TEAM-01',
         name: 'Team 01 (Bandipur Forest Unit)',
         stationId: 'STA-KA-01',
-        stationName: 'Bandipur Forest Response Unit',
+        stationName: 'Bandipur Range Forest Office & Fire Command (HQ)',
         status: 'AVAILABLE', // AVAILABLE, ASSIGNED, EN_ROUTE, ON_SITE, BUSY, OFFLINE
         members: 6,
         vehicle: 'Heavy Water Tender & Drone Patrol',
-        coordinates: { lat: 11.6680, lng: 76.6340 },
+        coordinates: { lat: 11.6675, lng: 76.6322 },
         currentIncident: null,
         etaMinutes: 14
       },
@@ -100,11 +100,11 @@ class IncidentStore {
         teamId: 'TEAM-02',
         name: 'Team 02 (Gundlupet Municipal Squad)',
         stationId: 'STA-KA-02',
-        stationName: 'Gundlupet Municipal Fire Brigade',
+        stationName: 'Gundlupet Fire Station (Karnataka State Fire Services)',
         status: 'BUSY',
         members: 8,
         vehicle: 'Dual Attack Bowser',
-        coordinates: { lat: 11.8050, lng: 76.6890 },
+        coordinates: { lat: 11.8055, lng: 76.6888 },
         currentIncident: null,
         etaMinutes: 28
       },
@@ -124,11 +124,11 @@ class IncidentStore {
         teamId: 'TEAM-04',
         name: 'Team 04 (Bandipur Rapid Response Squad)',
         stationId: 'STA-KA-01',
-        stationName: 'Bandipur Forest Response Unit',
+        stationName: 'Bandipur Range Forest Office & Fire Command (HQ)',
         status: 'AVAILABLE', // The recommended team for Bandipur
         members: 6,
         vehicle: 'High-Clearance 4x4 Brush Engine + Drone',
-        coordinates: { lat: 11.6680, lng: 76.6340 },
+        coordinates: { lat: 11.6675, lng: 76.6322 },
         currentIncident: null,
         etaMinutes: 16
       },
@@ -136,11 +136,11 @@ class IncidentStore {
         teamId: 'TEAM-05',
         name: 'Team 05 (Reserve Backup Squad)',
         stationId: 'STA-KA-01',
-        stationName: 'Bandipur Forest Response Unit',
+        stationName: 'Bandipur Range Forest Office & Fire Command (HQ)',
         status: 'OFFLINE',
         members: 5,
         vehicle: 'Logistics Bowser',
-        coordinates: { lat: 11.6680, lng: 76.6340 },
+        coordinates: { lat: 11.6675, lng: 76.6322 },
         currentIncident: null,
         etaMinutes: 45
       }

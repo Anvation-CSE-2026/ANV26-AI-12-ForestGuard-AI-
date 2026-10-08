@@ -273,25 +273,25 @@ function renderUserMapOverlays(lat, lng) {
   // 2. Nearest Fire Station within few km
   let stLat, stLng, stName, distKm;
   if (Math.abs(lat - 12.8550) < 0.04 && Math.abs(lng - 77.5420) < 0.04) {
-    // KSSEM / Kanakapura Road local station
-    stLat = 12.8590;
-    stLng = 77.5460;
-    stName = 'Kanakapura Road Fire Station (KSSEM)';
-    distKm = '0.6';
+    // KSSEM / Anjanapura local station building
+    stLat = 12.8575;
+    stLng = 77.5623;
+    stName = 'Anjanapura Fire & Emergency Station (KSSEM)';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
   } else if (Math.abs(lat - 12.8258) < 0.04 && Math.abs(lng - 77.5158) < 0.04) {
-    // DSATM local station
-    stLat = 12.8290;
-    stLng = 77.5180;
-    stName = 'DSATM Campus & Kaggalipura Rapid Fire Post';
-    distKm = '0.4';
+    // DSATM / Anjanapura local station building
+    stLat = 12.8575;
+    stLng = 77.5623;
+    stName = 'Anjanapura Fire & Emergency Station (DSATM)';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
   } else if (Math.abs(lat - 11.6643) < 0.2 && Math.abs(lng - 76.6250) < 0.2) {
-    // Bandipur HQ station
-    stLat = 11.6680;
-    stLng = 76.6340;
-    stName = 'Bandipur Station - Team Ready';
-    distKm = '1.1';
+    // Bandipur Range Forest Office & Fire Command HQ building (physical building on NH-766)
+    stLat = 11.6675;
+    stLng = 76.6322;
+    stName = 'Bandipur Range Forest Office & Fire Command (HQ)';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
   } else {
-    // Dynamically find closest or generate hyper-local station within 1.5 km
+    // Dynamically find closest real station from allResponseStations (never synthetic offsets)
     let best = null;
     let minD = Infinity;
     for (const s of allResponseStations) {
@@ -300,15 +300,15 @@ function renderUserMapOverlays(lat, lng) {
         if (d < minD) { minD = d; best = s; }
       }
     }
-    if (best && minD <= 8) {
+    if (best) {
       stLat = best.coordinates.lat;
       stLng = best.coordinates.lng;
       stName = best.name.split('(')[0].trim();
       distKm = minD.toFixed(1);
     } else {
-      stLat = parseFloat((lat + 0.012).toFixed(4));
-      stLng = parseFloat((lng + 0.014).toFixed(4));
-      stName = 'Local Rapid Fire Strike Post';
+      stLat = 11.6675;
+      stLng = 76.6322;
+      stName = 'Bandipur Range Forest Office & Fire Command (HQ)';
       distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
     }
   }
@@ -334,25 +334,41 @@ function renderUserMapOverlays(lat, lng) {
   // 3. Nearest Water Body within few km
   let wbLat, wbLng, wbName, wbDist;
   if (Math.abs(lat - 12.8550) < 0.08 && Math.abs(lng - 77.5420) < 0.08) {
-    wbLat = 12.8680;
-    wbLng = 77.5380;
-    wbName = 'Gubbalala Lake & Forest Hydrant Pier (KSSEM)';
-    wbDist = '1.5';
+    wbLat = 12.8710;
+    wbLng = 77.5435;
+    wbName = 'Vajarahalli Lake & Emergency Drafting Reservoir (KSSEM)';
+    wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
   } else if (Math.abs(lat - 12.8258) < 0.08 && Math.abs(lng - 77.5158) < 0.08) {
     wbLat = 12.8120;
-    wbLng = 77.5100;
+    wbLng = 77.5020;
     wbName = 'Kaggalipura Lake Emergency Reservoir (DSATM)';
-    wbDist = '1.7';
-  } else if (Math.abs(lat - 11.6643) < 0.2 && Math.abs(lng - 76.6250) < 0.2) {
-    wbLat = 11.6020;
-    wbLng = 76.6540;
-    wbName = 'Moyar River Deep Pool Draft Terminal';
-    wbDist = '7.6';
-  } else {
-    wbLat = parseFloat((lat - 0.012).toFixed(4));
-    wbLng = parseFloat((lng + 0.011).toFixed(4));
-    wbName = 'Local Emergency Water Draft Reservoir';
     wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
+  } else if (Math.abs(lat - 11.6643) < 0.2 && Math.abs(lng - 76.6250) < 0.2) {
+    wbLat = 11.6672;
+    wbLng = 76.6215;
+    wbName = 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)';
+    wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
+  } else {
+    // Dynamically find closest real water body from allWaterBodies (never synthetic offsets)
+    let bestWb = null;
+    let minWbD = Infinity;
+    for (const w of allWaterBodies) {
+      if (w.coordinates) {
+        const d = getHaversineDist(lat, lng, w.coordinates.lat, w.coordinates.lng);
+        if (d < minWbD) { minWbD = d; bestWb = w; }
+      }
+    }
+    if (bestWb) {
+      wbLat = bestWb.coordinates.lat;
+      wbLng = bestWb.coordinates.lng;
+      wbName = bestWb.name;
+      wbDist = minWbD.toFixed(1);
+    } else {
+      wbLat = 11.6672;
+      wbLng = 76.6215;
+      wbName = 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)';
+      wbDist = (getHaversineDist(lat, lng, wbLat, wbLng)).toFixed(1);
+    }
   }
 
   // Water Marker
@@ -1962,8 +1978,8 @@ function initFullMap() {
   });
 
   // 3. Response Station Graphical Badge: Bandipur Station - Team Ready (🛡️)
-  const stnLat = 11.6680;
-  const stnLng = 76.6340;
+  const stnLat = 11.6675;
+  const stnLng = 76.6322;
   const stnIcon = L.divIcon({
     className: 'custom-map-marker marker-station-badge',
     html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">Bandipur Station - Team Ready</span><span style="font-size:14px; filter:drop-shadow(0 0 4px #3b82f6);">🛡️</span></div>`,
@@ -1971,16 +1987,14 @@ function initFullMap() {
     iconAnchor: [0, 0]
   });
   L.marker([stnLat, stnLng], { icon: stnIcon }).addTo(fullMap)
-    .bindPopup(`<b>Bandipur Station - Team Ready</b><br><span style="color:#60a5fa;">Forest Response Unit (HQ)</span><br>ETA: <b>14 min</b> • Dist: <b>8.7 km</b>`);
+    .bindPopup(`<b>Bandipur Station - Team Ready</b><br><span style="color:#60a5fa;">Bandipur Range Forest Office & Fire Command (HQ)</span><br>ETA: <b>4 min</b> • Dist: <b>0.9 km</b>`);
 
   // 4. Dotted Route Line connecting Station to Fire (dashArray '8, 8')
   const routeWaypoints = [
-    [11.6680, 76.6340],
+    [11.6675, 76.6322],
     [11.66638, 76.6319],
-    [11.6685, 76.63204],
+    [11.6655, 76.6295],
     [11.66415, 76.6283],
-    [11.66727, 76.62904],
-    [11.66392, 76.6259],
     [11.6643, 76.6250]
   ];
   L.polyline(routeWaypoints, {
@@ -1990,14 +2004,14 @@ function initFullMap() {
     dashArray: '8, 8'
   }).addTo(fullMap);
 
-  // 5. Water drafting line to Kabini Reservoir
-  const waterCoords = [11.9050, 76.3500];
-  L.marker(waterCoords).addTo(fullMap).bindPopup(`💧 <b>Kabini Reservoir</b><br>High-volume water drafting source`);
-  L.polyline([[bandipurLat, bandipurLng], [11.8000, 76.4500], waterCoords], {
+  // 5. Water drafting line to Tavarekatte Lake Reservoir
+  const waterCoords = [11.6672, 76.6215];
+  L.marker(waterCoords).addTo(fullMap).bindPopup(`💧 <b>Tavarekatte Lake Reservoir</b><br>Bandipur Forest Emergency Water Drafting Source`);
+  L.polyline([[bandipurLat, bandipurLng], waterCoords], {
     color: '#0284c7',
-    weight: 3,
-    opacity: 0.85,
-    dashArray: '5, 5'
+    weight: 3.5,
+    opacity: 0.9,
+    dashArray: '6, 6'
   }).addTo(fullMap);
 
   // Add other water bodies & stations to full map

@@ -1288,11 +1288,11 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
         window.forestMapEngine.drawRadiusCircles(12.8550, 77.5420, [500, 1500, 5000]);
-        window.forestMapEngine.addStationMarker({ name: 'Kanakapura Road Fire & Emergency Station (KSSEM)', coordinates: { lat: 12.8590, lng: 77.5460 }, etaMinutes: 4 });
-        window.forestMapEngine.drawRoute([[12.8590, 77.5460], [12.8570, 77.5440], [12.8550, 77.5420]], '#f97316', true);
-        window.forestMapEngine.addWaterMarker({ name: 'Gubbalala Lake & Forest Hydrant Pier (KSSEM)', coordinates: { lat: 12.8680, lng: 77.5380 }, capacity: 'Continuous 25,000 LPM' });
-        window.forestMapEngine.drawRoute([[12.8680, 77.5380], [12.8550, 77.5420]], '#0284c7', true);
-        window.forestMapEngine.fitToIncidentAndEntities({ lat: 12.8550, lng: 77.5420 }, { lat: 12.8590, lng: 77.5460 }, { lat: 12.8680, lng: 77.5380 });
+        window.forestMapEngine.addStationMarker({ name: 'Anjanapura Fire & Emergency Station (Karnataka Fire Services)', coordinates: { lat: 12.8575, lng: 77.5623 }, etaMinutes: 5 });
+        window.forestMapEngine.drawRoute([[12.8575, 77.5623], [12.8560, 77.5520], [12.8550, 77.5420]], '#f97316', true);
+        window.forestMapEngine.addWaterMarker({ name: 'Vajarahalli Lake & Emergency Drafting Reservoir (KSSEM)', coordinates: { lat: 12.8710, lng: 77.5435 }, capacity: 'Continuous 35,000 Litres' });
+        window.forestMapEngine.drawRoute([[12.8710, 77.5435], [12.8550, 77.5420]], '#0284c7', true);
+        window.forestMapEngine.fitToIncidentAndEntities({ lat: 12.8550, lng: 77.5420 }, { lat: 12.8575, lng: 77.5623 }, { lat: 12.8710, lng: 77.5435 });
       }
       showToast('📍 Pinpointed: KS School of Engineering & Management (KSSEM) - High Detail', 'emerald');
     } else if (q.includes('dsatm')) {
@@ -1307,11 +1307,11 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
         window.forestMapEngine.drawRadiusCircles(12.8258, 77.5158, [500, 1500, 5000]);
-        window.forestMapEngine.addStationMarker({ name: 'DSATM Campus & Kaggalipura Rapid Fire Post', coordinates: { lat: 12.8290, lng: 77.5180 }, etaMinutes: 3 });
-        window.forestMapEngine.drawRoute([[12.8290, 77.5180], [12.8258, 77.5158]], '#f97316', true);
-        window.forestMapEngine.addWaterMarker({ name: 'Kaggalipura Lake Emergency Reservoir (DSATM)', coordinates: { lat: 12.8120, lng: 77.5100 }, capacity: 'High Capacity Drafting Pier' });
-        window.forestMapEngine.drawRoute([[12.8120, 77.5100], [12.8258, 77.5158]], '#0284c7', true);
-        window.forestMapEngine.fitToIncidentAndEntities({ lat: 12.8258, lng: 77.5158 }, { lat: 12.8290, lng: 77.5180 }, { lat: 12.8120, lng: 77.5100 });
+        window.forestMapEngine.addStationMarker({ name: 'Anjanapura Fire & Emergency Station (Karnataka Fire Services)', coordinates: { lat: 12.8575, lng: 77.5623 }, etaMinutes: 6 });
+        window.forestMapEngine.drawRoute([[12.8575, 77.5623], [12.8350, 77.5300], [12.8258, 77.5158]], '#f97316', true);
+        window.forestMapEngine.addWaterMarker({ name: 'Kaggalipura Lake Emergency Reservoir (DSATM)', coordinates: { lat: 12.8120, lng: 77.5020 }, capacity: 'High Capacity Drafting Pier' });
+        window.forestMapEngine.drawRoute([[12.8120, 77.5020], [12.8258, 77.5158]], '#0284c7', true);
+        window.forestMapEngine.fitToIncidentAndEntities({ lat: 12.8258, lng: 77.5158 }, { lat: 12.8575, lng: 77.5623 }, { lat: 12.8120, lng: 77.5020 });
       }
       showToast('📍 Pinpointed: DSATM Bengaluru Campus - High Detail', 'emerald');
     } else if (q.includes('bandipur')) {
@@ -1326,11 +1326,11 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
         window.forestMapEngine.drawRadiusCircles(11.6643, 76.6250, [500, 1500, 5000]);
-        window.forestMapEngine.addStationMarker({ name: 'Bandipur Forest Response Unit (HQ)', coordinates: { lat: 11.6680, lng: 76.6340 }, etaMinutes: 5 });
-        window.forestMapEngine.drawRoute([[11.6680, 76.6340], [11.6643, 76.6250]], '#f97316', true);
-        window.forestMapEngine.addWaterMarker({ name: 'Moyar River Deep Pool Draft Terminal', coordinates: { lat: 11.6020, lng: 76.6540 }, capacity: 'Continuous 14,000 LPM' });
-        window.forestMapEngine.drawRoute([[11.6020, 76.6540], [11.6643, 76.6250]], '#0284c7', true);
-        window.forestMapEngine.fitToIncidentAndEntities({ lat: 11.6643, lng: 76.6250 }, { lat: 11.6680, lng: 76.6340 }, { lat: 11.6020, lng: 76.6540 });
+        window.forestMapEngine.addStationMarker({ name: 'Bandipur Range Forest Office & Fire Command (HQ)', coordinates: { lat: 11.6675, lng: 76.6322 }, etaMinutes: 4 });
+        window.forestMapEngine.drawRoute([[11.6675, 76.6322], [11.6660, 76.6290], [11.6643, 76.6250]], '#f97316', true);
+        window.forestMapEngine.addWaterMarker({ name: 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)', coordinates: { lat: 11.6672, lng: 76.6215 }, capacity: 'Continuous 25,000 LPM Aerial Drafting' });
+        window.forestMapEngine.drawRoute([[11.6672, 76.6215], [11.6643, 76.6250]], '#0284c7', true);
+        window.forestMapEngine.fitToIncidentAndEntities({ lat: 11.6643, lng: 76.6250 }, { lat: 11.6675, lng: 76.6322 }, { lat: 11.6672, lng: 76.6215 });
       }
       showToast('📍 Pinpointed: Bandipur Tiger Reserve Forest Sector - Detailed', 'emerald');
     } else if (q.includes('corbett')) {
@@ -2100,16 +2100,52 @@ window.addEventListener('message', (e) => {
       if (match) {
         selectIncident(match, true);
       } else {
-        // Hyper-local plot for searched location: fire, nearest local station & waterbody
-        const stCoords = { lat: parseFloat((lat + 0.0035).toFixed(4)), lng: parseFloat((lng + 0.0030).toFixed(4)) };
-        const wbCoords = { lat: parseFloat((lat - 0.0065).toFixed(4)), lng: parseFloat((lng + 0.0060).toFixed(4)) };
+        // Find nearest real station & water body from verified datasets (never synthetic offsets)
+        let nearestSt = null;
+        let minStDist = Infinity;
+        if (allStations && allStations.length > 0) {
+          for (const s of allStations) {
+            if (s.coordinates) {
+              const d = Math.hypot(s.coordinates.lat - lat, s.coordinates.lng - lng);
+              if (d < minStDist) { minStDist = d; nearestSt = s; }
+            }
+          }
+        }
+        if (!nearestSt) {
+          nearestSt = {
+            name: 'Bandipur Range Forest Office & Fire Command (HQ)',
+            coordinates: { lat: 11.6675, lng: 76.6322 },
+            etaMinutesBase: 4
+          };
+        }
+
+        let nearestWb = null;
+        let minWbDist = Infinity;
+        if (allWaterBodies && allWaterBodies.length > 0) {
+          for (const w of allWaterBodies) {
+            if (w.coordinates) {
+              const d = Math.hypot(w.coordinates.lat - lat, w.coordinates.lng - lng);
+              if (d < minWbDist) { minWbDist = d; nearestWb = w; }
+            }
+          }
+        }
+        if (!nearestWb) {
+          nearestWb = {
+            name: 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)',
+            coordinates: { lat: 11.6672, lng: 76.6215 },
+            capacity: 'Continuous 25,000 LPM Aerial Drafting'
+          };
+        }
+
+        const stCoords = nearestSt.coordinates;
+        const wbCoords = nearestWb.coordinates;
         window.forestMapEngine.clearRoutes();
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
         window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1500, 5000]);
-        window.forestMapEngine.addStationMarker({ name: `${name.split(',')[0]} Rapid Fire Station`, coordinates: stCoords, etaMinutes: 4 });
+        window.forestMapEngine.addStationMarker({ name: nearestSt.name, coordinates: stCoords, etaMinutes: nearestSt.etaMinutesBase || 4 });
         window.forestMapEngine.drawRoute([[stCoords.lat, stCoords.lng], [lat, lng]], '#f97316', true);
-        window.forestMapEngine.addWaterMarker({ name: `${name.split(',')[0]} Water Draft Reservoir`, coordinates: wbCoords, capacity: 'High Draft Terminal' });
+        window.forestMapEngine.addWaterMarker({ name: nearestWb.name, coordinates: wbCoords, capacity: nearestWb.capacity || 'Continuous 25,000 LPM' });
         window.forestMapEngine.drawRoute([[wbCoords.lat, wbCoords.lng], [lat, lng]], '#0284c7', true);
         window.forestMapEngine.fitToIncidentAndEntities({ lat, lng }, stCoords, wbCoords);
       }

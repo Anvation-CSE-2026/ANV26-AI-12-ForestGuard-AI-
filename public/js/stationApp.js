@@ -15,7 +15,7 @@ let currentWaypointIndex = 0;
 let socket = null;
 
 const ACTIVE_TEAM_ID = 'TEAM-04';
-const STATION_COORDS = [11.6680, 76.6340]; // Bandipur Forest Response Unit HQ
+const STATION_COORDS = [11.6675, 76.6322]; // Bandipur Range Forest Office & Fire Command HQ building
 
 document.addEventListener('DOMContentLoaded', async () => {
   initMap();
