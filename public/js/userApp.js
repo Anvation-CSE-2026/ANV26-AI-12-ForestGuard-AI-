@@ -567,16 +567,23 @@ function analyzeImageFast(imgElement, callback) {
       const g = imgData[i + 1];
       const b = imgData[i + 2];
 
-      if (r > 165 && r > g && g > b && (r - g) > 25 && b < 140) {
+      // Multi-spectral fire detection: Red-Orange, Golden Yellow, White-Hot core, Embers
+      const isRedFire = (r > 130 && r > g && g >= b && (r - b) > 25);
+      const isYellowFire = (r > 175 && g > 130 && (r + g) > (2.1 * b));
+      const isWhiteCore = (r > 215 && g > 190 && b > 140 && r >= g && g >= b);
+      const isEmbers = (r > 110 && r > 1.3 * g && r > 1.5 * b);
+
+      if (isRedFire || isYellowFire || isWhiteCore || isEmbers) {
         firePixels++;
-      } else if (Math.abs(r - g) < 25 && Math.abs(g - b) < 25 && r > 80 && r < 210) {
+      } else if ((Math.abs(r - g) < 35 && Math.abs(g - b) < 35 && r > 65 && r < 225) ||
+                 (r > 85 && g > 70 && b < 165 && r > b && g > b)) {
         smokePixels++;
       }
     }
 
     const fireRatio = firePixels / total;
     const smokeRatio = smokePixels / total;
-    const isFire = fireRatio > 0.015 || (fireRatio > 0.008 && smokeRatio > 0.12);
+    const isFire = fireRatio > 0.004 || (fireRatio > 0.002 && smokeRatio > 0.08);
 
     if (isFire) {
       const anom = Math.min(99.4, Math.max(85.0, 85.0 + fireRatio * 120 + smokeRatio * 30));

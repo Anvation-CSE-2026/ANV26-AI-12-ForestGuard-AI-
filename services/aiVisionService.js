@@ -152,11 +152,23 @@ class AIVisionService {
           const b = rawPixels[idx + 2];
           total++;
 
-          // Flame condition
-          if (r > 165 && r > g && g > b && (r - g) > 25 && b < 140) {
+          // Rule 1: Red-Orange Fire (R > G >= B, R > 130, R - B > 25)
+          const isRedFire = (r > 130 && r > g && g >= b && (r - b) > 25);
+          
+          // Rule 2: Golden & Blazing Yellow Fire (R > 175, G > 130, R+G > 2.1*B)
+          const isYellowFire = (r > 175 && g > 130 && (r + g) > (2.1 * b));
+
+          // Rule 3: White-Hot Core (R > 215, G > 190, B > 140, R >= G, G >= B)
+          const isWhiteCore = (r > 215 && g > 190 && b > 140 && r >= g && g >= b);
+
+          // Rule 4: Deep Embers / Burning wood (R > 110, R > 1.3*G, R > 1.5*B)
+          const isEmbers = (r > 110 && r > 1.3 * g && r > 1.5 * b);
+
+          if (isRedFire || isYellowFire || isWhiteCore || isEmbers) {
             flameCount++;
             maxTempC = Math.max(maxTempC, 850 + (r + g) / 4);
-          } else if (Math.abs(r - g) < 25 && Math.abs(g - b) < 25 && r > 80 && r < 210) {
+          } else if ((Math.abs(r - g) < 35 && Math.abs(g - b) < 35 && r > 65 && r < 225) ||
+                     (r > 85 && g > 70 && b < 165 && r > b && g > b)) {
             smokeCount++;
           }
         }
@@ -164,7 +176,7 @@ class AIVisionService {
 
       flameRatio = total > 0 ? (flameCount / total) : 0.05;
       smokeRatio = total > 0 ? (smokeCount / total) : 0.12;
-      isFire = flameRatio > 0.015 || (flameRatio > 0.008 && smokeRatio > 0.14);
+      isFire = flameRatio > 0.004 || (flameRatio > 0.002 && smokeRatio > 0.08);
     }
 
     let confidence = 0.0;
