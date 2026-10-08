@@ -1,5 +1,5 @@
 /**
- * AgniRakshak Citizen Reporting Engine
+ * ForestGuard-AI Citizen Reporting Engine
  * Handles image selection, Google/Leaflet interactive map, geocoding, and alert submission
  */
 
@@ -344,7 +344,7 @@ function initFormSubmission() {
       formData.append('reporterName', document.getElementById('reporterNameInput')?.value || 'Citizen Reporter');
       formData.append('reporterPhone', document.getElementById('reporterPhoneInput')?.value || '');
 
-      if (modalStep) modalStep.textContent = 'Executing AgniRakshak AI Vision Pipeline...';
+      if (modalStep) modalStep.textContent = 'Executing ForestGuard-AI Vision Pipeline...';
 
       const response = await fetch('/api/reports', {
         method: 'POST',

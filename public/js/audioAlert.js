@@ -1,5 +1,5 @@
 /**
- * AgniRakshak Web Audio Emergency Siren Synthesizer
+ * ForestGuard-AI Web Audio Emergency Siren Synthesizer
  * Uses native Web Audio API to create authentic emergency alert tones
  * without external audio file dependencies.
  */

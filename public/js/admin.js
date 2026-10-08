@@ -1,5 +1,5 @@
 /**
- * AgniRakshak Mission Control & Incident Response Command Center
+ * ForestGuard-AI Mission Control & Incident Response Command Center
  * Orchestrates Socket.io real-time alerts, map auto-zooming, glowing fire markers,
  * AI telemetry rendering, nearest station / water body routing, and squad dispatching.
  */
