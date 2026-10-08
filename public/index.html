@@ -13,51 +13,149 @@
 </head>
 <body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white">
 
-  <!-- 1.5-SECOND CINEMATIC INTRO FLASH CARD (AUTO-REDIRECTS TO HOME DASHBOARD BUTTONS) -->
-  <div id="introFlashCard" onclick="dismissIntroFlashCard()" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-500 cursor-pointer">
-    <!-- Cinematic High-Res Fire Background with Breathing Glow -->
-    <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-90 contrast-125 saturate-150 transform scale-105 animate-pulse" style="background-image: url('/images/forestfire_hero_bg.jpg');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/60 to-[#02050e]/80 pointer-events-none"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(239,68,68,0.25)_0%,_rgba(0,0,0,0.85)_75%)] pointer-events-none"></div>
+  <!-- ========================================================================= -->
+  <!-- ULTRA-STUNNING CINEMATIC INTRO FLASH CARD (TACTICAL HUD & DUAL-SPECTRUM GRAPHICS) -->
+  <!-- ========================================================================= -->
+  <div id="introFlashCard" onclick="dismissIntroFlashCard()" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-700 cursor-pointer">
+    <!-- Cinematic High-Res Fire Background with Breathing Motion & Dual Scanning Drones -->
+    <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-95 contrast-110 saturate-125 transform scale-105 animate-hero-breath" style="background-image: url('/images/intro_flash_bg.jpg');"></div>
+    
+    <!-- Multi-layered Atmospheric Dark Gradients & Cyber Vignette -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/50 to-[#02050e]/85 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(249,115,22,0.18)_0%,_rgba(2,5,14,0.72)_60%,_#02050e_100%)] pointer-events-none"></div>
 
-    <!-- Glowing Flash Card Box -->
-    <div class="relative z-10 max-w-xl w-full mx-4 p-8 rounded-3xl bg-[#070e1c]/95 border-2 border-orange-500/70 shadow-[0_0_60px_rgba(249,115,22,0.45)] backdrop-blur-xl text-center transform transition-all duration-300">
-      <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center text-3xl shadow-xl shadow-red-950/80 border border-orange-400/60 animate-bounce">
-        🔥
+    <!-- Ambient Dynamic Floating Embers Canvas -->
+    <canvas id="flashCardEmbersCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-[1]"></canvas>
+
+    <!-- Glowing Tactical HUD Flash Card Box -->
+    <div onclick="event.stopPropagation()" class="relative z-10 max-w-2xl w-full mx-4 p-6 sm:p-8 rounded-3xl bg-[#060c1d]/90 border-2 border-orange-500/60 shadow-[0_0_80px_rgba(249,115,22,0.45)] backdrop-blur-2xl text-center transform transition-all duration-500 animate-flashcard-glow cursor-default">
+      
+      <!-- Top Live Tactical Status Bar -->
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-orange-500/25 text-[11px] font-mono">
+        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-red-950/80 border border-red-500/60 text-red-300 font-bold tracking-wider shadow">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          <span>LIVE DEFENSE GRID • ACTIVE</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400 font-bold flex items-center gap-1.5 text-[10px] sm:text-[11px]">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+            AUTODISPATCH READY
+          </span>
+          <button id="btnSkipFlashCard" onclick="dismissIntroFlashCard()" class="ml-1 sm:ml-2 px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-600 text-[10px] font-sans font-black transition cursor-pointer">
+            SKIP (ESC) ✕
+          </button>
+        </div>
       </div>
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/90 border border-red-500/70 text-red-300 text-[10px] font-black tracking-widest uppercase mb-2 shadow">
-        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-        <span>NATIONAL FORESTRY DEFENSE PLATFORM</span>
+
+      <!-- Central Hero Graphics / Insignia with Animated Radar Sweep -->
+      <div class="relative inline-flex items-center justify-center mb-3">
+        <!-- Outer Glowing Pulse Rings -->
+        <div class="absolute w-24 h-24 rounded-full bg-gradient-to-r from-red-600/40 via-orange-500/40 to-amber-500/30 blur-xl animate-pulse"></div>
+        
+        <!-- Central Graphic Badge -->
+        <div class="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-red-600 via-orange-600 to-amber-500 p-0.5 shadow-2xl shadow-red-950 border border-orange-300/70 flex items-center justify-center">
+          <div class="w-full h-full bg-[#091124] rounded-[14px] flex items-center justify-center relative overflow-hidden">
+            <!-- Animated Radar Sweep in Badge -->
+            <div class="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,rgba(249,115,22,0.45)_0deg,transparent_60deg)] animate-radar-spin"></div>
+            <!-- High-Tech Fire Shield & Drone Icon -->
+            <svg class="w-10 h-10 text-orange-400 relative z-10 filter drop-shadow-[0_0_10px_rgba(249,115,22,0.9)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2c3.5 3 6.5 6 6.5 11a6.5 6.5 0 0 1-13 0c0-5 3-8 6.5-11z" fill="url(#introFlameGrad)" stroke="none"/>
+              <path d="M12 7c1.8 1.8 3.5 3.8 3.5 6.5a3.5 3.5 0 0 1-7 0c0-2.7 1.7-4.7 3.5-6.5z" fill="#fef08a" stroke="none"/>
+              <circle cx="12" cy="13" r="8" stroke="#f97316" stroke-width="1.5" stroke-dasharray="3 3"/>
+              <defs>
+                <linearGradient id="introFlameGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ef4444"/>
+                  <stop offset="60%" stop-color="#f97316"/>
+                  <stop offset="100%" stop-color="#facc15"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
       </div>
-      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-wider mb-1 drop-shadow-[0_2px_12px_rgba(239,68,68,0.8)]">
-        AGNIRAKSHAK AI
+
+      <!-- Title & Typographic Hierarchy -->
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white mb-1 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+        <span class="bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">AGNIRAKSHAK AI</span>
       </h1>
-      <p class="text-xs sm:text-sm font-bold text-amber-300 tracking-wide uppercase mb-2">
-        Forest Fire Early Warning & Geospatial Response System
-      </p>
-      <p class="text-xs text-slate-300 leading-relaxed mb-4 max-w-md mx-auto">
-        Dual-spectrum AI vision and geospatial command center for instant wildfire containment.
+      <div class="text-xs sm:text-sm font-black tracking-widest text-amber-300 uppercase mb-2">
+        REPORT • LOCATE • ALERT • RESPOND
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto mb-4 leading-relaxed font-medium">
+        India's AI-powered wildfire emergency platform connecting citizens, satellite hotspots, and response fleets through one live geospatial command grid.
       </p>
 
-      <!-- Quick Skip Button -->
-      <button id="btnSkipFlashCard" onclick="dismissIntroFlashCard(); event.stopPropagation();" class="px-7 py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2 mx-auto cursor-pointer">
-        <span>ENTER HOME DASHBOARDS</span> <span>→</span>
-      </button>
-      <div class="text-[10px] text-slate-400 mt-2">Tap anywhere or wait 1.5s to view Citizen & Admin options</div>
+      <!-- 3 Core Tactical Feature Cards with Rich Graphics -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 mb-5 text-left">
+        <!-- Card 1: AI Vision -->
+        <div class="p-3 rounded-xl bg-[#0b1730]/90 border border-orange-500/30 hover:border-orange-500/70 transition group shadow-md">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-base p-1 rounded-lg bg-red-950/80 text-red-400 border border-red-500/40">👁️</span>
+            <div>
+              <div class="text-[11px] font-black text-white group-hover:text-orange-400 transition">Dual-Spectrum AI</div>
+              <div class="text-[9px] font-mono text-emerald-400">98.8% Accuracy</div>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-300 leading-tight">Thermal IR + optical live vision for instant flame and smoke classification.</p>
+        </div>
+
+        <!-- Card 2: Geospatial Pointers -->
+        <div class="p-3 rounded-xl bg-[#0b1730]/90 border border-orange-500/30 hover:border-cyan-500/70 transition group shadow-md">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-base p-1 rounded-lg bg-cyan-950/80 text-cyan-400 border border-cyan-500/40">🎯</span>
+            <div>
+              <div class="text-[11px] font-black text-white group-hover:text-cyan-300 transition">Ground-Zero Pin</div>
+              <div class="text-[9px] font-mono text-cyan-400">Sub-Meter Precision</div>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-300 leading-tight">500m, 1.5km, 5km safety perimeters with deep satellite zoom inspection.</p>
+        </div>
+
+        <!-- Card 3: Real Station & Water Relay -->
+        <div class="p-3 rounded-xl bg-[#0b1730]/90 border border-orange-500/30 hover:border-sky-500/70 transition group shadow-md">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-base p-1 rounded-lg bg-sky-950/80 text-sky-400 border border-sky-500/40">🚒</span>
+            <div>
+              <div class="text-[11px] font-black text-white group-hover:text-sky-300 transition">Fleet Dispatch</div>
+              <div class="text-[9px] font-mono text-sky-400">Physical Building & Lake</div>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-300 leading-tight">Turnout routing strictly connecting physical fire stations and lakes.</p>
+        </div>
+      </div>
+
+      <!-- Quick Direct Entry CTA Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-4">
+        <a href="/user.html" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-red-950/80 border border-orange-400/60 transition flex items-center gap-2 cursor-pointer">
+          <span>📸</span> <span>CITIZEN DASHBOARD</span>
+        </a>
+        <a href="/admin.html" class="px-5 py-2.5 rounded-xl bg-[#09142b] hover:bg-red-950/70 border-2 border-red-500/70 hover:border-red-400 text-white font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center gap-2 cursor-pointer">
+          <span>🚨</span> <span>ADMIN COMMAND CENTER</span>
+        </a>
+        <button onclick="dismissIntroFlashCard()" class="px-4 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-600 font-bold text-xs uppercase tracking-wider transition flex items-center gap-1.5 cursor-pointer">
+          <span>⚡</span> <span>EXPLORE HOME</span>
+        </button>
+      </div>
+
+      <!-- Countdown Progress Bar & Visual Indicator -->
+      <div class="max-w-md mx-auto mt-1">
+        <div class="flex items-center justify-between text-[10px] text-slate-400 mb-1.5">
+          <span class="flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping"></span>
+            Redirecting to home dashboard...
+          </span>
+          <span id="flashCardTimer" class="font-mono text-orange-400 font-bold">2.5s</span>
+        </div>
+        <div class="w-full h-1.5 bg-slate-800/80 rounded-full overflow-hidden border border-slate-700/60">
+          <div id="flashCardProgress" class="h-full bg-gradient-to-r from-red-500 via-orange-500 to-amber-400 transition-all duration-75" style="width: 0%;"></div>
+        </div>
+        <div class="text-[10px] text-slate-500 mt-2">
+          Click anywhere or press <kbd class="px-1 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-[9px] border border-slate-700">ESC</kbd> to enter immediately
+        </div>
+      </div>
+
     </div>
   </div>
-  <script>
-    function dismissIntroFlashCard() {
-      const flash = document.getElementById('introFlashCard');
-      if (flash) {
-        flash.style.opacity = '0';
-        flash.style.pointerEvents = 'none';
-        setTimeout(() => { if (flash && flash.parentNode) flash.parentNode.removeChild(flash); }, 400);
-      }
-    }
-    // Auto-dismiss within 1.5 seconds so home buttons are immediately visible
-    setTimeout(dismissIntroFlashCard, 1500);
-  </script>
 
   <!-- Top Navigation -->
   <header class="border-b border-slate-800 bg-[#070e1c]/90 backdrop-blur-md sticky top-0 z-50">
@@ -71,6 +169,9 @@
       </div>
       
       <nav class="flex items-center gap-2 sm:gap-3">
+        <button onclick="replayIntroFlashCard()" class="px-2.5 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-950/60 border border-orange-500/50 text-orange-300 hover:text-white hover:bg-orange-600/40 transition flex items-center gap-1 cursor-pointer" title="Replay Intro Flash Card">
+          <span>⚡</span> <span class="hidden sm:inline">Intro Card</span>
+        </button>
         <a href="/index.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 transition flex items-center gap-1">
           <span>🏠</span> <span>Home</span>
         </a>
@@ -743,42 +844,123 @@
       }
 
       renderEmbers();
-    // 3-Second Cinematic Flash Card Countdown & Fade-out Controller
-    (function initFlashCardController() {
+    })();
+
+    // =========================================================================
+    // ULTRA-STUNNING INTRO FLASH CARD CONTROLLER & DYNAMIC PARTICLE ENGINE
+    // =========================================================================
+    let flashCardProgressTimer = null;
+    let isFlashDismissed = false;
+
+    function dismissIntroFlashCard() {
+      if (isFlashDismissed) return;
+      isFlashDismissed = true;
+      if (flashCardProgressTimer) clearInterval(flashCardProgressTimer);
+
       const flash = document.getElementById('introFlashCard');
+      if (flash) {
+        flash.style.opacity = '0';
+        flash.style.pointerEvents = 'none';
+        setTimeout(() => {
+          if (flash) flash.style.display = 'none';
+        }, 500);
+      }
+    }
+
+    function replayIntroFlashCard() {
+      isFlashDismissed = false;
+      const flash = document.getElementById('introFlashCard');
+      if (flash) {
+        flash.style.display = 'flex';
+        flash.style.opacity = '1';
+        flash.style.pointerEvents = 'auto';
+        initFlashCardCountdown();
+        initFlashCardEmbers();
+      }
+    }
+
+    function initFlashCardCountdown() {
+      if (flashCardProgressTimer) clearInterval(flashCardProgressTimer);
       const timerText = document.getElementById('flashCardTimer');
       const bar = document.getElementById('flashCardProgress');
-      const btnSkip = document.getElementById('btnSkipFlashCard');
-      if (!flash) return;
-
-      let timeLeft = 3000;
+      let timeLeft = 2500; // 2.5 seconds
       const step = 40;
-      const progressTimer = setInterval(() => {
+
+      flashCardProgressTimer = setInterval(() => {
         timeLeft -= step;
-        const pct = Math.min(100, Math.round(((3000 - timeLeft) / 3000) * 100));
+        const pct = Math.min(100, Math.round(((2500 - timeLeft) / 2500) * 100));
         if (bar) bar.style.width = pct + '%';
         if (timerText) timerText.textContent = Math.max(0, (timeLeft / 1000).toFixed(1)) + 's';
 
         if (timeLeft <= 0) {
-          clearInterval(progressTimer);
-          dismissFlashCard();
+          clearInterval(flashCardProgressTimer);
+          dismissIntroFlashCard();
         }
       }, step);
+    }
 
-      function dismissFlashCard() {
-        clearInterval(progressTimer);
-        if (flash) {
-          flash.classList.add('opacity-0', 'pointer-events-none');
-          setTimeout(() => {
-            flash.style.display = 'none';
-          }, 700);
+    // Dismiss immediately on Escape, Enter, or Space keys
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') && !isFlashDismissed) {
+        dismissIntroFlashCard();
+      }
+    });
+
+    // Ambient floating embers on flash card canvas
+    function initFlashCardEmbers() {
+      const cvs = document.getElementById('flashCardEmbersCanvas');
+      if (!cvs) return;
+      const ctx = cvs.getContext('2d');
+      let w = cvs.width = window.innerWidth;
+      let h = cvs.height = window.innerHeight;
+
+      const onResize = () => {
+        if (!cvs) return;
+        w = cvs.width = window.innerWidth;
+        h = cvs.height = window.innerHeight;
+      };
+      window.addEventListener('resize', onResize);
+
+      const embers = [];
+      for (let i = 0; i < 40; i++) {
+        embers.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2.2 + 0.8,
+          vx: (Math.random() - 0.5) * 0.9,
+          vy: -(Math.random() * 1.6 + 0.6),
+          alpha: Math.random() * 0.7 + 0.3,
+          color: Math.random() > 0.4 ? 'rgba(249, 115, 22, ' : 'rgba(239, 68, 68, '
+        });
+      }
+
+      function drawFlashEmbers() {
+        if (isFlashDismissed) return;
+        ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < embers.length; i++) {
+          const e = embers[i];
+          e.x += e.vx + Math.sin(e.y * 0.02) * 0.4;
+          e.y += e.vy;
+          if (e.y < -10) {
+            e.y = h + 10;
+            e.x = Math.random() * w;
+          }
+          ctx.beginPath();
+          ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+          ctx.fillStyle = e.color + e.alpha + ')';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#f97316';
+          ctx.fill();
         }
+        requestAnimationFrame(drawFlashEmbers);
       }
+      drawFlashEmbers();
+    }
 
-      if (btnSkip) {
-        btnSkip.addEventListener('click', dismissFlashCard);
-      }
-    })();
+    // Initialize countdown and embers on window load
+    initFlashCardCountdown();
+    initFlashCardEmbers();
   </script>
 </body>
 </html>
