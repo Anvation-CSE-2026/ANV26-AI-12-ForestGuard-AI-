@@ -1000,6 +1000,34 @@ function analyzeImageFast(imgElement, callback) {
 }
 
 // 4. Form Submission & Modals
+function openModal(modalEl) {
+  if (!modalEl) return;
+  document.body.classList.add('modal-open');
+  modalEl.classList.remove('hidden');
+}
+
+function closeModal(modalEl) {
+  if (!modalEl) return;
+  modalEl.classList.add('hidden');
+  const cm = document.getElementById('confirmAlertModal');
+  const sm = document.getElementById('successAlertModal');
+  const cmOpen = cm && !cm.classList.contains('hidden');
+  const smOpen = sm && !sm.classList.contains('hidden');
+  if (!cmOpen && !smOpen) {
+    document.body.classList.remove('modal-open');
+    if (typeof userMap !== 'undefined' && userMap) {
+      setTimeout(() => {
+        try { userMap.invalidateSize(); } catch (e) {}
+      }, 60);
+    }
+    if (typeof fullMap !== 'undefined' && fullMap) {
+      setTimeout(() => {
+        try { fullMap.invalidateSize(); } catch (e) {}
+      }, 60);
+    }
+  }
+}
+
 function initFormAndModals() {
   const form = document.getElementById('userReportForm');
   const confirmModal = document.getElementById('confirmAlertModal');
@@ -1043,49 +1071,49 @@ function initFormAndModals() {
       const stnName = nearestStn ? nearestStn.name : 'Bandipur Forest Response Unit';
       document.getElementById('modalStationDistText').textContent = `${stnName} - ${distKm} km (ETA: ${etaMin} min)`;
 
-      confirmModal.classList.remove('hidden');
+      openModal(confirmModal);
     });
   }
 
   // Cancel / Close for Confirmation Modal
   if (btnCancelSend) {
-    btnCancelSend.addEventListener('click', () => confirmModal.classList.add('hidden'));
+    btnCancelSend.addEventListener('click', () => closeModal(confirmModal));
   }
   if (btnCloseConfirmTop) {
-    btnCloseConfirmTop.addEventListener('click', () => confirmModal.classList.add('hidden'));
+    btnCloseConfirmTop.addEventListener('click', () => closeModal(confirmModal));
   }
 
   // Cancel / Close for Success Modal
   if (btnCloseSuccessTop) {
-    btnCloseSuccessTop.addEventListener('click', () => successModal.classList.add('hidden'));
+    btnCloseSuccessTop.addEventListener('click', () => closeModal(successModal));
   }
   if (btnCancelSuccessModal) {
-    btnCancelSuccessModal.addEventListener('click', () => successModal.classList.add('hidden'));
+    btnCancelSuccessModal.addEventListener('click', () => closeModal(successModal));
   }
 
   // Backdrop click to cancel/dismiss modals
   if (confirmModal) {
     confirmModal.addEventListener('click', (e) => {
-      if (e.target === confirmModal) confirmModal.classList.add('hidden');
+      if (e.target === confirmModal) closeModal(confirmModal);
     });
   }
   if (successModal) {
     successModal.addEventListener('click', (e) => {
-      if (e.target === successModal) successModal.classList.add('hidden');
+      if (e.target === successModal) closeModal(successModal);
     });
   }
 
   // Escape key to dismiss modals
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      if (confirmModal && !confirmModal.classList.contains('hidden')) confirmModal.classList.add('hidden');
-      if (successModal && !successModal.classList.contains('hidden')) successModal.classList.add('hidden');
+      if (confirmModal && !confirmModal.classList.contains('hidden')) closeModal(confirmModal);
+      if (successModal && !successModal.classList.contains('hidden')) closeModal(successModal);
     }
   });
 
   if (btnConfirmSend) {
     btnConfirmSend.addEventListener('click', async () => {
-      confirmModal.classList.add('hidden');
+      closeModal(confirmModal);
 
       try {
         const formData = new FormData();
@@ -1149,7 +1177,7 @@ function initFormAndModals() {
 
   if (btnGoReports) {
     btnGoReports.addEventListener('click', () => {
-      successModal.classList.add('hidden');
+      closeModal(successModal);
       const tabBtn = document.querySelector('[data-tab="tabMyReports"]');
       if (tabBtn) tabBtn.click();
     });
@@ -1157,7 +1185,7 @@ function initFormAndModals() {
 
   if (btnCloseSucc) {
     btnCloseSucc.addEventListener('click', () => {
-      successModal.classList.add('hidden');
+      closeModal(successModal);
       // Reset observation form cleanly
       const obs = document.getElementById('descObservation');
       if (obs) obs.value = '';
@@ -1189,7 +1217,7 @@ function handleSubmissionSuccess(incident) {
   document.getElementById('succStatus').textContent = incident.status;
   document.getElementById('succCoords').textContent = `${incident.latitude}, ${incident.longitude} (${incident.forestName})`;
 
-  document.getElementById('successAlertModal').classList.remove('hidden');
+  openModal(document.getElementById('successAlertModal'));
   renderMyReports();
 }
 

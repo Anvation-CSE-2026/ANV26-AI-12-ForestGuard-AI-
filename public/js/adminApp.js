@@ -589,6 +589,31 @@ function initUIEvents() {
     });
   }
 
+function openAdminModal(modalEl) {
+  if (!modalEl) return;
+  document.body.classList.add('modal-open');
+  modalEl.classList.remove('hidden');
+}
+
+function closeAdminModal(modalEl) {
+  if (!modalEl) return;
+  modalEl.classList.add('hidden');
+  const dm = document.getElementById('dispatchModal');
+  const iim = document.getElementById('imageInspectorModal');
+  const aam = document.getElementById('adminAuthModal');
+  const isDm = dm && !dm.classList.contains('hidden');
+  const isIim = iim && !iim.classList.contains('hidden');
+  const isAam = aam && !aam.classList.contains('hidden');
+  if (!isDm && !isIim && !isAam) {
+    document.body.classList.remove('modal-open');
+    if (window.forestMapEngine) {
+      setTimeout(() => {
+        try { window.forestMapEngine.invalidateSize(); } catch (e) {}
+      }, 60);
+    }
+  }
+}
+
   // Dispatch Response Modal (Section 14)
   const btnDisp = document.getElementById('btnDispatchAction');
   const dispModal = document.getElementById('dispatchModal');
@@ -626,17 +651,17 @@ function initUIEvents() {
         updateSelectedTelemetry();
       }
 
-      dispModal.classList.remove('hidden');
+      openAdminModal(dispModal);
     });
   }
 
   const btnCloseDispatchTop = document.getElementById('btnCloseDispatchTop');
-  if (btnCloseDispatchTop) btnCloseDispatchTop.addEventListener('click', () => dispModal.classList.add('hidden'));
-  if (btnCancelDisp) btnCancelDisp.addEventListener('click', () => dispModal.classList.add('hidden'));
+  if (btnCloseDispatchTop) btnCloseDispatchTop.addEventListener('click', () => closeAdminModal(dispModal));
+  if (btnCancelDisp) btnCancelDisp.addEventListener('click', () => closeAdminModal(dispModal));
 
   if (dispModal) {
     dispModal.addEventListener('click', (e) => {
-      if (e.target === dispModal) dispModal.classList.add('hidden');
+      if (e.target === dispModal) closeAdminModal(dispModal);
     });
   }
 
@@ -645,15 +670,15 @@ function initUIEvents() {
     if (e.key === 'Escape') {
       const dm = document.getElementById('dispatchModal');
       const iim = document.getElementById('imageInspectorModal');
-      if (dm && !dm.classList.contains('hidden')) dm.classList.add('hidden');
-      if (iim && !iim.classList.contains('hidden')) iim.classList.add('hidden');
+      if (dm && !dm.classList.contains('hidden')) closeAdminModal(dm);
+      if (iim && !iim.classList.contains('hidden')) closeAdminModal(iim);
     }
   });
 
   if (btnConfirmDisp) {
     btnConfirmDisp.addEventListener('click', async () => {
       if (!activeIncident) return;
-      dispModal.classList.add('hidden');
+      closeAdminModal(dispModal);
 
       const selectEl = document.getElementById('modalSelectTeam');
       const opt = selectEl ? selectEl.options[selectEl.selectedIndex] : null;
@@ -948,10 +973,15 @@ function initImageInspectorModal() {
   const scanLine = document.getElementById('inspectorScanLine');
 
   if (btnOpen && modal) {
-    btnOpen.addEventListener('click', () => modal.classList.remove('hidden'));
+    btnOpen.addEventListener('click', () => openAdminModal(modal));
   }
   if (btnClose && modal) {
-    btnClose.addEventListener('click', () => modal.classList.add('hidden'));
+    btnClose.addEventListener('click', () => closeAdminModal(modal));
+  }
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeAdminModal(modal);
+    });
   }
 
   if (dropzone && fileInput) {
@@ -1179,7 +1209,7 @@ function initAdminAuth() {
   const grantAccess = (isInstant = false) => {
     sessionStorage.setItem('FG_ADMIN_AUTH', 'granted');
     if (modal) {
-      modal.classList.add('hidden');
+      closeAdminModal(modal);
     }
     if (errBox) errBox.classList.add('hidden');
     if (passInput) {
@@ -1197,7 +1227,7 @@ function initAdminAuth() {
   if (isDemoUrl || sessionStorage.getItem('FG_ADMIN_AUTH') === 'granted') {
     grantAccess();
   } else {
-    if (modal) modal.classList.remove('hidden');
+    if (modal) openAdminModal(modal);
     if (passInput) setTimeout(() => passInput.focus(), 200);
   }
 
@@ -1239,7 +1269,7 @@ function initAdminAuth() {
   if (btnLogout) {
     btnLogout.addEventListener('click', () => {
       sessionStorage.removeItem('FG_ADMIN_AUTH');
-      if (modal) modal.classList.remove('hidden');
+      if (modal) openAdminModal(modal);
       if (passInput) {
         passInput.value = '';
         passInput.focus();

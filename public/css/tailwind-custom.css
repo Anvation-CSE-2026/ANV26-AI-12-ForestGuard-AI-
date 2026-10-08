@@ -204,11 +204,31 @@ body {
   z-index: 1 !important;
 }
 
-/* Emergency Modals: Always stacked strictly on top of all Leaflet maps and layer controls */
+/* While emergency modals are open, completely hide all map containers so Chromium hardware acceleration / translate3d never punches through */
+body.modal-open #userCentralMap,
+body.modal-open #userFullMap,
+body.modal-open #adminLiveMap,
+body.modal-open .leaflet-container {
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
+
+/* Emergency Modals: Always stacked strictly on top of all Leaflet maps, 3D transforms, and layer controls */
 .modal-emergency-layer {
-  z-index: 99999 !important;
+  z-index: 2147483647 !important; /* Maximum 32-bit integer z-index */
   position: fixed !important;
   inset: 0 !important;
+  background-color: rgba(0, 0, 0, 0.94) !important;
+  backdrop-filter: none !important; /* Bypasses Chromium GPU compositor translate3d punch-through */
+  -webkit-backdrop-filter: none !important;
+}
+
+.modal-emergency-layer .modal-card-box {
+  position: relative !important;
+  z-index: 2147483647 !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
 }
 
 /* Stunning Hero Forest Fire Breathing Zoom Animation */
