@@ -416,6 +416,92 @@ class ForestGuardMapEngine {
       this.markers[category] = [];
     }
   }
+  // --- Draw Radius Circles (500m, 1km, 5km) (Section 11) ---
+  drawRadiusCircles(lat, lng, radii = [500, 1000, 5000]) {
+    this.clearCircles();
+    this.circles = [];
+
+    const colors = [
+      { color: '#ef4444', fill: 'rgba(239, 68, 68, 0.15)', name: '500m Hot Zone' },
+      { color: '#f97316', fill: 'rgba(249, 115, 22, 0.08)', name: '1km Buffer Perimeter' },
+      { color: '#eab308', fill: 'rgba(234, 179, 8, 0.04)', name: '5km Response Sector' }
+    ];
+
+    radii.forEach((radiusMeters, idx) => {
+      const col = colors[idx] || colors[0];
+      if (this.mode === 'google-api') {
+        const circle = new google.maps.Circle({
+          strokeColor: col.color,
+          strokeOpacity: 0.8,
+          strokeWeight: 1.5,
+          fillColor: col.color,
+          fillOpacity: 0.1,
+          map: this.map,
+          center: { lat, lng },
+          radius: radiusMeters
+        });
+        this.circles.push(circle);
+      } else {
+        const circle = L.circle([lat, lng], {
+          radius: radiusMeters,
+          color: col.color,
+          weight: 1.5,
+          fillColor: col.color,
+          fillOpacity: 0.08,
+          dashArray: '5, 5'
+        }).addTo(this.map);
+        circle.bindTooltip(col.name, { permanent: false, direction: 'top' });
+        this.circles.push(circle);
+      }
+    });
+  }
+
+  clearCircles() {
+    if (this.circles) {
+      this.circles.forEach(c => {
+        if (this.mode === 'google-api') c.setMap(null);
+        else this.map.removeLayer(c);
+      });
+    }
+    this.circles = [];
+  }
+
+  // --- Live Response Team Vehicle Marker (Section 17) ---
+  updateTeamVehicleMarker(lat, lng, label = 'Team 04') {
+    if (this.teamVehicleMarker) {
+      if (this.mode === 'google-api') {
+        this.teamVehicleMarker.setPosition({ lat, lng });
+      } else {
+        this.teamVehicleMarker.setLatLng([lat, lng]);
+      }
+    } else {
+      if (this.mode === 'google-api') {
+        this.teamVehicleMarker = new google.maps.Marker({
+          position: { lat, lng },
+          map: this.map,
+          title: `${label} (EN ROUTE)`,
+          icon: {
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+            scale: 8,
+            fillColor: '#00e5ff',
+            fillOpacity: 1,
+            strokeColor: '#ffffff',
+            strokeWeight: 2
+          }
+        });
+      } else {
+        const icon = L.divIcon({
+          className: 'custom-vehicle-moving',
+          html: `<div style="background:#00e5ff; border:2px solid #fff; border-radius:50%; width:38px; height:38px; display:flex; align-items:center; justify-content:center; font-size:18px; box-shadow:0 0 16px #00e5ff; animation:pulse 1s infinite;">🚑</div>`,
+          iconSize: [38, 38],
+          iconAnchor: [19, 19]
+        });
+        this.teamVehicleMarker = L.marker([lat, lng], { icon }).addTo(this.map);
+        this.teamVehicleMarker.bindPopup(`<b>${label}</b><br><span style="color:#00e5ff;">STATUS: EN ROUTE</span>`);
+      }
+    }
+    return this.teamVehicleMarker;
+  }
 }
 
 window.forestMapEngine = new ForestGuardMapEngine();

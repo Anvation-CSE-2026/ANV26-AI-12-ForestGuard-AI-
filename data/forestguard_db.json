@@ -363,7 +363,1083 @@
       ],
       "createdAt": "2026-10-08T06:01:02.679Z",
       "updatedAt": "2026-10-08T06:01:29.707Z"
+    },
+    {
+      "incidentId": "FG-2026-7813",
+      "source": "Citizen Photo",
+      "imageUrl": "/sample_images/sample_wildfire.jpg",
+      "latitude": 11.6643,
+      "longitude": 76.625,
+      "forestName": "Bandipur Tiger Reserve",
+      "state": "Karnataka",
+      "district": "Chamarajanagar",
+      "aiConfidence": 98.8,
+      "severity": "CRITICAL",
+      "riskScore": 97,
+      "satelliteConfidence": 89.2,
+      "sensorConfidence": 78.5,
+      "status": "RESOLVED",
+      "aiExplanation": "Smoke and flame-like visual patterns detected in the uploaded image. Image classification indicates a high probability of forest fire.",
+      "affectedAreaHectares": 3.6,
+      "detectedFeatures": [
+        "Flames",
+        "Smoke",
+        "Heat-like region",
+        "Vegetation"
+      ],
+      "featureBreakdown": [
+        {
+          "name": "Flames",
+          "detected": true,
+          "confidence": 99
+        },
+        {
+          "name": "Smoke",
+          "detected": true,
+          "confidence": 94
+        },
+        {
+          "name": "Heat-like region",
+          "detected": true,
+          "confidence": 99
+        },
+        {
+          "name": "Vegetation",
+          "detected": true,
+          "confidence": 84
+        },
+        {
+          "name": "Haze",
+          "detected": false,
+          "confidence": 12
+        },
+        {
+          "name": "Cloud",
+          "detected": false,
+          "confidence": 8
+        },
+        {
+          "name": "Dust",
+          "detected": false,
+          "confidence": 5
+        }
+      ],
+      "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
+      "sourceBreakdown": [
+        {
+          "source": "CITIZEN PHOTO + AI",
+          "confidence": 99,
+          "status": "CONFIRMED"
+        },
+        {
+          "source": "SATELLITE (SNPP-VIIRS (375m))",
+          "confidence": 89,
+          "status": "HOTSPOT DETECTED"
+        },
+        {
+          "source": "IOT SENSOR (FS-KA-042)",
+          "confidence": 86,
+          "status": "THRESHOLD EXCEEDED",
+          "details": "Temp: 48.2°C | Humidity: 21% | Smoke: 78.5%"
+        }
+      ],
+      "nearestStation": {
+        "id": "STA-KA-01",
+        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.668,
+          "lng": 76.634
+        },
+        "phone": "+91-8229-236021",
+        "etaMinutesBase": 18,
+        "unitType": "Forest Fire Squad Alpha",
+        "crewCount": 16,
+        "waterTenders": 3,
+        "aerialDrones": 2,
+        "status": "AVAILABLE",
+        "distanceKm": 1.1,
+        "distanceMeters": 1100,
+        "etaMinutes": 8,
+        "routeWaypoints": [
+          [
+            11.668,
+            76.634
+          ],
+          [
+            11.66638,
+            76.6319
+          ],
+          [
+            11.6685,
+            76.63204
+          ],
+          [
+            11.66415,
+            76.6283
+          ],
+          [
+            11.66727,
+            76.62904
+          ],
+          [
+            11.66392,
+            76.6259
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "nearestWaterBody": {
+        "id": "WB-06",
+        "name": "Moyar River Deep Pool Draft Terminal",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.602,
+          "lng": 76.654
+        },
+        "type": "River Gorge Pool",
+        "capacity": "Continuous 14,000 LPM",
+        "waterSourceType": "RIVER",
+        "distanceKm": 7.6,
+        "distanceMeters": 7600,
+        "routeWaypoints": [
+          [
+            11.602,
+            76.654
+          ],
+          [
+            11.61616,
+            76.6459
+          ],
+          [
+            11.63515,
+            76.6407
+          ],
+          [
+            11.64731,
+            76.6314
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "reporter": {
+        "name": "Ranger Vikram",
+        "phone": "+91-9876543210",
+        "notes": "Flames rising near Moyar canyon"
+      },
+      "assignedTeam": {
+        "teamId": "TEAM-04",
+        "name": "Bandipur Quick Response Unit 4",
+        "dispatchedAt": "2026-10-08T06:14:50.342Z",
+        "etaMinutes": 14,
+        "notes": "Forest Strike Fleet dispatched with water tenders and drones."
+      },
+      "timeline": [
+        {
+          "time": "11:44:50 am",
+          "message": "New report submitted at Bandipur Tiger Reserve & National Park (11.6643, 76.625)",
+          "type": "REPORT"
+        },
+        {
+          "time": "11:44:50 am",
+          "message": "AI Image Analysis: 98.8% confidence",
+          "type": "AI"
+        },
+        {
+          "time": "11:44:50 am",
+          "message": "Multi-source risk: 97/100 (CRITICAL)",
+          "type": "RISK"
+        },
+        {
+          "time": "11:44:50 am",
+          "message": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
+          "type": "MULTI_SOURCE"
+        },
+        {
+          "time": "11:44:50 am",
+          "message": "Nearest response station: Bandipur Forest Rapid Response Unit (HQ) (1.1 km)",
+          "type": "STATION"
+        },
+        {
+          "time": "11:44:50 am",
+          "message": "Incident verified by Forest Operations Command",
+          "type": "VERIFY"
+        },
+        {
+          "time": "11:44:50 am",
+          "message": "Response dispatched: Bandipur Quick Response Unit 4 (ETA: 14 mins)",
+          "type": "DISPATCH"
+        },
+        {
+          "time": "11:44:50 am",
+          "message": "Fire reported CONTAINED by ground forestry crews.",
+          "type": "STATUS"
+        },
+        {
+          "time": "11:44:50 am",
+          "message": "Incident fully RESOLVED and mopped up.",
+          "type": "STATUS"
+        }
+      ],
+      "createdAt": "2026-10-08T06:14:50.329Z",
+      "updatedAt": "2026-10-08T06:14:50.371Z"
+    },
+    {
+      "incidentId": "FG-2026-6473",
+      "reporterId": "REP-ANON-704",
+      "source": "Manual Alert",
+      "detectionMethod": "Manual",
+      "imageUrl": "/sample_images/sample_wildfire.jpg",
+      "videoUrl": null,
+      "latitude": 11.6643,
+      "longitude": 76.625,
+      "forestName": "Bandipur Tiger Reserve",
+      "state": "Karnataka",
+      "district": "Chamarajanagar",
+      "description": "Flames rising near Moyar canyon",
+      "estimatedSize": "Medium",
+      "smokeVisible": false,
+      "flamesVisible": false,
+      "peopleInDanger": false,
+      "aiConfidence": 88,
+      "severity": "CRITICAL",
+      "riskScore": 93,
+      "satelliteConfidence": 89.2,
+      "sensorConfidence": 78.5,
+      "status": "RESOLVED",
+      "aiExplanation": "Manual ground verification pin placed by citizen on live map.",
+      "affectedAreaHectares": 2.4,
+      "affectedRadiiMeters": [
+        500,
+        1000,
+        5000
+      ],
+      "detectedFeatures": [
+        "Visual Smoke Reported"
+      ],
+      "featureBreakdown": [],
+      "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
+      "assignedStation": {
+        "stationId": "STA-KA-01",
+        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "distanceKm": 1.1,
+        "etaMinutes": 8,
+        "phone": "+91-8229-236021",
+        "availability": "AVAILABLE"
+      },
+      "assignedTeam": {
+        "teamId": "TEAM-04",
+        "name": "Team 04 (Bandipur Rapid Response Squad)",
+        "status": "DISPATCHED",
+        "dispatchedAt": "2026-10-08T06:17:16.137Z",
+        "etaMinutes": 14,
+        "distanceKm": 1.1,
+        "instruction": "Deploy 4000L foam tender to northern fireline",
+        "distanceRemainingKm": 3.2,
+        "etaRemainingMin": 5
+      },
+      "nearestWaterBody": {
+        "id": "WB-06",
+        "name": "Moyar River Deep Pool Draft Terminal",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.602,
+          "lng": 76.654
+        },
+        "type": "River Gorge Pool",
+        "capacity": "Continuous 14,000 LPM",
+        "waterSourceType": "RIVER",
+        "distanceKm": 7.6,
+        "distanceMeters": 7600,
+        "routeWaypoints": [
+          [
+            11.602,
+            76.654
+          ],
+          [
+            11.61616,
+            76.6459
+          ],
+          [
+            11.63515,
+            76.6407
+          ],
+          [
+            11.64731,
+            76.6314
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "reporter": {
+        "name": "Ranger Vikram",
+        "phone": "+91-9876543210",
+        "notes": "Flames rising near Moyar canyon"
+      },
+      "timeline": [
+        {
+          "time": "11:47:16 am",
+          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (11.6643, 76.625)",
+          "type": "REPORT"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Evidence ingested (Manual)",
+          "type": "INGEST"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "AI Analysis complete: 88% confidence (CRITICAL)",
+          "type": "AI"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Risk score calculated: 93 / 100",
+          "type": "RISK"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Admin authority alerted in real-time via Socket.IO",
+          "type": "ALERT"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Fire verified by Chief Conservator Sharma",
+          "type": "VERIFY"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Team 04 (Bandipur Rapid Response Squad) dispatched by Admin Command",
+          "type": "DISPATCH"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Team 04 (Bandipur Rapid Response Squad) accepted response mission",
+          "type": "ACCEPT"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Team 04 (Bandipur Rapid Response Squad) en route to forest ground zero",
+          "type": "TRAVEL"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Team 04 (Bandipur Rapid Response Squad) arrived at forest site - containment initiated",
+          "type": "ON_SITE"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Fire contained by forestry response crew",
+          "type": "CONTAINED"
+        },
+        {
+          "time": "11:47:16 am",
+          "message": "Incident closed and marked RESOLVED",
+          "type": "RESOLVE"
+        }
+      ],
+      "routeWaypoints": [
+        [
+          11.668,
+          76.634
+        ],
+        [
+          11.66638,
+          76.6319
+        ],
+        [
+          11.6685,
+          76.63204
+        ],
+        [
+          11.66415,
+          76.6283
+        ],
+        [
+          11.66727,
+          76.62904
+        ],
+        [
+          11.66392,
+          76.6259
+        ],
+        [
+          11.6643,
+          76.625
+        ]
+      ],
+      "routeProgressIndex": 4,
+      "createdAt": "2026-10-08T06:17:16.117Z",
+      "updatedAt": "2026-10-08T06:17:16.176Z",
+      "verifiedBy": "Chief Conservator Sharma",
+      "verifiedAt": "2026-10-08T06:17:16.128Z"
+    },
+    {
+      "incidentId": "FG-2026-9395",
+      "reporterId": "REP-ANON-207",
+      "source": "Manual Alert",
+      "detectionMethod": "Manual",
+      "imageUrl": "/sample_images/sample_wildfire.jpg",
+      "videoUrl": null,
+      "latitude": 11.6643,
+      "longitude": 76.625,
+      "forestName": "Bandipur Tiger Reserve",
+      "state": "Karnataka",
+      "district": "Chamarajanagar",
+      "description": "Flames rising near Moyar canyon",
+      "estimatedSize": "Medium",
+      "smokeVisible": false,
+      "flamesVisible": false,
+      "peopleInDanger": false,
+      "aiConfidence": 88,
+      "severity": "CRITICAL",
+      "riskScore": 93,
+      "satelliteConfidence": 89.2,
+      "sensorConfidence": 78.5,
+      "status": "RESOLVED",
+      "aiExplanation": "Manual ground verification pin placed by citizen on live map.",
+      "affectedAreaHectares": 2.4,
+      "affectedRadiiMeters": [
+        500,
+        1000,
+        5000
+      ],
+      "detectedFeatures": [
+        "Visual Smoke Reported"
+      ],
+      "featureBreakdown": [],
+      "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
+      "nearestStation": {
+        "id": "STA-KA-01",
+        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.668,
+          "lng": 76.634
+        },
+        "phone": "+91-8229-236021",
+        "etaMinutesBase": 18,
+        "unitType": "Forest Fire Squad Alpha",
+        "crewCount": 16,
+        "waterTenders": 3,
+        "aerialDrones": 2,
+        "status": "AVAILABLE",
+        "distanceKm": 1.1,
+        "distanceMeters": 1100,
+        "etaMinutes": 8,
+        "routeWaypoints": [
+          [
+            11.668,
+            76.634
+          ],
+          [
+            11.66638,
+            76.6319
+          ],
+          [
+            11.6685,
+            76.63204
+          ],
+          [
+            11.66415,
+            76.6283
+          ],
+          [
+            11.66727,
+            76.62904
+          ],
+          [
+            11.66392,
+            76.6259
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "assignedStation": {
+        "stationId": "STA-KA-01",
+        "name": "Bandipur Forest Rapid Response Unit (HQ)",
+        "distanceKm": 1.1,
+        "etaMinutes": 8,
+        "phone": "+91-8229-236021",
+        "availability": "AVAILABLE"
+      },
+      "rankedStations": [
+        {
+          "id": "STA-KA-01",
+          "name": "Bandipur Forest Rapid Response Unit (HQ)",
+          "forestId": "FOR-KA-01",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 11.668,
+            "lng": 76.634
+          },
+          "phone": "+91-8229-236021",
+          "etaMinutesBase": 18,
+          "unitType": "Forest Fire Squad Alpha",
+          "crewCount": 16,
+          "waterTenders": 3,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 1.1,
+          "distanceMeters": 1100,
+          "etaMinutes": 8,
+          "routeWaypoints": [
+            [
+              11.668,
+              76.634
+            ],
+            [
+              11.66638,
+              76.6319
+            ],
+            [
+              11.6685,
+              76.63204
+            ],
+            [
+              11.66415,
+              76.6283
+            ],
+            [
+              11.66727,
+              76.62904
+            ],
+            [
+              11.66392,
+              76.6259
+            ],
+            [
+              11.6643,
+              76.625
+            ]
+          ]
+        },
+        {
+          "id": "STA-KA-02",
+          "name": "Gundlupet Municipal Fire Brigade Station",
+          "forestId": "FOR-KA-01",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 11.805,
+            "lng": 76.689
+          },
+          "phone": "+91-8229-222101",
+          "etaMinutesBase": 28,
+          "unitType": "Municipal Heavy Tender Fleet",
+          "crewCount": 22,
+          "waterTenders": 5,
+          "aerialDrones": 1,
+          "status": "AVAILABLE",
+          "distanceKm": 17.1,
+          "distanceMeters": 17100,
+          "etaMinutes": 33,
+          "routeWaypoints": [
+            [
+              11.805,
+              76.689
+            ],
+            [
+              11.78055,
+              76.67773
+            ],
+            [
+              11.75983,
+              76.66871
+            ],
+            [
+              11.73265,
+              76.6558
+            ],
+            [
+              11.71293,
+              76.64737
+            ],
+            [
+              11.68675,
+              76.63507
+            ],
+            [
+              11.6643,
+              76.625
+            ]
+          ]
+        },
+        {
+          "id": "STA-MP-01",
+          "name": "Kanha Khatia Fire Response Post",
+          "forestId": "FOR-MP-01",
+          "state": "Madhya Pradesh",
+          "coordinates": {
+            "lat": 22.351,
+            "lng": 80.592
+          },
+          "phone": "+91-7632-256312",
+          "etaMinutesBase": 20,
+          "unitType": "Central Reserve Fire Patrol",
+          "crewCount": 14,
+          "waterTenders": 2,
+          "aerialDrones": 2,
+          "status": "AVAILABLE",
+          "distanceKm": 1260.7,
+          "distanceMeters": 1260700,
+          "etaMinutes": 2165,
+          "routeWaypoints": [
+            [
+              22.351,
+              80.592
+            ],
+            [
+              20.56888,
+              79.93023
+            ],
+            [
+              18.7905,
+              79.27071
+            ],
+            [
+              17.00565,
+              78.6073
+            ],
+            [
+              15.22827,
+              77.94837
+            ],
+            [
+              13.44442,
+              77.28557
+            ],
+            [
+              11.6643,
+              76.625
+            ]
+          ]
+        }
+      ],
+      "assignedTeam": {
+        "teamId": "TEAM-04",
+        "name": "Team 04 (Bandipur Rapid Response Squad)",
+        "status": "DISPATCHED",
+        "dispatchedAt": "2026-10-08T06:28:26.860Z",
+        "etaMinutes": 14,
+        "distanceKm": 1.1,
+        "instruction": "Deploy 4000L foam tender to northern fireline",
+        "distanceRemainingKm": 3.2,
+        "etaRemainingMin": 5
+      },
+      "nearestWaterBody": {
+        "id": "WB-06",
+        "name": "Moyar River Deep Pool Draft Terminal",
+        "forestId": "FOR-KA-01",
+        "state": "Karnataka",
+        "coordinates": {
+          "lat": 11.602,
+          "lng": 76.654
+        },
+        "type": "River Gorge Pool",
+        "capacity": "Continuous 14,000 LPM",
+        "waterSourceType": "RIVER",
+        "distanceKm": 7.6,
+        "distanceMeters": 7600,
+        "routeWaypoints": [
+          [
+            11.602,
+            76.654
+          ],
+          [
+            11.61616,
+            76.6459
+          ],
+          [
+            11.63515,
+            76.6407
+          ],
+          [
+            11.64731,
+            76.6314
+          ],
+          [
+            11.6643,
+            76.625
+          ]
+        ]
+      },
+      "rankedWaterBodies": [
+        {
+          "id": "WB-06",
+          "name": "Moyar River Deep Pool Draft Terminal",
+          "forestId": "FOR-KA-01",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 11.602,
+            "lng": 76.654
+          },
+          "type": "River Gorge Pool",
+          "capacity": "Continuous 14,000 LPM",
+          "waterSourceType": "RIVER",
+          "distanceKm": 7.6,
+          "distanceMeters": 7600,
+          "routeWaypoints": [
+            [
+              11.602,
+              76.654
+            ],
+            [
+              11.61616,
+              76.6459
+            ],
+            [
+              11.63515,
+              76.6407
+            ],
+            [
+              11.64731,
+              76.6314
+            ],
+            [
+              11.6643,
+              76.625
+            ]
+          ]
+        },
+        {
+          "id": "WB-01",
+          "name": "Kabini Reservoir & Backwaters",
+          "forestId": "FOR-KA-01",
+          "state": "Karnataka",
+          "coordinates": {
+            "lat": 11.968,
+            "lng": 76.352
+          },
+          "type": "Dam / Large Reservoir",
+          "capacity": "19.52 TMC (High Volume Aerial Drafting Access)",
+          "waterSourceType": "RESERVOIR",
+          "distanceKm": 45,
+          "distanceMeters": 45000,
+          "routeWaypoints": [
+            [
+              11.968,
+              76.352
+            ],
+            [
+              11.89066,
+              76.4194
+            ],
+            [
+              11.81815,
+              76.4897
+            ],
+            [
+              11.73881,
+              76.5559
+            ],
+            [
+              11.6643,
+              76.625
+            ]
+          ]
+        },
+        {
+          "id": "WB-03",
+          "name": "Periyar Lake Aquatic Sanctuary",
+          "forestId": "FOR-KL-01",
+          "state": "Kerala",
+          "coordinates": {
+            "lat": 9.532,
+            "lng": 77.17
+          },
+          "type": "Natural Freshwater Lake",
+          "capacity": "Unlimited Drafting Access",
+          "waterSourceType": "LAKE",
+          "distanceKm": 244.5,
+          "distanceMeters": 244500,
+          "routeWaypoints": [
+            [
+              9.532,
+              77.17
+            ],
+            [
+              10.06366,
+              77.0329
+            ],
+            [
+              10.60015,
+              76.8987
+            ],
+            [
+              11.12981,
+              76.7604
+            ],
+            [
+              11.6643,
+              76.625
+            ]
+          ]
+        }
+      ],
+      "reporter": {
+        "name": "Ranger Vikram",
+        "phone": "+91-9876543210",
+        "notes": "Flames rising near Moyar canyon"
+      },
+      "timeline": [
+        {
+          "time": "11:58:26 am",
+          "message": "Citizen reported fire at Bandipur Tiger Reserve & National Park (11.6643, 76.625)",
+          "type": "REPORT"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Evidence ingested (Manual)",
+          "type": "INGEST"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "AI Analysis complete: 88% confidence (CRITICAL)",
+          "type": "AI"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Risk score calculated: 93 / 100",
+          "type": "RISK"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Admin authority alerted in real-time via Socket.IO",
+          "type": "ALERT"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Fire verified by Chief Conservator Sharma",
+          "type": "VERIFY"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Team 04 (Bandipur Rapid Response Squad) dispatched by Admin Command",
+          "type": "DISPATCH"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Team 04 (Bandipur Rapid Response Squad) accepted response mission",
+          "type": "ACCEPT"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Team 04 (Bandipur Rapid Response Squad) en route to forest ground zero",
+          "type": "TRAVEL"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Team 04 (Bandipur Rapid Response Squad) arrived at forest site - containment initiated",
+          "type": "ON_SITE"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Fire contained by forestry response crew",
+          "type": "CONTAINED"
+        },
+        {
+          "time": "11:58:26 am",
+          "message": "Incident closed and marked RESOLVED",
+          "type": "RESOLVE"
+        }
+      ],
+      "routeWaypoints": [
+        [
+          11.668,
+          76.634
+        ],
+        [
+          11.66638,
+          76.6319
+        ],
+        [
+          11.6685,
+          76.63204
+        ],
+        [
+          11.66415,
+          76.6283
+        ],
+        [
+          11.66727,
+          76.62904
+        ],
+        [
+          11.66392,
+          76.6259
+        ],
+        [
+          11.6643,
+          76.625
+        ]
+      ],
+      "routeProgressIndex": 4,
+      "createdAt": "2026-10-08T06:28:26.835Z",
+      "updatedAt": "2026-10-08T06:28:26.920Z",
+      "verifiedBy": "Chief Conservator Sharma",
+      "verifiedAt": "2026-10-08T06:28:26.851Z"
     }
   ],
-  "lastSaved": "2026-10-08T06:01:29.708Z"
+  "teams": [
+    {
+      "teamId": "TEAM-01",
+      "name": "Team 01 (Bandipur Forest Unit)",
+      "stationId": "STA-KA-01",
+      "stationName": "Bandipur Forest Response Unit",
+      "status": "AVAILABLE",
+      "members": 6,
+      "vehicle": "Heavy Water Tender & Drone Patrol",
+      "coordinates": {
+        "lat": 11.668,
+        "lng": 76.634
+      },
+      "currentIncident": null,
+      "etaMinutes": 14
+    },
+    {
+      "teamId": "TEAM-02",
+      "name": "Team 02 (Gundlupet Municipal Squad)",
+      "stationId": "STA-KA-02",
+      "stationName": "Gundlupet Municipal Fire Brigade",
+      "status": "BUSY",
+      "members": 8,
+      "vehicle": "Dual Attack Bowser",
+      "coordinates": {
+        "lat": 11.805,
+        "lng": 76.689
+      },
+      "currentIncident": null,
+      "etaMinutes": 28
+    },
+    {
+      "teamId": "TEAM-03",
+      "name": "Team 03 (Nagarhole Wildlife Strike Force)",
+      "stationId": "STA-KA-03",
+      "stationName": "Nagarhole Rapid Post",
+      "status": "BUSY",
+      "members": 6,
+      "vehicle": "Quick Response Tender",
+      "coordinates": {
+        "lat": 11.961,
+        "lng": 76.134
+      },
+      "currentIncident": null,
+      "etaMinutes": 32
+    },
+    {
+      "teamId": "TEAM-04",
+      "name": "Team 04 (Bandipur Rapid Response Squad)",
+      "stationId": "STA-KA-01",
+      "stationName": "Bandipur Forest Response Unit",
+      "status": "AVAILABLE",
+      "members": 6,
+      "vehicle": "High-Clearance 4x4 Brush Engine + Drone",
+      "coordinates": {
+        "lat": 11.66727,
+        "lng": 76.62904
+      },
+      "currentIncident": "FG-2026-9395",
+      "etaMinutes": 16
+    },
+    {
+      "teamId": "TEAM-05",
+      "name": "Team 05 (Reserve Backup Squad)",
+      "stationId": "STA-KA-01",
+      "stationName": "Bandipur Forest Response Unit",
+      "status": "OFFLINE",
+      "members": 5,
+      "vehicle": "Logistics Bowser",
+      "coordinates": {
+        "lat": 11.668,
+        "lng": 76.634
+      },
+      "currentIncident": null,
+      "etaMinutes": 45
+    }
+  ],
+  "emergencyContacts": [
+    {
+      "id": "CT-NAT-112",
+      "state": "All India",
+      "district": "National",
+      "department": "Fire & Emergency Services (National Emergency Number)",
+      "phone": "112",
+      "type": "Fire",
+      "active": true,
+      "isOfficial": true,
+      "description": "Nationwide single emergency telephone number for immediate assistance."
+    },
+    {
+      "id": "CT-KA-FOR",
+      "state": "Karnataka",
+      "district": "Chamarajanagar / Mysore",
+      "department": "Karnataka Forest Department Wildfire Helpline",
+      "phone": "1926",
+      "type": "Forest",
+      "active": true,
+      "isOfficial": true,
+      "description": "Toll-free forest fire reporting and human-wildlife conflict helpline."
+    },
+    {
+      "id": "CT-KA-BAN",
+      "state": "Karnataka",
+      "district": "Chamarajanagar",
+      "department": "Bandipur Tiger Reserve Field Directorate Emergency Desk",
+      "phone": "+91-8229-236021",
+      "type": "Forest",
+      "active": true,
+      "isOfficial": false,
+      "description": "Direct forest range control room for Bandipur sectors."
+    },
+    {
+      "id": "CT-MP-FOR",
+      "state": "Madhya Pradesh",
+      "district": "Mandla / Balaghat",
+      "department": "MP State Forest Fire Control Room (Van Agni)",
+      "phone": "1926",
+      "type": "Forest",
+      "active": true,
+      "isOfficial": true,
+      "description": "State emergency control cell for Kanha and central tiger reserves."
+    },
+    {
+      "id": "CT-UK-FOR",
+      "state": "Uttarakhand",
+      "district": "Nainital",
+      "department": "Corbett Tiger Reserve Fire & Anti-Poaching Cell",
+      "phone": "+91-5947-251489",
+      "type": "Forest",
+      "active": true,
+      "isOfficial": false,
+      "description": "Special Tiger Protection Force 24x7 wireless control unit."
+    },
+    {
+      "id": "CT-KL-FOR",
+      "state": "Kerala",
+      "district": "Idukki",
+      "department": "Kerala Forest Wildlife Emergency Control",
+      "phone": "1800-425-4733",
+      "type": "Forest",
+      "active": true,
+      "isOfficial": true,
+      "description": "Periyar Reserve Forest Emergency response cell."
+    }
+  ],
+  "lastSaved": "2026-10-08T06:28:26.921Z"
 }

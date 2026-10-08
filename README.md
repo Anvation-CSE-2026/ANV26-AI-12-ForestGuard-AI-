@@ -1,19 +1,19 @@
 # 🌲🔥 FORESTGUARD AI
-### Live AI Forest Fire Detection, Mapping & Emergency Alert System for India
+### Live AI Forest Fire Detection, Mapping & Rapid Emergency Response System for India
 
-> **"Detect Earlier. Verify Smarter. Respond Faster."**
-> A real-time AI-powered forest fire monitoring system combining citizen reports, satellite intelligence and IoT microclimate sensors on one live geospatial command center.
+> **TAGLINE: "Report. Locate. Alert. Respond."**  
+> *"An AI-powered real-time forest fire emergency platform connecting citizens, forest authorities, and response teams through one live geospatial command center."*
 
 ---
 
-## 📑 Core Concept
+## 📑 Core Concept & Architecture
 
-Forest fires in India threaten rich biodiversity hotspots like **Bandipur**, **Nagarhole**, **Kanha**, and **Jim Corbett**. Traditional alerts are often isolated, delayed, or plagued by false-positive reports (such as sunsets, dust, or agricultural burning).
+Forest fires in India threaten vital biodiversity reserves such as **Bandipur**, **Nagarhole**, **Kanha**, and **Jim Corbett**. Traditional alerts are often fragmented, slow, or plagued by false alarms (such as sunset twilight, ambient haze, or agricultural burning).
 
-**FORESTGUARD AI** solves this by unifying:
-1. **Citizen Photographic Evidence** analyzed via Computer Vision & Explainable AI.
-2. **Orbital Thermal Satellites** (MODIS Terra/Aqua & NOAA SNPP-VIIRS 375m).
-3. **Ground-Truth IoT Sensor Grids** (LoRaWAN mesh measuring heat, low humidity, and smoke).
+**FORESTGUARD AI** establishes a closed-loop emergency ecosystem centered on a **LIVE GOOGLE MAP**:
+1. **User / Citizen Emergency Dashboard** (`/user.html`): 6 reporting methods (Image upload, camera snapshot, video upload, manual map pin, GPS geolocation, location search), dynamic pre-send confirmation modal, real-time report tracker, and state-wise emergency telephone directory.
+2. **Admin Command Operations Center** (`/admin.html`): Live Socket.IO alerts without refreshing, auto-zooming Google Map to ground zero, red pulsing marker with 500m/1km/5km impact rings, multi-source verification (Citizen + Satellite + IoT), ranked emergency response fleet, nearest water drafting source, and dispatch controls (preventing fake alerts).
+3. **Fire Station & Response Team Terminal** (`/station.html`): Mission assignment reception, turnout acceptance, road transit simulation with live vehicle GPS telemetry, on-site arrival, and containment controls.
 
 Instead of treating fire reports in isolation, the platform cross-references all 3 streams into a **Multi-Source Risk Score (0–100)**. When a critical threshold (≥75) is crossed, it transmits an instantaneous **Socket.IO alert to the Admin Command Center**, auto-zooms Google Maps, drops an animated **red pulsing fire marker**, calculates the **nearest Forest Response Unit** and **nearest water drafting source**, and coordinates simulated rapid dispatch!
 
@@ -91,12 +91,14 @@ As defined in the project architecture:
 npm start
 ```
 Open:
-- Landing Page: [http://localhost:3000](http://localhost:3000)
-- Citizen Report: [http://localhost:3000/report.html](http://localhost:3000/report.html)
-- Admin Command Center: [http://localhost:3000/admin.html](http://localhost:3000/admin.html)
-- Satellite Radar: [http://localhost:3000/satellite.html](http://localhost:3000/satellite.html)
-- IoT Sensor Grid: [http://localhost:3000/iot.html](http://localhost:3000/iot.html)
-- Analytics: [http://localhost:3000/analytics.html](http://localhost:3000/analytics.html)
+- 🌐 Landing Page: [http://localhost:3000](http://localhost:3000)
+- 👤 User Emergency Dashboard: [http://localhost:3000/user.html](http://localhost:3000/user.html)
+- 🚨 Admin Command Operations Center: [http://localhost:3000/admin.html](http://localhost:3000/admin.html)
+- 🚒 Fire Station & Response Terminal: [http://localhost:3000/station.html](http://localhost:3000/station.html)
+- 📸 Dedicated Fire Report: [http://localhost:3000/report.html](http://localhost:3000/report.html)
+- 🛰️ Satellite Thermal Radar: [http://localhost:3000/satellite.html](http://localhost:3000/satellite.html)
+- 📡 IoT Sensor Grid: [http://localhost:3000/iot.html](http://localhost:3000/iot.html)
+- 📊 Incident Analytics: [http://localhost:3000/analytics.html](http://localhost:3000/analytics.html)
 
 ### Option 2: Full Dual-Stack (Python AI + Node.js)
 ```bash

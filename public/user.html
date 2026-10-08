@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Emergency Dashboard | FORESTGUARD AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/tailwind-custom.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-[#070e1c]/95 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/index.html" class="text-2xl filter drop-shadow-[0_0_8px_#f97316]">🌲🔥</a>
+        <div>
+          <div class="text-lg font-black tracking-wider text-white">FORESTGUARD AI</div>
+          <div class="text-[11px] text-orange-400 font-bold -mt-0.5 tracking-wider uppercase">USER EMERGENCY DASHBOARD</div>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 text-xs font-bold">
+        <button class="nav-tab px-3 py-1.5 rounded-lg text-white bg-slate-800" data-tab="tabReport">Report Fire</button>
+        <button class="nav-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white" data-tab="tabMyReports">My Reports</button>
+        <button class="nav-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white" data-tab="tabLiveMap">Live Map</button>
+        <button class="nav-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white" data-tab="tabContacts">Emergency Contacts</button>
+      </nav>
+
+      <!-- Action Button to Admin -->
+      <div class="flex items-center gap-2">
+        <a href="/admin.html" target="_blank" class="px-3 py-1.5 rounded-lg bg-red-950/80 border border-red-600/60 text-red-400 hover:bg-red-600 hover:text-white text-xs font-black transition flex items-center gap-1.5">
+          <span>🚨</span> <span class="hidden sm:inline">Admin Authority Center</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+
+    <!-- Top Section Banner -->
+    <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-[#0d182e] to-[#070e1c] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <div class="text-[11px] font-black text-orange-400 uppercase tracking-widest">RAPID FOREST RESPONSE SYSTEM</div>
+        <h1 class="text-xl sm:text-2xl font-black text-white mt-0.5">REPORT A FOREST FIRE</h1>
+        <p class="text-xs text-slate-400 mt-1 italic">"See a fire? Report it immediately. Every alert is pinned directly onto the live authority radar."</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="tel:112" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-black tracking-wider uppercase transition flex items-center gap-2 shadow-lg shadow-red-950">
+          <span>📞</span> <span>CALL 112 (FIRE)</span>
+        </a>
+        <button id="btnQuickReportNow" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-black tracking-wider uppercase transition flex items-center gap-1.5">
+          <span>🚨</span> <span>REPORT FIRE NOW</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 1: REPORT FIRE (Default Active) -->
+    <div id="tabReport" class="tab-content space-y-6">
+      
+      <!-- Section: MULTIPLE REPORTING METHODS (6 Methods as specified in prompt) -->
+      <div class="p-4 rounded-2xl bg-[#091122] border border-slate-800">
+        <div class="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">SELECT REPORTING METHOD</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          
+          <button class="method-card p-3 rounded-xl border border-orange-500/80 bg-orange-950/30 text-center transition" data-method="Image">
+            <span class="text-2xl block mb-1">📸</span>
+            <span class="text-xs font-bold text-white block">Upload Image</span>
+            <span class="text-[10px] text-orange-300">JPG, PNG, WEBP</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="Camera">
+            <span class="text-2xl block mb-1">📷</span>
+            <span class="text-xs font-bold text-white block">Capture Camera</span>
+            <span class="text-[10px] text-slate-400">Live Device Snap</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="Video">
+            <span class="text-2xl block mb-1">🎥</span>
+            <span class="text-xs font-bold text-white block">Video Upload</span>
+            <span class="text-[10px] text-slate-400">Short Video Clip</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="Manual">
+            <span class="text-2xl block mb-1">📍</span>
+            <span class="text-xs font-bold text-white block">Manual Map Pin</span>
+            <span class="text-[10px] text-slate-400">Tap Location</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="GPS">
+            <span class="text-2xl block mb-1">🎯</span>
+            <span class="text-xs font-bold text-white block">Current GPS</span>
+            <span class="text-[10px] text-slate-400">Use Device Loc</span>
+          </button>
+
+          <button class="method-card p-3 rounded-xl border border-slate-700 bg-[#0d182e] text-center hover:border-orange-500 transition" data-method="Search">
+            <span class="text-2xl block mb-1">🔍</span>
+            <span class="text-xs font-bold text-white block">Search Area</span>
+            <span class="text-[10px] text-slate-400">Forest / Village</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Main Two-Column Reporting Area -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left Column: Input Method Panels & Media Preview -->
+        <div class="lg:col-span-5 space-y-4">
+          
+          <!-- Method 1 Panel: Image Upload -->
+          <div id="panelImage" class="method-panel p-5 rounded-2xl bg-[#091122] border border-slate-800">
+            <h3 class="text-xs font-black text-slate-300 uppercase tracking-wider mb-2">DRAG & DROP FIRE IMAGE</h3>
+            <div id="userDropzone" class="border-2 border-dashed border-slate-700 hover:border-orange-500 rounded-xl p-6 text-center cursor-pointer transition bg-[#040814]/60 relative">
+              <input type="file" id="userFileInput" accept="image/png, image/jpeg, image/jpg, image/webp" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" />
+              <div class="text-3xl mb-1">🖼️</div>
+              <div class="text-xs font-bold text-white">Click or Drop Image Here</div>
+              <div class="text-[10px] text-slate-400">JPG, JPEG, PNG, WEBP</div>
+            </div>
+
+            <!-- Preset Scenarios -->
+            <div class="mt-4 pt-3 border-t border-slate-800">
+              <span class="text-[10px] text-slate-400 font-bold uppercase block mb-1.5">⚡ 1-Click Test Scenarios:</span>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <button type="button" class="btn-user-preset p-2 rounded-lg bg-[#0d182e] hover:bg-orange-950/40 border border-slate-700 text-left" data-path="/sample_images/sample_wildfire.jpg" data-forest="Bandipur Forest" data-lat="11.6643" data-lng="76.6250">
+                  <span class="text-orange-400 font-bold block text-[11px]">🔥 Bandipur Wildfire</span>
+                  <span class="text-[9px] text-slate-400">94% High Severity</span>
+                </button>
+                <button type="button" class="btn-user-preset p-2 rounded-lg bg-[#0d182e] hover:bg-yellow-950/40 border border-slate-700 text-left" data-path="/sample_images/sample_sunset_safe.jpg" data-forest="Bannerghatta Hills" data-lat="12.8009" data-lng="75.5762">
+                  <span class="text-yellow-400 font-bold block text-[11px]">🌅 Sunset (Safe)</span>
+                  <span class="text-[9px] text-slate-400">False-Alarm Test</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Method 2 Panel: Camera Capture -->
+          <div id="panelCamera" class="method-panel hidden p-5 rounded-2xl bg-[#091122] border border-slate-800 space-y-3">
+            <h3 class="text-xs font-black text-slate-300 uppercase tracking-wider">LIVE CAMERA CAPTURE</h3>
+            <div class="relative rounded-xl overflow-hidden bg-black h-56 flex items-center justify-center border border-slate-700">
+              <video id="cameraVideo" autoplay playsinline class="w-full h-full object-cover"></video>
+              <canvas id="cameraCanvas" class="hidden"></canvas>
+              <div id="cameraStatusText" class="absolute text-xs text-slate-400">Camera preview will appear here</div>
+            </div>
+            <div class="flex gap-2">
+              <button type="button" id="btnStartCamera" class="flex-1 py-2 rounded-lg bg-sky-950 border border-sky-600 text-sky-300 font-bold text-xs">
+                OPEN CAMERA
+              </button>
+              <button type="button" id="btnSnapPhoto" class="flex-1 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs" disabled>
+                📸 TAKE PHOTO
+              </button>
+            </div>
+          </div>
+
+          <!-- Method 3 Panel: Video Upload -->
+          <div id="panelVideo" class="method-panel hidden p-5 rounded-2xl bg-[#091122] border border-slate-800 space-y-3">
+            <h3 class="text-xs font-black text-slate-300 uppercase tracking-wider">VIDEO UPLOAD</h3>
+            <div class="border-2 border-dashed border-slate-700 rounded-xl p-6 text-center cursor-pointer bg-[#040814]/60 relative">
+              <input type="file" id="userVideoInput" accept="video/mp4, video/webm" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" />
+              <div class="text-3xl mb-1">🎥</div>
+              <div class="text-xs font-bold text-white">Upload Short Video Clip</div>
+              <div class="text-[10px] text-slate-400">MP4, WebM (Frame-by-frame analysis)</div>
+            </div>
+            <video id="videoPreviewPlayer" controls class="w-full h-40 rounded-xl border border-slate-700 hidden mt-2"></video>
+          </div>
+
+          <!-- Method 4/5/6 Controls: GPS & Search Toolbar -->
+          <div class="p-4 rounded-2xl bg-[#091122] border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-slate-300">LOCATION TOOLS</span>
+              <button type="button" id="btnCurrentGps" class="text-sky-400 hover:text-white font-bold flex items-center gap-1">
+                <span>📍</span> <span>USE MY CURRENT LOCATION</span>
+              </button>
+            </div>
+            <div class="flex gap-2">
+              <input type="text" id="inputSearchLocation" placeholder="Search Forest, Village, District, Landmark..." class="flex-1 bg-[#040814] border border-slate-700 focus:border-orange-500 rounded-lg px-3 py-1.5 text-xs text-white outline-none" />
+              <button type="button" id="btnSearchLoc" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg">
+                Search
+              </button>
+            </div>
+          </div>
+
+          <!-- Media Preview & AI Analysis Feedback Card -->
+          <div id="mediaFeedbackCard" class="p-4 rounded-2xl bg-[#091122] border border-orange-500/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white">EVIDENCE PREVIEW & AI READOUT</span>
+              <span id="txtAiBadge" class="text-[10px] font-black px-2 py-0.5 rounded bg-red-950 border border-red-600 text-red-300">FIRE DETECTED</span>
+            </div>
+            <div class="h-36 rounded-xl overflow-hidden bg-black border border-slate-800 relative">
+              <img id="imgMediaPreview" src="/sample_images/sample_wildfire.jpg" class="w-full h-full object-cover" />
+            </div>
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-400">Confidence: <b id="txtAiConf" class="text-orange-400">94%</b></span>
+              <span class="text-slate-400">Severity: <b id="txtAiSev" class="text-red-400">HIGH</b></span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Central Google Map & Detailed Fire Report Form -->
+        <div class="lg:col-span-7 space-y-4">
+          
+          <!-- Central Google Map Card -->
+          <div class="p-5 rounded-2xl bg-[#091122] border border-slate-800 shadow-xl space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <span>🗺️</span> <span>CENTRAL GOOGLE MAP (PIN EXACT LOCATION)</span>
+                </h2>
+                <div class="text-[10px] text-slate-400">Tap anywhere on map or drag pin to position ground zero.</div>
+              </div>
+              <span class="text-[10px] font-bold text-emerald-400 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> LIVE GPS PINNED
+              </span>
+            </div>
+
+            <!-- Map Container -->
+            <div id="userCentralMap" class="w-full h-72 rounded-xl border border-slate-700 relative bg-[#040814] overflow-hidden"></div>
+
+            <!-- Location Information Readout -->
+            <div class="p-3 rounded-xl bg-[#040814] border border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+              <div>
+                <span class="text-[10px] text-slate-400 block">Forest / Area:</span>
+                <span id="readoutForest" class="font-bold text-white truncate block">Bandipur Forest</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 block">District:</span>
+                <span id="readoutDistrict" class="font-bold text-slate-200 truncate block">Chamarajanagar</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 block">State:</span>
+                <span id="readoutState" class="font-bold text-slate-200 truncate block">Karnataka</span>
+              </div>
+              <div>
+                <span class="text-[10px] text-slate-400 block">Coordinates:</span>
+                <span id="readoutCoords" class="font-mono text-cyan-400 font-bold block">11.6643, 76.6250</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FIRE REPORT FORM (Section 4) -->
+          <div class="p-5 rounded-2xl bg-[#091122] border border-slate-800 shadow-xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+              <h2 class="text-xs font-black text-white uppercase tracking-wider">FIRE REPORT DETAILS</h2>
+              <span class="text-[10px] text-slate-400">Incident Telemetry</span>
+            </div>
+
+            <form id="userReportForm" class="space-y-3.5">
+              
+              <!-- Description -->
+              <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">Describe What You Observed</label>
+                <textarea id="descObservation" rows="2" class="w-full bg-[#040814] border border-slate-700 focus:border-orange-500 rounded-xl px-3 py-2 text-xs text-white outline-none resize-none" placeholder="e.g. Visible smoke and flames moving towards ridge line, strong wind..."></textarea>
+              </div>
+
+              <!-- Options Grid: Size, Smoke, Flames, People in Danger -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Estimated Fire Size</label>
+                  <select id="selFireSize" class="w-full bg-[#040814] border border-slate-700 rounded-lg px-2 py-1.5 text-white outline-none">
+                    <option value="Small">Small (&lt;100m)</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Large" selected>Large (Canopy)</option>
+                    <option value="Unknown">Unknown</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Smoke Visible?</label>
+                  <select id="selSmoke" class="w-full bg-[#040814] border border-slate-700 rounded-lg px-2 py-1.5 text-white outline-none">
+                    <option value="true" selected>YES</option>
+                    <option value="false">NO</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Flames Visible?</label>
+                  <select id="selFlames" class="w-full bg-[#040814] border border-slate-700 rounded-lg px-2 py-1.5 text-white outline-none">
+                    <option value="true" selected>YES</option>
+                    <option value="false">NO</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">People in Danger?</label>
+                  <select id="selPeople" class="w-full bg-[#040814] border border-slate-700 rounded-lg px-2 py-1.5 text-white outline-none">
+                    <option value="false" selected>NO</option>
+                    <option value="true">YES (URGENT)</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <!-- Large Red Button: SEND FIRE ALERT (Section 5) -->
+              <div class="pt-2">
+                <button type="submit" id="btnOpenAlertConfirm" class="btn-shimmer w-full py-4 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 text-white font-black text-base tracking-wider uppercase shadow-xl shadow-red-950/60 hover:brightness-110 active:scale-[0.99] transition flex items-center justify-center gap-2">
+                  <span>🚨</span> <span>SEND FIRE ALERT</span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- TAB 2: MY REPORTS (Section 8) -->
+    <div id="tabMyReports" class="tab-content hidden space-y-4">
+      <div class="border-b border-slate-800 pb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-black text-white">MY SUBMITTED REPORTS</h2>
+          <p class="text-xs text-slate-400">Track real-time operational status updates directly from Forest Authority Command.</p>
+        </div>
+        <span class="text-xs font-mono text-cyan-400">LIVE WEBSOCKET STREAMING</span>
+      </div>
+
+      <!-- Reports List Container -->
+      <div id="myReportsList" class="space-y-3">
+        <!-- Dynamically rendered report tracking cards -->
+      </div>
+    </div>
+
+    <!-- TAB 3: LIVE MAP (Interactive Forest & Hydrant Viewer) -->
+    <div id="tabLiveMap" class="tab-content hidden space-y-4">
+      <div class="border-b border-slate-800 pb-3 flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-black text-white">LIVE GEOSPATIAL MAP (INDIA FORESTS)</h2>
+          <p class="text-xs text-slate-400">View active incidents, water reservoirs, response stations, and forest reserves.</p>
+        </div>
+      </div>
+      <div id="userFullMap" class="w-full h-[520px] rounded-2xl border border-slate-700 overflow-hidden bg-[#040814]"></div>
+    </div>
+
+    <!-- TAB 4: EMERGENCY CONTACTS (Section 7 & 26) -->
+    <div id="tabContacts" class="tab-content hidden space-y-4">
+      <div class="border-b border-slate-800 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <h2 class="text-xl font-black text-white">EMERGENCY TELEPHONE DIRECTORY</h2>
+          <p class="text-xs text-slate-400">State-wise verified forest emergency desks and national 112 emergency services.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <select id="selContactStateFilter" class="bg-[#091122] border border-slate-700 text-xs text-white rounded-lg px-3 py-1.5 outline-none">
+            <option value="All India">All India Numbers</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="Kerala">Kerala</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="contactsGrid">
+        <!-- Loaded via API -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- CONFIRMATION MODAL: SEND EMERGENCY FIRE ALERT? (Section 5) -->
+  <div id="confirmAlertModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#091122] border-2 border-red-500/80 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="text-center">
+        <div class="w-14 h-14 rounded-full bg-red-950 text-red-400 text-2xl flex items-center justify-center mx-auto mb-2 border border-red-600 animate-pulse">
+          🚨
+        </div>
+        <h3 class="text-lg font-black text-white">SEND EMERGENCY FIRE ALERT?</h3>
+        <p class="text-xs text-slate-400 mt-0.5">Please confirm telemetry before dispatching to Command:</p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-[#040814] border border-slate-800 space-y-2 text-xs font-mono">
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">Location:</span>
+          <span id="modalLocationText" class="font-bold text-white font-sans text-right">Bandipur Forest</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">Source / Method:</span>
+          <span id="modalSourceText" class="font-bold text-orange-400 font-sans">Uploaded Image</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">AI Confidence:</span>
+          <span id="modalConfText" class="font-bold text-amber-400">94%</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">Severity:</span>
+          <span id="modalSevText" class="font-bold text-red-400 font-sans uppercase">HIGH</span>
+        </div>
+        <div class="flex justify-between border-t border-slate-800 pt-1.5">
+          <span class="text-slate-400 font-sans">Nearby Fire Station:</span>
+          <span id="modalStationDistText" class="font-bold text-purple-400 font-sans">8.4 km (ETA: 16 min)</span>
+        </div>
+      </div>
+
+      <div class="p-2.5 rounded-lg bg-red-950/40 border border-red-600/40 text-[10px] text-red-300 text-center">
+        ⚠️ Immediate emergency transmission will alert the Forest Fire Command Center.
+      </div>
+
+      <div class="flex gap-3">
+        <button type="button" id="btnCancelSend" class="flex-1 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs">
+          CANCEL
+        </button>
+        <button type="button" id="btnConfirmSend" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase shadow-lg">
+          SEND ALERT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL: EMERGENCY ALERT SENT (Section 6) -->
+  <div id="successAlertModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#091122] border-2 border-emerald-500 rounded-2xl max-w-md w-full p-6 shadow-2xl text-center space-y-4">
+      <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 text-3xl flex items-center justify-center mx-auto border border-emerald-500">
+        ✓
+      </div>
+
+      <div>
+        <div class="text-xs font-black tracking-widest text-emerald-400 uppercase">🚨 EMERGENCY ALERT SENT</div>
+        <h3 class="text-lg font-black text-white mt-1">Incident Transmitted to Command</h3>
+      </div>
+
+      <div class="p-4 rounded-xl bg-[#040814] border border-slate-800 text-xs font-mono text-left space-y-2">
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">Incident ID:</span>
+          <span id="succIncidentId" class="font-bold text-sky-400 text-sm">FG-2026-1052</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">Status:</span>
+          <span id="succStatus" class="font-bold text-amber-400 px-2 py-0.5 rounded bg-amber-950 font-sans">ADMIN AUTHORITY NOTIFIED</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400 font-sans">Location:</span>
+          <span id="succCoords" class="text-slate-200">11.6643, 76.6250</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-300 italic">
+        "Your fire report has been transmitted to the ForestGuard emergency command center."
+      </p>
+
+      <div class="flex flex-col gap-2 pt-2">
+        <button type="button" id="btnGoToMyReports" class="w-full py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs uppercase transition">
+          View in My Reports
+        </button>
+        <button type="button" id="btnCloseSuccessModal" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition">
+          Submit Another Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-slate-800 bg-[#02050c] py-4 px-4 text-center text-xs text-slate-500">
+    FORESTGUARD AI &copy; 2026. User Emergency Dashboard. Emergency dispatches simulated for evaluation.
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/audioAlert.js"></script>
+  <script src="/js/mapEngine.js"></script>
+  <script src="/js/userApp.js"></script>
+</body>
+</html>

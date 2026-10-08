@@ -112,6 +112,35 @@ function initSocket() {
     }
   });
 
+  // TEAM LOCATION PROGRESS UPDATE ALONG ROUTE
+  socket.on('team_location_update', (data) => {
+    console.log('🚑 [SOCKET EVENT: team_location_update]', data);
+    if (data.coordinates) {
+      window.forestMapEngine.updateTeamVehicleMarker(data.coordinates.lat, data.coordinates.lng, data.teamId);
+    }
+    const distEl = document.getElementById('detailStationDist');
+    const etaEl = document.getElementById('detailStationEta');
+    if (distEl) distEl.textContent = `${data.remainingDistanceKm} km`;
+    if (etaEl) etaEl.textContent = `ETA: ${data.remainingEtaMin} min`;
+  });
+
+  // GENERAL RESPONSE STATUS UPDATE
+  socket.on('response_status_updated', (updated) => {
+    updateIncidentInList(updated);
+    if (activeIncident && activeIncident.incidentId === updated.incidentId) {
+      selectIncident(updated, false);
+    }
+  });
+
+  // FIRE CONTAINED
+  socket.on('fire_contained', (data) => {
+    const inc = data.incident;
+    updateIncidentInList(inc);
+    if (activeIncident && activeIncident.incidentId === inc.incidentId) {
+      selectIncident(inc, false);
+    }
+  });
+
   // SENSOR THRESHOLD ALERT
   socket.on('sensor_alert', (sensorAlert) => {
     console.log('📡 [SOCKET EVENT: sensor_alert]', sensorAlert);
@@ -171,6 +200,9 @@ function selectIncident(incident, shouldCenter = true) {
   // Clear previous routes & add marker
   window.forestMapEngine.clearRoutes();
   window.forestMapEngine.addFireMarker(incident, () => selectIncident(incident, false));
+
+  // Draw 500m, 1km, 5km affected radius circles (Section 11)
+  window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1000, 5000]);
 
   // Draw Route to Nearest Response Station (PURPLE route)
   if (incident.nearestStation && incident.nearestStation.routeWaypoints) {
@@ -250,11 +282,44 @@ function renderIncidentDetailPanel(incident) {
   }
 
   // Nearby Station (PURPLE)
-  const st = incident.nearestStation || {};
+  const st = incident.nearestStation || incident.assignedStation || {};
   document.getElementById('detailStationName').textContent = st.name || 'Bandipur Forest Response Unit';
   document.getElementById('detailStationDist').textContent = `${st.distanceKm || 8.7} km`;
   document.getElementById('detailStationEta').textContent = `ETA: ${st.etaMinutes || 18} min`;
   document.getElementById('detailStationPhone').textContent = st.phone || '+91-8229-236021';
+
+  // Ranked Response Stations List
+  const rankedContainer = document.getElementById('detailRankedStationsList');
+  if (rankedContainer) {
+    const stations = incident.rankedStations && incident.rankedStations.length > 0
+      ? incident.rankedStations
+      : (st.name ? [st] : []);
+
+    rankedContainer.innerHTML = stations.map((s, idx) => {
+      const isFirst = idx === 0;
+      const rankTag = isFirst ? '#1 RECOMMENDED' : (idx === 1 ? '#2 STANDBY' : `#${idx + 1} MUTUAL AID`);
+      const rankBg = isFirst ? 'bg-purple-950 text-purple-300 border-purple-600' : 'bg-slate-800 text-slate-400 border-slate-700';
+      const statusColor = s.status === 'AVAILABLE' ? 'text-emerald-400' : 'text-amber-400';
+
+      return `
+        <div class="p-2 rounded-lg bg-[#040814] border border-slate-800 flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-[9px] font-black px-1.5 py-0.2 rounded border ${rankBg}">${rankTag}</span>
+              <span class="font-bold text-white text-[11px] truncate max-w-[150px]">${s.name}</span>
+            </div>
+            <div class="text-[10px] text-slate-400 mt-0.5">
+              Status: <span class="font-bold ${statusColor}">${s.status || 'AVAILABLE'}</span> • ${s.waterTenders || 2} Tenders
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="font-mono font-bold text-purple-300 text-xs">${s.distanceKm} km</div>
+            <div class="text-[10px] text-slate-400">ETA: ${s.etaMinutes} min</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
 
   // Nearby Water Body (BLUE)
   const wb = incident.nearestWaterBody || {};
@@ -436,9 +501,32 @@ function initUIEvents() {
       if (!activeIncident) return;
       document.getElementById('modalIncidentId').textContent = activeIncident.incidentId;
       document.getElementById('modalLocation').textContent = activeIncident.forestName;
-      document.getElementById('modalTeamName').textContent = activeIncident.nearestStation?.name || 'Forest Fire Rapid Response Unit';
-      document.getElementById('modalDistance').textContent = `${activeIncident.nearestStation?.distanceKm || 8.7} km`;
-      document.getElementById('modalEta').textContent = `${activeIncident.nearestStation?.etaMinutes || 18} Minutes`;
+
+      const selectEl = document.getElementById('modalSelectTeam');
+      const primaryStation = activeIncident.nearestStation || activeIncident.assignedStation || { id: 'STA-KA-01', name: 'Bandipur Forest Response Unit', distanceKm: 8.4, etaMinutes: 16 };
+      const stations = activeIncident.rankedStations && activeIncident.rankedStations.length > 0
+        ? activeIncident.rankedStations
+        : [primaryStation];
+
+      if (selectEl) {
+        selectEl.innerHTML = stations.map((s, idx) => `
+          <option value="${s.id || s.stationId}" data-dist="${s.distanceKm}" data-eta="${s.etaMinutes}" data-name="${s.name}">
+            ${idx === 0 ? '⭐ [Recommended #1] ' : `[Rank #${idx + 1}] `}${s.name} (${s.distanceKm} km, ETA: ${s.etaMinutes} min)
+          </option>
+        `).join('');
+
+        const updateSelectedTelemetry = () => {
+          const opt = selectEl.options[selectEl.selectedIndex];
+          if (opt) {
+            document.getElementById('modalDistance').textContent = `${opt.dataset.dist} km`;
+            document.getElementById('modalEta').textContent = `${opt.dataset.eta} Minutes`;
+          }
+        };
+
+        selectEl.onchange = updateSelectedTelemetry;
+        updateSelectedTelemetry();
+      }
+
       dispModal.classList.remove('hidden');
     });
   }
@@ -450,15 +538,24 @@ function initUIEvents() {
       if (!activeIncident) return;
       dispModal.classList.add('hidden');
 
+      const selectEl = document.getElementById('modalSelectTeam');
+      const opt = selectEl ? selectEl.options[selectEl.selectedIndex] : null;
+      const primaryStation = activeIncident.nearestStation || activeIncident.assignedStation || {};
+      const chosenId = opt ? opt.value : (primaryStation.id || 'STA-KA-01');
+      const chosenName = opt ? opt.dataset.name : (primaryStation.name || 'Forest Fire Rapid Response Unit');
+      const chosenEta = opt ? parseInt(opt.dataset.eta) : (primaryStation.etaMinutes || 16);
+      const chosenDist = opt ? parseFloat(opt.dataset.dist) : (primaryStation.distanceKm || 8.4);
+
       try {
         const res = await fetch(`/api/incidents/${activeIncident.incidentId}/dispatch`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            teamId: activeIncident.nearestStation?.id,
-            teamName: activeIncident.nearestStation?.name,
-            etaMinutes: activeIncident.nearestStation?.etaMinutes,
-            notes: 'Emergency water tender and drone strike squad deployed.'
+            teamId: chosenId,
+            teamName: chosenName,
+            etaMinutes: chosenEta,
+            distanceKm: chosenDist,
+            instruction: `Deploy high-pressure water tender and aerial surveillance drones to ${activeIncident.forestName}.`
           })
         });
 

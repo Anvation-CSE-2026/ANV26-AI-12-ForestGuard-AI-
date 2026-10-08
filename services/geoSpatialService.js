@@ -107,6 +107,45 @@ class GeoSpatialService {
     };
   }
 
+  findRankedResponseStations(lat, lng, limit = 4) {
+    const list = (this.forestData.responseStations || []).map(st => {
+      const d = this.getDistanceKm(lat, lng, st.coordinates.lat, st.coordinates.lng);
+      const distKm = parseFloat(d.toFixed(1));
+      const eta = Math.max(8, Math.round((distKm / 35) * 60 + 4));
+      return {
+        ...st,
+        distanceKm: distKm,
+        distanceMeters: Math.round(distKm * 1000),
+        etaMinutes: eta,
+        routeWaypoints: this.generateRoute([st.coordinates.lat, st.coordinates.lng], [lat, lng], 6)
+      };
+    });
+
+    list.sort((a, b) => {
+      if (a.status === 'AVAILABLE' && b.status !== 'AVAILABLE') return -1;
+      if (b.status === 'AVAILABLE' && a.status !== 'AVAILABLE') return 1;
+      return a.distanceKm - b.distanceKm;
+    });
+
+    return list.slice(0, limit);
+  }
+
+  findRankedWaterBodies(lat, lng, limit = 3) {
+    const list = (this.forestData.waterBodies || []).map(wb => {
+      const d = this.getDistanceKm(lat, lng, wb.coordinates.lat, wb.coordinates.lng);
+      const distKm = parseFloat(d.toFixed(1));
+      return {
+        ...wb,
+        distanceKm: distKm,
+        distanceMeters: Math.round(distKm * 1000),
+        routeWaypoints: this.generateRoute([wb.coordinates.lat, wb.coordinates.lng], [lat, lng], 4)
+      };
+    });
+
+    list.sort((a, b) => a.distanceKm - b.distanceKm);
+    return list.slice(0, limit);
+  }
+
   findNearestWaterBody(lat, lng) {
     let closest = null;
     let minDist = Infinity;

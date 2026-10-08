@@ -245,6 +245,17 @@
           </div>
         </div>
 
+        <!-- Ranked Emergency Response Fleet List -->
+        <div id="detailRankedStationsCard" class="p-3 rounded-xl bg-[#091122] border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between text-[10px] font-black uppercase tracking-wider text-slate-400">
+            <span>RANKED EMERGENCY STATIONS</span>
+            <span class="text-purple-400 font-mono text-[9px]">AVAILABLE → PROXIMITY → ETA</span>
+          </div>
+          <div id="detailRankedStationsList" class="space-y-1.5 text-xs">
+            <!-- Dynamically populated ranked stations -->
+          </div>
+        </div>
+
         <!-- Nearest Water Body -->
         <div class="p-3 rounded-xl bg-[#091122] border border-sky-500/40 flex items-center justify-between">
           <div>
@@ -315,9 +326,11 @@
           <span class="text-slate-400">Target Location:</span>
           <span id="modalLocation" class="font-bold text-white">Bandipur Forest Region</span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400">Assigned Team:</span>
-          <span id="modalTeamName" class="font-bold text-purple-400">Forest Response Team 04</span>
+        <div class="space-y-1 pt-1 border-t border-slate-800">
+          <label class="text-[11px] font-bold text-slate-300 block">Select Response Unit / Station:</label>
+          <select id="modalSelectTeam" class="w-full bg-[#0d182e] border border-purple-500/60 text-white rounded-lg px-2.5 py-1.5 text-xs font-bold outline-none focus:border-red-500">
+            <!-- Dynamically populated with ranked stations -->
+          </select>
         </div>
         <div class="flex justify-between">
           <span class="text-slate-400">Transit Distance:</span>
