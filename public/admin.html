@@ -1232,21 +1232,31 @@
         Live Forest Fire Command Center controls provincial dispatch, emergency sirens, and multi-source AI radar. Enter the command passcode, sign in with Google, or click the instant login button below.
       </p>
 
-      <!-- Password Input Form with Small Instant Login Button -->
+      <!-- Username & Password Form with Small Instant Login Button -->
       <form id="adminAuthForm" class="space-y-3.5">
+        <!-- Officer Username Input -->
         <div class="space-y-1.5">
           <div class="flex items-center justify-between text-xs">
-            <label for="adminPassInput" class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Command Passcode:</label>
+            <label for="adminUsernameInput" class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Officer Username:</label>
+            <span class="text-[11px] font-mono text-slate-400">Default: <b class="text-amber-400 select-all font-mono">admin</b></span>
+          </div>
+          <input type="text" id="adminUsernameInput" value="admin" placeholder="Enter officer username (e.g. admin)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono tracking-wider transition" autocomplete="username" />
+        </div>
+
+        <!-- Clearance Passcode / Password Input -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between text-xs">
+            <label for="adminPassInput" class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Command Passcode / Password:</label>
             <span class="text-[11px] font-mono text-slate-400">Default: <b class="text-amber-400 select-all font-mono">admin123</b></span>
           </div>
           <div class="relative">
-            <input type="password" id="adminPassInput" placeholder="Enter clearance passcode (e.g. admin123)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono tracking-wider transition pr-10" autocomplete="current-password" />
+            <input type="password" id="adminPassInput" value="admin123" placeholder="Enter clearance passcode (e.g. admin123)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono tracking-wider transition pr-10" autocomplete="current-password" />
             <button type="button" id="btnTogglePassVisibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs px-1.5 py-1 cursor-pointer" title="Show/Hide Passcode">👁️</button>
           </div>
         </div>
 
         <div id="adminAuthError" class="hidden text-xs text-red-300 bg-red-950/80 border border-red-700/80 rounded-xl p-2.5 flex items-center gap-2">
-          <span>⚠️</span> <span>Incorrect passcode. Use <b>admin123</b>, sign in with Google, or click <b>Instant 1-Click Login</b>.</span>
+          <span>⚠️</span> <span>Incorrect credentials. Use username <b>admin</b> & password <b>admin123</b>, or click <b>Instant 1-Click Login</b>.</span>
         </div>
 
         <!-- Action Buttons: Authenticate Passcode + Small Instant Login Button -->

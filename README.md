@@ -89,9 +89,14 @@ Mobile Citizen Dashboard (Smartphone)
    - Triangulates actual government fire stations and certified drafting reservoirs/lakes within the immediate district.
    - Renders neat dotted orange response trajectory lines directly from the station building to the fire ground zero, and dotted blue water drafting routes from the lake.
 
-6. **🔐 Admin Passcode Gate & Instant Login**:
-   - Command dispatch and tactical approvals are guarded behind an administrative passcode.
-   - Includes a **⚡ Instant Login** one-click bypass for rapid, frictionless jury and hackathon evaluations.
+6. **🔐 Officer Authorization & Admin Access (Username, Password & Instant 1-Click Login)**:
+   - **Default Officer Credentials**:
+     - **Username**: `admin` *(also accepts `commander`, `officer`)*
+     - **Password / Passcode**: `admin123` *(also accepts `forestguard2026`, `agni123`, `rakshak2026`)*
+   - **⚡ Instant 1-Click Login**: Instant evaluator access without passwords via the prominent `Instant 1-Click Login` button in the authorization modal and the top navigation bar.
+   - **Google Sign-In**: Instant 1-click Google officer account authorization (`Sign in with Google`).
+   - **🔒 Homepage & Admin Lock Buttons**: Click the lock symbol (`🔒`) in the navigation bar to trigger officer authorization anytime.
+   - **Zero Friction & Open by Default**: If the lock icon is not clicked, all public dashboards and maps open immediately at 100% speed without forced blocking overlays.
 
 ---
 
@@ -129,7 +134,7 @@ Mobile Citizen Dashboard (Smartphone)
    - Click **🔬 Deep Zoom (Tree/Building)** to zoom deeply into Ground Zero at `zoom: 19` to view individual buildings and tree canopies.
    - Click **🎯 Default Zoom** to restore the operational sector view with the fire station and waterbody.
 6. **Step 5: Dispatch Response Team**:
-   - Admin unlocks via **⚡ Instant Login** (or passcode `admin123`), selects the recommended local unit and clicks **DEPLOY UNIT**.
+   - Admin unlocks via **⚡ Instant 1-Click Login** (or username `admin` / password `admin123`), selects the recommended local unit and clicks **DEPLOY UNIT**.
    - Live emergency vehicle tracking animates along the dotted route to Ground Zero!
 
 ---
@@ -180,6 +185,18 @@ python ai_service.py
 npm start
 ```
 *(On Windows, you can double-click `start.bat`)*
+
+### 🔑 Officer Authorization & Admin Clearance Credentials
+When logging into the Admin Dashboard or clicking the lock icon (`🔒`):
+
+| Field | Default Value | Accepted Values | Notes |
+| :--- | :--- | :--- | :--- |
+| **Officer Username** | `admin` | `admin`, `commander`, `officer` | Officer clearance identity |
+| **Command Password** | `admin123` | `admin123`, `forestguard2026`, `agni123`, `rakshak2026` | Tactical command passcode (toggle eye available) |
+| **⚡ Instant Login** | `Instant 1-Click Login` | Direct 1-click button | 1-click instant evaluator bypass (no password needed) |
+| **Google Sign-In** | `Sign in with Google` | Direct 1-click button | Verified officer Google account access |
+
+> **💡 Zero Friction Default**: If the lock symbol is not clicked, all dashboards ([User/Citizen](http://localhost:8119/user.html), [Admin](http://localhost:8119/admin.html), and [Live Demo](http://localhost:8119/demo.html)) load completely open without any forced blocking overlay!
 
 ---
 

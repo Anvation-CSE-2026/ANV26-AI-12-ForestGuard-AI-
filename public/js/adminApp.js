@@ -2395,6 +2395,7 @@ function initImageInspectorModal() {
 function initAdminAuth() {
   const modal = document.getElementById('adminAuthModal');
   const form = document.getElementById('adminAuthForm');
+  const userInput = document.getElementById('adminUsernameInput');
   const passInput = document.getElementById('adminPassInput');
   const errBox = document.getElementById('adminAuthError');
   const btnInstant = document.getElementById('btnAdminInstantLogin');
@@ -2494,13 +2495,15 @@ function initAdminAuth() {
     });
   }
 
-  // Form Submission Check
+  // Form Submission Check (Username + Password)
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const u = (userInput ? userInput.value : '').trim().toLowerCase();
       const val = (passInput ? passInput.value : '').trim();
       const validCodes = ['admin123', 'forestguard2026', 'admin', 'agni123', 'rakshak2026'];
-      if (validCodes.includes(val)) {
+      if ((u === 'admin' || u === 'commander' || u === 'officer' || u.length > 0) && validCodes.includes(val)) {
+        if (u) sessionStorage.setItem('FG_OFFICER_NAME', u);
         grantAccess(false);
       } else {
         if (errBox) errBox.classList.remove('hidden');
