@@ -291,28 +291,7 @@ function getValidRouteWaypoints(startCoords, endCoords, candidateWaypoints) {
 
   if (lat1 === undefined || lng1 === undefined || lat2 === undefined || lng2 === undefined) return [];
 
-  const minLat = Math.min(lat1, lat2) - 0.08;
-  const maxLat = Math.max(lat1, lat2) + 0.08;
-  const minLng = Math.min(lng1, lng2) - 0.08;
-  const maxLng = Math.max(lng1, lng2) + 0.08;
-
-  let isValid = candidateWaypoints && Array.isArray(candidateWaypoints) && candidateWaypoints.length >= 2;
-  if (isValid) {
-    for (const pt of candidateWaypoints) {
-      const pLat = pt[0];
-      const pLng = pt[1];
-      if (pLat < minLat || pLat > maxLat || pLng < minLng || pLng > maxLng) {
-        isValid = false;
-        break;
-      }
-    }
-  }
-
-  if (isValid) {
-    return [ [lat1, lng1], ...candidateWaypoints.slice(1, -1), [lat2, lng2] ];
-  }
-
-  // Generate crisp direct line connecting strictly from building/waterbody to fire ground zero
+  // Strictly direct straight line connecting from building/waterbody to fire ground zero (no zig-zags)
   return [ [lat1, lng1], [lat2, lng2] ];
 }
 
@@ -422,9 +401,9 @@ function selectIncident(incident, shouldCenter = true) {
     window.forestMapEngine.clearPopulationExposureCircles();
     window.forestMapEngine.addFireMarker(incident, () => selectIncident(incident, false));
 
-    // Draw 500m, 1.5km, 5km affected radius circles
+    // Draw 500m affected active fire zone (strictly single clean boundary, eliminating unwanted outer area boxes)
     if (lat !== undefined && lng !== undefined) {
-      window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1500, 5000]);
+      window.forestMapEngine.drawRadiusCircles(lat, lng, [500]);
     }
 
     // Strictly ONE nearest response station building marker & crisp dotted orange route
@@ -541,7 +520,10 @@ function renderIncidentDetailPanel(incident) {
 
   // Image
   const imgEl = document.getElementById('detailImage');
-  imgEl.src = incident.imageUrl || '/sample_images/sample_wildfire.jpg';
+  if (imgEl) {
+    imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = '/sample_images/sample_wildfire.jpg'; };
+    imgEl.src = incident.imageUrl || '/sample_images/sample_wildfire.jpg';
+  }
 
   // AI Detection Result Score Board (YOLOv8 Engine)
   updateAdminScoreboard(incident.scoreboard || incident);
@@ -1445,7 +1427,7 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.clearRoutes();
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
-        window.forestMapEngine.drawRadiusCircles(12.8550, 77.5420, [500, 1500, 5000]);
+        window.forestMapEngine.drawRadiusCircles(12.8550, 77.5420, [500]);
         window.forestMapEngine.addStationMarker({ name: 'Anjanapura Fire & Emergency Station (Karnataka Fire Services)', coordinates: { lat: 12.8575, lng: 77.5623 }, etaMinutes: 5 });
         window.forestMapEngine.drawRoute([[12.8575, 77.5623], [12.8550, 77.5420]], '#f97316', true);
         window.forestMapEngine.addWaterMarker({ name: 'Vajarahalli Lake & Emergency Drafting Reservoir (KSSEM)', coordinates: { lat: 12.8715, lng: 77.5430 }, capacity: 'Continuous 35,000 Litres Aerial Drafting' });
@@ -1464,7 +1446,7 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.clearRoutes();
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
-        window.forestMapEngine.drawRadiusCircles(12.8258, 77.5158, [500, 1500, 5000]);
+        window.forestMapEngine.drawRadiusCircles(12.8258, 77.5158, [500]);
         window.forestMapEngine.addStationMarker({ name: 'DSATM Campus & Rapid Fire Post (Karnataka Fire Services)', coordinates: { lat: 12.8258, lng: 77.5158 }, etaMinutes: 4 });
         window.forestMapEngine.drawRoute([[12.8258, 77.5158], [12.8258, 77.5158]], '#f97316', true);
         window.forestMapEngine.addWaterMarker({ name: 'Kaggalipura Lake Emergency Reservoir (DSATM)', coordinates: { lat: 12.8025, lng: 77.5050 }, capacity: '50,000 Litres Rapid Pump Draft' });
@@ -1483,7 +1465,7 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.clearRoutes();
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
-        window.forestMapEngine.drawRadiusCircles(11.6643, 76.6250, [500, 1500, 5000]);
+        window.forestMapEngine.drawRadiusCircles(11.6643, 76.6250, [500]);
         window.forestMapEngine.addStationMarker({ name: 'Bandipur Range Forest Office & Fire Command (HQ)', coordinates: { lat: 11.6617, lng: 76.6272 }, etaMinutes: 4 });
         window.forestMapEngine.drawRoute([[11.6617, 76.6272], [11.6643, 76.6250]], '#f97316', true);
         window.forestMapEngine.addWaterMarker({ name: 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)', coordinates: { lat: 11.6672, lng: 76.6215 }, capacity: 'Continuous 25,000 LPM Aerial Drafting' });
@@ -2309,7 +2291,7 @@ window.addEventListener('message', (e) => {
         window.forestMapEngine.clearRoutes();
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
-        window.forestMapEngine.drawRadiusCircles(lat, lng, [500, 1500, 5000]);
+        window.forestMapEngine.drawRadiusCircles(lat, lng, [500]);
         window.forestMapEngine.addStationMarker({ name: nearestSt.name, coordinates: stCoords, etaMinutes: nearestSt.etaMinutesBase || 4 });
         window.forestMapEngine.drawRoute([[stCoords.lat, stCoords.lng], [lat, lng]], '#f97316', true);
         window.forestMapEngine.addWaterMarker({ name: nearestWb.name, coordinates: wbCoords, capacity: nearestWb.capacity || 'Continuous 25,000 LPM' });

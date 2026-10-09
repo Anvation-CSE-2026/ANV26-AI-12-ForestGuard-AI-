@@ -1912,7 +1912,7 @@ function renderMyReports() {
       <div class="p-4 rounded-2xl bg-[#091122] border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex items-start gap-3">
           <div class="w-16 h-16 rounded-xl bg-black border border-slate-700 overflow-hidden shrink-0">
-            <img src="${inc.imageUrl || '/sample_images/sample_wildfire.jpg'}" class="w-full h-full object-cover" />
+            <img src="${inc.imageUrl || '/sample_images/sample_wildfire.jpg'}" onerror="this.onerror=null; this.src='/sample_images/sample_wildfire.jpg';" class="w-full h-full object-cover" />
           </div>
           <div>
             <div class="flex items-center gap-2 flex-wrap">
@@ -2071,22 +2071,18 @@ function initFullMap() {
   L.marker([bandipurLat, bandipurLng], { icon: fireIcon }).addTo(fullMap)
     .bindTooltip(`<b>Reported Fire at Bandipur National Park (Sector 4B)</b><br><span style="color:#ef4444;font-size:11px;">CRITICAL • ACTIVE FIRE</span>`, { direction: 'top', offset: [0, -16] });
 
-  // 2. Concentric Danger Rings (500m, 1.5km, 5km)
-  // Keeps shade ONLY in the first radius (500m Hot Zone), retains clean dotted radius lines
+  // 2. Focused 500m Active Fire Danger Ring (eliminating unwanted outer boxes)
   [
-    { r: 500, col: '#ef4444', label: '500m Hot Zone' },
-    { r: 1500, col: '#f97316', label: '1.5km Buffer Perimeter' },
-    { r: 5000, col: '#eab308', label: '5km Response Sector' }
-  ].forEach((c, idx) => {
-    const isFirstRadius = (idx === 0);
+    { r: 500, col: '#ef4444', label: '500m Active Fire Zone' }
+  ].forEach((c) => {
     L.circle([bandipurLat, bandipurLng], {
       radius: c.r,
       color: c.col,
-      weight: 1.8,
+      weight: 2,
       opacity: 0.85,
-      fill: isFirstRadius,
+      fill: true,
       fillColor: c.col,
-      fillOpacity: isFirstRadius ? 0.16 : 0,
+      fillOpacity: 0.16,
       dashArray: '6, 6'
     }).addTo(fullMap).bindTooltip(c.label, { direction: 'top' });
   });
@@ -2103,10 +2099,9 @@ function initFullMap() {
   L.marker([stnLat, stnLng], { icon: stnIcon }).addTo(fullMap)
     .bindPopup(`<b>Bandipur Station - Team Ready</b><br><span style="color:#60a5fa;">Bandipur Range Forest Office & Fire Command (HQ)</span><br>ETA: <b>4 min</b> • Dist: <b>0.9 km</b>`);
 
-  // 4. Dotted Route Line connecting Station Building to Fire (dashArray '8, 8')
+  // 4. Direct Straight Dotted Route Line connecting Station Building to Fire (dashArray '8, 8')
   const routeWaypoints = [
     [11.6617, 76.6272],
-    [11.6630, 76.6265],
     [11.6643, 76.6250]
   ];
   L.polyline(routeWaypoints, {

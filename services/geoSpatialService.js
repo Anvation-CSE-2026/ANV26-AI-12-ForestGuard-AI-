@@ -147,25 +147,9 @@ class GeoSpatialService {
     return closest;
   }
 
-  generateRoute(start, end, segments = 6) {
-    const waypoints = [start];
-    const [lat1, lng1] = start;
-    const [lat2, lng2] = end;
-
-    for (let i = 1; i < segments; i++) {
-      const t = i / segments;
-      let lat = lat1 + (lat2 - lat1) * t;
-      let lng = lng1 + (lng2 - lng1) * t;
-
-      // Realistic terrain detour
-      const curve = Math.sin(t * Math.PI) * 0.002 * (i % 2 === 0 ? 1 : -1);
-      lat += curve;
-      lng += curve * 0.6;
-
-      waypoints.push([parseFloat(lat.toFixed(5)), parseFloat(lng.toFixed(5))]);
-    }
-    waypoints.push(end);
-    return waypoints;
+  generateRoute(start, end) {
+    // Direct straight line without sawtooth zig-zag detour
+    return [start, end];
   }
 
   getAllForests() {

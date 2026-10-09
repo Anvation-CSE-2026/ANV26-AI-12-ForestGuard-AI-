@@ -545,8 +545,15 @@ class ForestGuardMapEngine {
   // In Image 4, the connection from station to fire ground zero is a dotted line!
   drawRoute(waypoints, color = '#f97316', isDashed = true) {
     if (!this.map || !waypoints || waypoints.length === 0) return null;
+
+    // Strictly enforce direct straight line connecting start and end (avoid any intermediate zig-zags)
+    let cleanWaypoints = waypoints;
+    if (Array.isArray(waypoints) && waypoints.length > 2) {
+      cleanWaypoints = [waypoints[0], waypoints[waypoints.length - 1]];
+    }
+
     if (this.mode === 'google-api') {
-      const gWaypoints = waypoints.map(w => ({ lat: w[0], lng: w[1] }));
+      const gWaypoints = cleanWaypoints.map(w => ({ lat: w[0], lng: w[1] }));
       const polyline = new google.maps.Polyline({
         path: gWaypoints,
         geodesic: true,
@@ -558,7 +565,7 @@ class ForestGuardMapEngine {
       this.routes.push(polyline);
       return polyline;
     } else {
-      const polyline = L.polyline(waypoints, {
+      const polyline = L.polyline(cleanWaypoints, {
         color: color,
         weight: 4,
         opacity: 0.95,
@@ -617,30 +624,22 @@ class ForestGuardMapEngine {
       this.markers[category] = [];
     }
   }
-  // --- Draw Radius Circles (500m, 1.5km, 5km) Matching Image 4 ---
-  // Keeps shade ONLY in the first radius (500m Hot Zone), retains clean dotted radius lines around outer perimeters without orange wash
-  drawRadiusCircles(lat, lng, radii = [500, 1500, 5000]) {
+  // --- Draw Radius Circles (Immediate 500m Hot Zone, eliminating unwanted outer boxes) ---
+  drawRadiusCircles(lat, lng, radii = [500]) {
     this.clearCircles();
     this.circles = [];
     if (!this.map) return;
 
-    const colors = [
-      { color: '#ef4444', name: '500m Hot Zone' },
-      { color: '#f97316', name: '1.5km Buffer Perimeter' },
-      { color: '#eab308', name: '5km Response Sector' }
-    ];
-
-    radii.forEach((radiusMeters, idx) => {
-      const col = colors[idx] || colors[0];
-      const isFirstRadius = (idx === 0); // Keep shade ONLY in the first radius
-
+    // Strictly draw immediate 500m hot zone to prevent unwanted cluttering outer boxes
+    const cleanRadii = Array.isArray(radii) ? radii.slice(0, 1) : [500];
+    cleanRadii.forEach((radiusMeters) => {
       if (this.mode === 'google-api') {
         const circle = new google.maps.Circle({
-          strokeColor: col.color,
+          strokeColor: '#ef4444',
           strokeOpacity: 0.85,
-          strokeWeight: 1.8,
-          fillColor: col.color,
-          fillOpacity: isFirstRadius ? 0.16 : 0,
+          strokeWeight: 2,
+          fillColor: '#ef4444',
+          fillOpacity: 0.16,
           map: this.map,
           center: { lat, lng },
           radius: radiusMeters
@@ -649,15 +648,15 @@ class ForestGuardMapEngine {
       } else {
         const circle = L.circle([lat, lng], {
           radius: radiusMeters,
-          color: col.color,
-          weight: 1.8,
+          color: '#ef4444',
+          weight: 2,
           opacity: 0.85,
-          fill: isFirstRadius,
-          fillColor: col.color,
-          fillOpacity: isFirstRadius ? 0.16 : 0,
+          fill: true,
+          fillColor: '#ef4444',
+          fillOpacity: 0.16,
           dashArray: '6, 6'
         }).addTo(this.map);
-        circle.bindTooltip(col.name, { permanent: false, direction: 'top' });
+        circle.bindTooltip('500m Active Fire Zone', { permanent: false, direction: 'top' });
         this.circles.push(circle);
       }
     });
@@ -722,80 +721,70 @@ class ForestGuardMapEngine {
     if (this.layerVisibility.firePerimeter === false) return;
 
     try {
-      const zones = [
-        { key: 'potentialExpansion', data: perimeterData.zones.potentialExpansion, label: 'Potential Expansion Zone (Yellow)' },
-        { key: 'highRisk', data: perimeterData.zones.highRisk, label: 'High-Risk Surrounding Zone (Orange)' },
-        { key: 'confirmed', data: perimeterData.zones.confirmed, label: 'Current Fire / Confirmed Affected Area (Red)' }
-      ];
+      // Draw ONLY the innermost confirmed active fire area to avoid unwanted outer boundary boxes
+      const confirmedZone = perimeterData.zones?.confirmed;
+      if (!confirmedZone) return;
 
-      zones.forEach(z => {
-        if (!z.data) return;
-        const color = z.data.color || '#ef4444';
-        const isConfirmed = (z.key === 'confirmed'); // Keep shade ONLY in the innermost confirmed fire zone
-        const fillOpacity = isConfirmed ? 0.22 : 0;
-        const tooltipText = `<b>ESTIMATED FIRE PERIMETER</b><br><span style="color:${color};font-weight:bold;">${z.label}</span><br>Estimated Area: <b>${z.data.estimatedHectares || perimeterData.estimatedAreaHectares} ha</b><br><span style="font-size:10px;color:#94a3b8;">Prototype estimate based on coordinates & severity</span>`;
+      const color = confirmedZone.color || '#ef4444';
+      const tooltipText = `<b>Confirmed Active Fire Area</b><br>Estimated Area: <b>${confirmedZone.estimatedHectares || perimeterData.estimatedAreaHectares || 2.4} ha</b>`;
 
-        if (this.mode === 'google-api') {
-          if (z.data.polygonCoords && z.data.polygonCoords.length > 0) {
-            const polygon = new google.maps.Polygon({
-              paths: z.data.polygonCoords,
-              strokeColor: color,
-              strokeOpacity: 0.9,
-              strokeWeight: z.data.strokeWeight || 2,
-              fillColor: color,
-              fillOpacity: fillOpacity,
-              map: this.map,
-              zIndex: z.key === 'confirmed' ? 10 : z.key === 'highRisk' ? 9 : 8
-            });
-            const info = new google.maps.InfoWindow({ content: tooltipText });
-            polygon.addListener('click', (e) => {
-              info.setPosition(e.latLng);
-              info.open(this.map);
-            });
-            this.perimeterLayers.push(polygon);
-          } else if (perimeterData.center && z.data.radiusMeters) {
-            const circle = new google.maps.Circle({
-              center: perimeterData.center,
-              radius: z.data.radiusMeters,
-              strokeColor: color,
-              strokeOpacity: 0.9,
-              strokeWeight: z.data.strokeWeight || 2,
-              fillColor: color,
-              fillOpacity: fillOpacity,
-              map: this.map,
-              zIndex: z.key === 'confirmed' ? 10 : z.key === 'highRisk' ? 9 : 8
-            });
-            this.perimeterLayers.push(circle);
-          }
-        } else {
-          // Leaflet Hybrid Engine
-          if (z.data.polygonCoords && z.data.polygonCoords.length > 0) {
-            const latLngs = z.data.polygonCoords.map(c => [c.lat, c.lng]);
-            const poly = L.polygon(latLngs, {
-              color: color,
-              fill: isConfirmed,
-              fillColor: color,
-              fillOpacity: fillOpacity,
-              weight: z.data.strokeWeight || 2,
-              dashArray: !isConfirmed ? '4, 4' : undefined
-            }).addTo(this.map);
-            poly.bindTooltip(tooltipText, { permanent: false, direction: 'top' });
-            this.perimeterLayers.push(poly);
-          } else if (perimeterData.center && z.data.radiusMeters) {
-            const circle = L.circle([perimeterData.center.lat, perimeterData.center.lng], {
-              radius: z.data.radiusMeters,
-              color: color,
-              fill: isConfirmed,
-              fillColor: color,
-              fillOpacity: fillOpacity,
-              weight: z.data.strokeWeight || 2,
-              dashArray: !isConfirmed ? '4, 4' : undefined
-            }).addTo(this.map);
-            circle.bindTooltip(tooltipText, { permanent: false, direction: 'top' });
-            this.perimeterLayers.push(circle);
-          }
+      if (this.mode === 'google-api') {
+        if (confirmedZone.polygonCoords && confirmedZone.polygonCoords.length > 0) {
+          const polygon = new google.maps.Polygon({
+            paths: confirmedZone.polygonCoords,
+            strokeColor: color,
+            strokeOpacity: 0.9,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.25,
+            map: this.map,
+            zIndex: 10
+          });
+          const info = new google.maps.InfoWindow({ content: tooltipText });
+          polygon.addListener('click', (e) => {
+            info.setPosition(e.latLng);
+            info.open(this.map);
+          });
+          this.perimeterLayers.push(polygon);
+        } else if (perimeterData.center && confirmedZone.radiusMeters) {
+          const circle = new google.maps.Circle({
+            center: perimeterData.center,
+            radius: confirmedZone.radiusMeters,
+            strokeColor: color,
+            strokeOpacity: 0.9,
+            strokeWeight: 2,
+            fillColor: color,
+            fillOpacity: 0.25,
+            map: this.map,
+            zIndex: 10
+          });
+          this.perimeterLayers.push(circle);
         }
-      });
+      } else {
+        if (confirmedZone.polygonCoords && confirmedZone.polygonCoords.length > 0) {
+          const latLngs = confirmedZone.polygonCoords.map(c => [c.lat, c.lng]);
+          const poly = L.polygon(latLngs, {
+            color: color,
+            fill: true,
+            fillColor: color,
+            fillOpacity: 0.25,
+            weight: 2
+          }).addTo(this.map);
+          poly.bindTooltip(tooltipText, { permanent: false, direction: 'top' });
+          this.perimeterLayers.push(poly);
+        } else if (perimeterData.center && confirmedZone.radiusMeters) {
+          const circle = L.circle([perimeterData.center.lat, perimeterData.center.lng], {
+            radius: confirmedZone.radiusMeters,
+            color: color,
+            fill: true,
+            fillColor: color,
+            fillOpacity: 0.25,
+            weight: 2
+          }).addTo(this.map);
+          circle.bindTooltip(tooltipText, { permanent: false, direction: 'top' });
+          this.perimeterLayers.push(circle);
+        }
+      }
     } catch (err) {
       console.warn('Map service temporarily unavailable (Perimeter):', err.message);
     }

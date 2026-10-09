@@ -84,8 +84,22 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
     let videoRelativePath = '';
 
     if (req.files && req.files.fireImage && req.files.fireImage[0]) {
-      imageRelativePath = `/uploads/${req.files.fireImage[0].filename}`;
-      imageDiskPath = req.files.fireImage[0].path;
+      const upFile = req.files.fireImage[0];
+      imageRelativePath = `/uploads/${upFile.filename}`;
+      imageDiskPath = upFile.path;
+      // Convert to base64 Data URI so it reliably displays cross-device & on Vercel serverless without 404s
+      try {
+        if (fs.existsSync(imageDiskPath)) {
+          const stats = fs.statSync(imageDiskPath);
+          if (stats.size <= 6 * 1024 * 1024) {
+            const buf = fs.readFileSync(imageDiskPath);
+            const mime = upFile.mimetype || 'image/jpeg';
+            imageRelativePath = `data:${mime};base64,${buf.toString('base64')}`;
+          }
+        }
+      } catch (embErr) {
+        console.warn('[FORESTGUARD] Base64 image embed notice:', embErr.message);
+      }
     } else if (req.body.presetImage) {
       imageRelativePath = req.body.presetImage;
       imageDiskPath = path.join(__dirname, 'public', req.body.presetImage.replace(/^\//, ''));

@@ -58,26 +58,9 @@
         "distanceMeters": 1100,
         "etaMinutes": 5,
         "routeWaypoints": [
-          [11.6675, 76.6322],
           [
-            11.66638,
-            76.6319
-          ],
-          [
-            11.6685,
-            76.63204
-          ],
-          [
-            11.66415,
-            76.6283
-          ],
-          [
-            11.66727,
-            76.62904
-          ],
-          [
-            11.66392,
-            76.6259
+            11.6675,
+            76.6322
           ],
           [
             11.6643,
@@ -101,7 +84,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "phone": "+91-8229-236021",
           "etaMinutesBase": 18,
@@ -114,7 +97,10 @@
           "distanceMeters": 1100,
           "etaMinutes": 5,
           "routeWaypoints": [
-            [11.6675, 76.6322],
+            [
+              11.6675,
+              76.6322
+            ],
             [
               11.66638,
               76.6319
@@ -264,22 +250,9 @@
         "distanceKm": 7.6,
         "distanceMeters": 7600,
         "routeWaypoints": [
-          [11.6672, 76.6215],
           [
-            11.61328,
-            76.64749
-          ],
-          [
-            11.62882,
-            76.64354
-          ],
-          [
-            11.63748,
-            76.63546
-          ],
-          [
-            11.65302,
-            76.63151
+            11.6672,
+            76.6215
           ],
           [
             11.6643,
@@ -295,7 +268,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6672,
-          "lng": 76.6215
+            "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -303,7 +276,10 @@
           "distanceKm": 7.6,
           "distanceMeters": 7600,
           "routeWaypoints": [
-            [11.6672, 76.6215],
+            [
+              11.6672,
+              76.6215
+            ],
             [
               11.61328,
               76.64749
@@ -466,26 +442,9 @@
         "engineName": "YOLOv8 ENGINE READY"
       },
       "routeWaypoints": [
-        [11.6675, 76.6322],
         [
-          11.66638,
-          76.6319
-        ],
-        [
-          11.6685,
-          76.63204
-        ],
-        [
-          11.66415,
-          76.6283
-        ],
-        [
-          11.66727,
-          76.62904
-        ],
-        [
-          11.66392,
-          76.6259
+          11.6675,
+          76.6322
         ],
         [
           11.6643,
@@ -1187,7 +1146,7 @@
           ],
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -1216,7 +1175,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -1298,7 +1257,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -1326,7 +1285,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -1403,7 +1362,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -1477,26 +1436,9 @@
         "distanceMeters": 1100,
         "etaMinutes": 5,
         "routeWaypoints": [
-          [11.6675, 76.6322],
           [
-            11.66638,
-            76.6319
-          ],
-          [
-            11.6685,
-            76.63204
-          ],
-          [
-            11.66415,
-            76.6283
-          ],
-          [
-            11.66727,
-            76.62904
-          ],
-          [
-            11.66392,
-            76.6259
+            11.6675,
+            76.6322
           ],
           [
             11.6643,
@@ -1520,7 +1462,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "phone": "+91-8229-236021",
           "etaMinutesBase": 18,
@@ -1533,7 +1475,10 @@
           "distanceMeters": 1100,
           "etaMinutes": 5,
           "routeWaypoints": [
-            [11.6675, 76.6322],
+            [
+              11.6675,
+              76.6322
+            ],
             [
               11.66638,
               76.6319
@@ -1683,22 +1628,9 @@
         "distanceKm": 7.6,
         "distanceMeters": 7600,
         "routeWaypoints": [
-          [11.6672, 76.6215],
           [
-            11.61328,
-            76.64749
-          ],
-          [
-            11.62882,
-            76.64354
-          ],
-          [
-            11.63748,
-            76.63546
-          ],
-          [
-            11.65302,
-            76.63151
+            11.6672,
+            76.6215
           ],
           [
             11.6643,
@@ -1714,7 +1646,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6672,
-          "lng": 76.6215
+            "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -1722,7 +1654,10 @@
           "distanceKm": 7.6,
           "distanceMeters": 7600,
           "routeWaypoints": [
-            [11.6672, 76.6215],
+            [
+              11.6672,
+              76.6215
+            ],
             [
               11.61616,
               76.6459
@@ -1880,26 +1815,9 @@
         "engineName": "YOLOv8 ENGINE READY"
       },
       "routeWaypoints": [
-        [11.6675, 76.6322],
         [
-          11.66638,
-          76.6319
-        ],
-        [
-          11.6685,
-          76.63204
-        ],
-        [
-          11.66415,
-          76.6283
-        ],
-        [
-          11.66727,
-          76.62904
-        ],
-        [
-          11.66392,
-          76.6259
+          11.6675,
+          76.6322
         ],
         [
           11.6643,
@@ -2602,7 +2520,7 @@
           ],
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -2631,7 +2549,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -2713,7 +2631,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -2741,7 +2659,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -2818,7 +2736,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -2899,26 +2817,6 @@
             77.518
           ],
           [
-            12.82747,
-            77.51703
-          ],
-          [
-            12.82967,
-            77.51831
-          ],
-          [
-            12.8254,
-            77.5157
-          ],
-          [
-            12.8286,
-            77.51757
-          ],
-          [
-            12.82533,
-            77.51557
-          ],
-          [
             12.8258,
             77.5158
           ]
@@ -2990,7 +2888,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 12.8575,
-          "lng": 77.5623
+            "lng": 77.5623
           },
           "phone": "+91-80-22971550",
           "etaMinutesBase": 5,
@@ -3003,7 +2901,10 @@
           "distanceMeters": 4900,
           "etaMinutes": 11,
           "routeWaypoints": [
-            [12.8575, 77.5623],
+            [
+              12.8575,
+              77.5623
+            ],
             [
               12.85247,
               77.54037
@@ -3108,22 +3009,6 @@
             77.51
           ],
           [
-            12.81358,
-            77.51045
-          ],
-          [
-            12.81942,
-            77.51346
-          ],
-          [
-            12.81838,
-            77.51234
-          ],
-          [
-            12.82422,
-            77.51535
-          ],
-          [
             12.8258,
             77.5158
           ]
@@ -3174,7 +3059,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6672,
-          "lng": 76.6215
+            "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -3182,7 +3067,10 @@
           "distanceKm": 165.2,
           "distanceMeters": 165200,
           "routeWaypoints": [
-            [11.6672, 76.6215],
+            [
+              11.6672,
+              76.6215
+            ],
             [
               11.90654,
               76.8686
@@ -3307,26 +3195,6 @@
         [
           12.7708,
           77.5708
-        ],
-        [
-          12.77897,
-          77.56103
-        ],
-        [
-          12.79087,
-          77.55351
-        ],
-        [
-          12.7963,
-          77.5421
-        ],
-        [
-          12.8092,
-          77.53517
-        ],
-        [
-          12.81563,
-          77.52437
         ],
         [
           12.8258,
@@ -4028,7 +3896,7 @@
           ],
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -4057,7 +3925,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -4139,7 +4007,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -4167,7 +4035,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -4244,7 +4112,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -4325,26 +4193,6 @@
             77.518
           ],
           [
-            12.82747,
-            77.51703
-          ],
-          [
-            12.82967,
-            77.51831
-          ],
-          [
-            12.8254,
-            77.5157
-          ],
-          [
-            12.8286,
-            77.51757
-          ],
-          [
-            12.82533,
-            77.51557
-          ],
-          [
             12.8258,
             77.5158
           ]
@@ -4416,7 +4264,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 12.8575,
-          "lng": 77.5623
+            "lng": 77.5623
           },
           "phone": "+91-80-22971550",
           "etaMinutesBase": 5,
@@ -4429,7 +4277,10 @@
           "distanceMeters": 4900,
           "etaMinutes": 11,
           "routeWaypoints": [
-            [12.8575, 77.5623],
+            [
+              12.8575,
+              77.5623
+            ],
             [
               12.85247,
               77.54037
@@ -4534,22 +4385,6 @@
             77.51
           ],
           [
-            12.81358,
-            77.51045
-          ],
-          [
-            12.81942,
-            77.51346
-          ],
-          [
-            12.81838,
-            77.51234
-          ],
-          [
-            12.82422,
-            77.51535
-          ],
-          [
             12.8258,
             77.5158
           ]
@@ -4600,7 +4435,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6672,
-          "lng": 76.6215
+            "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -4608,7 +4443,10 @@
           "distanceKm": 165.2,
           "distanceMeters": 165200,
           "routeWaypoints": [
-            [11.6672, 76.6215],
+            [
+              11.6672,
+              76.6215
+            ],
             [
               11.90654,
               76.8686
@@ -4733,26 +4571,6 @@
         [
           12.7708,
           77.4608
-        ],
-        [
-          12.77897,
-          77.46937
-        ],
-        [
-          12.79087,
-          77.48017
-        ],
-        [
-          12.7963,
-          77.4871
-        ],
-        [
-          12.8092,
-          77.49851
-        ],
-        [
-          12.81563,
-          77.50603
         ],
         [
           12.8258,
@@ -5454,7 +5272,7 @@
           ],
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -5483,7 +5301,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -5565,7 +5383,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -5593,7 +5411,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -5670,7 +5488,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -5746,26 +5564,9 @@
         "distanceMeters": 1400,
         "etaMinutes": 5,
         "routeWaypoints": [
-          [11.6675, 76.6322],
           [
-            11.66625,
-            76.63133
-          ],
-          [
-            11.66823,
-            76.63091
-          ],
-          [
-            11.66375,
-            76.6266
-          ],
-          [
-            11.66673,
-            76.62677
-          ],
-          [
-            11.66325,
-            76.62307
+            11.6675,
+            76.6322
           ],
           [
             11.6635,
@@ -5789,7 +5590,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "phone": "+91-8229-236021",
           "etaMinutesBase": 18,
@@ -5802,7 +5603,10 @@
           "distanceMeters": 1400,
           "etaMinutes": 5,
           "routeWaypoints": [
-            [11.6675, 76.6322],
+            [
+              11.6675,
+              76.6322
+            ],
             [
               11.66625,
               76.63133
@@ -5952,22 +5756,9 @@
         "distanceKm": 7.7,
         "distanceMeters": 7700,
         "routeWaypoints": [
-          [11.6672, 76.6215],
           [
-            11.61312,
-            76.64681
-          ],
-          [
-            11.6285,
-            76.64218
-          ],
-          [
-            11.637,
-            76.63342
-          ],
-          [
-            11.65238,
-            76.62879
+            11.6672,
+            76.6215
           ],
           [
             11.6635,
@@ -5983,7 +5774,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6672,
-          "lng": 76.6215
+            "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -5991,7 +5782,10 @@
           "distanceKm": 7.7,
           "distanceMeters": 7700,
           "routeWaypoints": [
-            [11.6672, 76.6215],
+            [
+              11.6672,
+              76.6215
+            ],
             [
               11.61596,
               76.64505
@@ -6150,26 +5944,9 @@
         "engineName": "YOLOv8 ENGINE READY"
       },
       "routeWaypoints": [
-        [11.6675, 76.6322],
         [
-          11.66625,
-          76.63133
-        ],
-        [
-          11.66823,
-          76.63091
-        ],
-        [
-          11.66375,
-          76.6266
-        ],
-        [
-          11.66673,
-          76.62677
-        ],
-        [
-          11.66325,
-          76.62307
+          11.6675,
+          76.6322
         ],
         [
           11.6635,
@@ -6871,7 +6648,7 @@
           ],
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -6900,7 +6677,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -6982,7 +6759,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -7010,7 +6787,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -7087,7 +6864,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -7163,26 +6940,9 @@
         "distanceMeters": 700,
         "etaMinutes": 5,
         "routeWaypoints": [
-          [12.8575, 77.5623],
           [
-            12.8572,
-            77.54462
-          ],
-          [
-            12.85913,
-            77.54547
-          ],
-          [
-            12.8546,
-            77.54245
-          ],
-          [
-            12.85753,
-            77.54391
-          ],
-          [
-            12.854,
-            77.54148
+            12.8575,
+            77.5623
           ],
           [
             12.8542,
@@ -7206,7 +6966,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 12.8575,
-          "lng": 77.5623
+            "lng": 77.5623
           },
           "phone": "+91-80-22971550",
           "etaMinutesBase": 5,
@@ -7219,7 +6979,10 @@
           "distanceMeters": 700,
           "etaMinutes": 5,
           "routeWaypoints": [
-            [12.8575, 77.5623],
+            [
+              12.8575,
+              77.5623
+            ],
             [
               12.8572,
               77.54462
@@ -7369,22 +7132,9 @@
         "distanceKm": 1.6,
         "distanceMeters": 1600,
         "routeWaypoints": [
-          [12.871, 77.5435],
           [
-            12.86406,
-            77.53795
-          ],
-          [
-            12.86438,
-            77.54046
-          ],
-          [
-            12.85782,
-            77.53884
-          ],
-          [
-            12.85814,
-            77.54135
+            12.871,
+            77.5435
           ],
           [
             12.8542,
@@ -7437,7 +7187,7 @@
           "state": "Karnataka",
           "coordinates": {
             "lat": 11.6672,
-          "lng": 76.6215
+            "lng": 76.6215
           },
           "type": "River Gorge Pool",
           "capacity": "Continuous 14,000 LPM",
@@ -7445,7 +7195,10 @@
           "distanceKm": 169.4,
           "distanceMeters": 169400,
           "routeWaypoints": [
-            [11.6672, 76.6215],
+            [
+              11.6672,
+              76.6215
+            ],
             [
               11.91364,
               76.87498
@@ -7570,26 +7323,6 @@
         [
           12.9092,
           77.4863
-        ],
-        [
-          12.89903,
-          77.49487
-        ],
-        [
-          12.8926,
-          77.50567
-        ],
-        [
-          12.8797,
-          77.5126
-        ],
-        [
-          12.87427,
-          77.52401
-        ],
-        [
-          12.86237,
-          77.53153
         ],
         [
           12.8542,
@@ -8291,7 +8024,7 @@
           ],
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -8320,7 +8053,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -8402,7 +8135,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -8430,7 +8163,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -8507,7 +8240,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -8586,26 +8319,6 @@
           [
             29.541,
             78.789
-          ],
-          [
-            29.53747,
-            78.78562
-          ],
-          [
-            29.53767,
-            78.78447
-          ],
-          [
-            29.5314,
-            78.77945
-          ],
-          [
-            29.5326,
-            78.77891
-          ],
-          [
-            29.52733,
-            78.77448
           ],
           [
             29.5258,
@@ -8802,22 +8515,6 @@
           [
             29.585,
             78.752
-          ],
-          [
-            29.57198,
-            78.75535
-          ],
-          [
-            29.56322,
-            78.76126
-          ],
-          [
-            29.54758,
-            78.76304
-          ],
-          [
-            29.53882,
-            78.76895
           ],
           [
             29.5258,
@@ -9023,26 +8720,6 @@
         [
           29.541,
           78.789
-        ],
-        [
-          29.53747,
-          78.78562
-        ],
-        [
-          29.53767,
-          78.78447
-        ],
-        [
-          29.5314,
-          78.77945
-        ],
-        [
-          29.5326,
-          78.77891
-        ],
-        [
-          29.52733,
-          78.77448
         ],
         [
           29.5258,
@@ -9744,7 +9421,7 @@
           ],
           "coordinates": {
             "lat": 11.6675,
-          "lng": 76.6322
+            "lng": 76.6322
           },
           "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
           "currentWorkload": 0,
@@ -9773,7 +9450,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -9855,7 +9532,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "High-Clearance 4x4 Brush Engine + Drone",
             "currentWorkload": 0,
@@ -9883,7 +9560,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Heavy Water Tender & Drone Patrol",
             "currentWorkload": 0,
@@ -9960,7 +9637,7 @@
             ],
             "coordinates": {
               "lat": 11.6675,
-          "lng": 76.6322
+              "lng": 76.6322
             },
             "vehicleType": "Logistics Bowser",
             "currentWorkload": 0,
@@ -9988,7 +9665,7 @@
       "vehicle": "Heavy Water Tender & Drone Patrol",
       "coordinates": {
         "lat": 11.6675,
-          "lng": 76.6322
+        "lng": 76.6322
       },
       "currentIncident": null,
       "etaMinutes": 14
@@ -10048,7 +9725,7 @@
       "vehicle": "Logistics Bowser",
       "coordinates": {
         "lat": 11.6675,
-          "lng": 76.6322
+        "lng": 76.6322
       },
       "currentIncident": null,
       "etaMinutes": 45

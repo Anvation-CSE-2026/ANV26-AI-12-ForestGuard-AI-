@@ -252,10 +252,8 @@ function renderFireStationAndRoute(incident) {
     </div>
   `);
 
-  // Draw Glowing Route Polyline strictly from Station Building to Fire Ground Zero
-  const waypoints = (station.routeWaypoints && station.routeWaypoints.length >= 2)
-    ? [stationPos, ...station.routeWaypoints.slice(1, -1), [incident.coordinates.lat, incident.coordinates.lng]]
-    : [stationPos, [incident.coordinates.lat, incident.coordinates.lng]];
+  // Draw Direct Straight Route Polyline strictly from Station Building to Fire Ground Zero
+  const waypoints = [stationPos, [incident.coordinates.lat, incident.coordinates.lng]];
 
   stationRouteLayer = L.polyline(waypoints, {
     color: '#ff6a00',
@@ -318,9 +316,7 @@ function renderWaterBodyAndRelay(incident) {
   `);
 
   // Blue Dashed Hose Relay Line strictly from Water Body to Fire Ground Zero
-  const waypoints = (water.routeWaypoints && water.routeWaypoints.length >= 2)
-    ? [waterPos, ...water.routeWaypoints.slice(1, -1), [incident.coordinates.lat, incident.coordinates.lng]]
-    : [waterPos, [incident.coordinates.lat, incident.coordinates.lng]];
+  const waypoints = [waterPos, [incident.coordinates.lat, incident.coordinates.lng]];
 
   waterRouteLayer = L.polyline(waypoints, {
     color: '#00e5ff',
