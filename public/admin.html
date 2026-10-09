@@ -17,82 +17,93 @@
 <body class="bg-[#030712] text-slate-100 h-screen flex flex-col font-sans overflow-hidden">
 
   <!-- Top Command Center Navigation Bar -->
-  <header class="border-b border-slate-800 bg-[#070e1c] px-4 py-2 flex items-center justify-between shrink-0 z-50">
-    <div class="flex items-center gap-3">
-      <span class="text-2xl filter drop-shadow-[0_0_10px_#ef4444]">🌲🔥</span>
-      <div>
+  <header class="border-b border-slate-800 bg-[#070e1c] px-3 sm:px-4 py-2 flex items-center justify-between gap-3 shrink-0 z-50 min-h-[56px]">
+    <!-- Brand / Logo Section -->
+    <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+      <span class="text-2xl filter drop-shadow-[0_0_10px_rgba(239,68,68,0.5)] shrink-0 select-none">🌲🔥</span>
+      <div class="flex flex-col justify-center">
         <div class="flex items-center gap-2">
-          <span class="text-base sm:text-lg font-black tracking-wider text-white">ForestGuard-AI</span>
-          <span class="text-[10px] font-black px-1.5 py-0.5 rounded bg-red-950 border border-red-600/60 text-red-400">
-            LIVE FOREST FIRE COMMAND CENTER
+          <span class="text-sm sm:text-base font-black tracking-wider text-white whitespace-nowrap">ForestGuard-AI</span>
+          <span class="hidden sm:inline-flex items-center text-[9px] font-black tracking-wider uppercase px-2 py-0.5 rounded bg-red-950/90 border border-red-600/70 text-red-300 whitespace-nowrap shadow-sm">
+            COMMAND CENTER
           </span>
         </div>
-        <div class="text-[11px] text-slate-400 font-mono flex items-center gap-2">
-          <span>INDIA NATIONAL FORESTRY RADAR</span>
-          <span>•</span>
+        <div class="text-[10px] sm:text-[11px] text-slate-400 font-mono flex items-center gap-1.5 whitespace-nowrap mt-0.5">
+          <span class="hidden xl:inline text-slate-400">INDIA FORESTRY RADAR</span>
+          <span class="hidden xl:inline text-slate-600">•</span>
           <span class="text-emerald-400 font-bold flex items-center gap-1">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span id="txtSystemOnline">● SYSTEM ONLINE</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="txtSystemOnline">ONLINE</span>
           </span>
-          <span>•</span>
-          <span class="text-sky-400">LIVE DATA</span>
-          <span>•</span>
-          <span>Last Event: <span id="txtLastEventTime" class="text-amber-400">10:48:21 AM</span></span>
+          <span class="text-slate-600">•</span>
+          <span class="text-sky-400 hidden md:inline">LIVE RADAR</span>
+          <span class="text-slate-600 hidden md:inline">•</span>
+          <span class="text-slate-400">Last: <span id="txtLastEventTime" class="text-amber-400 font-bold">10:48 AM</span></span>
         </div>
       </div>
     </div>
 
-    <!-- Top Action Toolbar -->
-    <div class="flex items-center gap-2 sm:gap-3">
-      <!-- Mute/Unmute Audio -->
-      <button id="btnToggleSirenAudio" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
-        <span id="audioIcon">🔊</span> <span id="audioLabel" class="hidden sm:inline">Audio Siren Active</span>
+    <!-- Top Action Toolbar (Neatly Aligned Uniform Box Buttons) -->
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 overflow-x-auto sm:overflow-x-visible">
+      <!-- Mute/Unmute Audio Siren -->
+      <button id="btnToggleSirenAudio" type="button" class="h-9 px-2.5 sm:px-3 rounded-lg bg-[#091326] hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 text-xs font-bold text-slate-200 transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 cursor-pointer" title="Toggle Emergency Siren Audio">
+        <span id="audioIcon">🔊</span>
+        <span id="audioLabel" class="hidden lg:inline whitespace-nowrap">Siren Active</span>
       </button>
 
       <!-- Live AI Image Inspector Modal Button -->
-      <button id="btnOpenImageInspector" class="px-3 py-1.5 rounded-lg bg-emerald-950/80 hover:bg-emerald-850 border border-emerald-500/80 text-xs font-black text-emerald-300 hover:text-white transition flex items-center gap-1.5 shadow-md">
-        <span>🔬</span> <span class="hidden sm:inline">AI Score Board</span> Inspector
+      <button id="btnOpenImageInspector" type="button" class="h-9 px-2.5 sm:px-3 rounded-lg bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-500/60 hover:border-emerald-400 text-xs font-black text-emerald-300 hover:text-white transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 cursor-pointer" title="Open AI Vision Detection Score Board & Image Inspector">
+        <span>🔬</span>
+        <span class="hidden md:inline whitespace-nowrap">AI Inspector</span>
       </button>
 
       <!-- Launch Demo Trigger -->
-      <button id="btnTriggerDemoModal" class="px-3 py-1.5 rounded-lg bg-orange-950/80 hover:bg-orange-800 border border-orange-500/80 text-xs font-black text-orange-400 hover:text-white transition flex items-center gap-1">
-        <span>⚡</span> <span>Demo Scenarios</span>
+      <button id="btnTriggerDemoModal" type="button" class="h-9 px-2.5 sm:px-3 rounded-lg bg-amber-950/70 hover:bg-amber-900/80 border border-amber-500/60 hover:border-amber-400 text-xs font-black text-amber-300 hover:text-white transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 cursor-pointer" title="Launch Interactive Simulation Scenario">
+        <span>⚡</span>
+        <span class="hidden lg:inline whitespace-nowrap">Demo</span>
       </button>
 
-      <!-- Prominent Switcher to Citizen Dashboard (Port 8109) -->
-      <div class="flex items-center gap-2">
-        <!-- View Mode Mini Switcher: Desktop (Default) | Mobile Platform -->
-        <div id="viewModeMiniSwitcher" class="view-mode-toggle-group flex items-center bg-[#050b17] p-0.5 rounded-xl border-2 border-sky-500/60 shadow-lg" title="Toggle between Desktop Mode (Default) and Mobile Mode">
-          <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/50" title="Default Desktop Mode (Full 3-column workstation)">
-            <span>💻</span> <span class="hidden sm:inline">Desktop</span>
-          </button>
-          <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
-            <span>📱</span> <span class="hidden sm:inline">Mobile</span>
-          </button>
-        </div>
-
-        <!-- Dashboard Toggle Segmented Control -->
-        <div class="flex items-center bg-[#050b17] p-1 rounded-xl border-2 border-red-500/70 shadow-lg">
-          <a href="/user.html" data-switch-to="user" class="px-2 sm:px-3 py-1 rounded-lg text-orange-300 hover:text-white hover:bg-orange-600 border border-transparent hover:border-orange-500 text-xs font-black transition flex items-center gap-1.5 group" title="Switch to Citizen Emergency Dashboard">
-            <span class="group-hover:animate-pulse">👤</span> <span class="hidden sm:inline">Switch to Citizen Dashboard ➔</span><span class="sm:hidden">Citizen ➔</span>
-          </a>
-          <span class="px-2 sm:px-2.5 py-1 rounded-lg bg-red-600 text-white text-xs font-black flex items-center gap-1 shadow-sm">
-            <span>🚨</span> <span class="hidden sm:inline">Admin Mode</span>
-          </span>
-        </div>
-
-        <a href="/index.html" data-switch-to="home" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-300 hover:text-white transition flex items-center gap-1 shadow-sm" title="Return to Landing Page">
-          <span>🏠</span> <span class="hidden md:inline">Home</span>
-        </a>
-
-        <button id="btnHeaderInstantLogin" class="hidden px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-black text-white transition flex items-center gap-1 shadow-md cursor-pointer border border-emerald-400/50" title="1-Click Instant Demo Login">
-          <span>⚡</span> <span>Instant Login</span>
+      <!-- View Mode Mini Switcher: Desktop (Default) | Mobile Platform (Compact Icons) -->
+      <div id="viewModeMiniSwitcher" class="view-mode-toggle-group h-9 flex items-center bg-[#050b17] p-1 rounded-lg border border-slate-700/80 shadow-md shrink-0 gap-1" title="Toggle between Desktop Mode and Mobile Mode">
+        <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode h-7 px-2.5 rounded-md text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/50" title="Desktop Mode (Full 3-column workstation)">
+          <span>💻</span>
+          <span class="hidden 2xl:inline">Desktop</span>
         </button>
-
-        <button id="btnAdminLogout" class="px-2.5 py-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-700/80 text-xs font-bold text-red-300 hover:text-white transition flex items-center gap-1 shadow-sm cursor-pointer" title="Lock Command Center & Require Authorization">
-          <span>🔒</span> <span class="hidden md:inline">Lock / Auth</span>
+        <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn h-7 px-2.5 rounded-md text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
+          <span>📱</span>
+          <span class="hidden 2xl:inline">Mobile</span>
         </button>
       </div>
+
+      <!-- Dashboard Switcher Segmented Control -->
+      <div class="h-9 flex items-center bg-[#050b17] p-1 rounded-lg border border-red-500/60 shadow-md shrink-0 gap-1">
+        <a href="/user.html" data-switch-to="user" class="h-7 px-2.5 rounded-md text-orange-300 hover:text-white hover:bg-orange-600/80 text-xs font-black transition flex items-center justify-center gap-1 group whitespace-nowrap cursor-pointer" title="Switch to Citizen Emergency Reporting Dashboard">
+          <span class="group-hover:animate-pulse">👤</span>
+          <span class="hidden sm:inline">Citizen ➔</span>
+        </a>
+        <span class="h-7 px-2.5 rounded-md bg-red-600 text-white text-xs font-black flex items-center justify-center gap-1 shadow-sm whitespace-nowrap select-none">
+          <span>🚨</span>
+          <span class="hidden sm:inline">Admin</span>
+        </span>
+      </div>
+
+      <!-- Return to Home -->
+      <a href="/index.html" data-switch-to="home" class="h-9 px-2.5 sm:px-3 rounded-lg bg-[#091326] hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 text-xs font-bold text-slate-300 hover:text-white transition flex items-center justify-center gap-1 shadow-sm shrink-0 cursor-pointer" title="Return to Landing Page">
+        <span>🏠</span>
+        <span class="hidden xl:inline whitespace-nowrap">Home</span>
+      </a>
+
+      <!-- Instant Login (Demo helper when locked) -->
+      <button id="btnHeaderInstantLogin" type="button" class="hidden h-9 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 border border-emerald-400 text-xs font-black text-white transition items-center justify-center gap-1 shadow-md shrink-0 cursor-pointer" title="1-Click Instant Demo Login">
+        <span>⚡</span>
+        <span class="whitespace-nowrap">Instant Login</span>
+      </button>
+
+      <!-- Lock / Require Auth -->
+      <button id="btnAdminLogout" type="button" class="h-9 px-2.5 sm:px-3 rounded-lg bg-red-950/60 hover:bg-red-900 border border-red-700/70 hover:border-red-500 text-xs font-bold text-red-300 hover:text-white transition flex items-center justify-center gap-1 shadow-sm shrink-0 cursor-pointer" title="Lock Command Center & Require Authorization">
+        <span>🔒</span>
+        <span class="hidden xl:inline whitespace-nowrap">Lock</span>
+      </button>
     </div>
   </header>
 

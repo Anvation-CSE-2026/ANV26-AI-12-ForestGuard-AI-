@@ -64,19 +64,19 @@
 
       if (mode === 'mobile') {
         if (isMobileBtn) {
-          btn.className = 'view-mode-toggle-btn active-mode px-2 sm:px-2.5 py-1 rounded text-[11px] font-black transition-all flex items-center gap-1 cursor-pointer bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-400/50';
+          btn.className = 'view-mode-toggle-btn active-mode h-7 px-2.5 rounded-md text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer bg-emerald-600 text-white shadow-sm ring-1 ring-emerald-400/60';
           btn.setAttribute('aria-pressed', 'true');
         } else if (isDesktopBtn) {
-          btn.className = 'view-mode-toggle-btn px-2 sm:px-2.5 py-1 rounded text-[11px] font-black transition-all flex items-center gap-1 cursor-pointer text-slate-400 hover:text-white hover:bg-slate-800/60';
+          btn.className = 'view-mode-toggle-btn h-7 px-2.5 rounded-md text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer text-slate-400 hover:text-white hover:bg-slate-800/50';
           btn.setAttribute('aria-pressed', 'false');
         }
       } else {
         // Desktop is Active (Default)
         if (isDesktopBtn) {
-          btn.className = 'view-mode-toggle-btn active-mode px-2 sm:px-2.5 py-1 rounded text-[11px] font-black transition-all flex items-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/50';
+          btn.className = 'view-mode-toggle-btn active-mode h-7 px-2.5 rounded-md text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/60';
           btn.setAttribute('aria-pressed', 'true');
         } else if (isMobileBtn) {
-          btn.className = 'view-mode-toggle-btn px-2 sm:px-2.5 py-1 rounded text-[11px] font-black transition-all flex items-center gap-1 cursor-pointer text-slate-400 hover:text-white hover:bg-slate-800/60';
+          btn.className = 'view-mode-toggle-btn h-7 px-2.5 rounded-md text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer text-slate-400 hover:text-white hover:bg-slate-800/50';
           btn.setAttribute('aria-pressed', 'false');
         }
       }

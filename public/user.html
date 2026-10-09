@@ -27,37 +27,38 @@
       </div>
 
       <!-- Navigation Links -->
-      <nav class="hidden md:flex items-center gap-1 text-xs font-bold">
-        <button class="nav-tab px-3 py-1.5 rounded-lg text-white bg-slate-800" data-tab="tabReport">Report Fire</button>
-        <button class="nav-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white" data-tab="tabMyReports">My Reports</button>
-        <button class="nav-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white" data-tab="tabLiveMap">Live Map</button>
-        <button class="nav-tab px-3 py-1.5 rounded-lg text-slate-400 hover:text-white" data-tab="tabContacts">Emergency Contacts</button>
+      <nav class="hidden md:flex items-center gap-1.5 text-xs font-bold">
+        <button class="nav-tab h-9 px-3 rounded-lg text-white bg-slate-800 border border-slate-700/80 transition flex items-center justify-center" data-tab="tabReport">Report Fire</button>
+        <button class="nav-tab h-9 px-3 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 border border-transparent hover:border-slate-700 transition flex items-center justify-center" data-tab="tabMyReports">My Reports</button>
+        <button class="nav-tab h-9 px-3 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 border border-transparent hover:border-slate-700 transition flex items-center justify-center" data-tab="tabLiveMap">Live Map</button>
+        <button class="nav-tab h-9 px-3 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/60 border border-transparent hover:border-slate-700 transition flex items-center justify-center" data-tab="tabContacts">Emergency Contacts</button>
       </nav>
 
       <!-- Prominent Switcher to Admin Dashboard (Port 8109) -->
-      <div class="flex items-center gap-2">
-        <!-- View Mode Mini Switcher: Desktop (Default) | Mobile Platform -->
-        <div id="viewModeMiniSwitcher" class="view-mode-toggle-group flex items-center bg-[#050b17] p-0.5 rounded-xl border-2 border-orange-500/60 shadow-lg" title="Toggle between Desktop Mode (Default) and Mobile Mode">
-          <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer bg-orange-600 text-white shadow-sm ring-1 ring-orange-400/50" title="Default Desktop Mode">
-            <span>💻</span> <span class="hidden sm:inline">Desktop</span>
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- View Mode Mini Switcher: Desktop (Default) | Mobile Platform (Compact Icons) -->
+        <div id="viewModeMiniSwitcher" class="view-mode-toggle-group h-9 flex items-center bg-[#050b17] p-1 rounded-lg border border-slate-700/80 shadow-md shrink-0 gap-1" title="Toggle between Desktop Mode and Mobile Mode">
+          <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode h-7 px-2.5 rounded-md text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/50" title="Desktop Mode">
+            <span>💻</span> <span class="hidden 2xl:inline">Desktop</span>
           </button>
-          <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn px-2 sm:px-2.5 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
-            <span>📱</span> <span class="hidden sm:inline">Mobile</span>
+          <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn h-7 px-2.5 rounded-md text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
+            <span>📱</span> <span class="hidden 2xl:inline">Mobile</span>
           </button>
         </div>
 
         <!-- Dashboard Toggle Segmented Control -->
-        <div class="flex items-center bg-[#050b17] p-1 rounded-xl border-2 border-orange-500/70 shadow-lg">
-          <span class="px-2 sm:px-2.5 py-1 rounded-lg bg-orange-600 text-white text-xs font-black flex items-center gap-1 shadow-sm">
-            <span>👤</span> <span class="hidden sm:inline">Citizen Mode</span>
+        <div class="h-9 flex items-center bg-[#050b17] p-1 rounded-lg border border-orange-500/60 shadow-md shrink-0 gap-1">
+          <span class="h-7 px-2.5 rounded-md bg-orange-600 text-white text-xs font-black flex items-center justify-center gap-1 shadow-sm whitespace-nowrap select-none">
+            <span>👤</span> <span class="hidden sm:inline">Citizen</span>
           </span>
-          <a href="/admin.html?auth=demo" data-switch-to="admin" class="px-2 sm:px-3 py-1 rounded-lg text-red-300 hover:text-white hover:bg-red-600 border border-transparent hover:border-red-500 text-xs font-black transition flex items-center gap-1.5 group" title="Switch to Admin Authority Command Center">
-            <span class="group-hover:animate-pulse">🚨</span> <span class="hidden sm:inline">Switch to Admin Dashboard ➔</span><span class="sm:hidden">Admin ➔</span>
+          <a href="/admin.html?auth=demo" data-switch-to="admin" class="h-7 px-2.5 rounded-md text-red-300 hover:text-white hover:bg-red-600/80 text-xs font-black transition flex items-center justify-center gap-1 group whitespace-nowrap cursor-pointer" title="Switch to Admin Authority Command Center">
+            <span class="group-hover:animate-pulse">🚨</span> <span class="hidden sm:inline">Admin ➔</span>
           </a>
         </div>
 
-        <a href="/index.html" data-switch-to="home" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1 shadow-sm" title="Return to Landing Page">
-          <span>🏠</span> <span class="hidden md:inline">Home</span>
+        <!-- Return to Home -->
+        <a href="/index.html" data-switch-to="home" class="h-9 px-2.5 sm:px-3 rounded-lg bg-[#091326] hover:bg-slate-800 border border-slate-700/80 hover:border-slate-600 text-xs font-bold text-slate-300 hover:text-white transition flex items-center justify-center gap-1 shadow-sm shrink-0 cursor-pointer" title="Return to Landing Page">
+          <span>🏠</span> <span class="hidden xl:inline whitespace-nowrap">Home</span>
         </a>
       </div>
     </div>
