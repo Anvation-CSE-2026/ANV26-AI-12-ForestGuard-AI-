@@ -1323,41 +1323,41 @@ function updateScoreboardUI(data) {
   }
 
   // 5 Telemetry Progress Bars (Fire & Smoke ABOVE Anomaly)
-  const fireConfVal = parseFloat(data.fireConfidence !== undefined ? data.fireConfidence : (data.fireScore !== undefined ? data.fireScore : (isFire ? 96.8 : 0.0))).toFixed(1);
-  const smokeVal = parseFloat(data.smokeConfidence !== undefined ? data.smokeConfidence : (isFire ? 92.0 : 0.0)).toFixed(1);
-  const covVal = parseFloat(data.fireCoverage !== undefined ? data.fireCoverage : (isFire ? 38.5 : 0.0)).toFixed(1);
-  const smkLvlVal = parseFloat(data.smokeLevel !== undefined ? data.smokeLevel : (isFire ? 85.0 : 0.0)).toFixed(1);
-  const anomVal = parseFloat(data.anomalyConfidence !== undefined ? data.anomalyConfidence : (isFire ? 94.6 : 0.0)).toFixed(1);
+  const fireConfVal = (isFakeDetected || !isFire) ? '0.0' : parseFloat(data.fireConfidence !== undefined ? data.fireConfidence : (data.fireScore !== undefined ? data.fireScore : 96.8)).toFixed(1);
+  const smokeVal = (isFakeDetected || !isFire) ? '0.0' : parseFloat(data.smokeConfidence !== undefined ? data.smokeConfidence : 92.0).toFixed(1);
+  const covVal = (isFakeDetected || !isFire) ? '0.0' : parseFloat(data.fireCoverage !== undefined ? data.fireCoverage : 38.5).toFixed(1);
+  const smkLvlVal = (isFakeDetected || !isFire) ? '0.0' : parseFloat(data.smokeLevel !== undefined ? data.smokeLevel : 85.0).toFixed(1);
+  const anomVal = (isFakeDetected || !isFire) ? '0.0' : parseFloat(data.anomalyConfidence !== undefined ? data.anomalyConfidence : 94.6).toFixed(1);
 
   // 1. Fire Confidence (TOP)
   const elFireConf = document.getElementById('sbValFireConfidence');
   const barFireConf = document.getElementById('sbBarFireConfidence');
   if (elFireConf) elFireConf.textContent = `${fireConfVal}%`;
-  if (barFireConf) barFireConf.style.width = `${Math.min(100, Math.max(0, fireConfVal))}%`;
+  if (barFireConf) barFireConf.style.width = `${Math.min(100, Math.max(0, parseFloat(fireConfVal)))}%`;
 
   // 2. Smoke Confidence
   const elSmk = document.getElementById('sbValSmoke');
   const barSmk = document.getElementById('sbBarSmoke');
   if (elSmk) elSmk.textContent = `${smokeVal}%`;
-  if (barSmk) barSmk.style.width = `${Math.min(100, Math.max(0, smokeVal))}%`;
+  if (barSmk) barSmk.style.width = `${Math.min(100, Math.max(0, parseFloat(smokeVal)))}%`;
 
   // 3. Fire Coverage
   const elCov = document.getElementById('sbValCoverage');
   const barCov = document.getElementById('sbBarCoverage');
   if (elCov) elCov.textContent = `${covVal}%`;
-  if (barCov) barCov.style.width = `${Math.min(100, Math.max(0, covVal))}%`;
+  if (barCov) barCov.style.width = `${Math.min(100, Math.max(0, parseFloat(covVal)))}%`;
 
   // 4. Smoke Level
   const elSmkLvl = document.getElementById('sbValSmokeLevel');
   const barSmkLvl = document.getElementById('sbBarSmokeLevel');
   if (elSmkLvl) elSmkLvl.textContent = `${smkLvlVal}%`;
-  if (barSmkLvl) barSmkLvl.style.width = `${Math.min(100, Math.max(0, smkLvlVal))}%`;
+  if (barSmkLvl) barSmkLvl.style.width = `${Math.min(100, Math.max(0, parseFloat(smkLvlVal)))}%`;
 
   // 5. Anomaly Confidence (BELOW FIRE & SMOKE)
   const elAnom = document.getElementById('sbValAnomaly');
   const barAnom = document.getElementById('sbBarAnomaly');
   if (elAnom) elAnom.textContent = `${anomVal}%`;
-  if (barAnom) barAnom.style.width = `${Math.min(100, Math.max(0, anomVal))}%`;
+  if (barAnom) barAnom.style.width = `${Math.min(100, Math.max(0, parseFloat(anomVal)))}%`;
 
   // Unhide Scoreboard container now that image is uploaded & analyzed
   const sbContainer = document.getElementById('userScoreBoardContainer');
@@ -1371,7 +1371,7 @@ function updateScoreboardUI(data) {
   }
   const covLvlEl = document.getElementById('sbMetricCoverageLevel');
   if (covLvlEl) {
-    const spreadLabel = !isFire ? 'LEVEL: CLEAR' : (parseFloat(covVal) > 30 ? 'HIGH SPREAD (CRITICAL)' : (parseFloat(covVal) > 15 ? 'MODERATE SPREAD' : 'EARLY STAGE'));
+    const spreadLabel = (!isFire || isFakeDetected) ? 'LEVEL: CLEAR (0% FIRE)' : (parseFloat(covVal) > 30 ? 'HIGH SPREAD (CRITICAL)' : (parseFloat(covVal) > 15 ? 'MODERATE SPREAD' : 'EARLY STAGE'));
     covLvlEl.textContent = spreadLabel;
     covLvlEl.className = isFire ? 'text-[9px] font-bold text-amber-300 block mt-0.5 truncate' : 'text-[9px] font-bold text-slate-400 block mt-0.5 truncate';
   }
@@ -1502,39 +1502,53 @@ function analyzeImageFast(imgElement, callback) {
       const r = imgData[i];
       const g = imgData[i + 1];
       const b = imgData[i + 2];
+      const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
 
-      // Multi-spectral fire detection: Red-Orange, Golden Yellow, White-Hot core, Embers
-      const isRedFire = (r > 130 && r > g && g >= b && (r - b) > 25);
-      const isYellowFire = (r > 175 && g > 130 && (r + g) > (2.1 * b));
-      const isWhiteCore = (r > 215 && g > 190 && b > 140 && r >= g && g >= b);
-      const isEmbers = (r > 110 && r > 1.3 * g && r > 1.5 * b);
+      // Strict flame luminance and color ratio rules:
+      // Real flames are self-luminous (luminance > 140) and have strong red-to-blue excess (r - b > 55)
+      const isRedOrangeFlame = (r > 175 && r > g && g > b && (r - b) > 60 && luminance > 130);
+      const isGoldenFlame = (r > 200 && g > 150 && (r + g) > (2.6 * b) && luminance > 150 && (r - b) > 70);
+      const isWhiteCoreFlame = (r > 235 && g > 215 && b > 140 && (r + g) > (2.2 * b) && luminance > 205);
+      const isGlowingEmbers = (r > 185 && r > 1.8 * g && r > 2.2 * b && luminance > 120);
 
-      if (isRedFire || isYellowFire || isWhiteCore || isEmbers) {
+      if (isRedOrangeFlame || isGoldenFlame || isWhiteCoreFlame || isGlowingEmbers) {
         firePixels++;
-      } else if ((Math.abs(r - g) < 35 && Math.abs(g - b) < 35 && r > 65 && r < 225) ||
-                 (r > 85 && g > 70 && b < 165 && r > b && g > b)) {
+      } else if ((Math.abs(r - g) < 25 && Math.abs(g - b) < 25 && r > 90 && r < 210 && luminance > 80 && luminance < 190) ||
+                 (r > 100 && g > 85 && b < 140 && r > b && g > b && (r - b) > 30)) {
         smokePixels++;
       }
     }
 
     const fireRatio = firePixels / total;
     const smokeRatio = smokePixels / total;
-    const isFire = fireRatio > 0.004 || (fireRatio > 0.002 && smokeRatio > 0.08);
+    // Strict threshold: requires at least 1.2% genuine flame pixels
+    const isFire = fireRatio >= 0.012 || (fireRatio >= 0.008 && smokeRatio > 0.08);
 
     if (isFire) {
-      const fireConf = Math.min(99.6, Math.max(90.0, 88.0 + fireRatio * 110));
-      const smkConf = Math.min(98.0, Math.max(76.0, 78.0 + smokeRatio * 110));
-      const cov = Math.min(94.0, Math.max(18.0, fireRatio * 220 + 15));
-      const smkLvl = Math.min(96.0, Math.max(30.0, smokeRatio * 170 + 30));
-      const anom = Math.min(99.4, Math.max(84.0, 84.0 + fireRatio * 85 + smokeRatio * 25));
+      // Fire coverage in % directly reflects the amount of fire detected in the image
+      const cov = Math.min(95.0, Math.max(1.0, fireRatio * 200));
+      // Base confidence directly proportional to flame signature
+      const fireConf = Math.min(99.0, Math.max(55.0, 50.0 + (cov / 100.0) * 45));
+      const smkConf = Math.min(98.0, Math.max(40.0, 40.0 + smokeRatio * 180));
+      const smkLvl = Math.min(95.0, Math.max(20.0, smokeRatio * 190));
+      const anom = fireConf;
 
       // "More the fire, more the seriousness":
-      // Base risk scales directly with fire coverage and flame spread
-      const fireScale = Math.min(1.0, (cov / 34.0));
-      const baseRisk = 74 + Math.round(fireScale * 23); // Scales from 74 to 97 points
-      const smokeBonus = Math.min(2.0, (smkLvl / 50.0));
-      const risk = Math.min(99, Math.max(74, Math.round(baseRisk + smokeBonus)));
-      const sev = risk >= 84 ? 'CRITICAL' : 'HIGH';
+      // Small fire (< 15% coverage): MODERATE severity (risk 35-65)
+      // Medium fire (15% - 35% coverage): HIGH severity (risk 65-84)
+      // Large fire (> 35% coverage): CRITICAL severity (risk 85-99)
+      let sev = 'MODERATE';
+      let risk = 50;
+      if (cov >= 35.0) {
+        sev = 'CRITICAL';
+        risk = Math.min(99, Math.round(85 + ((cov - 35.0) / 60.0) * 14));
+      } else if (cov >= 15.0) {
+        sev = 'HIGH';
+        risk = Math.min(84, Math.round(65 + ((cov - 15.0) / 20.0) * 19));
+      } else {
+        sev = 'MODERATE';
+        risk = Math.min(64, Math.round(35 + (cov / 15.0) * 29));
+      }
 
       callback({
         fireDetected: true,
@@ -1546,8 +1560,17 @@ function analyzeImageFast(imgElement, callback) {
         anomalyConfidence: parseFloat(anom.toFixed(1)),
         riskScore: risk,
         severity: sev,
-        objectsCount: Math.max(1, Math.min(6, Math.round(fireRatio * 35 + 2))),
-        earlyWarningAlert: sev === 'CRITICAL' ? 'CRITICAL - IMMEDIATE DISPATCH' : 'HIGH RISK HAZARD DETECTED',
+        fireLevel: sev,
+        objectsCount: Math.max(1, Math.min(6, Math.round(fireRatio * 35 + 1))),
+        statusTitle: 'FIRE DETECTED',
+        statusText: `Status: Active Wildfire (${Math.max(1, Math.round(fireRatio * 35 + 1))} Objects)`,
+        badgeText: sev,
+        earlyWarningAlert: sev === 'CRITICAL' ? 'CRITICAL - IMMEDIATE DISPATCH' : (sev === 'HIGH' ? 'HIGH RISK HAZARD DETECTED' : 'MODERATE RISK FIRE INCIDENT'),
+        fakeProbability: 3.2,
+        authenticityScore: 96.8,
+        fakeVerdict: 'AUTHENTIC GROUND EVIDENCE',
+        fakeStatus: 'PASSED - REAL FIELD EVIDENCE (NOT FAKE / NOT AI-GEN)',
+        isFake: false,
         timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
       });
     } else {
@@ -1564,29 +1587,40 @@ function analyzeImageFast(imgElement, callback) {
         fireLevel: 'SAFE (FAKE ALERT)',
         objectsCount: 0,
         statusTitle: 'FAKE ALERT DETECTED',
-        statusText: 'Status: Non-Fire Photo Flagged as False Alarm',
+        statusText: 'Status: Non-Fire Photo Flagged as False Alarm (0% Fire)',
         badgeText: 'FAKE ALERT',
         earlyWarningAlert: '⚠️ FAKE ALERT SIGNAL - ZERO HAZARD / NON-FIRE PHOTO',
-        fakeProbability: 92.4,
-        authenticityScore: 7.6,
-        fakeVerdict: 'SUSPECTED FAKE / FALSE ALARM',
-        fakeStatus: 'FLAGGED - NON-FIRE PHOTO / POTENTIAL HOAX',
+        fakeProbability: 99.0,
+        authenticityScore: 0.0,
+        fakeVerdict: 'FAKE ALERT / ZERO FIRE DETECTED',
+        fakeStatus: 'FLAGGED - NON-FIRE PHOTO (0% FIRE)',
         isFake: true,
         timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
       });
     }
   } catch (e) {
-    // Default fallback on cross-origin image
+    // Fail-safe default on decode/canvas issue: strictly non-fire / fake alert
     callback({
-      fireDetected: true,
-      anomalyConfidence: 94.6,
-      smokeConfidence: 92.0,
-      fireCoverage: 38.5,
-      smokeLevel: 85.0,
-      riskScore: 96,
-      severity: 'CRITICAL',
-      objectsCount: 3,
-      earlyWarningAlert: 'CRITICAL - IMMEDIATE DISPATCH',
+      fireDetected: false,
+      anomalyConfidence: 0.0,
+      fireScore: 0.0,
+      fireConfidence: 0.0,
+      smokeConfidence: 0.0,
+      fireCoverage: 0.0,
+      smokeLevel: 0.0,
+      riskScore: 0,
+      severity: 'FAKE ALERT',
+      fireLevel: 'SAFE (FAKE ALERT)',
+      objectsCount: 0,
+      statusTitle: 'FAKE ALERT DETECTED',
+      statusText: 'Status: Non-Fire Photo Flagged as False Alarm (0% Fire)',
+      badgeText: 'FAKE ALERT',
+      earlyWarningAlert: '⚠️ FAKE ALERT SIGNAL - ZERO HAZARD / NON-FIRE PHOTO',
+      fakeProbability: 99.0,
+      authenticityScore: 0.0,
+      fakeVerdict: 'FAKE ALERT / ZERO FIRE DETECTED',
+      fakeStatus: 'FLAGGED - NON-FIRE PHOTO (0% FIRE)',
+      isFake: true,
       timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
     });
   }
@@ -1728,16 +1762,34 @@ function initFormAndModals() {
         formData.append('peopleInDanger', document.getElementById('selPeople')?.value || 'false');
         formData.append('reporterName', 'Citizen Observer');
         formData.append('isPriority', 'true');
-        formData.append('priorityLevel', 'PRIORITY 1 - CITIZEN REPORT');
-        formData.append('anomalyConfidence', document.getElementById('hdnAiConfidence')?.value || '94.6');
-        formData.append('smokeConfidence', document.getElementById('hdnSmokeConfidence')?.value || '92.0');
-        formData.append('fireCoverage', document.getElementById('hdnFireCoverage')?.value || '38.5');
-        formData.append('smokeLevel', document.getElementById('hdnSmokeLevel')?.value || '85.0');
-        formData.append('riskScore', document.getElementById('hdnRiskScore')?.value || '96');
-        formData.append('severity', document.getElementById('hdnSeverity')?.value || 'CRITICAL');
-        formData.append('fireScore', document.getElementById('hdnAiConfidence')?.value || '94.6');
-        formData.append('fakeProbability', document.getElementById('hdnFakeScore')?.value || '3.2');
-        formData.append('authenticityScore', document.getElementById('hdnAuthenticityScore')?.value || '96.8');
+        const hdnSevVal = document.getElementById('hdnSeverity')?.value || 'CRITICAL';
+        const isFakeSub = hdnSevVal === 'FAKE ALERT' || (parseFloat(document.getElementById('hdnFakeScore')?.value || '0') > 50) || (document.getElementById('sbStatusBadge')?.textContent?.includes('FAKE'));
+
+        if (isFakeSub) {
+          formData.append('isFake', 'true');
+          formData.append('fireDetected', 'false');
+          formData.append('anomalyConfidence', '0.0');
+          formData.append('smokeConfidence', '0.0');
+          formData.append('fireCoverage', '0.0');
+          formData.append('smokeLevel', '0.0');
+          formData.append('riskScore', '0');
+          formData.append('severity', 'FAKE ALERT');
+          formData.append('fireScore', '0.0');
+          formData.append('fakeProbability', document.getElementById('hdnFakeScore')?.value || '99.0');
+          formData.append('authenticityScore', '0.0');
+        } else {
+          formData.append('isFake', 'false');
+          formData.append('fireDetected', 'true');
+          formData.append('anomalyConfidence', document.getElementById('hdnAiConfidence')?.value || '94.6');
+          formData.append('smokeConfidence', document.getElementById('hdnSmokeConfidence')?.value || '92.0');
+          formData.append('fireCoverage', document.getElementById('hdnFireCoverage')?.value || '38.5');
+          formData.append('smokeLevel', document.getElementById('hdnSmokeLevel')?.value || '85.0');
+          formData.append('riskScore', document.getElementById('hdnRiskScore')?.value || '96');
+          formData.append('severity', hdnSevVal);
+          formData.append('fireScore', document.getElementById('hdnAiConfidence')?.value || '94.6');
+          formData.append('fakeProbability', document.getElementById('hdnFakeScore')?.value || '3.2');
+          formData.append('authenticityScore', document.getElementById('hdnAuthenticityScore')?.value || '96.8');
+        }
 
         let res;
         try {

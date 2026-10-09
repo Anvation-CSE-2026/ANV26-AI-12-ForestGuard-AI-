@@ -154,22 +154,23 @@ async def analyze_image(
     severity = "LOW"
     affected_hectares = 0.0
     
-    # Check for fire: Even small/distant fire (>0.4%) or smoky fire (>0.2% + smoke)
-    if flame_ratio > 0.004 or (flame_ratio > 0.002 and smoke_ratio > 0.08) or len(hotspots) > 0:
+    # Check for fire: Require genuine luminous flame pixels (flame_ratio >= 0.012)
+    if flame_ratio >= 0.012 or (flame_ratio >= 0.008 and smoke_ratio > 0.12):
         is_fire = True
         detected_features.extend(["Flames", "Smoke", "Heat-like region"])
         if veg_ratio > 0.08:
             detected_features.append("Vegetation")
             
         # Confidence calculation
-        confidence = min(99.2, max(88.0, 85.0 + (flame_ratio * 90.0) + (smoke_ratio * 25.0)))
+        confidence = min(99.2, max(85.0, 84.0 + (flame_ratio * 90.0) + (smoke_ratio * 25.0)))
         confidence = round(confidence, 1)
         
-        # Severity calculation
-        if flame_ratio > 0.05 or len(hotspots) >= 2 or (flame_ratio > 0.02 and smoke_ratio > 0.18):
+        # Severity calculation scaled with amount of fire
+        fire_coverage_pct = min(95.0, flame_ratio * 180.0)
+        if fire_coverage_pct > 35.0:
             severity = "CRITICAL"
             affected_hectares = round(float(np.random.uniform(2.8, 6.4)), 1)
-        elif flame_ratio > 0.015 or smoke_ratio > 0.12:
+        elif fire_coverage_pct > 15.0:
             severity = "HIGH"
             affected_hectares = round(float(np.random.uniform(1.2, 2.6)), 1)
         else:
@@ -177,33 +178,31 @@ async def analyze_image(
             affected_hectares = round(float(np.random.uniform(0.5, 1.2)), 1)
             
         explanation = (
-            "Active fire patterns and smoke plumes verified by Multi-Spectral Vision Engine. "
-            "High-temperature thermal luminescence in red/orange/yellow spectral bands confirms an active forest fire."
+            f"Active wildfire flames verified ({round(fire_coverage_pct, 1)}% fire coverage). "
+            f"Thermal radiance indicates {severity.lower()} threat requiring response."
         )
     else:
-        # Non-fire / False-Positive Case
+        # Non-fire / False-Positive Case: Strictly 0% fire always and FAKE ALERT
         is_fire = False
-        confidence = round(min(99.1, 91.0 + (1.0 - flame_ratio) * 7.5), 1)
-        severity = "LOW"
+        confidence = 0.0
+        severity = "FAKE ALERT"
         affected_hectares = 0.0
         
         if veg_ratio > 0.25:
             detected_features.append("Vegetation")
-        if smoke_ratio > 0.10:
-            detected_features.append("Haze")
         else:
-            detected_features.append("Cloud")
+            detected_features.append("Ambient Lighting")
             
-        explanation = "No significant fire or smoke signature detected. Image predominantly exhibits natural ambient lighting and vegetation."
+        explanation = "⚠️ Non-fire photograph detected. Analysis confirms 0% fire pixels and zero thermal hazard. Flagged as potential false alarm / hoax."
 
     # Build feature breakdown
-    feature_breakdown.append(FeatureItem(name="Flames", detected=is_fire, confidence=round(flame_ratio * 300, 1) if is_fire else 4.2))
-    feature_breakdown.append(FeatureItem(name="Smoke", detected=smoke_ratio > 0.08, confidence=round(min(98.0, smoke_ratio * 250), 1)))
-    feature_breakdown.append(FeatureItem(name="Heat-like region", detected=is_fire, confidence=round(confidence, 1) if is_fire else 8.0))
+    feature_breakdown.append(FeatureItem(name="Flames", detected=is_fire, confidence=round(confidence, 1) if is_fire else 0.0))
+    feature_breakdown.append(FeatureItem(name="Smoke", detected=smoke_ratio > 0.12, confidence=round(min(98.0, smoke_ratio * 250), 1) if is_fire else 0.0))
+    feature_breakdown.append(FeatureItem(name="Heat-like region", detected=is_fire, confidence=round(confidence, 1) if is_fire else 0.0))
     feature_breakdown.append(FeatureItem(name="Vegetation", detected=veg_ratio > 0.10, confidence=round(min(95.0, veg_ratio * 150), 1)))
-    feature_breakdown.append(FeatureItem(name="Haze", detected=smoke_ratio > 0.05 and not is_fire, confidence=45.0 if not is_fire else 15.0))
-    feature_breakdown.append(FeatureItem(name="Cloud", detected=not is_fire, confidence=60.0 if not is_fire else 10.0))
-    feature_breakdown.append(FeatureItem(name="Dust", detected=False, confidence=12.0))
+    feature_breakdown.append(FeatureItem(name="Haze", detected=False, confidence=0.0))
+    feature_breakdown.append(FeatureItem(name="Cloud", detected=False, confidence=0.0))
+    feature_breakdown.append(FeatureItem(name="Dust", detected=False, confidence=0.0))
 
     latency = (time.time() - start_time) * 1000
     
