@@ -15,7 +15,7 @@ let currentWaypointIndex = 0;
 let socket = null;
 
 const ACTIVE_TEAM_ID = 'TEAM-04';
-const STATION_COORDS = [11.6617, 76.6272]; // Bandipur Range Forest Office & Fire Command HQ building on NH-766
+const STATION_COORDS = [11.8055, 76.6888]; // Gundlupet Fire Station (Karnataka State Fire Services) on NH-766 - Bandipur Sector Command
 
 document.addEventListener('DOMContentLoaded', async () => {
   initMap();
@@ -48,7 +48,7 @@ function initMap() {
   });
 
   stationMarker = L.marker(STATION_COORDS, { icon: stnIcon }).addTo(stationMap);
-  stationMarker.bindPopup('<b>Bandipur Forest Response Unit (HQ)</b><br>Base Station: STA-KA-01');
+  stationMarker.bindPopup('<b>Gundlupet Fire Station (Karnataka State Fire Services)</b><br><span style="color:#60a5fa;">Bandipur Team Ready (🛡️)</span><br>Base Station: STA-KA-02 • NH-766');
 }
 
 function initSocket() {

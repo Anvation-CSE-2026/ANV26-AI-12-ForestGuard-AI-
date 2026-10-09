@@ -88,11 +88,12 @@ class IncidentStore {
         teamId: 'TEAM-01',
         name: 'Team 01 (Bandipur Forest Unit)',
         stationId: 'STA-KA-01',
-        stationName: 'Bandipur Range Forest Office & Fire Command (HQ)',
+        stationName: 'Bandipur Tiger Reserve Range Office & STPF Command Post',
+        badge: 'Bandipur Team Ready 🛡️',
         status: 'AVAILABLE', // AVAILABLE, ASSIGNED, EN_ROUTE, ON_SITE, BUSY, OFFLINE
         members: 6,
         vehicle: 'Heavy Water Tender & Drone Patrol',
-        coordinates: { lat: 11.6675, lng: 76.6322 },
+        coordinates: { lat: 11.6673, lng: 76.6286 },
         currentIncident: null,
         etaMinutes: 14
       },
@@ -101,6 +102,7 @@ class IncidentStore {
         name: 'Team 02 (Gundlupet Municipal Squad)',
         stationId: 'STA-KA-02',
         stationName: 'Gundlupet Fire Station (Karnataka State Fire Services)',
+        badge: 'Bandipur Team Ready 🛡️',
         status: 'BUSY',
         members: 8,
         vehicle: 'Dual Attack Bowser',
@@ -111,36 +113,39 @@ class IncidentStore {
       {
         teamId: 'TEAM-03',
         name: 'Team 03 (Nagarhole Wildlife Strike Force)',
-        stationId: 'STA-KA-03',
-        stationName: 'Nagarhole Rapid Post',
+        stationId: 'STA-KA-04',
+        stationName: 'Hunsur Fire Station (Karnataka State Fire Services)',
+        badge: 'Nagarhole Team Ready 🛡️',
         status: 'BUSY',
         members: 6,
         vehicle: 'Quick Response Tender',
-        coordinates: { lat: 11.9610, lng: 76.1340 },
+        coordinates: { lat: 12.3080, lng: 76.2910 },
         currentIncident: null,
         etaMinutes: 32
       },
       {
         teamId: 'TEAM-04',
         name: 'Team 04 (Bandipur Rapid Response Squad)',
-        stationId: 'STA-KA-01',
-        stationName: 'Bandipur Range Forest Office & Fire Command (HQ)',
+        stationId: 'STA-KA-02',
+        stationName: 'Gundlupet Fire Station (Karnataka State Fire Services)',
+        badge: 'Bandipur Team Ready 🛡️',
         status: 'AVAILABLE', // The recommended team for Bandipur
         members: 6,
         vehicle: 'High-Clearance 4x4 Brush Engine + Drone',
-        coordinates: { lat: 11.6675, lng: 76.6322 },
+        coordinates: { lat: 11.8055, lng: 76.6888 },
         currentIncident: null,
         etaMinutes: 16
       },
       {
         teamId: 'TEAM-05',
         name: 'Team 05 (Reserve Backup Squad)',
-        stationId: 'STA-KA-01',
-        stationName: 'Bandipur Range Forest Office & Fire Command (HQ)',
+        stationId: 'STA-KA-02',
+        stationName: 'Gundlupet Fire Station (Karnataka State Fire Services)',
+        badge: 'Bandipur Team Ready 🛡️',
         status: 'OFFLINE',
         members: 5,
         vehicle: 'Logistics Bowser',
-        coordinates: { lat: 11.6675, lng: 76.6322 },
+        coordinates: { lat: 11.8055, lng: 76.6888 },
         currentIncident: null,
         etaMinutes: 45
       }
@@ -266,12 +271,15 @@ class IncidentStore {
       multiSourceSummary: '3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)',
       nearestStation: station,
       assignedStation: {
-        stationId: 'STA-KA-01',
-        name: 'Bandipur Forest Fire Response Unit',
-        distanceKm: 8.4,
+        stationId: 'STA-KA-02',
+        name: 'Gundlupet Fire Station (Karnataka State Fire Services)',
+        badge: 'Bandipur Team Ready 🛡️',
+        coordinates: { lat: 11.8055, lng: 76.6888 },
+        distanceKm: 17.2,
         etaMinutes: 16,
-        phone: '+91-8229-236021',
-        availability: 'AVAILABLE'
+        phone: '+91-8229-222811',
+        availability: 'AVAILABLE',
+        notes: 'No municipal fire station inside Bandipur Tiger Reserve; primary response mobilized from Gundlupet Fire Station with Bandipur Strike Force ready.'
       },
       rankedStations: geoSpatialService.findRankedResponseStations(bandipurCoords.lat, bandipurCoords.lng, 3),
       assignedTeam: {

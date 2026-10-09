@@ -409,16 +409,49 @@ class ForestGuardMapEngine {
       this.markers.stations.push(marker);
       return marker;
     } else {
-      const rawName = station.name || 'Bandipur Station';
-      const shortName = rawName.split('(')[0].replace(/Rapid Response Unit|Fire Response Unit|Forest Response Unit/gi, 'Station').trim();
+      let badgeLabel = 'Team Ready 🛡️';
+      if (station.badge) {
+        badgeLabel = station.badge.includes('🛡️') ? station.badge : `${station.badge} 🛡️`;
+      } else {
+        const rawName = station.name || 'Station';
+        if (/Bandipur|Gundlupet/i.test(rawName)) {
+          badgeLabel = 'Bandipur Team Ready 🛡️';
+        } else if (/KSSEM|Anjanapura/i.test(rawName)) {
+          badgeLabel = 'KSSEM Team Ready 🛡️';
+        } else if (/DSATM|Kaggalipura/i.test(rawName)) {
+          badgeLabel = 'DSATM Team Ready 🛡️';
+        } else if (/Corbett|Ramnagar/i.test(rawName)) {
+          badgeLabel = 'Corbett Team Ready 🛡️';
+        } else if (/Kanha|Baihar/i.test(rawName)) {
+          badgeLabel = 'Kanha Team Ready 🛡️';
+        } else if (/Wayanad|Sulthan Bathery/i.test(rawName)) {
+          badgeLabel = 'Wayanad Team Ready 🛡️';
+        } else if (/Nagarhole|Hunsur/i.test(rawName)) {
+          badgeLabel = 'Nagarhole Team Ready 🛡️';
+        } else if (/Bannerghatta|Jigani/i.test(rawName)) {
+          badgeLabel = 'Bannerghatta Team Ready 🛡️';
+        } else if (/Kaziranga|Bokakhat/i.test(rawName)) {
+          badgeLabel = 'Kaziranga Team Ready 🛡️';
+        } else if (/Gir|Talala|Sasan/i.test(rawName)) {
+          badgeLabel = 'Gir Team Ready 🛡️';
+        } else {
+          const firstWord = rawName.split(/[\s(]/)[0].replace(/[^a-zA-Z]/g, '');
+          badgeLabel = `${firstWord || 'Sector'} Team Ready 🛡️`;
+        }
+      }
+
       const icon = L.divIcon({
         className: 'custom-map-marker marker-station-badge',
-        html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">${shortName} - Team Ready</span><span style="font-size:14px; filter:drop-shadow(0 0 4px #3b82f6);">🛡️</span></div>`,
+        html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">${badgeLabel}</span></div>`,
         iconSize: [0, 0],
         iconAnchor: [0, 0]
       });
       const marker = L.marker([lat, lng], { icon }).addTo(this.map);
-      marker.bindPopup(`<b>${station.name}</b><br><span style="color:#60a5fa;">Emergency Forestry Station - Team Ready (🛡️)</span><br>ETA: <b>${station.etaMinutes || 14} min</b>`);
+      const isBandipur = /Bandipur|Gundlupet/i.test(station.name || '');
+      const noteHtml = isBandipur
+        ? `<br><span style="color:#94a3b8; font-size:11px;">📌 <i>Note: No municipal fire station inside Bandipur Tiger Reserve core forest; primary fire response deployed from Gundlupet Fire Station on NH-766 with Bandipur Strike Force ready.</i></span>`
+        : '';
+      marker.bindPopup(`<b>${station.name}</b><br><span style="color:#60a5fa;">${badgeLabel}</span><br>Physical Building: <b>${lat.toFixed(4)}, ${lng.toFixed(4)}</b><br>ETA: <b>${station.etaMinutes || 14} min</b>${station.distanceKm ? ` • Dist: <b>${station.distanceKm} km</b>` : ''}${noteHtml}`);
       marker.on('click', () => onClickCallback && onClickCallback(station));
       this.markers.stations.push(marker);
       return marker;

@@ -344,12 +344,14 @@ function selectIncident(incident, shouldCenter = true) {
         distanceKm: '0.4'
       };
     } else if (Math.abs(lat - 11.6643) < 0.25 && Math.abs(lng - 76.6250) < 0.25) {
-      // Bandipur -> Bandipur Range Forest Office & Fire Command HQ building
+      // Bandipur -> No municipal fire station inside core tiger reserve; primary civil station is Gundlupet Fire Station on NH-766 with Bandipur Strike Force ready
       deployStation = {
-        name: 'Bandipur Range Forest Office & Fire Command (HQ)',
-        coordinates: { lat: 11.6617, lng: 76.6272 },
-        etaMinutes: 10,
-        distanceKm: '0.8'
+        name: 'Gundlupet Fire Station (Karnataka State Fire Services)',
+        coordinates: { lat: 11.8055, lng: 76.6888 },
+        badge: 'Bandipur Team Ready 🛡️',
+        etaMinutes: 16,
+        distanceKm: '17.2',
+        notes: 'No municipal fire station inside Bandipur Tiger Reserve core forest; primary fire response deployed from Gundlupet Fire Station on NH-766 with Bandipur Strike Force ready.'
       };
     } else if (incident.nearestStation && incident.nearestStation.coordinates) {
       deployStation = incident.nearestStation;
@@ -1476,22 +1478,138 @@ function closeAdminModal(modalEl) {
         window.forestMapEngine.clearMarkers('stations');
         window.forestMapEngine.clearMarkers('water');
         window.forestMapEngine.drawRadiusCircles(11.6643, 76.6250, [500]);
-        window.forestMapEngine.addStationMarker({ name: 'Bandipur Range Forest Office & Fire Command (HQ)', coordinates: { lat: 11.6617, lng: 76.6272 }, etaMinutes: 4 });
-        window.forestMapEngine.drawRoute([[11.6617, 76.6272], [11.6643, 76.6250]], '#f97316', true);
+        window.forestMapEngine.addStationMarker({
+          name: 'Gundlupet Fire Station (Karnataka State Fire Services)',
+          coordinates: { lat: 11.8055, lng: 76.6888 },
+          badge: 'Bandipur Team Ready 🛡️',
+          etaMinutes: 16,
+          distanceKm: '17.2'
+        });
+        window.forestMapEngine.drawRoute([[11.8055, 76.6888], [11.6643, 76.6250]], '#f97316', true);
         window.forestMapEngine.addWaterMarker({ name: 'Tavarekatte Lake Reservoir (Bandipur Forest Water Source)', coordinates: { lat: 11.6672, lng: 76.6215 }, capacity: 'Continuous 25,000 LPM Aerial Drafting' });
         window.forestMapEngine.drawRoute([[11.6672, 76.6215], [11.6643, 76.6250]], '#0284c7', true);
-        window.forestMapEngine.fitToIncidentAndEntities({ lat: 11.6643, lng: 76.6250 }, { lat: 11.6617, lng: 76.6272 }, { lat: 11.6672, lng: 76.6215 });
+        window.forestMapEngine.fitToIncidentAndEntities({ lat: 11.6643, lng: 76.6250 }, { lat: 11.8055, lng: 76.6888 }, { lat: 11.6672, lng: 76.6215 });
       }
-      showToast('📍 Pinpointed: Bandipur Tiger Reserve Forest Sector - Detailed', 'emerald');
+      showToast('📍 Pinpointed: Bandipur Tiger Reserve Forest Sector (Gundlupet Station & Bandipur Team Ready)', 'emerald');
     } else if (q.includes('corbett')) {
-      window.forestMapEngine.centerOn(29.5300, 78.7747, 15);
-      showToast('📍 Pinpointed: Jim Corbett National Park', 'emerald');
+      window.forestMapEngine.clearRoutes();
+      window.forestMapEngine.clearMarkers('stations');
+      window.forestMapEngine.clearMarkers('water');
+      window.forestMapEngine.drawRadiusCircles(29.5300, 78.7747, [500]);
+      window.forestMapEngine.addStationMarker({
+        name: 'Ramnagar Fire Station (Uttarakhand Fire & Emergency Services)',
+        coordinates: { lat: 29.3955, lng: 79.1285 },
+        badge: 'Corbett Team Ready 🛡️',
+        etaMinutes: 25,
+        distanceKm: '37.4'
+      });
+      window.forestMapEngine.drawRoute([[29.3955, 79.1285], [29.5300, 78.7747]], '#f97316', true);
+      window.forestMapEngine.addWaterMarker({ name: 'Ramganga River Drafting Reservoir', coordinates: { lat: 29.5820, lng: 78.7510 }, capacity: '45,000 LPM Perennial Stream' });
+      window.forestMapEngine.drawRoute([[29.5820, 78.7510], [29.5300, 78.7747]], '#0284c7', true);
+      window.forestMapEngine.fitToIncidentAndEntities({ lat: 29.5300, lng: 78.7747 }, { lat: 29.3955, lng: 79.1285 }, { lat: 29.5820, lng: 78.7510 });
+      showToast('📍 Pinpointed: Jim Corbett National Park (Ramnagar Fire Station Ready)', 'emerald');
     } else if (q.includes('kanha')) {
-      window.forestMapEngine.centerOn(22.3345, 80.6115, 15);
-      showToast('📍 Pinpointed: Kanha Tiger Reserve', 'emerald');
+      window.forestMapEngine.clearRoutes();
+      window.forestMapEngine.clearMarkers('stations');
+      window.forestMapEngine.clearMarkers('water');
+      window.forestMapEngine.drawRadiusCircles(22.3345, 80.6115, [500]);
+      window.forestMapEngine.addStationMarker({
+        name: 'Baihar Fire Station (MP State Fire Services)',
+        coordinates: { lat: 22.0950, lng: 80.5510 },
+        badge: 'Kanha Team Ready 🛡️',
+        etaMinutes: 30,
+        distanceKm: '27.3'
+      });
+      window.forestMapEngine.drawRoute([[22.0950, 80.5510], [22.3345, 80.6115]], '#f97316', true);
+      window.forestMapEngine.addWaterMarker({ name: 'Banjar River Drafting Reservoir', coordinates: { lat: 22.3120, lng: 80.5840 }, capacity: '30,000 LPM Pumping Capacity' });
+      window.forestMapEngine.drawRoute([[22.3120, 80.5840], [22.3345, 80.6115]], '#0284c7', true);
+      window.forestMapEngine.fitToIncidentAndEntities({ lat: 22.3345, lng: 80.6115 }, { lat: 22.0950, lng: 80.5510 }, { lat: 22.3120, lng: 80.5840 });
+      showToast('📍 Pinpointed: Kanha Tiger Reserve (Baihar Fire Station Ready)', 'emerald');
     } else if (q.includes('wayanad')) {
-      window.forestMapEngine.centerOn(11.6854, 76.3670, 15);
-      showToast('📍 Pinpointed: Wayanad Wildlife Sanctuary', 'emerald');
+      window.forestMapEngine.clearRoutes();
+      window.forestMapEngine.clearMarkers('stations');
+      window.forestMapEngine.clearMarkers('water');
+      window.forestMapEngine.drawRadiusCircles(11.6854, 76.3670, [500]);
+      window.forestMapEngine.addStationMarker({
+        name: 'Sulthan Bathery Fire & Rescue Station (Kerala Fire Services)',
+        coordinates: { lat: 11.6695, lng: 76.2620 },
+        badge: 'Wayanad Team Ready 🛡️',
+        etaMinutes: 16,
+        distanceKm: '11.6'
+      });
+      window.forestMapEngine.drawRoute([[11.6695, 76.2620], [11.6854, 76.3670]], '#f97316', true);
+      window.forestMapEngine.addWaterMarker({ name: 'Karapuzha Reservoir Drafting Point', coordinates: { lat: 11.6020, lng: 76.1680 }, capacity: 'Helicopter Bucket & Bowser Drafting' });
+      window.forestMapEngine.drawRoute([[11.6020, 76.1680], [11.6854, 76.3670]], '#0284c7', true);
+      window.forestMapEngine.fitToIncidentAndEntities({ lat: 11.6854, lng: 76.3670 }, { lat: 11.6695, lng: 76.2620 }, { lat: 11.6020, lng: 76.1680 });
+      showToast('📍 Pinpointed: Wayanad Wildlife Sanctuary (Sulthan Bathery Station Ready)', 'emerald');
+    } else if (q.includes('nagarhole')) {
+      window.forestMapEngine.clearRoutes();
+      window.forestMapEngine.clearMarkers('stations');
+      window.forestMapEngine.clearMarkers('water');
+      window.forestMapEngine.drawRadiusCircles(11.9610, 76.1340, [500]);
+      window.forestMapEngine.addStationMarker({
+        name: 'Hunsur Fire Station (Karnataka State Fire Services)',
+        coordinates: { lat: 12.3080, lng: 76.2910 },
+        badge: 'Nagarhole Team Ready 🛡️',
+        etaMinutes: 25,
+        distanceKm: '42.2'
+      });
+      window.forestMapEngine.drawRoute([[12.3080, 76.2910], [11.9610, 76.1340]], '#f97316', true);
+      window.forestMapEngine.addWaterMarker({ name: 'Kabini River Drafting Reservoir', coordinates: { lat: 11.9240, lng: 76.2620 }, capacity: 'Unlimited Regional Drafting' });
+      window.forestMapEngine.drawRoute([[11.9240, 76.2620], [11.9610, 76.1340]], '#0284c7', true);
+      window.forestMapEngine.fitToIncidentAndEntities({ lat: 11.9610, lng: 76.1340 }, { lat: 12.3080, lng: 76.2910 }, { lat: 11.9240, lng: 76.2620 });
+      showToast('📍 Pinpointed: Nagarhole National Park (Hunsur Fire Station Ready)', 'emerald');
+    } else if (q.includes('bannerghatta')) {
+      window.forestMapEngine.clearRoutes();
+      window.forestMapEngine.clearMarkers('stations');
+      window.forestMapEngine.clearMarkers('water');
+      window.forestMapEngine.drawRadiusCircles(12.8000, 77.5750, [500]);
+      window.forestMapEngine.addStationMarker({
+        name: 'Bannerghatta / Jigani Fire Station (Karnataka Fire Services)',
+        coordinates: { lat: 12.7840, lng: 77.6380 },
+        badge: 'Bannerghatta Team Ready 🛡️',
+        etaMinutes: 11,
+        distanceKm: '7.1'
+      });
+      window.forestMapEngine.drawRoute([[12.7840, 77.6380], [12.8000, 77.5750]], '#f97316', true);
+      window.forestMapEngine.addWaterMarker({ name: 'Bannerghatta Lake Reservoir', coordinates: { lat: 12.8050, lng: 77.5780 }, capacity: 'Continuous 30,000 LPM Aerial Drafting' });
+      window.forestMapEngine.drawRoute([[12.8050, 77.5780], [12.8000, 77.5750]], '#0284c7', true);
+      window.forestMapEngine.fitToIncidentAndEntities({ lat: 12.8000, lng: 77.5750 }, { lat: 12.7840, lng: 77.6380 }, { lat: 12.8050, lng: 77.5780 });
+      showToast('📍 Pinpointed: Bannerghatta National Park (Jigani Fire Station Ready)', 'emerald');
+    } else if (q.includes('kaziranga')) {
+      window.forestMapEngine.clearRoutes();
+      window.forestMapEngine.clearMarkers('stations');
+      window.forestMapEngine.clearMarkers('water');
+      window.forestMapEngine.drawRadiusCircles(26.5775, 93.1711, [500]);
+      window.forestMapEngine.addStationMarker({
+        name: 'Bokakhat Fire Station (Assam Fire & Emergency Services)',
+        coordinates: { lat: 26.6210, lng: 93.5910 },
+        badge: 'Kaziranga Team Ready 🛡️',
+        etaMinutes: 25,
+        distanceKm: '42.0'
+      });
+      window.forestMapEngine.drawRoute([[26.6210, 93.5910], [26.5775, 93.1711]], '#f97316', true);
+      window.forestMapEngine.addWaterMarker({ name: 'Diphlu River Drafting Point', coordinates: { lat: 26.5910, lng: 93.2100 }, capacity: 'Perennial River Flow' });
+      window.forestMapEngine.drawRoute([[26.5910, 93.2100], [26.5775, 93.1711]], '#0284c7', true);
+      window.forestMapEngine.fitToIncidentAndEntities({ lat: 26.5775, lng: 93.1711 }, { lat: 26.6210, lng: 93.5910 }, { lat: 26.5910, lng: 93.2100 });
+      showToast('📍 Pinpointed: Kaziranga National Park (Bokakhat Fire Station Ready)', 'emerald');
+    } else if (q.includes('gir')) {
+      window.forestMapEngine.clearRoutes();
+      window.forestMapEngine.clearMarkers('stations');
+      window.forestMapEngine.clearMarkers('water');
+      window.forestMapEngine.drawRadiusCircles(21.1245, 70.8242, [500]);
+      window.forestMapEngine.addStationMarker({
+        name: 'Sasan Gir Forest Fire Station & Talala Fire Post',
+        coordinates: { lat: 21.1640, lng: 70.5750 },
+        badge: 'Gir Team Ready 🛡️',
+        etaMinutes: 20,
+        distanceKm: '26.2'
+      });
+      window.forestMapEngine.drawRoute([[21.1640, 70.5750], [21.1245, 70.8242]], '#f97316', true);
+      window.forestMapEngine.addWaterMarker({ name: 'Hiran River Drafting Reservoir', coordinates: { lat: 21.1350, lng: 70.7920 }, capacity: 'Forest River Pump Sump' });
+      window.forestMapEngine.drawRoute([[21.1350, 70.7920], [21.1245, 70.8242]], '#0284c7', true);
+      window.forestMapEngine.fitToIncidentAndEntities({ lat: 21.1245, lng: 70.8242 }, { lat: 21.1640, lng: 70.5750 }, { lat: 21.1350, lng: 70.7920 });
+      showToast('📍 Pinpointed: Gir National Park (Sasan Gir Fire Post Ready)', 'emerald');
     } else {
       const match = allIncidents.find(i => {
         const text = ((i.forestName || '') + ' ' + (i.title || '') + ' ' + (i.locationName || '')).toLowerCase();
@@ -2413,9 +2531,10 @@ window.addEventListener('message', (e) => {
         }
         if (!nearestSt) {
           nearestSt = {
-            name: 'Bandipur Range Forest Office & Fire Command (HQ)',
-            coordinates: { lat: 11.6617, lng: 76.6272 },
-            etaMinutesBase: 4
+            name: 'Gundlupet Fire Station (Karnataka State Fire Services)',
+            coordinates: { lat: 11.8055, lng: 76.6888 },
+            badge: 'Bandipur Team Ready 🛡️',
+            etaMinutesBase: 16
           };
         }
 

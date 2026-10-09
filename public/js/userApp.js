@@ -21,8 +21,8 @@ let allResponseStations = [
   { id: 'STA-BLR-01', name: 'Anjanapura Fire & Emergency Station (Karnataka Fire Services)', coordinates: { lat: 12.8575, lng: 77.5623 }, etaMinutesBase: 5 },
   { id: 'STA-BLR-02', name: 'DSATM Campus & Kaggalipura Rapid Fire Post', coordinates: { lat: 12.8258, lng: 77.5158 }, etaMinutesBase: 6 },
   { id: 'STA-BLR-03', name: 'Banashankari Fire Station (Karnataka State Fire Services)', coordinates: { lat: 12.9159, lng: 77.5546 }, etaMinutesBase: 12 },
-  { id: 'STA-KA-01', name: 'Bandipur Range Forest Office & Fire Command (HQ)', coordinates: { lat: 11.6617, lng: 76.6272 }, etaMinutesBase: 4 },
-  { id: 'STA-KA-02', name: 'Gundlupet Fire Station (Karnataka State Fire Services)', coordinates: { lat: 11.8055, lng: 76.6888 }, etaMinutesBase: 20 },
+  { id: 'STA-KA-01', name: 'Bandipur Tiger Reserve Range Office & STPF Command Post', coordinates: { lat: 11.6673, lng: 76.6286 }, badge: 'Bandipur Team Ready 🛡️', etaMinutesBase: 5 },
+  { id: 'STA-KA-02', name: 'Gundlupet Fire Station (Karnataka State Fire Services)', coordinates: { lat: 11.8055, lng: 76.6888 }, badge: 'Bandipur Team Ready 🛡️', etaMinutesBase: 16 },
   { id: 'STA-KA-03', name: 'Saraswathipuram Fire Station (Mysuru Fire Services)', coordinates: { lat: 12.3020, lng: 76.6290 }, etaMinutesBase: 22 },
   { id: 'STA-UK-01', name: 'Ramnagar Fire Station & Corbett STPF Headquarters', coordinates: { lat: 29.3950, lng: 79.1270 }, etaMinutesBase: 15 },
   { id: 'STA-MP-01', name: 'Kanha Khatia Fire Response Post & Range Office', coordinates: { lat: 22.3510, lng: 80.5920 }, etaMinutesBase: 18 }
@@ -344,24 +344,70 @@ function renderUserMapOverlays(lat, lng) {
   });
 
   // 2. Nearest Fire Station within given district, city or village
-  let stLat, stLng, stName, distKm;
+  let stLat, stLng, stName, stBadge, distKm;
   if (Math.abs(lat - 12.8550) < 0.04 && Math.abs(lng - 77.5420) < 0.04) {
     // KSSEM / Kanakapura Rd -> Anjanapura Fire Station actual building
     stLat = 12.8575;
     stLng = 77.5623;
-    stName = 'Anjanapura Fire & Emergency Station (KSSEM)';
+    stName = 'Anjanapura Fire & Emergency Station (Karnataka Fire Services)';
+    stBadge = 'KSSEM Team Ready 🛡️';
     distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
   } else if (Math.abs(lat - 12.8258) < 0.04 && Math.abs(lng - 77.5158) < 0.04) {
-    // DSATM / Kanakapura Rd -> DSATM Campus & Rapid Fire Post building
-    stLat = 12.8258;
-    stLng = 77.5158;
-    stName = 'DSATM Campus & Rapid Fire Post (DSATM)';
+    // DSATM / Kanakapura Rd -> Kaggalipura Fire Station building
+    stLat = 12.8120;
+    stLng = 77.5020;
+    stName = 'Kaggalipura Fire Station / South Rapid Fire Post (Karnataka Fire Services)';
+    stBadge = 'DSATM Team Ready 🛡️';
     distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
-  } else if (Math.abs(lat - 11.6643) < 0.2 && Math.abs(lng - 76.6250) < 0.2) {
-    // Bandipur -> Bandipur Range Forest Office & Fire Command HQ campus building on NH-766
-    stLat = 11.6617;
-    stLng = 76.6272;
-    stName = 'Bandipur Range Forest Office & Fire Command (HQ)';
+  } else if (Math.abs(lat - 11.6643) < 0.25 && Math.abs(lng - 76.6250) < 0.25) {
+    // Bandipur Forest -> Real Civil Fire Station is Gundlupet Fire Station on NH-766
+    // Note: No municipal fire station exists inside Bandipur Tiger Reserve core forest
+    stLat = 11.8055;
+    stLng = 76.6888;
+    stName = 'Gundlupet Fire Station (Karnataka State Fire Services)';
+    stBadge = 'Bandipur Team Ready 🛡️';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
+  } else if (Math.abs(lat - 29.5300) < 0.35 && Math.abs(lng - 78.7747) < 0.35) {
+    stLat = 29.3955;
+    stLng = 79.1285;
+    stName = 'Ramnagar Fire Station (Uttarakhand Fire & Emergency Services)';
+    stBadge = 'Corbett Team Ready 🛡️';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
+  } else if (Math.abs(lat - 22.3345) < 0.35 && Math.abs(lng - 80.6115) < 0.35) {
+    stLat = 22.0950;
+    stLng = 80.5510;
+    stName = 'Baihar Fire Station (MP State Fire Services)';
+    stBadge = 'Kanha Team Ready 🛡️';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
+  } else if (Math.abs(lat - 11.6854) < 0.25 && Math.abs(lng - 76.3670) < 0.25) {
+    stLat = 11.6695;
+    stLng = 76.2620;
+    stName = 'Sulthan Bathery Fire & Rescue Station (Kerala Fire Services)';
+    stBadge = 'Wayanad Team Ready 🛡️';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
+  } else if (Math.abs(lat - 11.9610) < 0.25 && Math.abs(lng - 76.1340) < 0.25) {
+    stLat = 12.3080;
+    stLng = 76.2910;
+    stName = 'Hunsur Fire Station (Karnataka State Fire Services)';
+    stBadge = 'Nagarhole Team Ready 🛡️';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
+  } else if (Math.abs(lat - 12.8000) < 0.25 && Math.abs(lng - 77.5750) < 0.25) {
+    stLat = 12.7840;
+    stLng = 77.6380;
+    stName = 'Bannerghatta / Jigani Fire Station (Karnataka Fire Services)';
+    stBadge = 'Bannerghatta Team Ready 🛡️';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
+  } else if (Math.abs(lat - 26.5775) < 0.5 && Math.abs(lng - 93.1711) < 0.5) {
+    stLat = 26.6210;
+    stLng = 93.5910;
+    stName = 'Bokakhat Fire Station (Assam Fire & Emergency Services)';
+    stBadge = 'Kaziranga Team Ready 🛡️';
+    distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
+  } else if (Math.abs(lat - 21.1245) < 0.5 && Math.abs(lng - 70.8242) < 0.5) {
+    stLat = 21.1640;
+    stLng = 70.5750;
+    stName = 'Sasan Gir Forest Fire Station & Talala Fire Post';
+    stBadge = 'Gir Team Ready 🛡️';
     distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
   } else {
     // Dynamically find closest real physical station building from allResponseStations
@@ -376,25 +422,32 @@ function renderUserMapOverlays(lat, lng) {
     if (best) {
       stLat = best.coordinates.lat;
       stLng = best.coordinates.lng;
-      stName = best.name.split('(')[0].trim();
+      stName = best.name;
+      stBadge = best.badge || `${best.name.split(/[\s(]/)[0]} Team Ready 🛡️`;
       distKm = minD.toFixed(1);
     } else {
-      stLat = 11.6617;
-      stLng = 76.6272;
-      stName = 'Bandipur Range Forest Office & Fire Command (HQ)';
+      stLat = 11.8055;
+      stLng = 76.6888;
+      stName = 'Gundlupet Fire Station (Karnataka State Fire Services)';
+      stBadge = 'Bandipur Team Ready 🛡️';
       distKm = (getHaversineDist(lat, lng, stLat, stLng)).toFixed(1);
     }
   }
 
   // Station Badge Marker placed at actual physical building
+  const isBandipurArea = /Bandipur|Gundlupet/i.test(stName || '');
+  const notePopup = isBandipurArea
+    ? `<br><span style="color:#94a3b8; font-size:10px;">📌 <i>Note: No municipal fire station inside Bandipur Tiger Reserve core forest; primary fire brigade response dispatched from Gundlupet Fire Station with Bandipur Strike Force ready.</i></span>`
+    : '';
+
   const stnIcon = L.divIcon({
     className: 'custom-map-marker marker-station-badge',
-    html: `<div style="display:inline-flex; align-items:center; gap:5px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:9px; padding:3px 8px; box-shadow:0 0 14px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:10px; font-weight:800; color:#fff;">${stName} - Team Ready</span><span style="font-size:12px;">🛡️</span></div>`,
+    html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">${stBadge}</span></div>`,
     iconSize: [0, 0],
     iconAnchor: [0, 0]
   });
   userAuxLayers.markerStation = L.marker([stLat, stLng], { icon: stnIcon }).addTo(userMap)
-    .bindPopup(`<b>${stName}</b><br><span style="color:#60a5fa;">Nearest Fire Response Unit - Team Ready (🛡️)</span><br>Physical Building Coordinates: <b>${stLat.toFixed(4)}, ${stLng.toFixed(4)}</b><br>Distance: <b>${distKm} km</b>`);
+    .bindPopup(`<b>${stName}</b><br><span style="color:#60a5fa;">${stBadge}</span><br>Physical Building Coordinates: <b>${stLat.toFixed(4)}, ${stLng.toFixed(4)}</b><br>Distance: <b>${distKm} km</b>${notePopup}`);
 
   // Crisp Dotted Route: Points strictly towards the actual building of fire station
   userAuxLayers.routeStation = L.polyline([[stLat, stLng], [lat, lng]], {
@@ -2237,21 +2290,21 @@ function initFullMap() {
     }).addTo(fullMap).bindTooltip(c.label, { direction: 'top' });
   });
 
-  // 3. Response Station Graphical Badge: Bandipur Station - Team Ready (🛡️)
-  const stnLat = 11.6617;
-  const stnLng = 76.6272;
+  // 3. Response Station Graphical Badge: Bandipur Team Ready (🛡️)
+  const stnLat = 11.8055;
+  const stnLng = 76.6888;
   const stnIcon = L.divIcon({
     className: 'custom-map-marker marker-station-badge',
-    html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">Bandipur Station - Team Ready</span><span style="font-size:14px; filter:drop-shadow(0 0 4px #3b82f6);">🛡️</span></div>`,
+    html: `<div style="display:inline-flex; align-items:center; gap:6px; background:rgba(7,14,28,0.95); border:2px solid #3b82f6; border-radius:10px; padding:4px 10px; box-shadow:0 0 16px rgba(59,130,246,0.6); color:#fff; font-family:Inter,sans-serif; cursor:pointer; white-space:nowrap; transform:translate(-50%, -50%);"><span style="font-size:11px; font-weight:800; color:#fff;">Bandipur Team Ready 🛡️</span></div>`,
     iconSize: [0, 0],
     iconAnchor: [0, 0]
   });
   L.marker([stnLat, stnLng], { icon: stnIcon }).addTo(fullMap)
-    .bindPopup(`<b>Bandipur Station - Team Ready</b><br><span style="color:#60a5fa;">Bandipur Range Forest Office & Fire Command (HQ)</span><br>ETA: <b>4 min</b> • Dist: <b>0.9 km</b>`);
+    .bindPopup(`<b>Gundlupet Fire Station (Karnataka State Fire Services)</b><br><span style="color:#60a5fa;">Bandipur Team Ready (🛡️)</span><br>Physical Building: <b>NH-766, Gundlupet Town (11.8055, 76.6888)</b><br>ETA: <b>16 min</b> • Dist: <b>17.2 km</b><br><span style="color:#94a3b8; font-size:10px;">📌 <i>Note: No municipal fire station exists inside Bandipur Tiger Reserve core forest; primary fire response deployed from Gundlupet Fire Station with Bandipur Strike Force ready.</i></span>`);
 
   // 4. Direct Straight Dotted Route Line connecting Station Building to Fire (dashArray '8, 8')
   const routeWaypoints = [
-    [11.6617, 76.6272],
+    [11.8055, 76.6888],
     [11.6643, 76.6250]
   ];
   L.polyline(routeWaypoints, {

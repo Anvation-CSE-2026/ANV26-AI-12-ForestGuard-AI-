@@ -40,7 +40,7 @@
       "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
@@ -70,7 +70,7 @@
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "distanceKm": 1.1,
         "etaMinutes": 5,
         "phone": "+91-8229-236021",
@@ -79,7 +79,7 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
@@ -1418,7 +1418,7 @@
       "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
@@ -1448,7 +1448,7 @@
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "distanceKm": 1.1,
         "etaMinutes": 5,
         "phone": "+91-8229-236021",
@@ -1457,7 +1457,7 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
@@ -5546,7 +5546,7 @@
       "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
@@ -5576,7 +5576,7 @@
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "distanceKm": 1.4,
         "etaMinutes": 5,
         "phone": "+91-8229-236021",
@@ -5585,7 +5585,7 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
           "coordinates": {
@@ -9693,12 +9693,12 @@
       "multiSourceSummary": "ZERO FIRE DETECTED (FAKE ALERT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.6617,
-          "lng": 76.6272
+          "lat": 11.8055,
+          "lng": 76.6888
         },
         "phone": "+91-8229-236021",
         "etaMinutesBase": 5,
@@ -9719,11 +9719,13 @@
             11.6643,
             76.625
           ]
-        ]
+        ],
+        "badge": "Bandipur Team Ready 🛡️",
+        "notes": "No municipal fire station inside Bandipur Tiger Reserve core forest; emergency response mobilized from Gundlupet Fire Station with Bandipur Strike Force ready."
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "distanceKm": 0.4,
         "etaMinutes": 4,
         "phone": "+91-8229-236021",
@@ -9732,13 +9734,10 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.6617,
-            "lng": 76.6272
-          },
+          "coordinates": {"lat": 11.8055, "lng": 76.6888},
           "phone": "+91-8229-236021",
           "etaMinutesBase": 5,
           "unitType": "Bandipur Tiger Reserve Fire Squad Alpha",
@@ -10680,7 +10679,7 @@
           "name": "Team 04",
           "fullName": "Team 04 (Bandipur Rapid Response Squad)",
           "stationId": "STA-KA-01",
-          "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "status": "AVAILABLE",
           "members": 6,
           "equipment": [
@@ -10711,7 +10710,7 @@
             "name": "Team 01",
             "fullName": "Team 01 (Bandipur Forest Unit)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -10791,7 +10790,7 @@
             "name": "Team 04",
             "fullName": "Team 04 (Bandipur Rapid Response Squad)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -10821,7 +10820,7 @@
             "name": "Team 01",
             "fullName": "Team 01 (Bandipur Forest Unit)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -10899,7 +10898,7 @@
             "name": "Team 05",
             "fullName": "Team 05 (Reserve Backup Squad)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "OFFLINE",
             "members": 5,
             "equipment": [
@@ -10967,12 +10966,12 @@
       "multiSourceSummary": "ZERO FIRE DETECTED (FAKE ALERT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.6617,
-          "lng": 76.6272
+          "lat": 11.8055,
+          "lng": 76.6888
         },
         "phone": "+91-8229-236021",
         "etaMinutesBase": 5,
@@ -10993,11 +10992,13 @@
             11.6643,
             76.625
           ]
-        ]
+        ],
+        "badge": "Bandipur Team Ready 🛡️",
+        "notes": "No municipal fire station inside Bandipur Tiger Reserve core forest; emergency response mobilized from Gundlupet Fire Station with Bandipur Strike Force ready."
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "distanceKm": 0.4,
         "etaMinutes": 4,
         "phone": "+91-8229-236021",
@@ -11006,13 +11007,10 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.6617,
-            "lng": 76.6272
-          },
+          "coordinates": {"lat": 11.8055, "lng": 76.6888},
           "phone": "+91-8229-236021",
           "etaMinutesBase": 5,
           "unitType": "Bandipur Tiger Reserve Fire Squad Alpha",
@@ -11954,7 +11952,7 @@
           "name": "Team 04",
           "fullName": "Team 04 (Bandipur Rapid Response Squad)",
           "stationId": "STA-KA-01",
-          "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "status": "AVAILABLE",
           "members": 6,
           "equipment": [
@@ -11985,7 +11983,7 @@
             "name": "Team 01",
             "fullName": "Team 01 (Bandipur Forest Unit)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -12065,7 +12063,7 @@
             "name": "Team 04",
             "fullName": "Team 04 (Bandipur Rapid Response Squad)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -12095,7 +12093,7 @@
             "name": "Team 01",
             "fullName": "Team 01 (Bandipur Forest Unit)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -12173,7 +12171,7 @@
             "name": "Team 05",
             "fullName": "Team 05 (Reserve Backup Squad)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "OFFLINE",
             "members": 5,
             "equipment": [
@@ -12241,12 +12239,12 @@
       "multiSourceSummary": "ZERO FIRE DETECTED (FAKE ALERT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.6617,
-          "lng": 76.6272
+          "lat": 11.8055,
+          "lng": 76.6888
         },
         "phone": "+91-8229-236021",
         "etaMinutesBase": 5,
@@ -12267,11 +12265,13 @@
             11.6643,
             76.625
           ]
-        ]
+        ],
+        "badge": "Bandipur Team Ready 🛡️",
+        "notes": "No municipal fire station inside Bandipur Tiger Reserve core forest; emergency response mobilized from Gundlupet Fire Station with Bandipur Strike Force ready."
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "distanceKm": 0.4,
         "etaMinutes": 4,
         "phone": "+91-8229-236021",
@@ -12280,13 +12280,10 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.6617,
-            "lng": 76.6272
-          },
+          "coordinates": {"lat": 11.8055, "lng": 76.6888},
           "phone": "+91-8229-236021",
           "etaMinutesBase": 5,
           "unitType": "Bandipur Tiger Reserve Fire Squad Alpha",
@@ -13246,7 +13243,7 @@
           "name": "Team 04",
           "fullName": "Team 04 (Bandipur Rapid Response Squad)",
           "stationId": "STA-KA-01",
-          "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "status": "AVAILABLE",
           "members": 6,
           "equipment": [
@@ -13277,7 +13274,7 @@
             "name": "Team 01",
             "fullName": "Team 01 (Bandipur Forest Unit)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -13357,7 +13354,7 @@
             "name": "Team 04",
             "fullName": "Team 04 (Bandipur Rapid Response Squad)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -13387,7 +13384,7 @@
             "name": "Team 01",
             "fullName": "Team 01 (Bandipur Forest Unit)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -13465,7 +13462,7 @@
             "name": "Team 05",
             "fullName": "Team 05 (Reserve Backup Squad)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "OFFLINE",
             "members": 5,
             "equipment": [
@@ -13535,12 +13532,12 @@
       "multiSourceSummary": "3 SOURCES CONFIRM POTENTIAL FIRE (Citizen + Satellite + IoT)",
       "nearestStation": {
         "id": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "forestId": "FOR-KA-01",
         "state": "Karnataka",
         "coordinates": {
-          "lat": 11.6617,
-          "lng": 76.6272
+          "lat": 11.8055,
+          "lng": 76.6888
         },
         "phone": "+91-8229-236021",
         "etaMinutesBase": 5,
@@ -13561,11 +13558,13 @@
             11.6643,
             76.625
           ]
-        ]
+        ],
+        "badge": "Bandipur Team Ready 🛡️",
+        "notes": "No municipal fire station inside Bandipur Tiger Reserve core forest; emergency response mobilized from Gundlupet Fire Station with Bandipur Strike Force ready."
       },
       "assignedStation": {
         "stationId": "STA-KA-01",
-        "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+        "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
         "distanceKm": 0.4,
         "etaMinutes": 4,
         "phone": "+91-8229-236021",
@@ -13574,13 +13573,10 @@
       "rankedStations": [
         {
           "id": "STA-KA-01",
-          "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "forestId": "FOR-KA-01",
           "state": "Karnataka",
-          "coordinates": {
-            "lat": 11.6617,
-            "lng": 76.6272
-          },
+          "coordinates": {"lat": 11.8055, "lng": 76.6888},
           "phone": "+91-8229-236021",
           "etaMinutesBase": 5,
           "unitType": "Bandipur Tiger Reserve Fire Squad Alpha",
@@ -14548,7 +14544,7 @@
           "name": "Team 04",
           "fullName": "Team 04 (Bandipur Rapid Response Squad)",
           "stationId": "STA-KA-01",
-          "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+          "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
           "status": "AVAILABLE",
           "members": 6,
           "equipment": [
@@ -14579,7 +14575,7 @@
             "name": "Team 01",
             "fullName": "Team 01 (Bandipur Forest Unit)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -14659,7 +14655,7 @@
             "name": "Team 04",
             "fullName": "Team 04 (Bandipur Rapid Response Squad)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -14689,7 +14685,7 @@
             "name": "Team 01",
             "fullName": "Team 01 (Bandipur Forest Unit)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "AVAILABLE",
             "members": 6,
             "equipment": [
@@ -14767,7 +14763,7 @@
             "name": "Team 05",
             "fullName": "Team 05 (Reserve Backup Squad)",
             "stationId": "STA-KA-01",
-            "stationName": "Bandipur Range Forest Office & Fire Command (HQ)",
+            "stationName": "Gundlupet Fire Station (Karnataka State Fire Services)",
             "status": "OFFLINE",
             "members": 5,
             "equipment": [
@@ -14870,7 +14866,7 @@
     },
     {
       "teamId": "STA-KA-01",
-      "name": "Bandipur Range Forest Office & Fire Command (HQ)",
+      "name": "Gundlupet Fire Station (Karnataka State Fire Services)",
       "status": "AVAILABLE",
       "members": 6,
       "currentIncident": "FG-2026-1052"
