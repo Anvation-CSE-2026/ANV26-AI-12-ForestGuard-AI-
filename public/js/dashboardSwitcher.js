@@ -1,7 +1,7 @@
-// dashboardSwitcher.js - ForestGuard AI Universal Dashboard Switcher (Port 8109)
+// dashboardSwitcher.js - ForestGuard AI Universal Dashboard Switcher (Port 8119)
 (function() {
   const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-  const BASE_URL = isLocal ? `${window.location.protocol}//${window.location.hostname}:${window.location.port || '8109'}` : (typeof window !== 'undefined' ? window.location.origin : '');
+  const BASE_URL = isLocal ? `${window.location.protocol}//${window.location.hostname}:${window.location.port || '8119'}` : (typeof window !== 'undefined' ? window.location.origin : '');
 
   function getPageType() {
     const p = window.location.pathname.toLowerCase();
@@ -25,7 +25,7 @@
     }
   }
 
-  // Intercept and enforce all [data-switch-to] elements to navigate cleanly to Port 8109
+  // Intercept and enforce all [data-switch-to] elements to navigate cleanly to Port 8119
   function initHeaderButtons() {
     document.querySelectorAll('[data-switch-to]').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -70,7 +70,7 @@
       <!-- Port Indicator -->
       <div class="hidden sm:flex items-center gap-1 px-2 py-0.5 text-[10px] font-black uppercase text-amber-400 tracking-wider">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span>PORT 8109:</span>
+        <span>PORT 8119:</span>
       </div>
 
       <!-- User/Citizen Switch Button -->
@@ -78,7 +78,7 @@
         isUser 
           ? 'bg-orange-600 text-white shadow-md cursor-default pointer-events-none' 
           : 'bg-[#0d182e] text-orange-300 hover:bg-orange-600 hover:text-white border border-orange-800/80 shadow-sm'
-      }" title="Switch to Citizen Emergency Reporting Dashboard (Port 8109)">
+      }" title="Switch to Citizen Emergency Reporting Dashboard (Port 8119)">
         <span>👤</span>
         <span>${isUser ? 'Citizen (Active)' : 'Citizen Dashboard'}</span>
       </a>
@@ -91,7 +91,7 @@
         isAdmin 
           ? 'bg-red-600 text-white shadow-md cursor-default pointer-events-none' 
           : 'bg-[#0d182e] text-red-300 hover:bg-red-600 hover:text-white border border-red-800/80 shadow-sm'
-      }" title="Switch to Admin Forest Fire Command Center (Port 8109)">
+      }" title="Switch to Admin Forest Fire Command Center (Port 8119)">
         <span>🚨</span>
         <span>${isAdmin ? 'Admin (Active)' : 'Admin Dashboard'}</span>
       </a>

@@ -21,7 +21,7 @@ const io = new Server(server, {
   }
 });
 
-const PORT = process.env.PORT || 8109;
+const PORT = process.env.PORT || 8119;
 
 // Dynamic config store (e.g. for Google Maps API Key entered in UI)
 let userConfig = {
@@ -682,7 +682,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// Unified Live Demo Route (Port 8109 Hub)
+// Unified Live Demo Route (Port 8119 Hub)
 app.get(['/demo', '/live-demo'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'demo.html'));
 });
@@ -703,7 +703,7 @@ if (!process.env.VERCEL) {
     console.log(`================================================================`);
   });
 
-  // Dual-Port Bridge: Listen on port 8109 AND port 3000 simultaneously so users on either port work seamlessly!
+  // Dual-Port Bridge: Listen on port 8119 AND port 3000 simultaneously so users on either port work seamlessly!
   if (PORT !== 3000) {
     const serverFallback = http.createServer(app);
     serverFallback.on('error', (err) => {

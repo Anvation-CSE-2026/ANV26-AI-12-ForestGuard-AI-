@@ -168,7 +168,7 @@ npm install
 npm start
 ```
 Server listens simultaneously on:
-- Primary Port: **http://localhost:8109**
+- Primary Port: **http://localhost:8119**
 - Compatibility Bridge: **http://localhost:3000**
 
 ### Full Dual-Stack (Python AI + Node.js)

@@ -249,7 +249,7 @@ function initForm() {
       } catch (fetchErr) {
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         if (isLocal) {
-          const targetPort = window.location.port === '8109' ? '3000' : '8109';
+          const targetPort = window.location.port === '8119' ? '3000' : '8119';
           res = await fetch(`http://localhost:${targetPort}/api/incidents`, {
             method: 'POST',
             body: formData
