@@ -2398,12 +2398,15 @@ function initAdminAuth() {
   const passInput = document.getElementById('adminPassInput');
   const errBox = document.getElementById('adminAuthError');
   const btnInstant = document.getElementById('btnAdminInstantLogin');
+  const btnGoogle = document.getElementById('btnAdminGoogleSignIn');
   const btnHeaderInstant = document.getElementById('btnHeaderInstantLogin');
   const btnToggleEye = document.getElementById('btnTogglePassVisibility');
   const btnLogout = document.getElementById('btnAdminLogout');
+  const btnModalDismiss = document.getElementById('btnAdminModalDismiss');
 
   const grantAccess = (isInstant = false) => {
     sessionStorage.setItem('FG_ADMIN_AUTH', 'granted');
+    sessionStorage.removeItem('FG_LOCKED');
     if (modal) {
       closeAdminModal(modal);
     }
@@ -2427,6 +2430,7 @@ function initAdminAuth() {
   };
 
   const lockDashboard = () => {
+    sessionStorage.setItem('FG_LOCKED', 'true');
     sessionStorage.removeItem('FG_ADMIN_AUTH');
     if (btnHeaderInstant) btnHeaderInstant.classList.remove('hidden');
     if (modal) openAdminModal(modal);
@@ -2437,20 +2441,40 @@ function initAdminAuth() {
     showToast('🔒 Command Center Locked: Authorization Required', 'orange');
   };
 
-  // Require Authorization on Admin Dashboard:
-  // Show authorization modal if not yet authenticated in this session
-  if (sessionStorage.getItem('FG_ADMIN_AUTH') === 'granted') {
-    grantAccess();
-  } else {
+  // Open by default condition:
+  // If lock symbol is not clicked in home screen or admin, it works as is without lock system in any dashboard.
+  // This does not affect map open speed at all.
+  if (sessionStorage.getItem('FG_LOCKED') === 'true' && sessionStorage.getItem('FG_ADMIN_AUTH') !== 'granted') {
     if (modal) openAdminModal(modal);
     if (btnHeaderInstant) btnHeaderInstant.classList.remove('hidden');
     if (passInput) setTimeout(() => passInput.focus(), 250);
+  } else {
+    // Unlocked and open by default
+    if (modal) closeAdminModal(modal);
+    if (btnHeaderInstant) btnHeaderInstant.classList.add('hidden');
   }
 
   // Small Instant Login Button inside Modal
   if (btnInstant) {
     btnInstant.addEventListener('click', () => {
       grantAccess(true);
+    });
+  }
+
+  // Google Sign-in Button inside Modal
+  if (btnGoogle) {
+    btnGoogle.addEventListener('click', () => {
+      grantAccess(false);
+      showToast('🛡️ Signed in with Google Officer Account', 'emerald');
+    });
+  }
+
+  // Dismiss button inside Modal
+  if (btnModalDismiss) {
+    btnModalDismiss.addEventListener('click', () => {
+      if (modal) closeAdminModal(modal);
+      sessionStorage.removeItem('FG_LOCKED');
+      if (btnHeaderInstant) btnHeaderInstant.classList.add('hidden');
     });
   }
 

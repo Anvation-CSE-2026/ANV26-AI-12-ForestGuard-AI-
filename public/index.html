@@ -183,6 +183,11 @@
         <a href="/admin.html" class="h-9 px-2.5 sm:px-3 text-xs sm:text-sm font-bold rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md shadow-red-900/40 hover:brightness-110 transition flex items-center justify-center gap-1 shrink-0">
           <span>🚨</span> <span class="hidden sm:inline whitespace-nowrap">Admin Dashboard</span><span class="sm:hidden">Admin</span>
         </a>
+
+        <!-- Officer Authorization / Lock Button (Matches Screenshot media_1791512701695_d263b3ca.png) -->
+        <button id="btnHomeLockAuth" type="button" class="h-9 w-9 rounded-xl bg-[#1e0c10]/90 hover:bg-[#2e1319] border border-red-700/70 hover:border-red-500 text-amber-400 hover:text-amber-300 transition flex items-center justify-center shadow-md shrink-0 cursor-pointer group active:scale-95" title="Officer Authorization & Quick Login (Username/Password, Google Sign-in, or Instant Login)">
+          <span class="text-sm select-none group-hover:scale-110 transition-transform">🔒</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -1124,6 +1129,205 @@
     // Initialize countdown and embers on window load
     initFlashCardCountdown();
     initFlashCardEmbers();
+  </script>
+
+  <!-- ========================================================================= -->
+  <!-- 🔒 OFFICER AUTHORIZATION MODAL (Username/Password, Google Sign-in & Small Instant 1-Click Login) -->
+  <!-- ========================================================================= -->
+  <div id="homeAuthModal" class="fixed inset-0 z-[2147483647] bg-[#02050c]/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 hidden">
+    <div class="relative w-full max-w-md p-6 sm:p-7 rounded-3xl bg-[#091122] border-2 border-red-500/70 shadow-[0_0_60px_rgba(239,68,68,0.35)] space-y-4 animate-fade-in text-left">
+      
+      <!-- Top Header & Close Button -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3.5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-red-600 via-orange-600 to-amber-500 flex items-center justify-center text-xl shadow-lg shadow-red-950/80 border border-orange-400/50">
+            🔒
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[9px] font-black tracking-widest text-red-400 uppercase bg-red-950/90 border border-red-700/60 px-2 py-0.5 rounded">OFFICER CLEARANCE</span>
+              <span class="text-[9px] font-mono text-amber-400">SECURE LOGIN</span>
+            </div>
+            <h2 class="text-base sm:text-lg font-black text-white mt-0.5 tracking-wide">ForestGuard-AI Officer Login</h2>
+          </div>
+        </div>
+        <button id="btnCloseHomeAuth" type="button" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition text-xs font-bold cursor-pointer" title="Close & Return to Homepage">
+          ✕
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">
+        Officer authorization unlocks live incident commands, fire siren triggers, and auto-dispatch relays. Sign in with officer credentials, Google, or use instant evaluator access.
+      </p>
+
+      <!-- Username & Password Form -->
+      <form id="homeAuthForm" class="space-y-3">
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-xs">
+            <label for="homeAuthUsername" class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Officer Username:</label>
+            <span class="text-[10px] font-mono text-slate-400">Default: <b class="text-amber-400 font-mono select-all">admin</b></span>
+          </div>
+          <input type="text" id="homeAuthUsername" value="admin" placeholder="Enter username (e.g. admin)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 font-mono tracking-wider transition" autocomplete="username" />
+        </div>
+
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-xs">
+            <label for="homeAuthPassword" class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Clearance Passcode:</label>
+            <span class="text-[10px] font-mono text-slate-400">Default: <b class="text-amber-400 font-mono select-all">admin123</b></span>
+          </div>
+          <div class="relative">
+            <input type="password" id="homeAuthPassword" value="admin123" placeholder="Enter passcode (e.g. admin123)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 font-mono tracking-wider transition pr-10" autocomplete="current-password" />
+            <button type="button" id="btnToggleHomePassVisibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs px-1.5 py-1 cursor-pointer" title="Show/Hide Passcode">👁️</button>
+          </div>
+        </div>
+
+        <div id="homeAuthError" class="hidden text-xs text-red-300 bg-red-950/80 border border-red-700/80 rounded-xl p-2.5 flex items-center gap-2">
+          <span>⚠️</span> <span>Invalid credentials. Use <b>admin</b> / <b>admin123</b> or click <b>Instant 1-Click Login</b>.</span>
+        </div>
+
+        <!-- Form Submit Button -->
+        <button type="submit" id="btnHomeAuthSubmit" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 hover:brightness-110 active:scale-[0.99] text-white font-black text-xs tracking-wider uppercase shadow-lg shadow-red-950/80 transition flex items-center justify-center gap-1.5 cursor-pointer border border-red-500/50">
+          <span>🔓</span> <span>Authorize Access</span>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="relative flex py-1 items-center">
+        <div class="flex-grow border-t border-slate-800"></div>
+        <span class="flex-shrink mx-3 text-[10px] font-bold uppercase tracking-widest text-slate-500">OR CONTINUE WITH</span>
+        <div class="flex-grow border-t border-slate-800"></div>
+      </div>
+
+      <!-- Google Sign-in & Small Instant Login Options -->
+      <div class="space-y-2">
+        <!-- Google Sign-in Button -->
+        <button type="button" id="btnHomeGoogleSignIn" class="w-full py-2.5 px-3 rounded-xl bg-white hover:bg-slate-100 active:scale-[0.99] text-slate-900 font-bold text-xs tracking-wide shadow-md transition flex items-center justify-center gap-2.5 cursor-pointer border border-slate-300 group">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span class="group-hover:text-black">Sign in with Google</span>
+        </button>
+
+        <!-- Small Instant 1-Click Login Button -->
+        <button type="button" id="btnHomeInstantLogin" class="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 active:scale-[0.99] text-white font-black text-xs tracking-wider uppercase shadow-md shadow-emerald-950/60 transition flex items-center justify-center gap-1.5 cursor-pointer border border-emerald-400/60" title="Instant Evaluator Access (No Password Needed)">
+          <span>⚡</span> <span>Instant 1-Click Login</span>
+        </button>
+      </div>
+
+      <!-- Bottom Dismiss Note -->
+      <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+        <span>Public pages are completely open</span>
+        <button type="button" id="btnDismissHomeAuth" class="text-orange-400 hover:text-orange-300 font-bold transition cursor-pointer">
+          Dismiss ✕
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // 🔒 ForestGuard-AI Officer Authorization Modal Controller
+    function initHomeAuthModal() {
+      const btnLock = document.getElementById('btnHomeLockAuth');
+      const modal = document.getElementById('homeAuthModal');
+      const btnClose = document.getElementById('btnCloseHomeAuth');
+      const btnDismiss = document.getElementById('btnDismissHomeAuth');
+      const form = document.getElementById('homeAuthForm');
+      const userInput = document.getElementById('homeAuthUsername');
+      const passInput = document.getElementById('homeAuthPassword');
+      const btnToggleEye = document.getElementById('btnToggleHomePassVisibility');
+      const errBox = document.getElementById('homeAuthError');
+      const btnGoogle = document.getElementById('btnHomeGoogleSignIn');
+      const btnInstant = document.getElementById('btnHomeInstantLogin');
+
+      if (!btnLock || !modal) return;
+
+      function openModal() {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        if (userInput) setTimeout(() => userInput.focus(), 100);
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        if (errBox) errBox.classList.add('hidden');
+        if (passInput) passInput.classList.remove('border-red-500');
+      }
+
+      btnLock.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+      });
+
+      if (btnClose) btnClose.addEventListener('click', closeModal);
+      if (btnDismiss) btnDismiss.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+      });
+
+      window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+
+      if (btnToggleEye && passInput) {
+        btnToggleEye.addEventListener('click', function() {
+          const isPass = passInput.type === 'password';
+          passInput.type = isPass ? 'text' : 'password';
+          btnToggleEye.textContent = isPass ? '🔒' : '👁️';
+        });
+      }
+
+      function completeLogin(name) {
+        sessionStorage.setItem('FG_ADMIN_AUTH', 'granted');
+        sessionStorage.removeItem('FG_LOCKED');
+        if (name) sessionStorage.setItem('FG_OFFICER_NAME', name);
+        closeModal();
+        window.location.href = '/admin.html';
+      }
+
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const u = (userInput ? userInput.value : '').trim();
+          const p = (passInput ? passInput.value : '').trim();
+          const validPass = ['admin123', 'forestguard2026', 'admin', 'agni123', 'rakshak2026'];
+          if (p && validPass.includes(p)) {
+            completeLogin(u || 'Officer Commander');
+          } else {
+            if (errBox) errBox.classList.remove('hidden');
+            if (passInput) {
+              passInput.classList.add('border-red-500');
+              passInput.focus();
+            }
+          }
+        });
+      }
+
+      if (btnGoogle) {
+        btnGoogle.addEventListener('click', function() {
+          completeLogin('Google Verified Commander');
+        });
+      }
+
+      if (btnInstant) {
+        btnInstant.addEventListener('click', function() {
+          completeLogin('Instant Verified Commander');
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHomeAuthModal);
+    } else {
+      initHomeAuthModal();
+    }
   </script>
 </body>
 </html>

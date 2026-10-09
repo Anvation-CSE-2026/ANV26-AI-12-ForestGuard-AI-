@@ -3,83 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FORESTGUARD AI | Live AI Forest Fire Detection & Emergency Response Network</title>
+  <title>ForestGuard-AI | Live AI Forest Fire Detection & Emergency Response Network</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/css/tailwind-custom.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <!-- ForestGuard-AI View Mode Switcher (Desktop Default | Dedicated Mobile Platform) -->
+  <script src="/js/viewModeSwitcher.js"></script>
 </head>
 <body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-orange-500 selection:text-white">
 
-  <!-- 1.5-SECOND CINEMATIC INTRO FLASH CARD (AUTO-REDIRECTS TO HOME DASHBOARD BUTTONS) -->
-  <div id="introFlashCard" onclick="dismissIntroFlashCard()" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-500 cursor-pointer">
-    <!-- Cinematic High-Res Fire Background with Breathing Glow -->
-    <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-90 contrast-125 saturate-150 transform scale-105 animate-pulse" style="background-image: url('/images/forestfire_hero_bg.jpg');"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/60 to-[#02050e]/80 pointer-events-none"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(239,68,68,0.25)_0%,_rgba(0,0,0,0.85)_75%)] pointer-events-none"></div>
+  <!-- ========================================================================= -->
+  <!-- ULTRA-STUNNING CINEMATIC INTRO FLASH CARD (TACTICAL HUD & DUAL-SPECTRUM GRAPHICS) -->
+  <!-- ========================================================================= -->
+  <div id="introFlashCard" onclick="dismissIntroFlashCard()" class="fixed inset-0 z-[9999999] flex items-center justify-center bg-[#02050e] overflow-hidden transition-all duration-700 cursor-pointer">
+    <!-- Cinematic High-Res Fire Background with Roaring Flames & Dense Forest Trees -->
+    <div class="absolute inset-0 bg-cover bg-center pointer-events-none filter brightness-100 contrast-115 saturate-135 transform scale-105 animate-hero-breath" style="background-image: url('/images/flashcard_forest_fire_bg.jpg');"></div>
+    
+    <!-- Multi-layered Atmospheric Dark Gradients & Fiery Tree Vignette -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#02050e] via-[#02050e]/40 to-[#02050e]/80 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(249,115,22,0.14)_0%,_rgba(2,5,14,0.65)_60%,_#02050e_100%)] pointer-events-none"></div>
 
-    <!-- Glowing Flash Card Box -->
-    <div class="relative z-10 max-w-xl w-full mx-4 p-8 rounded-3xl bg-[#070e1c]/95 border-2 border-orange-500/70 shadow-[0_0_60px_rgba(249,115,22,0.45)] backdrop-blur-xl text-center transform transition-all duration-300">
-      <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center text-3xl shadow-xl shadow-red-950/80 border border-orange-400/60 animate-bounce">
-        🔥
+    <!-- Ambient Dynamic Floating Embers Canvas -->
+    <canvas id="flashCardEmbersCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-[1]"></canvas>
+
+    <!-- Glowing Tactical HUD Flash Card Box with Rich Forest & Fire Theme -->
+    <div onclick="event.stopPropagation()" class="relative z-10 max-w-2xl w-full mx-4 p-6 sm:p-8 rounded-3xl border-2 border-orange-500/60 shadow-[0_0_80px_rgba(249,115,22,0.55)] backdrop-blur-2xl text-center transform transition-all duration-500 animate-flashcard-glow cursor-default" style="background-image: linear-gradient(135deg, rgba(6, 12, 29, 0.94) 0%, rgba(9, 18, 38, 0.90) 100%), url('/images/flashcard_forest_fire_bg.jpg'); background-size: cover; background-position: center;">
+      
+      <!-- Top Live Tactical Status Bar -->
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-orange-500/25 text-[11px] font-mono">
+        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-red-950/80 border border-red-500/60 text-red-300 font-bold tracking-wider shadow">
+          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          <span>LIVE FOREST DEFENSE GRID • ACTIVE</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400 font-bold flex items-center gap-1.5 text-[10px] sm:text-[11px]">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+            AUTODISPATCH READY
+          </span>
+          <button id="btnSkipFlashCard" onclick="dismissIntroFlashCard()" class="ml-1 sm:ml-2 px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-600 text-[10px] font-sans font-black transition cursor-pointer">
+            SKIP (ESC) ✕
+          </button>
+        </div>
       </div>
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/90 border border-red-500/70 text-red-300 text-[10px] font-black tracking-widest uppercase mb-2 shadow">
-        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-        <span>NATIONAL FORESTRY DEFENSE PLATFORM</span>
+
+      <!-- Central Hero Graphic Figure: Tree & Fire Guardian Emblem with Cyber Shield -->
+      <div class="relative inline-flex items-center justify-center mb-3">
+        <!-- Outer Fiery Pulse Aura -->
+        <div class="absolute w-32 h-32 rounded-full bg-gradient-to-r from-red-600/50 via-orange-500/50 to-emerald-500/40 blur-2xl animate-pulse"></div>
+        
+        <!-- Graphical Emblem Frame -->
+        <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-tr from-cyan-400 via-orange-500 to-emerald-400 shadow-[0_0_40px_rgba(249,115,22,0.8)] border border-orange-300/80 group">
+          <img src="/images/forestguard_tree_fire_emblem.jpg" alt="ForestGuard-AI Tree & Fire Guardian Emblem" class="w-full h-full object-cover rounded-full shadow-inner transform transition duration-500 group-hover:scale-105" />
+          <!-- High-Tech Rotating Cyber Ring Around Tree Graphic -->
+          <div class="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/70 animate-radar-spin pointer-events-none"></div>
+          <!-- Floating Emblem Pill -->
+          <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-[#051124]/95 border border-emerald-400/80 text-[8px] sm:text-[9px] font-black tracking-widest text-emerald-300 uppercase shadow-lg flex items-center gap-1 whitespace-nowrap">
+            <span>🌲</span> <span>FOREST & FIRE DEFENSE</span> <span>🔥</span>
+          </div>
+        </div>
       </div>
-      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-wider mb-1 drop-shadow-[0_2px_12px_rgba(239,68,68,0.8)]">
-        AGNIRAKSHAK AI
+
+      <!-- Title & Typographic Hierarchy -->
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white mb-1 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+        <span class="bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">ForestGuard-AI</span>
       </h1>
-      <p class="text-xs sm:text-sm font-bold text-amber-300 tracking-wide uppercase mb-2">
-        Forest Fire Early Warning & Geospatial Response System
-      </p>
-      <p class="text-xs text-slate-300 leading-relaxed mb-4 max-w-md mx-auto">
-        Dual-spectrum AI vision and geospatial command center for instant wildfire containment.
+      <div class="text-xs sm:text-sm font-black tracking-widest text-amber-300 uppercase mb-2">
+        REPORT • LOCATE • ALERT • RESPOND
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 max-w-lg mx-auto mb-4 leading-relaxed font-medium">
+        India's AI-powered wildfire emergency platform connecting citizens, satellite hotspots, and response fleets through one live geospatial command grid.
       </p>
 
-      <!-- Quick Skip Button -->
-      <button id="btnSkipFlashCard" onclick="dismissIntroFlashCard(); event.stopPropagation();" class="px-7 py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center justify-center gap-2 mx-auto cursor-pointer">
-        <span>ENTER HOME DASHBOARDS</span> <span>→</span>
-      </button>
-      <div class="text-[10px] text-slate-400 mt-2">Tap anywhere or wait 1.5s to view Citizen & Admin options</div>
+      <!-- 3 Core Tactical Feature Cards with Rich Forest & Fire Graphics -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 mb-5 text-left">
+        <!-- Card 1: Dense Forest Canopy & Tree Defense -->
+        <div class="p-3 rounded-xl bg-[#09152e]/90 border border-emerald-500/35 hover:border-emerald-500/80 transition group shadow-md backdrop-blur-md">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-base p-1.5 rounded-lg bg-emerald-950/80 text-emerald-400 border border-emerald-500/50">🌲</span>
+            <div>
+              <div class="text-[11px] font-black text-white group-hover:text-emerald-300 transition">Forest Canopy Grid</div>
+              <div class="text-[9px] font-mono text-emerald-400 font-bold">9 Reserves Shielded</div>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-300 leading-tight">Live tree canopy surveillance, fuel load moisture, and wildfire spread perimeter prediction.</p>
+        </div>
+
+        <!-- Card 2: Dual-Spectrum Fire AI -->
+        <div class="p-3 rounded-xl bg-[#09152e]/90 border border-orange-500/35 hover:border-orange-500/80 transition group shadow-md backdrop-blur-md">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-base p-1.5 rounded-lg bg-red-950/80 text-orange-400 border border-orange-500/50">🔥</span>
+            <div>
+              <div class="text-[11px] font-black text-white group-hover:text-orange-300 transition">Dual-Spectrum Fire AI</div>
+              <div class="text-[9px] font-mono text-orange-400 font-bold">98.8% Dual Vision</div>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-300 leading-tight">YOLOv8 dual thermal infrared + optical drone camera detection with zero false-alarm filtering.</p>
+        </div>
+
+        <!-- Card 3: Real Station & Water Relay -->
+        <div class="p-3 rounded-xl bg-[#09152e]/90 border border-cyan-500/35 hover:border-cyan-500/80 transition group shadow-md backdrop-blur-md">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-base p-1.5 rounded-lg bg-cyan-950/80 text-cyan-400 border border-cyan-500/50">🚒</span>
+            <div>
+              <div class="text-[11px] font-black text-white group-hover:text-cyan-300 transition">Fleet Turn-out Relay</div>
+              <div class="text-[9px] font-mono text-cyan-400 font-bold">Physical Stations & Lakes</div>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-300 leading-tight">Instant routing connecting real government station buildings to open water drafting reservoirs.</p>
+        </div>
+      </div>
+
+      <!-- Quick Direct Entry CTA Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-4">
+        <a href="/user.html" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 hover:brightness-110 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-red-950/80 border border-orange-400/60 transition flex items-center gap-2 cursor-pointer">
+          <span>📸</span> <span>CITIZEN DASHBOARD</span>
+        </a>
+        <a href="/admin.html" class="px-5 py-2.5 rounded-xl bg-[#09142b] hover:bg-red-950/70 border-2 border-red-500/70 hover:border-red-400 text-white font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center gap-2 cursor-pointer">
+          <span>🚨</span> <span>ADMIN COMMAND CENTER</span>
+        </a>
+        <button onclick="dismissIntroFlashCard()" class="px-4 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-600 font-bold text-xs uppercase tracking-wider transition flex items-center gap-1.5 cursor-pointer">
+          <span>⚡</span> <span>EXPLORE HOME</span>
+        </button>
+      </div>
+
+      <!-- Countdown Progress Bar & Visual Indicator -->
+      <div class="max-w-md mx-auto mt-1">
+        <div class="flex items-center justify-between text-[10px] text-slate-400 mb-1.5">
+          <span class="flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping"></span>
+            Redirecting to home dashboard...
+          </span>
+          <span id="flashCardTimer" class="font-mono text-orange-400 font-bold">2.5s</span>
+        </div>
+        <div class="w-full h-1.5 bg-slate-800/80 rounded-full overflow-hidden border border-slate-700/60">
+          <div id="flashCardProgress" class="h-full bg-gradient-to-r from-red-500 via-orange-500 to-amber-400 transition-all duration-75" style="width: 0%;"></div>
+        </div>
+        <div class="text-[10px] text-slate-500 mt-2">
+          Click anywhere or press <kbd class="px-1 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-[9px] border border-slate-700">ESC</kbd> to enter immediately
+        </div>
+      </div>
+
     </div>
   </div>
-  <script>
-    function dismissIntroFlashCard() {
-      const flash = document.getElementById('introFlashCard');
-      if (flash) {
-        flash.style.opacity = '0';
-        flash.style.pointerEvents = 'none';
-        setTimeout(() => { if (flash && flash.parentNode) flash.parentNode.removeChild(flash); }, 400);
-      }
-    }
-    // Auto-dismiss within 1.5 seconds so home buttons are immediately visible
-    setTimeout(dismissIntroFlashCard, 1500);
-  </script>
 
   <!-- Top Navigation -->
-  <header class="border-b border-slate-800 bg-[#070e1c]/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <span class="text-3xl filter drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]">🌲🔥</span>
-        <div>
-          <span class="text-xl font-black tracking-wider bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent">AGNIRAKSHAK AI</span>
-          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-[10px] font-bold tracking-widest bg-red-950/80 border border-red-700/60 text-red-400 rounded">INDIA NATIONAL GRID</span>
+  <header class="border-b border-slate-800 bg-[#070e1c]/90 backdrop-blur-md sticky top-0 z-50 w-full max-w-full overflow-hidden">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2 sm:gap-3 shrink min-w-0">
+        <span class="text-2xl sm:text-3xl filter drop-shadow-[0_0_12px_rgba(249,115,22,0.8)] shrink-0">🌲🔥</span>
+        <div class="min-w-0 truncate">
+          <span class="text-sm sm:text-xl font-black tracking-wider bg-gradient-to-r from-red-500 via-orange-400 to-amber-200 bg-clip-text text-transparent truncate block sm:inline">ForestGuard-AI</span>
+          <span class="hidden md:inline-block ml-2 px-2 py-0.5 text-[10px] font-bold tracking-widest bg-red-950/80 border border-red-700/60 text-red-400 rounded">INDIA NATIONAL GRID</span>
         </div>
       </div>
       
-      <nav class="flex items-center gap-2 sm:gap-3">
-        <a href="/index.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 transition flex items-center gap-1">
-          <span>🏠</span> <span>Home</span>
+      <nav class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <!-- View Mode Mini Switcher: Desktop (Default) | Mobile Platform (Compact Icons) -->
+        <div id="viewModeMiniSwitcher" class="view-mode-toggle-group h-9 flex items-center bg-[#050b17] p-1 rounded-lg border border-slate-700/80 shadow-md shrink-0 gap-1" title="Toggle between Desktop Mode and Mobile Mode">
+          <button id="btnSetDesktopMode" type="button" class="view-mode-toggle-btn active-mode h-7 px-2.5 rounded-md text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer bg-sky-600 text-white shadow-sm ring-1 ring-sky-400/50" title="Default Desktop Mode">
+            <span>💻</span> <span class="hidden 2xl:inline">Desktop</span>
+          </button>
+          <button id="btnSetMobileMode" type="button" class="view-mode-toggle-btn h-7 px-2.5 rounded-md text-xs font-black transition-all flex items-center justify-center gap-1 cursor-pointer text-slate-400 hover:text-white" title="Dedicated Mobile Mode (Smartphone UI with bottom navigation)">
+            <span>📱</span> <span class="hidden 2xl:inline">Mobile</span>
+          </button>
+        </div>
+
+        <button onclick="replayIntroFlashCard()" class="h-9 px-2.5 sm:px-3 text-xs sm:text-sm font-bold rounded-lg bg-orange-950/60 border border-orange-500/50 text-orange-300 hover:text-white hover:bg-orange-600/40 transition flex items-center justify-center gap-1 cursor-pointer shrink-0" title="Replay Intro Flash Card">
+          <span>⚡</span> <span class="hidden sm:inline whitespace-nowrap">Intro Card</span>
+        </button>
+        <a href="/index.html" class="hidden xs:flex h-9 px-2.5 sm:px-3 text-xs sm:text-sm font-bold rounded-lg bg-slate-800 text-slate-200 hover:bg-slate-700 transition items-center justify-center gap-1 shrink-0">
+          <span>🏠</span> <span class="hidden md:inline whitespace-nowrap">Home</span>
         </a>
-        <a href="/user.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-orange-600/20 border border-orange-500/50 text-orange-400 hover:bg-orange-600/30 transition flex items-center gap-1">
-          <span>👤</span> <span class="hidden sm:inline">Citizen Dashboard</span><span class="sm:hidden">Citizen</span>
+        <a href="/user.html" class="h-9 px-2.5 sm:px-3 text-xs sm:text-sm font-bold rounded-lg bg-orange-600/20 border border-orange-500/50 text-orange-400 hover:bg-orange-600/30 transition flex items-center justify-center gap-1 shrink-0">
+          <span>👤</span> <span class="hidden sm:inline whitespace-nowrap">Citizen Dashboard</span><span class="sm:hidden">Citizen</span>
         </a>
-        <a href="/admin.html" class="px-3 py-1.5 text-xs sm:text-sm font-bold rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md shadow-red-900/40 hover:brightness-110 transition flex items-center gap-1.5">
-          <span>🚨</span> <span class="hidden sm:inline">Admin Dashboard</span><span class="sm:hidden">Admin</span>
+        <a href="/admin.html" class="h-9 px-2.5 sm:px-3 text-xs sm:text-sm font-bold rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-md shadow-red-900/40 hover:brightness-110 transition flex items-center justify-center gap-1 shrink-0">
+          <span>🚨</span> <span class="hidden sm:inline whitespace-nowrap">Admin Dashboard</span><span class="sm:hidden">Admin</span>
         </a>
+
+        <!-- Officer Authorization / Lock Button (Matches Screenshot media_1791512701695_d263b3ca.png) -->
+        <button id="btnHomeLockAuth" type="button" class="h-9 w-9 rounded-xl bg-[#1e0c10]/90 hover:bg-[#2e1319] border border-red-700/70 hover:border-red-500 text-amber-400 hover:text-amber-300 transition flex items-center justify-center shadow-md shrink-0 cursor-pointer group active:scale-95" title="Officer Authorization & Quick Login (Username/Password, Google Sign-in, or Instant Login)">
+          <span class="text-sm select-none group-hover:scale-110 transition-transform">🔒</span>
+        </button>
       </nav>
     </div>
   </header>
@@ -110,7 +218,7 @@
         </div>
 
         <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-2 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
-          AGNIRAKSHAK AI
+          ForestGuard-AI
         </h1>
         <div class="text-xl sm:text-3xl font-black tracking-widest bg-gradient-to-r from-red-500 via-orange-400 to-amber-300 bg-clip-text text-transparent mb-4 drop-shadow-[0_2px_10px_rgba(249,115,22,0.4)]">
           REPORT. LOCATE. ALERT. RESPOND.
@@ -325,6 +433,154 @@
         </div>
       </div>
     </section>
+
+    <!-- ========================================================================= -->
+    <!-- TEAM VIBECODERS & PROJECT INNOVATION SHOWCASE SECTION -->
+    <!-- ========================================================================= -->
+    <section class="border-t border-orange-500/30 bg-gradient-to-b from-[#030712] via-[#071022] to-[#02050c] py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <!-- Background Ambient Glow Accents -->
+      <div class="absolute -top-24 left-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto relative z-10">
+        <!-- Tagline & Header -->
+        <div class="text-center mb-12">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-950/70 border border-orange-500/50 text-orange-400 text-xs font-black tracking-widest uppercase mb-4 shadow-lg shadow-orange-950/40">
+            <span class="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
+            <span>EXPLORE • INNOVATE • TRANSFORM</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-3 drop-shadow-md">
+            AI-Based Forest Fire Detection
+          </h2>
+          <div class="inline-flex items-center gap-2 text-base sm:text-lg font-bold text-amber-300">
+            <span>Engineering Team :</span>
+            <span class="px-3.5 py-1 rounded-lg bg-orange-600/20 border border-orange-500/60 text-white font-black tracking-wider shadow">
+              VibeCoders 🚀
+            </span>
+          </div>
+          <p class="text-sm text-slate-400 max-w-2xl mx-auto mt-3 leading-relaxed">
+            Pioneering autonomous computer vision, satellite telemetry, and rapid geospatial dispatch to defend Indian forests and wildlife ecosystems against wildfire devastation.
+          </p>
+        </div>
+
+        <!-- 4 Team Member Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          
+          <!-- Member 1: Suhas S -->
+          <div class="p-6 rounded-2xl bg-[#09142b]/85 border-2 border-orange-500/40 hover:border-orange-400 transition-all duration-300 shadow-xl hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] hover:-translate-y-1 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-orange-500 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-red-950 border border-orange-300/60">
+                  SS
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-white group-hover:text-orange-400 transition">Suhas S</h3>
+                  <div class="text-[11px] font-mono text-emerald-400 font-semibold">Team VibeCoders</div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                Core AI Architecture, Real-Time Emergency Coordination Engine & Full-Stack System Design.
+              </p>
+            </div>
+            <a href="https://www.linkedin.com/in/suhas-s-081b84335?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-[#0A66C2]/15 hover:bg-[#0A66C2] border border-[#0A66C2]/50 hover:border-[#0A66C2] text-[#38bdf8] hover:text-white text-xs font-bold transition shadow-sm group/btn">
+              <svg class="w-4 h-4 fill-current transition group-hover/btn:scale-110" viewBox="0 0 24 24">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+              </svg>
+              <span>Connect on LinkedIn</span>
+              <span class="text-[10px] group-hover/btn:translate-x-0.5 transition">↗</span>
+            </a>
+          </div>
+
+          <!-- Member 2: Sanjay V -->
+          <div class="p-6 rounded-2xl bg-[#09142b]/85 border-2 border-orange-500/40 hover:border-cyan-400 transition-all duration-300 shadow-xl hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] hover:-translate-y-1 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-cyan-950 border border-cyan-300/60">
+                  SV
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-white group-hover:text-cyan-400 transition">Sanjay V</h3>
+                  <div class="text-[11px] font-mono text-cyan-400 font-semibold">Team VibeCoders</div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                Geospatial Mapping Intelligence, Water Body Triangulation & Response Station Optimization.
+              </p>
+            </div>
+            <a href="https://www.linkedin.com/in/sanjay-v-20abb13b8?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-[#0A66C2]/15 hover:bg-[#0A66C2] border border-[#0A66C2]/50 hover:border-[#0A66C2] text-[#38bdf8] hover:text-white text-xs font-bold transition shadow-sm group/btn">
+              <svg class="w-4 h-4 fill-current transition group-hover/btn:scale-110" viewBox="0 0 24 24">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+              </svg>
+              <span>Connect on LinkedIn</span>
+              <span class="text-[10px] group-hover/btn:translate-x-0.5 transition">↗</span>
+            </a>
+          </div>
+
+          <!-- Member 3: Shekhar Singh -->
+          <div class="p-6 rounded-2xl bg-[#09142b]/85 border-2 border-orange-500/40 hover:border-amber-400 transition-all duration-300 shadow-xl hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] hover:-translate-y-1 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-orange-600 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-amber-950 border border-amber-300/60">
+                  SS
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-white group-hover:text-amber-400 transition">Shekhar Singh</h3>
+                  <div class="text-[11px] font-mono text-amber-400 font-semibold">Team VibeCoders</div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                Dual-Spectrum YOLOv8 Detection Models, Drone Telemetry Streaming & Optical Vision Verification.
+              </p>
+            </div>
+            <div class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-amber-950/30 border border-amber-500/40 text-amber-300 text-xs font-bold">
+              <span>🛡️ Team VibeCoders Core</span>
+            </div>
+          </div>
+
+          <!-- Member 4: Sachin Gotur -->
+          <div class="p-6 rounded-2xl bg-[#09142b]/85 border-2 border-orange-500/40 hover:border-emerald-400 transition-all duration-300 shadow-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:-translate-y-1 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-emerald-950 border border-emerald-300/60">
+                  SG
+                </div>
+                <div>
+                  <h3 class="text-lg font-black text-white group-hover:text-emerald-400 transition">Sachin Gotur</h3>
+                  <div class="text-[11px] font-mono text-emerald-400 font-semibold">Team VibeCoders</div>
+                </div>
+              </div>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                IoT Sensor Mesh Telemetry, Environmental Threat Modeling & Rapid Incident Analytics.
+              </p>
+            </div>
+            <div class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 text-emerald-300 text-xs font-bold">
+              <span>🌲 Team VibeCoders Core</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Project Badge & Presentation Credential Bar -->
+        <div class="mt-10 p-5 rounded-2xl bg-[#060e20]/90 border border-orange-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🇮🇳</span>
+            <div>
+              <div class="text-xs font-black text-white uppercase tracking-wider">National Forest Fire Defense Initiative</div>
+              <div class="text-[11px] text-slate-400">Created for Advanced Wildfire Early Warning & Rapid Fleet Dispatch</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="/user.html" class="px-4 py-2 rounded-xl bg-orange-600/20 hover:bg-orange-600/30 border border-orange-500/50 text-orange-300 text-xs font-black transition">
+              Citizen Portal
+            </a>
+            <a href="/admin.html" class="px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white text-xs font-black hover:brightness-110 shadow-lg transition">
+              Admin Command
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
   </main>
 
   <!-- Interactive Demo Stepper Modal -->
@@ -336,7 +592,7 @@
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-orange-950 border border-orange-600/60 flex items-center justify-center text-xl">⚡</div>
           <div>
-            <h3 class="text-lg font-black text-white tracking-wide">FORESTGUARD AI LIVE SHOWCASE</h3>
+            <h3 class="text-lg font-black text-white tracking-wide">ForestGuard-AI LIVE SHOWCASE</h3>
             <p class="text-xs text-slate-400">Interactive Emergency Lifecycle & Real-Time Geospatial Simulator</p>
           </div>
         </div>
@@ -507,8 +763,21 @@
   </div>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800 bg-[#02050c] py-6 px-4 text-center text-xs text-slate-500">
-    FORESTGUARD AI &copy; 2026. Live Geospatial Forest Fire Early Warning Prototype. Emergency services simulated for evaluation.
+  <footer class="border-t border-slate-800 bg-[#02050c] py-8 px-4 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-slate-300 font-bold">
+        <span>🌲🔥</span>
+        <span>ForestGuard-AI</span>
+        <span class="text-slate-600">•</span>
+        <span class="text-orange-400 font-mono text-[11px]">AI-Based Forest Fire Detection</span>
+      </div>
+      <div class="text-slate-400 text-[11px]">
+        Engineered by <span class="text-white font-bold">Team VibeCoders</span> (Suhas S, Sanjay V, Shekhar Singh, Sachin Gotur)
+      </div>
+      <div class="text-[11px] text-slate-500">
+        EXPLORE • INNOVATE • TRANSFORM &copy; 2026
+      </div>
+    </div>
   </footer>
 
   <script>
@@ -743,42 +1012,322 @@
       }
 
       renderEmbers();
-    // 3-Second Cinematic Flash Card Countdown & Fade-out Controller
-    (function initFlashCardController() {
+    })();
+
+    // =========================================================================
+    // ULTRA-STUNNING INTRO FLASH CARD CONTROLLER & DYNAMIC PARTICLE ENGINE
+    // =========================================================================
+    let flashCardProgressTimer = null;
+    let isFlashDismissed = false;
+
+    function dismissIntroFlashCard() {
+      if (isFlashDismissed) return;
+      isFlashDismissed = true;
+      if (flashCardProgressTimer) clearInterval(flashCardProgressTimer);
+
       const flash = document.getElementById('introFlashCard');
+      if (flash) {
+        flash.style.opacity = '0';
+        flash.style.pointerEvents = 'none';
+        setTimeout(() => {
+          if (flash) flash.style.display = 'none';
+        }, 500);
+      }
+    }
+
+    function replayIntroFlashCard() {
+      isFlashDismissed = false;
+      const flash = document.getElementById('introFlashCard');
+      if (flash) {
+        flash.style.display = 'flex';
+        flash.style.opacity = '1';
+        flash.style.pointerEvents = 'auto';
+        initFlashCardCountdown();
+        initFlashCardEmbers();
+      }
+    }
+
+    function initFlashCardCountdown() {
+      if (flashCardProgressTimer) clearInterval(flashCardProgressTimer);
       const timerText = document.getElementById('flashCardTimer');
       const bar = document.getElementById('flashCardProgress');
-      const btnSkip = document.getElementById('btnSkipFlashCard');
-      if (!flash) return;
-
-      let timeLeft = 3000;
+      let timeLeft = 2500; // 2.5 seconds
       const step = 40;
-      const progressTimer = setInterval(() => {
+
+      flashCardProgressTimer = setInterval(() => {
         timeLeft -= step;
-        const pct = Math.min(100, Math.round(((3000 - timeLeft) / 3000) * 100));
+        const pct = Math.min(100, Math.round(((2500 - timeLeft) / 2500) * 100));
         if (bar) bar.style.width = pct + '%';
         if (timerText) timerText.textContent = Math.max(0, (timeLeft / 1000).toFixed(1)) + 's';
 
         if (timeLeft <= 0) {
-          clearInterval(progressTimer);
-          dismissFlashCard();
+          clearInterval(flashCardProgressTimer);
+          dismissIntroFlashCard();
         }
       }, step);
+    }
 
-      function dismissFlashCard() {
-        clearInterval(progressTimer);
-        if (flash) {
-          flash.classList.add('opacity-0', 'pointer-events-none');
-          setTimeout(() => {
-            flash.style.display = 'none';
-          }, 700);
+    // Dismiss immediately on Escape, Enter, or Space keys
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') && !isFlashDismissed) {
+        dismissIntroFlashCard();
+      }
+    });
+
+    // Ambient floating embers on flash card canvas
+    function initFlashCardEmbers() {
+      const cvs = document.getElementById('flashCardEmbersCanvas');
+      if (!cvs) return;
+      const ctx = cvs.getContext('2d');
+      let w = cvs.width = window.innerWidth;
+      let h = cvs.height = window.innerHeight;
+
+      const onResize = () => {
+        if (!cvs) return;
+        w = cvs.width = window.innerWidth;
+        h = cvs.height = window.innerHeight;
+      };
+      window.addEventListener('resize', onResize);
+
+      const embers = [];
+      for (let i = 0; i < 40; i++) {
+        embers.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 2.2 + 0.8,
+          vx: (Math.random() - 0.5) * 0.9,
+          vy: -(Math.random() * 1.6 + 0.6),
+          alpha: Math.random() * 0.7 + 0.3,
+          color: Math.random() > 0.4 ? 'rgba(249, 115, 22, ' : 'rgba(239, 68, 68, '
+        });
+      }
+
+      function drawFlashEmbers() {
+        if (isFlashDismissed) return;
+        ctx.clearRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < embers.length; i++) {
+          const e = embers[i];
+          e.x += e.vx + Math.sin(e.y * 0.02) * 0.4;
+          e.y += e.vy;
+          if (e.y < -10) {
+            e.y = h + 10;
+            e.x = Math.random() * w;
+          }
+          ctx.beginPath();
+          ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+          ctx.fillStyle = e.color + e.alpha + ')';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#f97316';
+          ctx.fill();
         }
+        requestAnimationFrame(drawFlashEmbers);
+      }
+      drawFlashEmbers();
+    }
+
+    // Initialize countdown and embers on window load
+    initFlashCardCountdown();
+    initFlashCardEmbers();
+  </script>
+
+  <!-- ========================================================================= -->
+  <!-- 🔒 OFFICER AUTHORIZATION MODAL (Username/Password, Google Sign-in & Small Instant 1-Click Login) -->
+  <!-- ========================================================================= -->
+  <div id="homeAuthModal" class="fixed inset-0 z-[2147483647] bg-[#02050c]/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 hidden">
+    <div class="relative w-full max-w-md p-6 sm:p-7 rounded-3xl bg-[#091122] border-2 border-red-500/70 shadow-[0_0_60px_rgba(239,68,68,0.35)] space-y-4 animate-fade-in text-left">
+      
+      <!-- Top Header & Close Button -->
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3.5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-red-600 via-orange-600 to-amber-500 flex items-center justify-center text-xl shadow-lg shadow-red-950/80 border border-orange-400/50">
+            🔒
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[9px] font-black tracking-widest text-red-400 uppercase bg-red-950/90 border border-red-700/60 px-2 py-0.5 rounded">OFFICER CLEARANCE</span>
+              <span class="text-[9px] font-mono text-amber-400">SECURE LOGIN</span>
+            </div>
+            <h2 class="text-base sm:text-lg font-black text-white mt-0.5 tracking-wide">ForestGuard-AI Officer Login</h2>
+          </div>
+        </div>
+        <button id="btnCloseHomeAuth" type="button" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition text-xs font-bold cursor-pointer" title="Close & Return to Homepage">
+          ✕
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed">
+        Officer authorization unlocks live incident commands, fire siren triggers, and auto-dispatch relays. Sign in with officer credentials, Google, or use instant evaluator access.
+      </p>
+
+      <!-- Username & Password Form -->
+      <form id="homeAuthForm" class="space-y-3">
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-xs">
+            <label for="homeAuthUsername" class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Officer Username:</label>
+            <span class="text-[10px] font-mono text-slate-400">Default: <b class="text-amber-400 font-mono select-all">admin</b></span>
+          </div>
+          <input type="text" id="homeAuthUsername" value="admin" placeholder="Enter username (e.g. admin)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 font-mono tracking-wider transition" autocomplete="username" />
+        </div>
+
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-xs">
+            <label for="homeAuthPassword" class="font-bold text-slate-300 uppercase tracking-wider text-[11px]">Clearance Passcode:</label>
+            <span class="text-[10px] font-mono text-slate-400">Default: <b class="text-amber-400 font-mono select-all">admin123</b></span>
+          </div>
+          <div class="relative">
+            <input type="password" id="homeAuthPassword" value="admin123" placeholder="Enter passcode (e.g. admin123)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 font-mono tracking-wider transition pr-10" autocomplete="current-password" />
+            <button type="button" id="btnToggleHomePassVisibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs px-1.5 py-1 cursor-pointer" title="Show/Hide Passcode">👁️</button>
+          </div>
+        </div>
+
+        <div id="homeAuthError" class="hidden text-xs text-red-300 bg-red-950/80 border border-red-700/80 rounded-xl p-2.5 flex items-center gap-2">
+          <span>⚠️</span> <span>Invalid credentials. Use <b>admin</b> / <b>admin123</b> or click <b>Instant 1-Click Login</b>.</span>
+        </div>
+
+        <!-- Form Submit Button -->
+        <button type="submit" id="btnHomeAuthSubmit" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 hover:brightness-110 active:scale-[0.99] text-white font-black text-xs tracking-wider uppercase shadow-lg shadow-red-950/80 transition flex items-center justify-center gap-1.5 cursor-pointer border border-red-500/50">
+          <span>🔓</span> <span>Authorize Access</span>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="relative flex py-1 items-center">
+        <div class="flex-grow border-t border-slate-800"></div>
+        <span class="flex-shrink mx-3 text-[10px] font-bold uppercase tracking-widest text-slate-500">OR CONTINUE WITH</span>
+        <div class="flex-grow border-t border-slate-800"></div>
+      </div>
+
+      <!-- Google Sign-in & Small Instant Login Options -->
+      <div class="space-y-2">
+        <!-- Google Sign-in Button -->
+        <button type="button" id="btnHomeGoogleSignIn" class="w-full py-2.5 px-3 rounded-xl bg-white hover:bg-slate-100 active:scale-[0.99] text-slate-900 font-bold text-xs tracking-wide shadow-md transition flex items-center justify-center gap-2.5 cursor-pointer border border-slate-300 group">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span class="group-hover:text-black">Sign in with Google</span>
+        </button>
+
+        <!-- Small Instant 1-Click Login Button -->
+        <button type="button" id="btnHomeInstantLogin" class="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 active:scale-[0.99] text-white font-black text-xs tracking-wider uppercase shadow-md shadow-emerald-950/60 transition flex items-center justify-center gap-1.5 cursor-pointer border border-emerald-400/60" title="Instant Evaluator Access (No Password Needed)">
+          <span>⚡</span> <span>Instant 1-Click Login</span>
+        </button>
+      </div>
+
+      <!-- Bottom Dismiss Note -->
+      <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+        <span>Public pages are completely open</span>
+        <button type="button" id="btnDismissHomeAuth" class="text-orange-400 hover:text-orange-300 font-bold transition cursor-pointer">
+          Dismiss ✕
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // 🔒 ForestGuard-AI Officer Authorization Modal Controller
+    function initHomeAuthModal() {
+      const btnLock = document.getElementById('btnHomeLockAuth');
+      const modal = document.getElementById('homeAuthModal');
+      const btnClose = document.getElementById('btnCloseHomeAuth');
+      const btnDismiss = document.getElementById('btnDismissHomeAuth');
+      const form = document.getElementById('homeAuthForm');
+      const userInput = document.getElementById('homeAuthUsername');
+      const passInput = document.getElementById('homeAuthPassword');
+      const btnToggleEye = document.getElementById('btnToggleHomePassVisibility');
+      const errBox = document.getElementById('homeAuthError');
+      const btnGoogle = document.getElementById('btnHomeGoogleSignIn');
+      const btnInstant = document.getElementById('btnHomeInstantLogin');
+
+      if (!btnLock || !modal) return;
+
+      function openModal() {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        if (userInput) setTimeout(() => userInput.focus(), 100);
       }
 
-      if (btnSkip) {
-        btnSkip.addEventListener('click', dismissFlashCard);
+      function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        if (errBox) errBox.classList.add('hidden');
+        if (passInput) passInput.classList.remove('border-red-500');
       }
-    })();
+
+      btnLock.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+      });
+
+      if (btnClose) btnClose.addEventListener('click', closeModal);
+      if (btnDismiss) btnDismiss.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeModal();
+      });
+
+      window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+
+      if (btnToggleEye && passInput) {
+        btnToggleEye.addEventListener('click', function() {
+          const isPass = passInput.type === 'password';
+          passInput.type = isPass ? 'text' : 'password';
+          btnToggleEye.textContent = isPass ? '🔒' : '👁️';
+        });
+      }
+
+      function completeLogin(name) {
+        sessionStorage.setItem('FG_ADMIN_AUTH', 'granted');
+        sessionStorage.removeItem('FG_LOCKED');
+        if (name) sessionStorage.setItem('FG_OFFICER_NAME', name);
+        closeModal();
+        window.location.href = '/admin.html';
+      }
+
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const u = (userInput ? userInput.value : '').trim();
+          const p = (passInput ? passInput.value : '').trim();
+          const validPass = ['admin123', 'forestguard2026', 'admin', 'agni123', 'rakshak2026'];
+          if (p && validPass.includes(p)) {
+            completeLogin(u || 'Officer Commander');
+          } else {
+            if (errBox) errBox.classList.remove('hidden');
+            if (passInput) {
+              passInput.classList.add('border-red-500');
+              passInput.focus();
+            }
+          }
+        });
+      }
+
+      if (btnGoogle) {
+        btnGoogle.addEventListener('click', function() {
+          completeLogin('Google Verified Commander');
+        });
+      }
+
+      if (btnInstant) {
+        btnInstant.addEventListener('click', function() {
+          completeLogin('Instant Verified Commander');
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHomeAuthModal);
+    } else {
+      initHomeAuthModal();
+    }
   </script>
 </body>
 </html>
