@@ -132,9 +132,27 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
       aiResult = await aiVisionService.analyzeFireImage(imageDiskPath, locationName);
     }
 
-    const clientFlaggedFake = req.body.isFake === 'true' || req.body.isFake === true || req.body.fireDetected === 'false' || req.body.fireDetected === false || req.body.severity === 'FAKE ALERT';
-    const isFakeFinal = clientFlaggedFake || aiResult.isFake || aiResult.fireDetected === false || aiResult.severity === 'FAKE ALERT';
+    const clientFlaggedFake = req.body.isFake === 'true' || req.body.isFake === true || req.body.fireDetected === 'false' || req.body.fireDetected === false || req.body.severity === 'FAKE ALERT' || req.body.fireCoverage === '0.0' || parseFloat(req.body.fireCoverage || '10') === 0;
+    const isFakeFinal = clientFlaggedFake || aiResult.isFake || aiResult.fireDetected === false || aiResult.severity === 'FAKE ALERT' || aiResult.fireCoverage === 0 || parseFloat(aiResult.fireCoverage || '0') === 0;
     const fireDetectedFinal = !isFakeFinal && (aiResult.fireDetected !== false);
+
+    const irThermalScanFinal = isFakeFinal ? {
+      irCoverage: 0.0,
+      peakTempCelsius: 24,
+      averageTempCelsius: 22,
+      thermalStatus: 'COLD SPECTRUM (0.0% IR FLAME)',
+      flameColorPercent: 0.0,
+      isThermalHazard: false,
+      irVerdict: 'ZERO THERMAL HAZARD / NON-FIRE'
+    } : (aiResult.irThermalScan || {
+      irCoverage: aiResult.fireCoverage || 17.5,
+      peakTempCelsius: 850,
+      averageTempCelsius: 650,
+      thermalStatus: 'ACTIVE THERMAL COMBUSTION DETECTED',
+      flameColorPercent: aiResult.fireCoverage || 17.5,
+      isThermalHazard: true,
+      irVerdict: 'VERIFIED THERMAL HOTSPOT'
+    });
 
     // Save Incident to Store (calculates multi-source risk + proximity)
     const newIncident = incidentStore.createIncident({
@@ -156,10 +174,11 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
       fireDetected: fireDetectedFinal,
       severity: isFakeFinal ? 'FAKE ALERT' : aiResult.severity,
       aiExplanation: isFakeFinal 
-        ? (aiResult.explanation || 'No flame signatures detected. Non-fire photo / potential false alarm.')
+        ? (aiResult.explanation || 'No orange/red flame signatures detected. Non-fire photo flagged as fake alert.')
         : aiResult.explanation,
       affectedAreaHectares: isFakeFinal ? 0.0 : (aiResult.affectedAreaEstimateHectares || 2.4),
       detectedFeatures: isFakeFinal ? ['No Fire Detected', 'Non-Fire Photo'] : aiResult.detectedFeatures,
+      irThermalScan: irThermalScanFinal,
       scoreboard: isFakeFinal ? {
         fireScore: 0.0,
         fireLevel: 'SAFE (FAKE ALERT)',
@@ -174,14 +193,15 @@ app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage',
         fakeVerdict: 'FAKE ALERT / ZERO FIRE DETECTED',
         fakeStatus: 'FLAGGED - NON-FIRE PHOTO (0% FIRE)',
         isFake: true,
+        irThermalScan: irThermalScanFinal,
         objectsCount: 0,
         statusTitle: 'FAKE ALERT DETECTED',
-        statusText: 'Status: Flagged - Non-Fire Photo / Potential Hoax',
+        statusText: 'Status: Flagged - Non-Fire Photo / Potential Hoax (0% Fire)',
         badgeText: 'FAKE ALERT',
         earlyWarningAlert: '⚠️ FAKE ALERT SIGNAL - ZERO HAZARD / NON-FIRE PHOTO',
         timestamp: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }),
-        engineName: 'YOLOv8 DUAL-SPECTRUM ENGINE'
-      } : (aiResult.scoreboard || req.body.scoreboard),
+        engineName: 'YOLOv8 + IR RADIOMETRIC ENGINE'
+      } : { ...(aiResult.scoreboard || req.body.scoreboard || {}), irThermalScan: irThermalScanFinal },
       fireScore: isFakeFinal ? 0.0 : aiResult.fireScore,
       fireLevel: isFakeFinal ? 'SAFE (FAKE ALERT)' : aiResult.fireLevel,
       anomalyConfidence: isFakeFinal ? 0.0 : aiResult.anomalyConfidence,

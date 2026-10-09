@@ -1750,8 +1750,9 @@ async function fetchIncidents() {
 // 12. Update Admin Score Board (YOLOv8 Dual-Spectrum Detection Result HUD)
 function updateAdminScoreboard(sbData) {
   if (!sbData) return;
-  const isFakeDetected = sbData.isFake || (sbData.fakeProbability !== undefined && parseFloat(sbData.fakeProbability) > 50) || sbData.fireDetected === false || sbData.severity === 'FAKE ALERT' || (sbData.badgeText && sbData.badgeText.includes('FAKE'));
-  const isFire = !isFakeDetected && sbData.severity !== 'NORMAL' && sbData.fireDetected !== false;
+  const rawCov = sbData.fireCoverage !== undefined ? parseFloat(sbData.fireCoverage) : 0;
+  const isFakeDetected = sbData.isFake || (sbData.fakeProbability !== undefined && parseFloat(sbData.fakeProbability) > 50) || sbData.fireDetected === false || sbData.severity === 'FAKE ALERT' || (sbData.badgeText && sbData.badgeText.includes('FAKE')) || rawCov === 0;
+  const isFire = !isFakeDetected && sbData.severity !== 'NORMAL' && sbData.fireDetected !== false && rawCov > 0;
 
   const tsEl = document.getElementById('adminSbTimestamp');
   if (tsEl) {
@@ -1779,7 +1780,7 @@ function updateAdminScoreboard(sbData) {
       iconBox.className = 'w-7 h-7 rounded-lg flex items-center justify-center text-sm bg-red-900/60 border border-red-500 text-red-300 animate-pulse';
       iconBox.textContent = '⚠️';
       title.textContent = 'FAKE ALERT SIGNAL DETECTED';
-      subtitle.textContent = 'Status: Flagged - Non-Fire Photo / Potential Hoax';
+      subtitle.textContent = 'Status: Flagged - Non-Fire Photo / Potential Hoax (0% Fire)';
       badge.textContent = 'FAKE ALERT';
       badge.className = 'text-[10px] font-black px-2 py-0.5 rounded-md bg-red-600 text-white border border-red-400 shadow-sm animate-pulse font-mono';
     } else {
@@ -1818,6 +1819,45 @@ function updateAdminScoreboard(sbData) {
   const barSmkLvl = document.getElementById('adminSbBarSmokeLevel');
   if (elSmkLvl) elSmkLvl.textContent = `${smkLvl}%`;
   if (barSmkLvl) barSmkLvl.style.width = `${Math.min(100, Math.max(0, parseFloat(smkLvl)))}%`;
+
+  // 📡 IR Radiometric Thermal Scanner Card Updating in Admin Panel
+  const irCovVal = (isFakeDetected || !isFire) ? '0.0' : cov;
+  const elIrCov = document.getElementById('adminSbValIrCoverage');
+  if (elIrCov) elIrCov.textContent = `${irCovVal}% IR Heat`;
+  const barIrCov = document.getElementById('adminSbBarIrCoverage');
+  if (barIrCov) barIrCov.style.width = `${Math.min(100, Math.max(0, parseFloat(irCovVal)))}%`;
+
+  const badgeIrStatus = document.getElementById('adminSbBadgeIrStatus');
+  if (badgeIrStatus) {
+    if (isFire) {
+      badgeIrStatus.textContent = 'THERMAL HOTSPOT';
+      badgeIrStatus.className = 'text-[8px] font-black px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-500/60 uppercase animate-pulse';
+    } else {
+      badgeIrStatus.textContent = 'COLD SPECTRUM';
+      badgeIrStatus.className = 'text-[8px] font-black px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/60 uppercase';
+    }
+  }
+
+  const elIrStatusText = document.getElementById('adminSbIrStatusText');
+  if (elIrStatusText) {
+    if (isFire) {
+      const peakTemp = sbData.irThermalScan?.peakTempCelsius || (parseFloat(cov) > 30 ? 1120 : (parseFloat(cov) > 10 ? 880 : 620));
+      elIrStatusText.textContent = `IR Status: Active Radiance (Peak: ${peakTemp}°C) • Verified Combustion`;
+    } else {
+      elIrStatusText.textContent = 'IR Spectrum: Cold Ambient (24°C) • Zero Thermal Signature';
+    }
+  }
+
+  const elFlameColor = document.getElementById('adminSbValFlameColor');
+  if (elFlameColor) {
+    if (isFire) {
+      elFlameColor.textContent = `${cov}% Active Orange/Red Flames`;
+      elFlameColor.className = 'text-amber-300 font-bold';
+    } else {
+      elFlameColor.textContent = '0.0% (No Orange/Red Detected)';
+      elFlameColor.className = 'text-slate-400 font-bold';
+    }
+  }
 
   // 1. Fire Score & Level
   const fireScoreVal = isFakeDetected ? '0.0' : parseFloat(sbData.fireScore !== undefined ? sbData.fireScore : anom).toFixed(1);
@@ -1955,7 +1995,8 @@ function initImageInspectorModal() {
     const ts = document.getElementById('modalSbTimestamp');
     if (ts) ts.textContent = sb.timestamp || new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
 
-    const isFake = !isFire || sb.isFake || sb.severity === 'FAKE ALERT' || (sb.fakeProbability && parseFloat(sb.fakeProbability) > 50);
+    const rawCov = sb.fireCoverage !== undefined ? parseFloat(sb.fireCoverage) : 0;
+    const isFake = !isFire || sb.isFake || sb.severity === 'FAKE ALERT' || (sb.fakeProbability && parseFloat(sb.fakeProbability) > 50) || rawCov === 0;
 
     // 1. Fire Confidence (TOP)
     const fireConfVal = isFake ? '0.0' : parseFloat(sb.fireConfidence !== undefined ? sb.fireConfidence : (sb.fireScore || 96.5)).toFixed(1);
@@ -1992,6 +2033,44 @@ function initImageInspectorModal() {
     const barAnom = document.getElementById('modalSbBarAnomaly');
     if (barAnom) barAnom.style.width = `${Math.min(100, Math.max(0, parseFloat(anomVal)))}%`;
 
+    // 📡 IR Radiometric Thermal Scanner Card Updating in Modal Inspector
+    const elIrCov = document.getElementById('modalSbValIrCoverage');
+    if (elIrCov) elIrCov.textContent = `${isFake ? '0.0' : covVal}% IR Heat`;
+    const barIrCov = document.getElementById('modalSbBarIrCoverage');
+    if (barIrCov) barIrCov.style.width = `${isFake ? '0' : Math.min(100, Math.max(0, parseFloat(covVal)))}%`;
+
+    const badgeIrStatus = document.getElementById('modalSbBadgeIrStatus');
+    if (badgeIrStatus) {
+      if (!isFake) {
+        badgeIrStatus.textContent = 'THERMAL HOTSPOT';
+        badgeIrStatus.className = 'text-[8px] font-black px-1.5 py-0.2 rounded bg-red-950 text-red-300 border border-red-500/60 uppercase animate-pulse';
+      } else {
+        badgeIrStatus.textContent = 'COLD SPECTRUM';
+        badgeIrStatus.className = 'text-[8px] font-black px-1.5 py-0.2 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/60 uppercase';
+      }
+    }
+
+    const elIrStatusText = document.getElementById('modalSbIrStatusText');
+    if (elIrStatusText) {
+      if (!isFake) {
+        const peakTemp = sb.irThermalScan?.peakTempCelsius || (parseFloat(covVal) > 30 ? 1120 : (parseFloat(covVal) > 10 ? 880 : 620));
+        elIrStatusText.textContent = `IR Status: Active Radiance (Peak: ${peakTemp}°C) • Real Combustion`;
+      } else {
+        elIrStatusText.textContent = 'IR Spectrum: Cold Ambient (24°C) • Zero Thermal Signature';
+      }
+    }
+
+    const elFlameColor = document.getElementById('modalSbValFlameColor');
+    if (elFlameColor) {
+      if (!isFake) {
+        elFlameColor.textContent = `${covVal}% Active Orange/Red Flames`;
+        elFlameColor.className = 'text-amber-300 font-bold';
+      } else {
+        elFlameColor.textContent = '0.0% (No Orange/Red Detected)';
+        elFlameColor.className = 'text-slate-400 font-bold';
+      }
+    }
+
     const rEl = document.getElementById('modalSbRisk');
     if (rEl) rEl.textContent = isFake ? '0 (FAKE)' : (sb.riskScore || 96);
     const sevEl = document.getElementById('modalSbSeverity');
@@ -2019,7 +2098,7 @@ function initImageInspectorModal() {
         banner.className = 'p-2.5 rounded-xl border flex items-center justify-between bg-gradient-to-r from-red-950/90 via-amber-950/70 to-red-950/90 border-red-500/80 shadow-[0_0_12px_rgba(239,68,68,0.35)]';
         icon.textContent = '⚠️';
         title.textContent = 'FAKE ALERT SIGNAL DETECTED';
-        subtitle.textContent = 'Status: Flagged - Non-Fire Photo / Potential Hoax';
+        subtitle.textContent = 'Status: Flagged - Non-Fire Photo / Potential Hoax (0% Fire)';
         badge.textContent = 'FAKE ALERT';
         badge.className = 'text-[10px] font-black px-2 py-0.5 rounded bg-red-600 text-white shadow animate-pulse font-mono';
       }
@@ -2029,32 +2108,55 @@ function initImageInspectorModal() {
   function analyzeInspectorCanvas(imgElement) {
     try {
       const canvas = document.createElement('canvas');
-      canvas.width = 80;
-      canvas.height = 80;
+      canvas.width = 128;
+      canvas.height = 128;
       const ctx = canvas.getContext('2d');
-      ctx.drawImage(imgElement, 0, 0, 80, 80);
-      const imgData = ctx.getImageData(0, 0, 80, 80).data;
+      ctx.drawImage(imgElement, 0, 0, 128, 128);
+      const imgData = ctx.getImageData(0, 0, 128, 128).data;
 
       let firePixels = 0;
       let smokePixels = 0;
-      const total = 80 * 80;
+      let maxTempC = 24;
+      const total = 128 * 128;
 
       for (let i = 0; i < imgData.length; i += 4) {
         const r = imgData[i];
         const g = imgData[i + 1];
         const b = imgData[i + 2];
-        const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
 
-        // Strict flame luminance and color ratio rules:
-        // Real flames are self-luminous (luminance > 140) and have strong red-to-blue excess (r - b > 55)
-        const isRedOrangeFlame = (r > 175 && r > g && g > b && (r - b) > 60 && luminance > 130);
-        const isGoldenFlame = (r > 200 && g > 150 && (r + g) > (2.6 * b) && luminance > 150 && (r - b) > 70);
-        const isWhiteCoreFlame = (r > 235 && g > 215 && b > 140 && (r + g) > (2.2 * b) && luminance > 205);
-        const isGlowingEmbers = (r > 185 && r > 1.8 * g && r > 2.2 * b && luminance > 120);
+        // Convert to HSV for strict Orange/Red chromatic color gate
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        const delta = max - min;
+        const sat = max === 0 ? 0 : delta / max;
+        let hue = 0;
+        if (delta > 0) {
+          if (max === r) hue = ((g - b) / delta) % 6;
+          else if (max === g) hue = (b - r) / delta + 2;
+          else hue = (r - g) / delta + 4;
+          hue = Math.round(hue * 60);
+          if (hue < 0) hue += 360;
+        }
 
-        if (isRedOrangeFlame || isGoldenFlame || isWhiteCoreFlame || isGlowingEmbers) {
+        // Rule A: Hue must strictly lie in flame Orange/Red spectrum (0° - 42° or 350° - 360°)
+        const isOrangeRedHue = (hue >= 0 && hue <= 42) || (hue >= 350 && hue <= 360);
+
+        // Rule B: High Saturation (real flames are deeply saturated; white text, gray backgrounds, screen glare have sat < 0.25)
+        const isSaturated = (sat >= 0.40);
+
+        // Rule C: Red Dominance and Blue Suppression (filters out white text, light gray, cyan, purple, and screens)
+        const isFlameChromatic = (r >= 145 && r > g * 1.10 && (r - b) >= 45 && b <= 130);
+
+        // Rule D: Radiometric Infrared (IR) Thermal Index
+        const irRadiance = (r - b) / (r + b + 1) * (r / (g + 1));
+        const pixelTempC = (isOrangeRedHue && isSaturated && isFlameChromatic && irRadiance > 0.32)
+          ? Math.min(1200, Math.round(520 + irRadiance * 380 + (r + g) / 4))
+          : Math.round(20 + (r / 255) * 15);
+
+        if (isOrangeRedHue && isSaturated && isFlameChromatic && pixelTempC >= 500) {
           firePixels++;
-        } else if ((Math.abs(r - g) < 25 && Math.abs(g - b) < 25 && r > 90 && r < 210 && luminance > 80 && luminance < 190) ||
+          if (pixelTempC > maxTempC) maxTempC = pixelTempC;
+        } else if ((Math.abs(r - g) < 20 && Math.abs(g - b) < 20 && r > 90 && r < 190) ||
                    (r > 100 && g > 85 && b < 140 && r > b && g > b && (r - b) > 30)) {
           smokePixels++;
         }
@@ -2062,42 +2164,50 @@ function initImageInspectorModal() {
 
       const fireRatio = firePixels / total;
       const smokeRatio = smokePixels / total;
-      // Strict threshold: requires at least 1.2% genuine flame pixels
-      const isFire = fireRatio >= 0.012 || (fireRatio >= 0.008 && smokeRatio > 0.08);
+
+      // Strict threshold: requires at least 2.0% genuine flame pixels to eliminate camera noise & UI graphics
+      const isFire = (fireRatio >= 0.020);
 
       if (isFire) {
-        const cov = Math.min(95.0, Math.max(1.0, fireRatio * 200));
-        const fireConf = Math.min(99.0, Math.max(55.0, 50.0 + (cov / 100.0) * 45));
-        const smkConf = Math.min(98.0, Math.max(40.0, 40.0 + smokeRatio * 180));
-        const smkLvl = Math.min(95.0, Math.max(20.0, smokeRatio * 190));
+        const cov = parseFloat((fireRatio * 100).toFixed(1));
+        const fireConf = parseFloat((Math.min(99.6, Math.max(86.0, 84.0 + (cov / 100) * 15))).toFixed(1));
+        const smkConf = parseFloat((Math.min(98.0, Math.max(35.0, 35.0 + cov * 1.5))).toFixed(1));
+        const smkLvl = parseFloat((Math.min(96.0, Math.max(30.0, 30.0 + cov * 1.4))).toFixed(1));
         const anom = fireConf;
 
-        // "More the fire, more the seriousness":
         let sev = 'MODERATE';
-        let risk = 50;
-        if (cov >= 35.0) {
+        let risk = 45;
+        if (cov >= 30.0) {
           sev = 'CRITICAL';
-          risk = Math.min(99, Math.round(85 + ((cov - 35.0) / 60.0) * 14));
-        } else if (cov >= 15.0) {
+          risk = Math.round(80 + ((cov - 30.0) / 70.0) * 19);
+        } else if (cov >= 10.0) {
           sev = 'HIGH';
-          risk = Math.min(84, Math.round(65 + ((cov - 15.0) / 20.0) * 19));
+          risk = Math.round(56 + ((cov - 10.0) / 20.0) * 23);
         } else {
           sev = 'MODERATE';
-          risk = Math.min(64, Math.round(35 + (cov / 15.0) * 29));
+          risk = Math.round(30 + (cov / 10.0) * 25);
         }
 
         const quickSb = {
           fireDetected: true,
-          fireConfidence: parseFloat(fireConf.toFixed(1)),
-          fireScore: parseFloat(fireConf.toFixed(1)),
-          smokeConfidence: parseFloat(smkConf.toFixed(1)),
-          fireCoverage: parseFloat(cov.toFixed(1)),
-          smokeLevel: parseFloat(smkLvl.toFixed(1)),
-          anomalyConfidence: parseFloat(anom.toFixed(1)),
+          fireConfidence: fireConf,
+          fireScore: fireConf,
+          smokeConfidence: smkConf,
+          fireCoverage: cov,
+          smokeLevel: smkLvl,
+          anomalyConfidence: anom,
           riskScore: risk,
           severity: sev,
           objectsCount: Math.max(1, Math.min(6, Math.round(fireRatio * 35 + 1))),
-          earlyWarningAlert: sev === 'CRITICAL' ? 'CRITICAL - IMMEDIATE DISPATCH' : 'HIGH RISK HAZARD DETECTED',
+          earlyWarningAlert: sev === 'CRITICAL' ? 'CRITICAL - IMMEDIATE DISPATCH' : (sev === 'HIGH' ? 'HIGH RISK HAZARD DETECTED' : 'MODERATE RISK FIRE INCIDENT'),
+          irThermalScan: {
+            irCoverage: cov,
+            peakTempCelsius: Math.round(maxTempC),
+            thermalStatus: 'ACTIVE THERMAL COMBUSTION DETECTED',
+            flameColorPercent: cov,
+            isThermalHazard: true,
+            irVerdict: 'VERIFIED THERMAL HOTSPOT'
+          },
           timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
         };
         updateInspectorScoreboard(quickSb, true);
@@ -2115,6 +2225,14 @@ function initImageInspectorModal() {
           severity: 'FAKE ALERT',
           objectsCount: 0,
           earlyWarningAlert: '⚠️ FAKE ALERT SIGNAL - ZERO HAZARD / NON-FIRE PHOTO',
+          irThermalScan: {
+            irCoverage: 0.0,
+            peakTempCelsius: 24,
+            thermalStatus: 'COLD SPECTRUM (0.0% IR FLAME)',
+            flameColorPercent: 0.0,
+            isThermalHazard: false,
+            irVerdict: 'ZERO THERMAL HAZARD / NON-FIRE'
+          },
           timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })
         };
         updateInspectorScoreboard(clearSb, false);

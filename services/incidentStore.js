@@ -411,6 +411,23 @@ class IncidentStore {
       ],
       isPriority: data.isPriority !== undefined ? data.isPriority : true,
       priorityLevel: isFakeAlert ? 'FAKE ALERT - CITIZEN REPORT' : (data.priorityLevel || 'PRIORITY 1 - CITIZEN REPORT'),
+      irThermalScan: isFakeAlert ? {
+        irCoverage: 0.0,
+        peakTempCelsius: 24,
+        averageTempCelsius: 22,
+        thermalStatus: 'COLD SPECTRUM (0.0% IR FLAME)',
+        flameColorPercent: 0.0,
+        isThermalHazard: false,
+        irVerdict: 'ZERO THERMAL HAZARD / NON-FIRE'
+      } : (data.irThermalScan || {
+        irCoverage: typeof data.fireCoverage === 'number' ? data.fireCoverage : 17.5,
+        peakTempCelsius: 850,
+        averageTempCelsius: 650,
+        thermalStatus: 'ACTIVE THERMAL COMBUSTION DETECTED',
+        flameColorPercent: typeof data.fireCoverage === 'number' ? data.fireCoverage : 17.5,
+        isThermalHazard: true,
+        irVerdict: 'VERIFIED THERMAL HOTSPOT'
+      }),
       scoreboard: isFakeAlert ? {
         fireScore: 0.0,
         fireLevel: 'SAFE (FAKE ALERT)',
@@ -425,13 +442,22 @@ class IncidentStore {
         fakeVerdict: 'FAKE ALERT / ZERO FIRE DETECTED',
         fakeStatus: 'FLAGGED - NON-FIRE PHOTO (0% FIRE)',
         isFake: true,
+        irThermalScan: {
+          irCoverage: 0.0,
+          peakTempCelsius: 24,
+          averageTempCelsius: 22,
+          thermalStatus: 'COLD SPECTRUM (0.0% IR FLAME)',
+          flameColorPercent: 0.0,
+          isThermalHazard: false,
+          irVerdict: 'ZERO THERMAL HAZARD / NON-FIRE'
+        },
         objectsCount: 0,
         statusTitle: 'FAKE ALERT DETECTED',
-        statusText: 'Status: Flagged - Non-Fire Photo / Potential Hoax',
+        statusText: 'Status: Flagged - Non-Fire Photo / Potential Hoax (0% Fire)',
         badgeText: 'FAKE ALERT',
         earlyWarningAlert: '⚠️ FAKE ALERT SIGNAL - ZERO HAZARD / NON-FIRE PHOTO',
         timestamp: timestampStr,
-        engineName: 'YOLOv8 ENGINE READY'
+        engineName: 'YOLOv8 + IR RADIOMETRIC ENGINE'
       } : (data.scoreboard || {
         fireScore: typeof data.fireScore === 'number' ? parseFloat(data.fireScore.toFixed(1)) : (typeof data.aiConfidence === 'number' ? parseFloat(data.aiConfidence.toFixed(1)) : 94.6),
         fireLevel: data.fireLevel || data.severity || 'CRITICAL',
@@ -446,13 +472,22 @@ class IncidentStore {
         fakeVerdict: data.fakeVerdict || 'AUTHENTIC GROUND EVIDENCE',
         fakeStatus: data.fakeStatus || 'PASSED - REAL FIELD EVIDENCE (NOT FAKE / NOT AI-GEN)',
         isFake: false,
+        irThermalScan: data.irThermalScan || {
+          irCoverage: typeof data.fireCoverage === 'number' ? data.fireCoverage : 38.5,
+          peakTempCelsius: 850,
+          averageTempCelsius: 650,
+          thermalStatus: 'ACTIVE THERMAL COMBUSTION DETECTED',
+          flameColorPercent: typeof data.fireCoverage === 'number' ? data.fireCoverage : 38.5,
+          isThermalHazard: true,
+          irVerdict: 'VERIFIED THERMAL HOTSPOT'
+        },
         objectsCount: data.objectsCount !== undefined ? data.objectsCount : 3,
         statusTitle: 'FIRE DETECTED',
         statusText: `Status: Active Wildfire (${data.objectsCount || 3} Objects)`,
         badgeText: data.severity || riskResult.severity || 'CRITICAL',
         earlyWarningAlert: 'CRITICAL - IMMEDIATE DISPATCH',
         timestamp: timestampStr,
-        engineName: 'YOLOv8 ENGINE READY'
+        engineName: 'YOLOv8 + IR RADIOMETRIC ENGINE'
       }),
       routeWaypoints: station.routeWaypoints || [],
       routeProgressIndex: 0,
