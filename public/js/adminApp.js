@@ -2391,38 +2391,31 @@ function initImageInspectorModal() {
   }
 }
 
-// 12. Admin Command Center Password Protection & Instant 1-Click Login Gate
+// 12. Admin Command Center Password & Google Authorization Gate
 function initAdminAuth() {
   const modal = document.getElementById('adminAuthModal');
   const form = document.getElementById('adminAuthForm');
   const userInput = document.getElementById('adminUsernameInput');
   const passInput = document.getElementById('adminPassInput');
   const errBox = document.getElementById('adminAuthError');
-  const btnInstant = document.getElementById('btnAdminInstantLogin');
   const btnGoogle = document.getElementById('btnAdminGoogleSignIn');
-  const btnHeaderInstant = document.getElementById('btnHeaderInstantLogin');
   const btnToggleEye = document.getElementById('btnTogglePassVisibility');
   const btnLogout = document.getElementById('btnAdminLogout');
   const btnModalDismiss = document.getElementById('btnAdminModalDismiss');
 
-  const grantAccess = (isInstant = false) => {
+  const grantAccess = () => {
     sessionStorage.setItem('FG_ADMIN_AUTH', 'granted');
     sessionStorage.removeItem('FG_LOCKED');
     if (modal) {
       closeAdminModal(modal);
     }
-    if (btnHeaderInstant) btnHeaderInstant.classList.add('hidden');
     if (errBox) errBox.classList.add('hidden');
     if (passInput) {
       passInput.value = '';
       passInput.classList.remove('border-red-500');
     }
 
-    if (isInstant) {
-      showToast('⚡ Commander Access Granted via Instant 1-Click Login', 'emerald');
-    } else {
-      showToast('🔓 Command Clearance Verified: Level 4 Commander', 'emerald');
-    }
+    showToast('🔓 Command Clearance Verified: Level 4 Commander', 'emerald');
 
     // Refresh map layout so tiles align cleanly
     setTimeout(() => {
@@ -2433,7 +2426,6 @@ function initAdminAuth() {
   const lockDashboard = () => {
     sessionStorage.setItem('FG_LOCKED', 'true');
     sessionStorage.removeItem('FG_ADMIN_AUTH');
-    if (btnHeaderInstant) btnHeaderInstant.classList.remove('hidden');
     if (modal) openAdminModal(modal);
     if (passInput) {
       passInput.value = '';
@@ -2447,25 +2439,16 @@ function initAdminAuth() {
   // This does not affect map open speed at all.
   if (sessionStorage.getItem('FG_LOCKED') === 'true' && sessionStorage.getItem('FG_ADMIN_AUTH') !== 'granted') {
     if (modal) openAdminModal(modal);
-    if (btnHeaderInstant) btnHeaderInstant.classList.remove('hidden');
     if (passInput) setTimeout(() => passInput.focus(), 250);
   } else {
     // Unlocked and open by default
     if (modal) closeAdminModal(modal);
-    if (btnHeaderInstant) btnHeaderInstant.classList.add('hidden');
-  }
-
-  // Small Instant Login Button inside Modal
-  if (btnInstant) {
-    btnInstant.addEventListener('click', () => {
-      grantAccess(true);
-    });
   }
 
   // Google Sign-in Button inside Modal
   if (btnGoogle) {
     btnGoogle.addEventListener('click', () => {
-      grantAccess(false);
+      grantAccess();
       showToast('🛡️ Signed in with Google Officer Account', 'emerald');
     });
   }
@@ -2475,14 +2458,6 @@ function initAdminAuth() {
     btnModalDismiss.addEventListener('click', () => {
       if (modal) closeAdminModal(modal);
       sessionStorage.removeItem('FG_LOCKED');
-      if (btnHeaderInstant) btnHeaderInstant.classList.add('hidden');
-    });
-  }
-
-  // Small Instant Login Button in Top Header
-  if (btnHeaderInstant) {
-    btnHeaderInstant.addEventListener('click', () => {
-      grantAccess(true);
     });
   }
 

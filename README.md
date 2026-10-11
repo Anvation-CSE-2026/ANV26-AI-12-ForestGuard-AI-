@@ -32,7 +32,7 @@
 | :--- | :--- | :--- | :--- |
 | 🏠 **Vercel Cloud** | **Home Landing Page** | [**Open Home Landing Page ➔**](https://agni-rakshak-three.vercel.app/) | Tactical intro flash card, dynamic glowing ember canopy, Team VibeCoders credentials |
 | 🔀 **Vercel Cloud** | **Unified Dual Live Demo Hub** | [**Open Dual Split Demo ➔**](https://agni-rakshak-three.vercel.app/demo.html) | Side-by-side synchronized Citizen + Admin split view for rapid evaluation |
-| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Command Center ➔**](https://agni-rakshak-three.vercel.app/admin.html) | Instant Login, 🔬 Deep Zoom (Zoom 19), 🎯 Sector Default Zoom, real-time alert receipt, fleet dispatch |
+| 🚨 **Vercel Cloud** | **Admin Authority Command Center** | [**Open Admin Command Center ➔**](https://agni-rakshak-three.vercel.app/admin.html) | Level 4 Officer Clearance, 🔬 Deep Zoom (Zoom 19), 🎯 Sector Default Zoom, real-time alert receipt, fleet dispatch |
 | 👤 **Vercel Cloud** | **Citizen Emergency Dashboard** | [**Open Citizen Reporting Portal ➔**](https://agni-rakshak-three.vercel.app/user.html) | 6 reporting modes, YOLOv8 scoreboard, GPS search, real physical fire station & water body routing |
 | 🚒 **Vercel Cloud** | **Fire Station Turnout Terminal** | [**Open Station Turnout Terminal ➔**](https://agni-rakshak-three.vercel.app/station.html) | Station alert receipt, turnout acceptance, drafting routes & turn-by-turn navigation |
 | 🛰️ **Vercel Cloud** | **Satellite Thermal Radar** | [**Open Satellite Thermal Radar ➔**](https://agni-rakshak-three.vercel.app/satellite.html) | ISRO / MODIS thermal anomaly hotspots & Fire Radiative Power (FRP) tracking |
@@ -89,12 +89,11 @@ Mobile Citizen Dashboard (Smartphone)
    - Triangulates actual government fire stations and certified drafting reservoirs/lakes within the immediate district.
    - Renders neat dotted orange response trajectory lines directly from the station building to the fire ground zero, and dotted blue water drafting routes from the lake.
 
-6. **🔐 Officer Authorization & Admin Access (Username, Password & Instant 1-Click Login)**:
+6. **🔐 Officer Authorization & Admin Access (Username, Password & Google Sign-In)**:
    - **Default Officer Credentials**:
      - **Username**: `admin` *(also accepts `commander`, `officer`)*
      - **Password / Passcode**: `admin123` *(also accepts `forestguard2026`, `agni123`, `rakshak2026`)*
-   - **⚡ Instant 1-Click Login**: Instant evaluator access without passwords via the prominent `Instant 1-Click Login` button in the authorization modal and the top navigation bar.
-   - **Google Sign-In**: Instant 1-click Google officer account authorization (`Sign in with Google`).
+   - **Google Sign-In**: 1-click Google officer account authorization (`Sign in with Google`).
    - **🔒 Homepage & Admin Lock Buttons**: Click the lock symbol (`🔒`) in the navigation bar to trigger officer authorization anytime.
    - **Zero Friction & Open by Default**: If the lock icon is not clicked, all public dashboards and maps open immediately at 100% speed without forced blocking overlays.
 
@@ -134,7 +133,7 @@ Mobile Citizen Dashboard (Smartphone)
    - Click **🔬 Deep Zoom (Tree/Building)** to zoom deeply into Ground Zero at `zoom: 19` to view individual buildings and tree canopies.
    - Click **🎯 Default Zoom** to restore the operational sector view with the fire station and waterbody.
 6. **Step 5: Dispatch Response Team**:
-   - Admin unlocks via **⚡ Instant 1-Click Login** (or username `admin` / password `admin123`), selects the recommended local unit and clicks **DEPLOY UNIT**.
+   - Admin unlocks via officer credentials (username `admin` / password `admin123` or Google Sign-In), selects the recommended local unit and clicks **DEPLOY UNIT**.
    - Live emergency vehicle tracking animates along the dotted route to Ground Zero!
 
 ---
@@ -193,7 +192,6 @@ When logging into the Admin Dashboard or clicking the lock icon (`🔒`):
 | :--- | :--- | :--- | :--- |
 | **Officer Username** | `admin` | `admin`, `commander`, `officer` | Officer clearance identity |
 | **Command Password** | `admin123` | `admin123`, `forestguard2026`, `agni123`, `rakshak2026` | Tactical command passcode (toggle eye available) |
-| **⚡ Instant Login** | `Instant 1-Click Login` | Direct 1-click button | 1-click instant evaluator bypass (no password needed) |
 | **Google Sign-In** | `Sign in with Google` | Direct 1-click button | Verified officer Google account access |
 
 > **💡 Zero Friction Default**: If the lock symbol is not clicked, all dashboards ([User/Citizen](http://localhost:8119/user.html), [Admin](http://localhost:8119/admin.html), and [Live Demo](http://localhost:8119/demo.html)) load completely open without any forced blocking overlay!

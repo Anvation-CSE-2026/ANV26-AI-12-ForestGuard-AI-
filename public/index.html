@@ -185,7 +185,7 @@
         </a>
 
         <!-- Officer Authorization / Lock Button (Matches Screenshot media_1791512701695_d263b3ca.png) -->
-        <button id="btnHomeLockAuth" type="button" class="h-9 w-9 rounded-xl bg-[#1e0c10]/90 hover:bg-[#2e1319] border border-red-700/70 hover:border-red-500 text-amber-400 hover:text-amber-300 transition flex items-center justify-center shadow-md shrink-0 cursor-pointer group active:scale-95" title="Officer Authorization & Quick Login (Username/Password, Google Sign-in, or Instant Login)">
+        <button id="btnHomeLockAuth" type="button" class="h-9 w-9 rounded-xl bg-[#1e0c10]/90 hover:bg-[#2e1319] border border-red-700/70 hover:border-red-500 text-amber-400 hover:text-amber-300 transition flex items-center justify-center shadow-md shrink-0 cursor-pointer group active:scale-95" title="Officer Authorization & Quick Login (Username/Password or Google Sign-in)">
           <span class="text-sm select-none group-hover:scale-110 transition-transform">🔒</span>
         </button>
       </nav>
@@ -1132,7 +1132,7 @@
   </script>
 
   <!-- ========================================================================= -->
-  <!-- 🔒 OFFICER AUTHORIZATION MODAL (Username/Password, Google Sign-in & Small Instant 1-Click Login) -->
+  <!-- 🔒 OFFICER AUTHORIZATION MODAL (Username/Password & Google Sign-in) -->
   <!-- ========================================================================= -->
   <div id="homeAuthModal" class="fixed inset-0 z-[2147483647] bg-[#02050c]/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 hidden">
     <div class="relative w-full max-w-md p-6 sm:p-7 rounded-3xl bg-[#091122] border-2 border-red-500/70 shadow-[0_0_60px_rgba(239,68,68,0.35)] space-y-4 animate-fade-in text-left">
@@ -1157,7 +1157,7 @@
       </div>
 
       <p class="text-xs text-slate-300 leading-relaxed">
-        Officer authorization unlocks live incident commands, fire siren triggers, and auto-dispatch relays. Sign in with officer credentials, Google, or use instant evaluator access.
+        Officer authorization unlocks live incident commands, fire siren triggers, and auto-dispatch relays. Sign in with officer credentials or Google.
       </p>
 
       <!-- Username & Password Form -->
@@ -1182,7 +1182,7 @@
         </div>
 
         <div id="homeAuthError" class="hidden text-xs text-red-300 bg-red-950/80 border border-red-700/80 rounded-xl p-2.5 flex items-center gap-2">
-          <span>⚠️</span> <span>Invalid credentials. Use <b>admin</b> / <b>admin123</b> or click <b>Instant 1-Click Login</b>.</span>
+          <span>⚠️</span> <span>Invalid credentials. Use <b>admin</b> / <b>admin123</b>, or continue with Google.</span>
         </div>
 
         <!-- Form Submit Button -->
@@ -1198,9 +1198,8 @@
         <div class="flex-grow border-t border-slate-800"></div>
       </div>
 
-      <!-- Google Sign-in & Small Instant Login Options -->
-      <div class="space-y-2">
-        <!-- Google Sign-in Button -->
+      <!-- Google Sign-in Option -->
+      <div>
         <button type="button" id="btnHomeGoogleSignIn" class="w-full py-2.5 px-3 rounded-xl bg-white hover:bg-slate-100 active:scale-[0.99] text-slate-900 font-bold text-xs tracking-wide shadow-md transition flex items-center justify-center gap-2.5 cursor-pointer border border-slate-300 group">
           <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -1209,11 +1208,6 @@
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
           </svg>
           <span class="group-hover:text-black">Sign in with Google</span>
-        </button>
-
-        <!-- Small Instant 1-Click Login Button -->
-        <button type="button" id="btnHomeInstantLogin" class="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-600 hover:from-emerald-500 hover:to-teal-500 active:scale-[0.99] text-white font-black text-xs tracking-wider uppercase shadow-md shadow-emerald-950/60 transition flex items-center justify-center gap-1.5 cursor-pointer border border-emerald-400/60" title="Instant Evaluator Access (No Password Needed)">
-          <span>⚡</span> <span>Instant 1-Click Login</span>
         </button>
       </div>
 
@@ -1241,7 +1235,6 @@
       const btnToggleEye = document.getElementById('btnToggleHomePassVisibility');
       const errBox = document.getElementById('homeAuthError');
       const btnGoogle = document.getElementById('btnHomeGoogleSignIn');
-      const btnInstant = document.getElementById('btnHomeInstantLogin');
 
       if (!btnLock || !modal) return;
 
@@ -1313,12 +1306,6 @@
       if (btnGoogle) {
         btnGoogle.addEventListener('click', function() {
           completeLogin('Google Verified Commander');
-        });
-      }
-
-      if (btnInstant) {
-        btnInstant.addEventListener('click', function() {
-          completeLogin('Instant Verified Commander');
         });
       }
     }
