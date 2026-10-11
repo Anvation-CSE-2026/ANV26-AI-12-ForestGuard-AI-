@@ -2424,8 +2424,8 @@ function initAdminAuth() {
   };
 
   const lockDashboard = () => {
-    sessionStorage.setItem('FG_LOCKED', 'true');
     sessionStorage.removeItem('FG_ADMIN_AUTH');
+    sessionStorage.setItem('FG_LOCKED', 'true');
     if (modal) openAdminModal(modal);
     if (passInput) {
       passInput.value = '';
@@ -2434,15 +2434,14 @@ function initAdminAuth() {
     showToast('🔒 Command Center Locked: Authorization Required', 'orange');
   };
 
-  // Open by default condition:
-  // If lock symbol is not clicked in home screen or admin, it works as is without lock system in any dashboard.
-  // This does not affect map open speed at all.
-  if (sessionStorage.getItem('FG_LOCKED') === 'true' && sessionStorage.getItem('FG_ADMIN_AUTH') !== 'granted') {
+  // Enforce Officer Authentication:
+  // Admin Command Center requires verified officer clearance (Username: admin, Password: admin123, or Google Sign-In)
+  if (sessionStorage.getItem('FG_ADMIN_AUTH') === 'granted') {
+    if (modal) closeAdminModal(modal);
+  } else {
+    // Locked by default on admin page until authenticated
     if (modal) openAdminModal(modal);
     if (passInput) setTimeout(() => passInput.focus(), 250);
-  } else {
-    // Unlocked and open by default
-    if (modal) closeAdminModal(modal);
   }
 
   // Google Sign-in Button inside Modal
@@ -2456,8 +2455,28 @@ function initAdminAuth() {
   // Dismiss button inside Modal
   if (btnModalDismiss) {
     btnModalDismiss.addEventListener('click', () => {
-      if (modal) closeAdminModal(modal);
-      sessionStorage.removeItem('FG_LOCKED');
+      if (sessionStorage.getItem('FG_ADMIN_AUTH') !== 'granted') {
+        showToast('🛡️ Officer authentication required for Admin Command Center. Returning to Home...', 'orange');
+        setTimeout(() => {
+          window.location.href = '/index.html';
+        }, 300);
+      } else {
+        if (modal) closeAdminModal(modal);
+      }
+    });
+  }
+
+  // Backdrop click on modal: block dismissal if not authenticated
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        if (sessionStorage.getItem('FG_ADMIN_AUTH') !== 'granted') {
+          if (errBox) errBox.classList.remove('hidden');
+          if (passInput) passInput.focus();
+        } else {
+          closeAdminModal(modal);
+        }
+      }
     });
   }
 
@@ -2477,9 +2496,13 @@ function initAdminAuth() {
       const u = (userInput ? userInput.value : '').trim().toLowerCase();
       const val = (passInput ? passInput.value : '').trim();
       const validCodes = ['admin123', 'forestguard2026', 'admin', 'agni123', 'rakshak2026'];
-      if ((u === 'admin' || u === 'commander' || u === 'officer' || u.length > 0) && validCodes.includes(val)) {
+      const validUsers = ['admin', 'commander', 'officer', 'agnirakshak', 'guard'];
+      const isUserOk = validUsers.includes(u) || u.length >= 3;
+      const isPassOk = validCodes.includes(val);
+
+      if (isUserOk && isPassOk) {
         if (u) sessionStorage.setItem('FG_OFFICER_NAME', u);
-        grantAccess(false);
+        grantAccess();
       } else {
         if (errBox) errBox.classList.remove('hidden');
         if (passInput) {

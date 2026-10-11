@@ -1209,7 +1209,19 @@
       </div>
     </div>
   <!-- 🔒 ADMIN COMMAND CENTER PASSWORD & GOOGLE AUTHORIZATION GATE -->
-  <div id="adminAuthModal" class="modal-emergency-layer fixed inset-0 z-[2147483647] bg-[#02050c]/98 flex items-center justify-center p-4 hidden">
+  <div id="adminAuthModal" class="modal-emergency-layer fixed inset-0 z-[2147483647] bg-[#02050c]/98 flex items-center justify-center p-4">
+    <script>
+      (function() {
+        try {
+          if (sessionStorage.getItem('FG_ADMIN_AUTH') === 'granted') {
+            var m = document.getElementById('adminAuthModal');
+            if (m) m.classList.add('hidden');
+          } else {
+            if (document.body) document.body.classList.add('modal-open');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <div class="modal-card-box w-full max-w-lg p-6 sm:p-8 rounded-3xl bg-[#091122] border-2 border-red-500/80 shadow-[0_0_60px_rgba(239,68,68,0.35)] relative space-y-5 animate-fade-in max-h-[90vh] overflow-y-auto">
       
       <!-- Top Tactical Clearance Header -->
@@ -1226,7 +1238,7 @@
             <h2 class="text-lg sm:text-xl font-black text-white mt-0.5 tracking-wide">FOREST AUTHORITY COMMAND CENTER</h2>
           </div>
         </div>
-        <button type="button" id="btnAdminModalDismiss" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition text-xs font-bold cursor-pointer" title="Close Authorization Modal">
+        <button type="button" id="btnAdminModalDismiss" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition text-xs font-bold cursor-pointer" title="Cancel & Return to Home">
           ✕
         </button>
       </div>
@@ -1253,7 +1265,7 @@
             <span class="text-[11px] font-mono text-slate-400">Default: <b class="text-amber-400 select-all font-mono">admin123</b></span>
           </div>
           <div class="relative">
-            <input type="password" id="adminPassInput" value="admin123" placeholder="Enter clearance passcode (e.g. admin123)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono tracking-wider transition pr-10" autocomplete="current-password" />
+            <input type="password" id="adminPassInput" value="" placeholder="Enter clearance passcode (e.g. admin123)..." class="w-full bg-[#030712] border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono tracking-wider transition pr-10" autocomplete="current-password" />
             <button type="button" id="btnTogglePassVisibility" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs px-1.5 py-1 cursor-pointer" title="Show/Hide Passcode">👁️</button>
           </div>
         </div>

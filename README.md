@@ -195,8 +195,7 @@ When logging into the Admin Dashboard or clicking the lock icon (`🔒`):
 | **Officer Username** | `admin` | `admin`, `commander`, `officer` | Officer clearance identity |
 | **Command Password** | `admin123` | `admin123`, `forestguard2026`, `agni123`, `rakshak2026` | Tactical command passcode (toggle eye available) |
 | **Google Sign-In** | `Sign in with Google` | Direct 1-click button | Verified officer Google account access |
-
-> **💡 Zero Friction Default**: If the lock symbol is not clicked, all dashboards ([User/Citizen](http://localhost:8119/user.html), [Admin](http://localhost:8119/admin.html), and [Live Demo](http://localhost:8119/demo.html)) load completely open without any forced blocking overlay!
+> **🛡️ Admin Security Gate**: The [Admin Command Center](http://localhost:8119/admin.html) is protected by mandatory officer clearance (`admin` / `admin123` or Google Sign-In) to safeguard fire dispatch, siren triggers, and provincial emergency controls. The [User/Citizen Dashboard](http://localhost:8119/user.html) remains open for fast emergency fire reporting without barriers!
 
 ---
 
