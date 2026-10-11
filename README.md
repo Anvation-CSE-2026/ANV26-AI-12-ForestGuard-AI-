@@ -6,7 +6,7 @@
 
 [![Vercel Deployment](https://img.shields.io/badge/Vercel-Live%20Demo-success?logo=vercel&style=for-the-badge)](https://agni-rakshak-three.vercel.app/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-ForestGuard--AI-181717?logo=github&style=for-the-badge)](https://github.com/Anvation-CSE-2026/ANV26-AI-12-ForestGuard-AI-)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary%20%7C%20All%20Rights%20Reserved-red.svg?style=for-the-badge)](LICENSE)
 [![Real-Time Engine](https://img.shields.io/badge/Real--Time-Socket.IO%20%7C%20Zero--Refresh-red?style=for-the-badge)](https://agni-rakshak-three.vercel.app/demo.html)
 
 ---
@@ -15,7 +15,9 @@
 
 > **EXPLORE • INNOVATE • TRANSFORM**  
 > **Project: AI-Based Forest Fire Detection**  
-> **Team Name: VibeCoders 🚀**
+> **Team Name: VibeCoders 🚀**  
+> ⛔ **STRICT ANTI-PLAGIARISM & PROPRIETARY NOTICE**:  
+> *This system is the exclusive intellectual property of **Team VibeCoders** (Suhas S, Sanjay V, Shekhar Singh, Sachin Gotur) for ANVATION CSE 2026. Unauthorized cloning, mirroring, academic re-submission, or presentation is strictly prohibited and instrumented with embedded digital provenance seals.*
 
 | Team Member | Role & Focus | LinkedIn Profile |
 | :--- | :--- | :--- |
@@ -198,7 +200,9 @@ When logging into the Admin Dashboard or clicking the lock icon (`🔒`):
 
 ---
 
-## 📄 License & Presentation Note
+## 📄 License & Intellectual Property Notice
 
-Distributed under the MIT License.  
+Copyright &copy; 2026 Team VibeCoders (Suhas S, Sanjay V, Shekhar Singh, Sachin Gotur). All Rights Reserved.  
+Licensed under the **ForestGuard-AI Proprietary & Anti-Plagiarism Evaluation License**.  
+Unauthorized cloning, distribution, or third-party academic presentation is strictly prohibited.  
 *Note: Emergency notifications to government agencies, fire departments, or helplines are simulated for hackathon evaluation and demonstration purposes.*

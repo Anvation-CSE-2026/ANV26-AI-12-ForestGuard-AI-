@@ -1,0 +1,34 @@
+FORESTGUARD-AI PROPRIETARY & ANTI-PLAGIARISM EVALUATION LICENSE
+Copyright (c) 2026 Team VibeCoders (Suhas S, Sanjay V, Shekhar Singh, Sachin Gotur)
+All Rights Reserved.
+
+NOTICE TO ALL USERS, STUDENTS, AND COMPETITORS:
+
+This source code, associated geospatial datasets, trained computer vision scoring models,
+user interfaces, and documentation constitute the exclusive intellectual property of 
+Team VibeCoders (Suhas S, Sanjay V, Shekhar Singh, Sachin Gotur) for ANVATION CSE 2026.
+
+1. PROHIBITION OF UNAUTHORIZED CLONING, FORKING & REPRODUCTION
+   No person, organization, student, or team may:
+   a) Clone, fork, mirror, download, redistribute, or reproduce this codebase or any part 
+      thereof for unauthorized third-party use.
+   b) Submit, present, demo, or represent any portion of this system as their own work in 
+      any academic course, capstone evaluation, hackathon, conference, or competition.
+   c) Scrape, extract, or repurpose the custom Indian forestry GIS datasets, fire triangulation
+      algorithms, or UI components without explicit prior written authorization.
+
+2. AUTHORIZED USE & EVALUATION
+   Access to this repository and live deployment (https://agni-rakshak-three.vercel.app) is 
+   granted strictly for:
+   a) Official hackathon jury, faculty coordinators, and evaluation panels of ANVATION CSE 2026.
+   b) Authorized demonstration and peer-review under the direct supervision of Team VibeCoders.
+
+3. EMBEDDED DIGITAL PROVENANCE & PLAGIARISM DETECTION
+   All assets in this platform are instrumented with digital signatures, cryptographic hashes, 
+   and authorship provenance records. Any unauthorized duplicate, clone, or plagiarized variant 
+   discovered across public hosting platforms or academic repositories will be subject to 
+   immediate intellectual property takedown notices (DMCA) and formal academic misconduct reporting.
+
+FOR AUTHORIZATION INQUIRIES:
+Team VibeCoders Lead: Suhas S (https://linkedin.com/in/suhas-s-081b84335)
+Official Repository: https://github.com/Anvation-CSE-2026/ANV26-AI-12-ForestGuard-AI-

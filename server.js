@@ -11,6 +11,7 @@ const geoSpatialService = require('./services/geoSpatialService');
 const incidentStore = require('./services/incidentStore');
 const riskEngine = require('./services/riskEngine');
 const fireIntelligenceService = require('./services/fireIntelligenceService');
+const securityGuard = require('./services/securityGuard');
 
 const app = express();
 const server = http.createServer(app);
@@ -56,11 +57,17 @@ const upload = multer({
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(securityGuard.antiCloneMiddleware);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ========================
 // API ROUTES
 // ========================
+
+// 0. Digital Authorship & Anti-Plagiarism Verification Seal
+app.get('/api/security/verification', (req, res) => {
+  res.json(securityGuard.getVerificationCertificate());
+});
 
 // 1. Submit Fire Incident (Citizen Report via Multiple Methods: Image, Camera, Video, Manual, GPS, Search)
 app.post(['/api/incidents', '/api/reports'], upload.fields([{ name: 'fireImage', maxCount: 1 }, { name: 'fireVideo', maxCount: 1 }]), async (req, res) => {

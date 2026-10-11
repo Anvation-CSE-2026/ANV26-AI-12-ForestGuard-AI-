@@ -16,8 +16,9 @@
     "disaster-management",
     "india"
   ],
-  "author": "ForestGuard AI Team",
-  "license": "MIT",
+  "private": true,
+  "author": "Team VibeCoders (Suhas S, Sanjay V, Shekhar Singh, Sachin Gotur)",
+  "license": "UNLICENSED",
   "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.6",
